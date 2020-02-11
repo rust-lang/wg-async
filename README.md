@@ -10,8 +10,8 @@ Our meetings take place at [6:00 PM UTC](https://everytimezone.com/s/3b45ddfe) e
 ## Links
 
 - [wg-async-foundations Zulip][zulip]
-- [Ongoing work](https://github.com/orgs/rust-lang/projects/2)
-- [Traige](https://github.com/orgs/rust-lang/projects/3)
+- [Ongoing work board](https://github.com/orgs/rust-lang/projects/2)
+- [Triage board](https://github.com/orgs/rust-lang/projects/3)
 - [Old website](https://rust-lang.github.io/compiler-team/working-groups/async-await/) (outdated; for reference)
 
 ## License
