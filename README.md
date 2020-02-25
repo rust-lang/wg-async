@@ -12,6 +12,34 @@ You can also take a look at our [ongoing work][project board] to get a sense of 
 [E-mentor]: https://github.com/search?q=org%3Arust-lang+is%3Aissue+label%3AAsyncAwait-Triaged+label%3AE-mentor+is%3Aopen&type=Issues
 [project board]: https://github.com/orgs/rust-lang/projects/2
 
+## What is the goal of this working group?
+
+### Current focus
+
+The **current focus** of the group is polishing the async-await
+feature and working on the async book. 
+
+### Overall roadmap and progress
+
+- ✅ Stabilize the `Future` trait
+- ✅ Deliver a "minimal viable product" (MVP) introducing `async fn` inherent functions and async blocks.
+- ⚒️ Polish the async-await feature, improving diagnostics, spurious errors, and other corner cases.
+- ⚒️ Write the [async book](https://github.com/rust-lang/async-book), which introduces how the core language features in support of Async I/O and teaches you how to use them.
+
+### Future areas
+
+Possible future areas for consideration include:
+
+- Stabilize other core traits in std, such as `AsyncRead`
+- Support async fn in traits
+- Support async closures (and possibly an `AsyncFn` trait)
+- Support consuming async streams conveniently (e.g., `for await` loops or some similar thing)
+- Support authoring async streams conveniently via async generators
+- Support async drop 
+
+However, we've decided to largely defer this sort of work until we've
+finished off more of the polish work on async-await.
+
 ## Triage meetings
 
 In our weekly triage meetings, we take new issues assigned [`A-async-await`] and categorize them. The process is:
@@ -42,7 +70,6 @@ Mentors assigned to issues should write up mentoring instructions. Often, this i
 
 - [wg-async-foundations Zulip][zulip]
 - [Project board][project board]
-- [Old website](https://rust-lang.github.io/compiler-team/working-groups/async-await/) (outdated; for reference)
 
 [zulip]: https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async-foundations
 
