@@ -1,5 +1,10 @@
 # wg-async-foundations
-Working group dedicated to improving the foundations of Async I/O in Rust
+Working group dedicated to improving the foundations of async I/O in Rust
+
+**Leads**: [@tmandry] and [@nikomatsakis]
+
+[@tmandry]: https://github.com/tmandry
+[@nikomatsakis]: https://github.com/nikomatsakis
 
 ## Getting involved
 
@@ -13,6 +18,8 @@ You can also take a look at our [ongoing work][project board] to get a sense of 
 [project board]: https://github.com/orgs/rust-lang/projects/2
 
 ## What is the goal of this working group?
+
+This working group is focused around implementation/design of the “foundations” for Async I/O. This includes the async-await language feature but also the core Future trait and adapters.
 
 ### Current focus
 
