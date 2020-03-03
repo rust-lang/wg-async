@@ -8,7 +8,7 @@ Working group dedicated to improving the foundations of async I/O in Rust
 
 ## Getting involved
 
-Our meetings take place at [6:00 PM UTC](https://everytimezone.com/s/3b45ddfe) every Tuesday in our [Zulip stream][zulip]. Feel free to stop by then (or any time!) to introduce yourself.
+Our meetings take place at [10:00 AM PST](https://everytimezone.com/s/d96642f9) every Tuesday in our [Zulip stream][zulip]. Feel free to stop by then (or any time!) to introduce yourself.
 
 **If you'd like something to work on, check our [mentored issues][E-mentor] for places to get started.** Feel free to claim one of these by adding a comment with the text `@rustbot claim`.
 
@@ -57,9 +57,11 @@ In our weekly triage meetings, we take new issues assigned [`A-async-await`] and
   - Add `P-high` and _assigned_ `E-needs-mentor` issues to the [project board]
   - Mark `AsyncAwait-triaged`
 - Review the [project board]
-  - Move `E-needs-mentor` issues in **To do** to **Mentor assigned**
-  - Move **Mentor assigned** issues with `E-mentor` to **To do**
-  - Review **In progress** issues to check we are making progress (move to **Blocked** or **Done** when appropriate)
+  - Move `E-needs-mentor` issues in **To do** to **Claimed**
+    - Once `E-needs-mentor` issues have mentoring instructions, they should be tagged `E-mentor` and moved to **To do**
+  - Review **In progress** issues to check we are making progress and there is a clear path to finishing (otherwise, move to the appropriate column)
+  - Review **Blocked** issues to see if there is anything we can do to unblock
+  - Review **Claimed** issues to see if they are in progress, and if the assigned person still intends to work on it
   - Review **To do** issues and assign to anyone who wants to work on something
 - If there's a shortage of **To do** issues, review the list of [`P-medium`] or [`P-low`] issues for candidates
 
