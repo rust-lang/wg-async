@@ -67,9 +67,9 @@ In our weekly triage meetings, we take new issues assigned [`A-async-await`] and
 
 If an issue is a good candidate for mentoring, mark `E-needs-mentor` and try to find a mentor.
 
-Mentors assigned to issues should write up mentoring instructions. Often, this is just a couple lines pointing to the relevant code. After that they should un-assign themselves, add `E-mentor`, and remove `E-needs-mentor`.
+Mentors assigned to issues should write up mentoring instructions. **Often, this is just a couple lines pointing to the relevant code.** Mentorship doesn't require intimate knowledge of the compiler, just some familiarity and a willingness to look around for the right code.
 
-On the project board, if a mentor is assigned to an issue, it should go to the **Claimed** column until mentoring instructions are provided. After that, it should go to **To do** until someone has volunteered to work on it.
+After writing instructions, mentors should un-assign themselves, add `E-mentor`, and remove `E-needs-mentor`. On the project board, if a mentor is assigned to an issue, it should go to the **Claimed** column until mentoring instructions are provided. After that, it should go to **To do** until someone has volunteered to work on it.
 
 [`A-async-await`]: https://github.com/rust-lang/rust/labels/A-async-await
 [uncategorized issues]: https://github.com/search?q=org%3Arust-lang+is%3Aissue+label%3AA-async-await+is%3Aopen+-label%3AAsyncAwait-Triaged&type=Issues
