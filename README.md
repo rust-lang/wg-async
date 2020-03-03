@@ -57,18 +57,19 @@ In our weekly triage meetings, we take new issues assigned [`A-async-await`] and
   - Review **Blocked** issues to see if there is anything we can do to unblock
   - Review **Claimed** issues to see if they are in progress, and if the assigned person still intends to work on it
   - Review **To do** issues and assign to anyone who wants to work on something
-- If there's a shortage of **To do** issues, review the list of [`P-medium`] or [`P-low`] issues for candidates
-  - If an issue is a good candidate for mentoring, mark `E-needs-mentor` and try to find a mentor
-    - Move `E-needs-mentor` issues in **To do** to **Claimed**
-    - Once `E-needs-mentor` issues have mentoring instructions, they should be tagged `E-mentor` and moved back to **To do** until someone has volunteered to work on it
 - Review [uncategorized issues]
   - Mark `P-low`, `P-medium`, or `P-high`
   - Add `P-high` and _assigned_ `E-needs-mentor` issues to the [project board]
   - Mark `AsyncAwait-triaged`
+- If there's still a shortage of **To do** issues, review the list of [`P-medium`] or [`P-low`] issues for candidates
 
 ### Mentoring
 
-Mentors assigned to issues should write up mentoring instructions. Often, this is just a couple lines pointing to the relevant code. After that they should un-assign themselves, add E-mentor, and remove E-needs-mentor.
+If an issue is a good candidate for mentoring, mark `E-needs-mentor` and try to find a mentor.
+
+Mentors assigned to issues should write up mentoring instructions. Often, this is just a couple lines pointing to the relevant code. After that they should un-assign themselves, add `E-mentor`, and remove `E-needs-mentor`.
+
+On the project board, if a mentor is assigned to an issue, it should go to the **Claimed** column until mentoring instructions are provided. After that, it should go to **To do** until someone has volunteered to work on it.
 
 [`A-async-await`]: https://github.com/rust-lang/rust/labels/A-async-await
 [uncategorized issues]: https://github.com/search?q=org%3Arust-lang+is%3Aissue+label%3AA-async-await+is%3Aopen+-label%3AAsyncAwait-Triaged&type=Issues
