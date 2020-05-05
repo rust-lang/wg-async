@@ -4,14 +4,14 @@
 
 Some types should not be held across a "yield" bound. A typical example is a `MutexGuard`:
 
-```rust
+```rust,ignore
 async fn example(x: &Lock<u32>) {
     let data = x.lock().unwrap();
     something().await;
     *data += 1;
 }
 
-async fn something() { ..}
+async fn something() { }
 ```
 
 In practice, a lot of these issues are avoided because `MutexGuard` is not `Send`, but single-thread runtimes hit these issues.

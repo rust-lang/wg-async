@@ -6,7 +6,7 @@
 
 ## General goal
 
-```rust
+```rust,ignore
 trait Foo {
     // Currently disallowed:
     async fn bar();
@@ -25,7 +25,7 @@ Also true for functions `fn bar() -> impl Trait`.
 
 [Relevant thread](https://internals.rust-lang.org/t/how-often-do-you-want-non-send-futures/10360)
 
-```rust
+```rust,ignore
 async fn foo() {}
 
 // desugars to
@@ -37,7 +37,7 @@ fn foo() -> impl Future + Send { }
 
 If I want to constrain the future I get back from a method, it is difficult to do without a name:
 
-```rust
+```rust,ignore
 trait Service {
     async fn request(&self);
 }
@@ -56,7 +56,7 @@ where
 
 ## Example use case: the Service
 
-```rust
+```rust,ignore
 trait Service {
     type Future: Future<Output = Response>;
 
@@ -76,7 +76,7 @@ impl Service for MyService {
 
 ## Example use case: capturing lifetimes of arguments
 
-```rust
+```rust,ignore
 trait MyMethod {
     async fn foo(&self);
 }

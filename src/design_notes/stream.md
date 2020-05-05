@@ -4,7 +4,7 @@
 
 ## Trait definition
 
-```rust
+```rust,ignore
 pub trait Stream {
     type Item;
 

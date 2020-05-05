@@ -4,3 +4,6 @@ language = "en"
 multilingual = false
 src = "src"
 title = "wg-async-foundations"
+
+[rust]
+edition = "2018"
