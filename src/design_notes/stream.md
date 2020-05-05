@@ -1,6 +1,6 @@
 # Stream trait
 
-* [Current definition](https://docs.rs/futures/0.3.1/futures/stream/trait.Stream.html)
+* [Current definition](https://docs.rs/futures/0.3/futures/stream/trait.Stream.html)
 
 ## Trait definition
 
@@ -44,5 +44,5 @@ Sometimes streams need to reuse internal storage ([Discussion]).
     * e.g., [`poll_next_unpin`] can make working with pin easier, albeit at a loss of generality
         * folks who are new to pinning could use this method, and it can help us to guide the diagnostics by suggesting that they `Box::pin`
 
-[`StreamExt`]: https://docs.rs/futures/0.3.1/futures/stream/trait.StreamExt.html
-[`poll_next_unpin`]: https://docs.rs/futures/0.3.1/futures/stream/trait.StreamExt.html#method.poll_next_unpin
+[`StreamExt`]: https://docs.rs/futures/0.3/futures/stream/trait.StreamExt.html
+[`poll_next_unpin`]: https://docs.rs/futures/0.3/futures/stream/trait.StreamExt.html#method.poll_next_unpin
