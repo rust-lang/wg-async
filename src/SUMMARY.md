@@ -7,7 +7,7 @@
     - [Generator syntax](./design_notes/generator_syntax.md)
     - [AsyncRead, AsyncWrite traits](./design_notes/async_read_write.md)
     - [Async fn in traits](./design_notes/async_fn_in_traits.md)
-    - [Mutex (future-aware)](./design_notes/async_read_write.md)
+    - [Mutex (future-aware)](./design_notes/mutex.md)
     - [Async aware channels](./design_notes/channels.md)
     - [Async closures](./design_notes/async_closures.md)
     - [Join combinator](./design_notes/join.md)
@@ -17,3 +17,4 @@
     - [Async drop](./design_notes/async_drop.md)
        - [Async lifecycle](./design_notes/async_lifecycle.md)
     - [Completion-based futures](./design_notes/completion_based_futures.md)
+
