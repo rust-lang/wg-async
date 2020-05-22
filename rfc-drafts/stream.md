@@ -182,7 +182,10 @@ Designing such a migration feature is out of scope for this RFC.
 * currently blocked on async fn in traits
 * The exact bounds are unclear.
 * the same as combinators
-* These would be needed to provide
+* These would be needed to provide similar iteration semantics as Iterator:
+    * `for x in iter` uses `impl IntoIterator for T`
+    * `for x in &iter` uses `impl IntoIterator for &T`
+    * `for x in &mut iter` uses `impl IntoIterator for &mut T`
 
 ## Async iteration syntax
 
