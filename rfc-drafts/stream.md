@@ -47,6 +47,7 @@ the current task to be re-awoken when the data is ready.
 [`Poll::pending`]: https://doc.rust-lang.org/std/task/enum.Poll.html#variant.Pending
 
 ```rust
+// Defined in std::stream module
 pub trait Stream {
     type Item;
     
@@ -74,11 +75,50 @@ The arguments to `poll_next` match that of the [`Future::poll`] method:
 [context]: https://doc.rust-lang.org/std/task/struct.Context.html
 [Waker]: https://doc.rust-lang.org/std/task/struct.Waker.html
 
+## Initial impls
+
+There are a number of simple "bridge" impls that are also provided:
+
+```rust
+impl<S> Stream for Box<S>
+where
+    S: Stream + Unpin + ?Sized,
+{
+    type Item = <S as Stream>::Item
+}
+
+impl<S> Stream for &mut S
+where
+    S: Stream + Unpin + ?Sized,
+{
+    type Item = <S as Stream>::Item;
+}
+
+impl<S, T> Stream for Pin<P>
+where
+    P: DerefMut<Target=T> + Unpin,
+    T::Target: Stream,
+{
+    type Item = <T as Stream>::Item;
+}
+
+impl<S> Stream for AssertUnwindSafe<S>
+where
+    S: Stream, 
+{
+    type Item = <S as Stream>::Item;
+}
+```
+
 # Reference-level explanation
 [reference-level-explanation]: #reference-level-explanation
 
 This section goes into details about various aspects of the design and
 why they ended up the way they did.
+
+## Where does `Stream` live in the std lib?
+
+`Stream` will live in the `core::stream` module and be re-exported as `std::stream`.
 
 ## Why use a `poll` method?
 
@@ -114,9 +154,10 @@ Why should we *not* do this?
 # Rationale and alternatives
 [rationale-and-alternatives]: #rationale-and-alternatives
 
-- Why is this design the best in the space of possible designs?
-- What other designs have been considered and what is the rationale for not choosing them?
-- What is the impact of not doing this?
+## Where should stream live?
+
+* core::stream is analogous to core::future
+* but do we want to find some other naming scheme that can scale up to other future additions, such as io traits or channels?
 
 # Prior art
 [prior-art]: #prior-art
@@ -163,6 +204,9 @@ decided to enable progress on the stream trait by stabilizing a core,
 and to come back to the problem of extending it with combinators.
 
 [outstanding design issues]: https://rust-lang.github.io/wg-async-foundations/design_notes/async_closures.html
+
+Another reason to defer adding combinators is because of the possibility
+that some combinators may work best 
 
 This path does carry some risk. Adding combinator methods can cause
 existing code to stop compiling due to the ambiguities in method
