@@ -13,9 +13,21 @@ standard library.
 # Motivation
 [motivation]: #motivation
 
-XXX describe async streams
-
-discuss also some of the design goals
+* Why include stream trait in the std library at all?
+    * Streams are a core async abstraction
+        * we want to enable portable libraries that produce/consume streams without being tied to particular executors
+        * examples of crates that are consuming streams?
+            * [async-h1](https://docs.rs/async-h1)'s server implementation takes `TcpStream` instances produced by a `TcpListener` in a loop.
+        * examples of crates that are producing streams?
+            * [async-sse](https://docs.rs/async-sse/) parses incoming buffers into a stream of messages.
+        * people can do this today using futures crate, but the stability guarantees are less clear
+            * e.g., if tokio wishes to declare a [5 year stability period](http://smallcultfollowing.com/babysteps/blog/2020/02/11/async-interview-6-eliza-weisman/#communicating-stability), having something in std means there are no concerns about trait changing during that time ([citation](http://smallcultfollowing.com/babysteps/blog/2019/12/23/async-interview-3-carl-lerche/#what-should-we-do-next-stabilize-stream))
+    * We eventually want dedicated syntax for working with streams, which will require a shared trait
+        * Producing streams
+        * Consuming streams
+* Why is the stream trait defined how it is?
+    * It is the "pollable iterator"
+    * dyn compatibility
 
 # Guide-level explanation
 [guide-level-explanation]: #guide-level-explanation
@@ -92,41 +104,7 @@ Stream` values without the need to monomorphize the functions that work
 with them.
 
 Unfortunately, the use of poll does mean that it is harder to write
-stream implementations.
-
-## What about combinators?
-
-The `Iterator` trait defines a number of useful combinators, like
-`map`.  The `Stream` trait being proposed here does not include any
-such conveniences.  Instead, they are available via extension traits,
-such as the [`StreamExt`] trait offered by the [`futures`] crate.
-
-[`StreamExt`]: https://docs.rs/futures/0.3.5/futures/stream/trait.StreamExt.html
-[`futures`]: https://crates.io/crates/futures
-
-The reason that we have chosen to exclude combinators is that a number
-of them would require access to async closures. As of this writing,
-async closures are unstable and there are a number of [outstanding
-design issues] to be resolved before they are added. Therefore, we've
-decided to enable progress on the stream trait by stabilizing a core,
-and to come back to the problem of extending it with combinators.
-
-[outstanding design issues]: https://rust-lang.github.io/wg-async-foundations/design_notes/async_closures.html
-
-This path does carry some risk. Adding combinator methods can cause
-existing code to stop compiling due to the ambiguities in method
-resolution. We have had problems in the past with attempting to migate
-iterator helper methods from `itertools` for this same reason.
-
-While such breakage is technically permitted by our semver guidelines,
-it would obviously be best to avoid it, or at least to go to great
-lengths to mitigate its effects. One option would be to extend the
-language to allow method resolution to "favor" the extension trait in
-existing code, perhaps as part of an edition migration.
-
-## "Attached" streams
-
-## Compatibility with future generator syntax
+stream implementations. The long-term fix for this, discussed in the [Future possibilities][future-possibilities] section, is dedicated [generator syntax].
 
 # Drawbacks
 [drawbacks]: #drawbacks
@@ -167,20 +145,60 @@ Please also take into consideration that rust sometimes intentionally diverges f
 # Future possibilities
 [future-possibilities]: #future-possibilities
 
-Think about what the natural extension and evolution of your proposal would
-be and how it would affect the language and project as a whole in a holistic
-way. Try to use this section as a tool to more fully consider all possible
-interactions with the project and language in your proposal.
-Also consider how the this all fits into the roadmap for the project
-and of the relevant sub-team.
+## Convenience methods
 
-This is also a good place to "dump ideas", if they are out of scope for the
-RFC you are writing but otherwise related.
+The `Iterator` trait defines a number of useful combinators, like
+`map`.  The `Stream` trait being proposed here does not include any
+such conveniences.  Instead, they are available via extension traits,
+such as the [`StreamExt`] trait offered by the [`futures`] crate.
 
-If you have tried and cannot think of any future possibilities,
-you may simply state that you cannot think of anything.
+[`StreamExt`]: https://docs.rs/futures/0.3.5/futures/stream/trait.StreamExt.html
+[`futures`]: https://crates.io/crates/futures
 
-Note that having something written down in the future-possibilities section
-is not a reason to accept the current or a future RFC; such notes should be
-in the section on motivation or rationale in this or subsequent RFCs.
-The section merely provides additional information.
+The reason that we have chosen to exclude combinators is that a number
+of them would require access to async closures. As of this writing,
+async closures are unstable and there are a number of [outstanding
+design issues] to be resolved before they are added. Therefore, we've
+decided to enable progress on the stream trait by stabilizing a core,
+and to come back to the problem of extending it with combinators.
+
+[outstanding design issues]: https://rust-lang.github.io/wg-async-foundations/design_notes/async_closures.html
+
+This path does carry some risk. Adding combinator methods can cause
+existing code to stop compiling due to the ambiguities in method
+resolution. We have had problems in the past with attempting to migrate
+iterator helper methods from `itertools` for this same reason.
+
+While such breakage is technically permitted by our semver guidelines,
+it would obviously be best to avoid it, or at least to go to great
+lengths to mitigate its effects. One option would be to extend the
+language to allow method resolution to "favor" the extension trait in
+existing code, perhaps as part of an edition migration.
+
+Designing such a migration feature is out of scope for this RFC.
+
+## IntoStream / FromStream traits, mirroring iterators
+
+* currently blocked on async fn in traits
+* The exact bounds are unclear.
+* the same as combinators
+* These would be needed to provide
+
+## Async iteration syntax
+
+We may wish to introduce some dedicated syntax, analogous to `for` 
+
+## Generator syntax
+[generator syntax]: #generator-syntax
+
+```rust
+gen async fn foo() -> X {
+    yield value;
+}
+```
+
+## "Attached" streams
+
+Just as with iterators, there is a 
+
+
