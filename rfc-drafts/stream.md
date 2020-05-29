@@ -13,21 +13,27 @@ standard library.
 # Motivation
 [motivation]: #motivation
 
-* Why include stream trait in the std library at all?
-    * Streams are a core async abstraction
-        * we want to enable portable libraries that produce/consume streams without being tied to particular executors
-        * examples of crates that are consuming streams?
-            * [async-h1](https://docs.rs/async-h1)'s server implementation takes `TcpStream` instances produced by a `TcpListener` in a loop.
-        * examples of crates that are producing streams?
-            * [async-sse](https://docs.rs/async-sse/) parses incoming buffers into a stream of messages.
-        * people can do this today using futures crate, but the stability guarantees are less clear
-            * e.g., if tokio wishes to declare a [5 year stability period](http://smallcultfollowing.com/babysteps/blog/2020/02/11/async-interview-6-eliza-weisman/#communicating-stability), having something in std means there are no concerns about trait changing during that time ([citation](http://smallcultfollowing.com/babysteps/blog/2019/12/23/async-interview-3-carl-lerche/#what-should-we-do-next-stabilize-stream))
-    * We eventually want dedicated syntax for working with streams, which will require a shared trait
-        * Producing streams
-        * Consuming streams
-* Why is the stream trait defined how it is?
-    * It is the "pollable iterator"
-    * dyn compatibility
+Streams are a core async abstraction. We want to enable portable libraries that produce/consume streams without being tied to a particular executor.
+
+People can do this currently using the [futures](https://crates.io/crates/futures) crate, but stability guarantees are clearer when traits are added to the standard library than when they exist in a separate crate. For example, if [Tokio](https://tokio.rs/) wishes to declare a [5 year stability period](http://smallcultfollowing.com/babysteps/blog/2020/02/11/async-interview-6-eliza-weisman/#communicating-stability), having the stream trait in std means there are no concerns about trait changing during that time ([citation](http://smallcultfollowing.com/babysteps/blog/2019/12/23/async-interview-3-carl-lerche/#what-should-we-do-next-stabilize-stream)).
+
+## Examples of crates that are consuming streams
+
+### async-h1
+
+* [async-h1](https://docs.rs/async-h1)'s server implementation takes `TcpStream` instances produced by a `TcpListener` in a loop.
+
+### async-sse
+
+* [async-sse](https://docs.rs/async-sse/) parses incoming buffers into a stream of messages.
+
+## Why a shared trait?
+
+We eventually want dedicated syntax for working with streams, which will require a shared trait. This includes a trait for producing streams and a trait for consuming streams.
+
+## Why is the stream trait defined how it is?
+* It is the "pollable iterator"
+* dyn compatibility
 
 # Guide-level explanation
 [guide-level-explanation]: #guide-level-explanation
@@ -163,7 +169,15 @@ Why should we *not* do this?
 [prior-art]: #prior-art
 
 Discuss prior art, both the good and the bad, in relation to this proposal.
-A few examples of what this can include are:
+
+The best example of prior art in Rust is the [futures](https://crates.io/crates/futures) crate.
+
+* Ruby - https://github.com/socketry/async-io
+* Javascript https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator
+* more Javascript https://javascript.info/async-iterators-generators
+* Dart https://dart.dev/tutorials/language/streams
+
+
 
 - For language, library, cargo, tools, and compiler proposals: Does this feature exist in other programming languages and what experience have their community had?
 - For community proposals: Is this done by some other community and what were their experiences with it?
