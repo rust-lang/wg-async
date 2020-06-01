@@ -15,7 +15,7 @@ standard library.
 
 Streams are a core async abstraction. We want to enable portable libraries that produce/consume streams without being tied to a particular executor.
 
-People can do this currently using the [futures](https://crates.io/crates/futures) crate, but stability guarantees are clearer when traits are added to the standard library than when they exist in a separate crate. For example, if [Tokio](https://tokio.rs/) wishes to declare a [5 year stability period](http://smallcultfollowing.com/babysteps/blog/2020/02/11/async-interview-6-eliza-weisman/#communicating-stability), having the stream trait in std means there are no concerns about trait changing during that time ([citation](http://smallcultfollowing.com/babysteps/blog/2019/12/23/async-interview-3-carl-lerche/#what-should-we-do-next-stabilize-stream)).
+People can do this currently using the [futures](https://crates.io/crates/futures) crate. However, stability guarantees are clearer when traits are added to the standard library than when they exist in a separate crate. For example, if [Tokio](https://tokio.rs/) wishes to declare a [5 year stability period](http://smallcultfollowing.com/babysteps/blog/2020/02/11/async-interview-6-eliza-weisman/#communicating-stability), having the stream trait in std means there are no concerns about trait changing during that time ([citation](http://smallcultfollowing.com/babysteps/blog/2019/12/23/async-interview-3-carl-lerche/#what-should-we-do-next-stabilize-stream)).
 
 ## Examples of crates that are consuming streams
 
@@ -172,17 +172,24 @@ Discuss prior art, both the good and the bad, in relation to this proposal.
 
 The best example of prior art in Rust is the [futures](https://crates.io/crates/futures) crate.
 
+## Other Rust Examples
+* [tokio-rs/async-stream](https://github.com/tokio-rs/async-stream)
+
+## Rust blog posts/books on Async streams
+* [The Stream Trait - Asynchronous Programming in Rust](https://rust-lang.github.io/async-book/05_streams/01_chapter.html)
+* [Rust Streams - Yoshua Wuyts](https://blog.yoshuawuyts.com/rust-streams/)
+* [For await loops - Boats](https://boats.gitlab.io/blog/page/2/)
+* [For await loops - Rust internals post](https://internals.rust-lang.org/t/for-await-loops/9819?u=cad97)
+* [On "Async Streams" in Rust - Christopher Durham](https://dev.to/cad97/on-async-streams-in-rust-25eo)
+* [Stream combinators implemented using for await syntax](https://www.reddit.com/r/rust/comments/cbvhq9/stream_combinators_implemented_using_for_await/)
+
+
+## Other Languages
 * Ruby - https://github.com/socketry/async-io
 * Javascript https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator
 * more Javascript https://javascript.info/async-iterators-generators
 * Dart https://dart.dev/tutorials/language/streams
 
-
-
-- For language, library, cargo, tools, and compiler proposals: Does this feature exist in other programming languages and what experience have their community had?
-- For community proposals: Is this done by some other community and what were their experiences with it?
-- For other teams: What lessons can we learn from what other communities have done here?
-- Papers: Are there any published papers or great posts that discuss this? If you have some relevant papers to refer to, this can serve as a more detailed theoretical background.
 
 This section is intended to encourage you as an author to think about the lessons from other languages, provide readers of your RFC with a fuller picture.
 If there is no prior art, that is fine - your ideas are interesting to us whether they are brand new or if it is an adaptation from other languages.
