@@ -7,15 +7,15 @@
 [summary]: #summary
 
 Introduce the `Stream` trait into the standard library, using the
-design from `futures`. Redirect the futures-stream definition to the
-standard library.
+design from `futures`. Redirect the `Stream` trait definition in the 
+`futures` crate to the standard library.
 
 # Motivation
 [motivation]: #motivation
 
 Streams are a core async abstraction. We want to enable portable libraries that produce/consume streams without being tied to a particular executor.
 
-People can do this currently using the [futures](https://crates.io/crates/futures) crate. However, stability guarantees are clearer when traits are added to the standard library than when they exist in a separate crate. For example, if [Tokio](https://tokio.rs/) wishes to declare a [5 year stability period](http://smallcultfollowing.com/babysteps/blog/2020/02/11/async-interview-6-eliza-weisman/#communicating-stability), having the stream trait in std means there are no concerns about trait changing during that time ([citation](http://smallcultfollowing.com/babysteps/blog/2019/12/23/async-interview-3-carl-lerche/#what-should-we-do-next-stabilize-stream)).
+People can do this currently using the `Stream` trait defined in the [futures](https://crates.io/crates/futures) crate. However, the stability guarantee of that trait would be clearer if it were added to the standard library. For example, if [Tokio](https://tokio.rs/) wishes to declare a [5 year stability period](http://smallcultfollowing.com/babysteps/blog/2020/02/11/async-interview-6-eliza-weisman/#communicating-stability), having the stream trait in std means there are no concerns about trait changing during that time ([citation](http://smallcultfollowing.com/babysteps/blog/2019/12/23/async-interview-3-carl-lerche/#what-should-we-do-next-stabilize-stream)).
 
 ## Examples of crates that are consuming streams
 
@@ -33,7 +33,7 @@ We eventually want dedicated syntax for working with streams, which will require
 
 ## Why is the stream trait defined how it is?
 * It is the "pollable iterator"
-* dyn compatibility
+* [dyn compatibility](https://doc.rust-lang.org/std/keyword.dyn.html)
 
 # Guide-level explanation
 [guide-level-explanation]: #guide-level-explanation
@@ -172,9 +172,6 @@ Discuss prior art, both the good and the bad, in relation to this proposal.
 
 The best example of prior art in Rust is the [futures](https://crates.io/crates/futures) crate.
 
-## Other Rust Examples
-* [tokio-rs/async-stream](https://github.com/tokio-rs/async-stream)
-
 ## Rust blog posts/books on Async streams
 * [The Stream Trait - Asynchronous Programming in Rust](https://rust-lang.github.io/async-book/05_streams/01_chapter.html)
 * [Rust Streams - Yoshua Wuyts](https://blog.yoshuawuyts.com/rust-streams/)
@@ -185,11 +182,7 @@ The best example of prior art in Rust is the [futures](https://crates.io/crates/
 
 
 ## Other Languages
-* Ruby - https://github.com/socketry/async-io
-* Javascript https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator
-* more Javascript https://javascript.info/async-iterators-generators
-* Dart https://dart.dev/tutorials/language/streams
-
+* [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator)
 
 This section is intended to encourage you as an author to think about the lessons from other languages, provide readers of your RFC with a fuller picture.
 If there is no prior art, that is fine - your ideas are interesting to us whether they are brand new or if it is an adaptation from other languages.
@@ -254,10 +247,57 @@ Designing such a migration feature is out of scope for this RFC.
 
 ## Async iteration syntax
 
-We may wish to introduce some dedicated syntax, analogous to `for` 
+Currently, if someone wishes to iterate over a `Stream` as defined in the `futures` crate,
+they are not able to use  `for` loops, they must use `while let` and `next/try_next` instead.
+
+We may wish to extend the `for` loop so that it works over streams as well. 
+
+```rust
+#[async]
+for elem in stream { ... }
+```
+
+Designing this extension is out of scope for this RFC.
+
+## "Attached" streams
+
+There has been much discussion around attached/detached streams.
+
+### Definitions
+
+[Source](https://smallcultfollowing.com/babysteps/blog/2019/12/10/async-interview-2-cramertj-part-2/#the-need-for-streaming-streams-and-iterators)
+
+In a **detached** stream, the `Item` that gets returned by `Stream` is "detached" from self. This means it can be stored and moved about independently from `self`.
+
+In an **attached** stream, the `Item` that gets returned by `Stream` may be borrowed from `self`. It can only be used as long as the `self` reference remains live.
+
+### Alternate terminology
+
+An alternative terminology - which may be easier to understand in terms of ownership and borrowed - involves **owned** and **borrowed** streams.
+
+An **owned** stream is like a **detached** stream. The `Stream` transfers ownership of the `Item` returned by it to you.
+
+A **borrowed** stream is like an **attached** stream. The `Item` you get back from the `Stream` is borrowed from the `Stream` itself.
+
+This RFC does not cover the addition of attached/detached owned/borrowed streams. 
+We can add the `Stream` trait to the standard library now and delay
+adding in this distinction between two types of streams. The advantage of this 
+is it would allow us to copy the `Stream` trait from `futures` largely 'as is'. 
+The disadvantage of this is functions that consume streams would first be written 
+to work with `Stream`, and then potentially  have to be rewritten later to work with 
+`AttachedStream`s.
 
 ## Generator syntax
 [generator syntax]: #generator-syntax
+
+In the future, we may wish to introduce a new form of function - 
+`gen fn` in iterators and `async gen` in async code that
+can contain `yield` statements. Calling such a function would
+yield a `impl Iterator` or `impl Stream`, for sync and async 
+respectively. Given an "attached" or "borrowed" stream, the generator
+yield could return references to local variables. Given a "detached"
+or "owned" stream, the generator yield could return things
+that you own or things that were borrowed from your caller.
 
 ```rust
 gen async fn foo() -> X {
@@ -265,8 +305,4 @@ gen async fn foo() -> X {
 }
 ```
 
-## "Attached" streams
-
-Just as with iterators, there is a 
-
-
+Designing generator functions is out of the scope of this RFC.
