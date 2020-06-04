@@ -8,7 +8,7 @@
 
 Introduce the `Stream` trait into the standard library, using the
 design from `futures`. Redirect the `Stream` trait definition in the 
-`futures` crate to the standard library.
+`futures-core` crate (which is "pub-used" by the `futures` crate) to the standard library.
 
 # Motivation
 [motivation]: #motivation
@@ -252,7 +252,7 @@ We may wish to extend the `for` loop so that it works over streams as well.
 for elem in stream { ... }
 ```
 
-Designing this extension is out of scope for this RFC.
+Designing this extension is out of scope for this RFC. However, it could be prototyped using procedural macros today.
 
 ## "Attached" streams
 
@@ -265,14 +265,6 @@ There has been much discussion around attached/detached streams.
 In a **detached** stream, the `Item` that gets returned by `Stream` is "detached" from self. This means it can be stored and moved about independently from `self`.
 
 In an **attached** stream, the `Item` that gets returned by `Stream` may be borrowed from `self`. It can only be used as long as the `self` reference remains live.
-
-### Alternate terminology
-
-An alternative terminology - which may be easier to understand in terms of ownership and borrowed - involves **owned** and **borrowed** streams.
-
-An **owned** stream is like a **detached** stream. The `Stream` transfers ownership of the `Item` returned by it to you.
-
-A **borrowed** stream is like an **attached** stream. The `Item` you get back from the `Stream` is borrowed from the `Stream` itself.
 
 This RFC does not cover the addition of attached/detached owned/borrowed streams. 
 We can add the `Stream` trait to the standard library now and delay
