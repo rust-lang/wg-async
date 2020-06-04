@@ -36,7 +36,8 @@ about the trait changing during that time ([citation](http://smallcultfollowing.
 
 ## Why a shared trait?
 
-We eventually want dedicated syntax for working with streams, which will require a shared trait. This includes a trait for producing streams and a trait for consuming streams.
+We eventually want dedicated syntax for working with streams, which will require a shared trait. 
+This includes a trait for producing streams and a trait for consuming streams.
 
 ## Why is the stream trait defined how it is?
 * It is the "pollable iterator"
