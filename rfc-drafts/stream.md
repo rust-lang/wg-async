@@ -274,6 +274,57 @@ The disadvantage of this is functions that consume streams would first be writte
 to work with `Stream`, and then potentially  have to be rewritten later to work with 
 `AttachedStream`s.
 
+### Current Stream Trait
+
+```rust
+pub trait Stream {
+    type Item;
+
+    fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>>;
+
+    #[inline]
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        (0, None)
+    }
+}
+```
+
+This trait, like `Iterator`, always gives ownership of each item back to its caller. This offers flexibility - 
+such as the ability to spawn off futures processing each item in parallel.
+
+### Potential Attached Stream Trait
+
+```rust
+impl<S> AttachedStream for S
+where
+    S: Stream,
+{
+    type Item<'_> = S::Item;
+    
+    fn poll_next<'s>(
+        self: Pin<&'s mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<Option<Self::Item<'s>>> {
+        Stream::poll_next(self, cx)
+    }
+}
+```
+
+This is a "conversion" trait such that anything which implements `Stream` can also implement 
+`Attached Stream`.
+
+This trait captures the case we re-use internal buffers. This would be less flexible for 
+consumers, but potentially more efficient. Types could implement the `AttachedStream` 
+where they need to re-use an internal buffer and `Stream` if they do not. There is room for both.
+
+We would also need to pursue the same design for iterators - whether through adding two traits
+or one new trait with a "conversion" from the old trait.
+
+This also brings up the question of whether we should allow conversion in the opposite way - if
+every "Detached" stream can become an attached one, should _some_ detached streams be able to 
+become attached ones? These use cases need more thought, which is part of the reason 
+it is out of the scope of this particular RFC.
+
 ## Generator syntax
 [generator syntax]: #generator-syntax
 
