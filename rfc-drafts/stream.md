@@ -233,16 +233,29 @@ Designing such a migration feature is out of scope for this RFC.
 
 ## IntoStream / FromStream traits
 
-The `IntoStream` trait would provide a way to convert something into a `Stream`.
+### IntoStream
 
-The `FromStream` trait would provide a way to convert a `Stream` into something else.
+Iterators have an `IntoIterator` that is used with `for` loops to convert items of other types to an iterator.
 
-These would need to provide similar iteration semantics as `Iterator`.
 * `for x in iter` uses `impl IntoIterator for T`
 * `for x in &iter` uses `impl IntoIterator for &T`
 * `for x in &mut iter` uses `impl IntoIterator for &mut T`
 
-The reasons not to do this right now are the same as the reasons for delaying convenience methods.
+We may want a trait similar to this for `Stream`. The `IntoStream` trait would provide a way to convert something into a `Stream`.
+
+This trait could look like this:
+
+[TO BE ADDED]
+
+### FromStream
+
+Iterators have an `FromIterator` that is used to convert iterators into another type.
+
+We may want a trait similar to this for `Stream`. The `FromStream` trait would provide way to convert a `Stream` into another type.
+
+This trait could look like this:
+
+[TO BE ADDED]
 
 ## Other Traits
 
