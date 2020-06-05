@@ -237,8 +237,6 @@ The `IntoStream` trait would provide a way to convert something into a `Stream`.
 
 The `FromStream` trait would provide a way to convert a `Stream` into something else.
 
-Implementing the `IntoStream` and `FromStream` traits on `Stream` is currently blocked on needing [`async fn` available in traits]( http://smallcultfollowing.com/babysteps/blog/2019/10/26/async-fn-in-traits-are-hard).
-
 These would need to provide similar iteration semantics as `Iterator`.
 * `for x in iter` uses `impl IntoIterator for T`
 * `for x in &iter` uses `impl IntoIterator for &T`
@@ -248,21 +246,19 @@ The reasons not to do this right now are the same as the reasons for delaying co
 
 ## Other Traits
 
-Eventually, we will also want to add some (if not all) of the roster of traits we found useful for `Iterator`.
+Eventually, we may also want to add some (if not all) of the roster of traits we found useful for `Iterator`.
 
 [async_std::stream](https://docs.rs/async-std/1.6.0/async_std/stream/index.html) has created several async counterparts to the traits in [std::iter](https://doc.rust-lang.org/std/iter/). These include:
 
-```
-DoubleEndedStream  # A stream able to yield elements from both ends.
-ExactSizeStream    # A stream that knows its exact length.
-Extend             # Extends a collection with the contents of a stream.
-FromStream         # Conversion from a Stream.
-FusedStream        # A stream that always continues to yield None when exhausted.
-IntoStream         # Conversion into a Stream.
-Product            # Trait to represent types that can be created by multiplying the elements of a stream.
-Stream             # An asynchronous stream of values.
-Sum                # Trait to represent types that can be created by summing up a stream.
-```
+* DoubleEndedStream: A stream able to yield elements from both ends.
+* ExactSizeStream: A stream that knows its exact length.
+* Extend: Extends a collection with the contents of a stream.
+* FromStream: Conversion from a Stream.
+* FusedStream: A stream that always continues to yield None when exhausted.
+* IntoStream: Conversion into a Stream.
+* Product: Trait to represent types that can be created by multiplying the elements of a stream.
+* Stream: An asynchronous stream of values.
+* Sum: Trait to represent types that can be created by summing up a stream.
 
 As detailed in previous sections, the migrations to add these traits are out of scope for this RFC.
 
