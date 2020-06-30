@@ -289,25 +289,29 @@ for elem in stream { ... }
 
 Designing this extension is out of scope for this RFC. However, it could be prototyped using procedural macros today.
 
-## "Attached" streams
+## "Lending" streams
 
-There has been much discussion around attached/detached streams.
+There has been much discussion around lending streams (also referred to as attached streams).
 
 ### Definitions
 
 [Source](https://smallcultfollowing.com/babysteps/blog/2019/12/10/async-interview-2-cramertj-part-2/#the-need-for-streaming-streams-and-iterators)
 
-In a **detached** stream, the `Item` that gets returned by `Stream` is "detached" from self. This means it can be stored and moved about independently from `self`.
 
-In an **attached** stream, the `Item` that gets returned by `Stream` may be borrowed from `self`. It can only be used as long as the `self` reference remains live.
+In an **lending** stream (also known as an "attached" stream), the `Item` that gets returned by `Stream` may be borrowed from `self`. It can only be used as long as the `self` reference remains live.
 
-This RFC does not cover the addition of attached/detached owned/borrowed streams. 
+In a **non-lending** stream (also known as a "detached" stream), the `Item` that gets returned by `Stream` is "detached" from self. This means it can be stored and moved about independently from `self`.
+
+This RFC does not cover the addition of lending streams (streams as implemented through this RFC are all non-lending streams).
+
 We can add the `Stream` trait to the standard library now and delay
-adding in this distinction between two types of streams. The advantage of this 
-is it would allow us to copy the `Stream` trait from `futures` largely 'as is'. 
-The disadvantage of this is functions that consume streams would first be written 
-to work with `Stream`, and then potentially  have to be rewritten later to work with 
-`AttachedStream`s.
+adding in this distinction between the two types of streams - lending and
+non-lending. The advantage of this is it would allow us to copy the `Stream`
+trait from `futures` largely 'as is'. 
+
+The disadvantage of this is functions that consume streams would 
+first be written to work with `Stream`, and then potentially have 
+to be rewritten later to work with `LendingStream`s.
 
 ### Current Stream Trait
 
@@ -327,10 +331,10 @@ pub trait Stream {
 This trait, like `Iterator`, always gives ownership of each item back to its caller. This offers flexibility - 
 such as the ability to spawn off futures processing each item in parallel.
 
-### Potential Attached Stream Trait
+### Potential Lending Stream Trait
 
 ```rust
-impl<S> AttachedStream for S
+impl<S> LendingStream for S
 where
     S: Stream,
 {
@@ -346,10 +350,10 @@ where
 ```
 
 This is a "conversion" trait such that anything which implements `Stream` can also implement 
-`Attached Stream`.
+`Lending Stream`.
 
 This trait captures the case we re-use internal buffers. This would be less flexible for 
-consumers, but potentially more efficient. Types could implement the `AttachedStream` 
+consumers, but potentially more efficient. Types could implement the `LendingStream` 
 where they need to re-use an internal buffer and `Stream` if they do not. There is room for both.
 
 We would also need to pursue the same design for iterators - whether through adding two traits
