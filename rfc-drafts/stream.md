@@ -305,13 +305,67 @@ pub trait IntoStream where
 
 ### FromStream
 
+**Iterators**
+
 Iterators have an `FromIterator` that is used to convert iterators into another type.
+
+```rust
+pub trait FromIterator<A> {
+
+    fn from_iter<T>(iter: T) -> Self
+    where
+        T: IntoIterator<Item = A>;
+}
+```
+
+It should be noted that this trait is rarely used directly, instead used through Iterator's collect method ([source](https://doc.rust-lang.org/std/iter/trait.FromIterator.html)).
+
+```rust
+pub trait Interator {
+    fn collect<B>(self) -> B
+    where
+        B: FromIterator<Self::Item>,
+    { ... }
+}
+```
+
+Examples taken from the Rust docs on [iter and collect]](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect)
+
+
+```rust
+let a = [1, 2, 3];
+
+let doubled: Vec<i32> = a.iter()
+                         .map(|&x| x * 2)
+                         .collect();
+
+```
+
+**Streams**
 
 We may want a trait similar to this for `Stream`. The `FromStream` trait would provide way to convert a `Stream` into another type.
 
 This trait could look like this:
 
-[TO BE ADDED]
+```rust
+pub trait FromStream<A> {
+
+    fn from_stream<T>(iter: T) -> Self
+    where
+        T: IntoStream<Item = A>;
+}
+```
+
+We could potentially include a collect method for Stream as well.
+
+```rust
+pub trait Stream {
+    fn collect<B>(self) -> B
+    where
+        B: FromStream<Self::Item>,
+    { ... }
+}
+```
 
 ## Other Traits
 
