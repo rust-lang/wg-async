@@ -473,10 +473,29 @@ This also brings up the question of whether we should allow conversion in the op
 every non-lending stream can become a lending one, should _some_ non-lending streams be able to 
 become lending ones? 
 
-We can say that, as the Rust language stands today, we cannot cleanly convert impl Stream to impl LendingStream due to the [coherence conflict](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=a667a7560f8dc97ab82a780e27dfc9eb) shown here.
+We can say that, as the Rust language stands today, we cannot cleanly convert impl Stream to impl LendingStream due to a coherence conflict.
 
-These use cases need more thought, which is part of the reason 
-it is out of the scope of this particular RFC.
+If you have other impls like:
+
+```rust
+impl<T> Stream for Box<T> where T: Stream
+```
+
+and
+
+```rust
+impl<T> LendingStream for Box<T> where T: LendingStream
+```
+
+There is a coherence conflict for `Box<impl Stream>`, so presumably it will fail the coherence rules. 
+
+[More examples are available here](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=a667a7560f8dc97ab82a780e27dfc9eb).
+
+Resolving this would require either an explicit “wrapper” step or else some form of language extension.
+
+It should be noted that the same applies to Iterator, it is not unique to Stream.
+
+These use cases for lending/non-lending streams need more thought, which is part of the reason it is out of the scope of this particular RFC.
 
 ## Generator syntax
 [generator syntax]: #generator-syntax
