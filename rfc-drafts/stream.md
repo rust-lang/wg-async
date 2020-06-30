@@ -470,8 +470,12 @@ We would also need to pursue the same design for iterators - whether through add
 or one new trait with a "conversion" from the old trait.
 
 This also brings up the question of whether we should allow conversion in the opposite way - if
-every "Detached" stream can become an attached one, should _some_ detached streams be able to 
-become attached ones? These use cases need more thought, which is part of the reason 
+every non-lending stream can become a lending one, should _some_ non-lending streams be able to 
+become lending ones? 
+
+We can say that, as the Rust language stands today, we cannot cleanly convert impl Stream to impl LendingStream due to the [coherence conflict](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=a667a7560f8dc97ab82a780e27dfc9eb) shown here.
+
+These use cases need more thought, which is part of the reason 
 it is out of the scope of this particular RFC.
 
 ## Generator syntax
