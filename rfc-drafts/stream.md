@@ -235,17 +235,73 @@ Designing such a migration feature is out of scope for this RFC.
 
 ### IntoStream
 
+**Iterators**
+
 Iterators have an `IntoIterator` that is used with `for` loops to convert items of other types to an iterator.
 
+```rust
+pub trait IntoIterator where
+    <Self::IntoIter as Iterator>::Item == Self::Item, 
+{
+    type Item;
+
+    type IntoIter: Iterator;
+
+    fn into_iter(self) -> Self::IntoIter;
+}
+```
+
+Examples taken from the Rust docs on [for loops and into_iter]](https://doc.rust-lang.org/std/iter/index.html#for-loops-and-intoiterator)
+
 * `for x in iter` uses `impl IntoIterator for T`
+
+```rust
+let values = vec![1, 2, 3, 4, 5];
+
+for x in values {
+    println!("{}", x);
+}
+```
+
+Desugars to:
+
+```rust
+let values = vec![1, 2, 3, 4, 5];
+{
+    let result = match IntoIterator::into_iter(values) {
+        mut iter => loop {
+            let next;
+            match iter.next() {
+                Some(val) => next = val,
+                None => break,
+            };
+            let x = next;
+            let () = { println!("{}", x); };
+        },
+    };
+    result
+}
+```
 * `for x in &iter` uses `impl IntoIterator for &T`
 * `for x in &mut iter` uses `impl IntoIterator for &mut T`
+
+**Streams**
 
 We may want a trait similar to this for `Stream`. The `IntoStream` trait would provide a way to convert something into a `Stream`.
 
 This trait could look like this:
 
-[TO BE ADDED]
+```rust
+pub trait IntoStream where 
+    <Self::IntoStream as Stream>::Item == Self::Item,
+{
+    type Item;
+
+    type IntoStream: Stream;
+
+    fn into_stream(self) -> Self::IntoStream;
+}
+```
 
 ### FromStream
 
