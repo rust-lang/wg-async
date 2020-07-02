@@ -124,6 +124,52 @@ where
 }
 ```
 
+## Next method/struct
+
+We should also implement a next method, similar to [the implementation in the futures crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
+
+```rust
+/// Future for the [`next`](super::StreamExt::next) method.
+#[derive(Debug)]
+#[must_use = "futures do nothing unless you `.await` or poll them"]
+pub struct Next<'a, St: ?Sized> {
+    stream: &'a mut St,
+}
+
+impl<St: ?Sized + Unpin> Unpin for Next<'_, St> {}
+
+impl<'a, St: ?Sized + Stream + Unpin> Next<'a, St> {
+    pub(super) fn new(stream: &'a mut St) -> Self {
+        Next { stream }
+    }
+}
+
+impl<St: ?Sized + FusedStream + Unpin> FusedFuture for Next<'_, St> {
+    fn is_terminated(&self) -> bool {
+        self.stream.is_terminated()
+    }
+}
+
+impl<St: ?Sized + Stream + Unpin> Future for Next<'_, St> {
+    type Output = Option<St::Item>;
+
+    fn poll(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<Self::Output> {
+        self.stream.poll_next_unpin(cx)
+    }
+}
+```
+
+This would allow a user to await on a future:
+
+```rust
+while let Some(v) = stream.next().await {
+
+}
+```
+
 # Reference-level explanation
 [reference-level-explanation]: #reference-level-explanation
 
