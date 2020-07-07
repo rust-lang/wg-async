@@ -405,7 +405,7 @@ We could potentially include a collect method for Stream as well.
 
 ```rust
 pub trait Stream {
-    fn collect<B>(self) -> B
+    async fn collect<B>(self) -> B
     where
         B: FromStream<Self::Item>,
     { ... }
