@@ -349,6 +349,26 @@ pub trait IntoStream where
 }
 ```
 
+This trait (as expressed by @taiki-e in [a comment on a draft of this RFC](https://github.com/rust-lang/wg-async-foundations/pull/15/files#r449880986)) makes it easy to write streams in combination with [async stream](https://github.com/taiki-e/futures-async-stream).
+
+```rust
+type S(usize);
+
+impl IntoStream for S {
+    type Item = usize;
+    type IntoStream: impl Stream<Item = Self::Item>;
+
+    fn into_stream(self) -> Self::IntoStream {
+        #[stream]
+        async move {
+            for i in 0..self.0 {
+                yield i;
+            }
+        }
+    }
+}   
+```
+
 ### FromStream
 
 **Iterators**
