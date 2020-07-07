@@ -395,8 +395,7 @@ This trait could look like this:
 
 ```rust
 pub trait FromStream<A> {
-
-    fn from_stream<T>(iter: T) -> Self
+    async fn from_stream<T>(stream: T) -> Self
     where
         T: IntoStream<Item = A>;
 }
