@@ -575,9 +575,29 @@ or "owned" stream, the generator yield could return things
 that you own or things that were borrowed from your caller.
 
 ```rust
-gen async fn foo() -> X {
+gen async fn foo() -> Value {
     yield value;
 }
 ```
 
-Designing generator functions is out of the scope of this RFC.
+After desugaring, this would result in a function like:
+
+```rust
+fn foo() -> impl Iterator<Item = Value>
+```
+
+```rust
+async gen fn foo() -> Value
+```
+
+After desugaring would result in a function like:
+
+```rust
+fn foo() -> impl Stream<Item = Value>
+```
+
+If we introduce `-> Stream` first, we will have to permit `LendingStream` in the future. 
+Additionally, if we introduce `LendingStream` later, we'll have to figure out how
+to convert a `LendingStream` into a `Stream` seamlessly.
+
+Further designing generator functions is out of the scope of this RFC.
