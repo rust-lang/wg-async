@@ -163,7 +163,7 @@ impl<St: ?Sized + Stream + Unpin> Future for Next<'_, St> {
         mut self: Pin<&mut Self>,
         cx: &mut Context<'_>,
     ) -> Poll<Self::Output> {
-        self.stream.poll_next_unpin(cx)
+        Pin::new(&mut *self.stream).poll_next(cx)
     }
 }
 ```
