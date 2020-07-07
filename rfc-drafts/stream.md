@@ -138,8 +138,8 @@ We should also implement a next method, similar to [the implementation in the fu
 /// [`Stream`]: trait.Stream.html
 #[derive(Debug)]
 #[must_use = "futures do nothing unless you `.await` or poll them"]
-pub struct Next<'a, St: ?Sized> {
-    stream: &'a mut St,
+pub struct Next<'a, S: ?Sized> {
+    stream: &'a mut S,
 }
 
 impl<St: ?Sized + Unpin> Unpin for Next<'_, St> {}
