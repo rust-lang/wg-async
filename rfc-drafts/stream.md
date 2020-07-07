@@ -129,7 +129,13 @@ where
 We should also implement a next method, similar to [the implementation in the futures crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
 
 ```rust
-/// Future for the [`next`](super::StreamExt::next) method.
+/// A future that advances the stream and returns the next value.
+///
+/// This `struct` is created by the [`next`] method on [`Stream`]. See its
+/// documentation for more.
+///
+/// [`next`]: trait.Stream.html#method.next
+/// [`Stream`]: trait.Stream.html
 #[derive(Debug)]
 #[must_use = "futures do nothing unless you `.await` or poll them"]
 pub struct Next<'a, St: ?Sized> {
