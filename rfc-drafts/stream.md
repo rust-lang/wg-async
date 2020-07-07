@@ -150,12 +150,6 @@ impl<'a, St: ?Sized + Stream + Unpin> Next<'a, St> {
     }
 }
 
-impl<St: ?Sized + FusedStream + Unpin> FusedFuture for Next<'_, St> {
-    fn is_terminated(&self) -> bool {
-        self.stream.is_terminated()
-    }
-}
-
 impl<St: ?Sized + Stream + Unpin> Future for Next<'_, St> {
     type Output = Option<St::Item>;
 
