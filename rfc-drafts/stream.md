@@ -395,7 +395,7 @@ pub trait Interator {
 }
 ```
 
-Examples taken from the Rust docs on [iter and collect]](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect)
+Examples taken from the Rust docs on [iter and collect](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect)
 
 
 ```rust
