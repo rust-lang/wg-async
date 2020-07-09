@@ -473,7 +473,7 @@ There has been much discussion around lending streams (also referred to as attac
 [Source](https://smallcultfollowing.com/babysteps/blog/2019/12/10/async-interview-2-cramertj-part-2/#the-need-for-streaming-streams-and-iterators)
 
 
-In an **lending** stream (also known as an "attached" stream), the `Item` that gets returned by `Stream` may be borrowed from `self`. It can only be used as long as the `self` reference remains live.
+In a **lending** stream (also known as an "attached" stream), the `Item` that gets returned by `Stream` may be borrowed from `self`. It can only be used as long as the `self` reference remains live.
 
 In a **non-lending** stream (also known as a "detached" stream), the `Item` that gets returned by `Stream` is "detached" from self. This means it can be stored and moved about independently from `self`.
 
