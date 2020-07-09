@@ -63,14 +63,20 @@ the current task to be re-awoken when the data is ready.
 ```rust
 // Defined in std::stream module
 pub trait Stream {
+    // Core items:
     type Item;
-    
     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>>;
     
+    // Optional optimization hint, just like with iterators:
     #[inline]
     fn size_hint(&self) -> (usize, Option<usize>) {
         (0, None)
     }
+
+    // Convenience methods (covered later on in the RFC):
+    fn next(&mut self) -> Next<'_, Self>
+    where
+        Self: Unpin;
 }
 ```
 
@@ -127,6 +133,10 @@ where
 ## Next method/struct
 
 We should also implement a next method, similar to [the implementation in the futures crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
+
+In general, we have purposefully kept the core trait definition minimal. There are a number of useful extension methods that are available, for example, in the futures-stream crate, but we have not included them because they involve closure arguments, and we have not yet finalized the design of async closures.
+
+However, the core methods alone are extremely unergonomic. You can't even iterate over the items coming out of the stream. Therefore, we include a few minimal convenience methods that are not dependent on any unstable features. Most notably, next
 
 ```rust
 /// A future that advances the stream and returns the next value.
@@ -576,6 +586,8 @@ yield could return references to local variables. Given a "detached"
 or "owned" stream, the generator yield could return things
 that you own or things that were borrowed from your caller.
 
+### In Iterators
+
 ```rust
 gen async fn foo() -> Value {
     yield value;
@@ -587,6 +599,8 @@ After desugaring, this would result in a function like:
 ```rust
 fn foo() -> impl Iterator<Item = Value>
 ```
+
+### In Async Code
 
 ```rust
 async gen fn foo() -> Value
