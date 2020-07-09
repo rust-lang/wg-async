@@ -535,8 +535,8 @@ We would also need to pursue the same design for iterators - whether through add
 or one new trait with a "conversion" from the old trait.
 
 This also brings up the question of whether we should allow conversion in the opposite way - if
-every non-lending stream can become a lending one, should _some_ non-lending streams be able to 
-become lending ones? 
+every non-lending stream can become a lending one, should _some_ lending streams be able to 
+become non-lending ones? 
 
 We can say that, as the Rust language stands today, we cannot cleanly convert impl Stream to impl LendingStream due to a coherence conflict.
 
