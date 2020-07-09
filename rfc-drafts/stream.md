@@ -538,7 +538,9 @@ This also brings up the question of whether we should allow conversion in the op
 every non-lending stream can become a lending one, should _some_ lending streams be able to 
 become non-lending ones? 
 
-We can say that, as the Rust language stands today, we cannot cleanly convert impl Stream to impl LendingStream due to a coherence conflict.
+**Coherence**
+
+The impl above has a problem. As the Rust language stands today, we cannot cleanly convert impl Stream to impl LendingStream due to a coherence conflict.
 
 If you have other impls like:
 
