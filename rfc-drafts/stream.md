@@ -297,7 +297,7 @@ pub trait IntoIterator where
 }
 ```
 
-Examples taken from the Rust docs on [for loops and into_iter]](https://doc.rust-lang.org/std/iter/index.html#for-loops-and-intoiterator)
+Examples taken from the Rust docs on [for loops and into_iter](https://doc.rust-lang.org/std/iter/index.html#for-loops-and-intoiterator)
 
 * `for x in iter` uses `impl IntoIterator for T`
 
