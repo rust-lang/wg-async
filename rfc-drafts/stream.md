@@ -348,7 +348,8 @@ We may want a trait similar to this for `Stream`. The `IntoStream` trait would p
 This trait could look like this:
 
 ```rust
-pub trait IntoStream where 
+pub trait IntoStream
+where 
     <Self::IntoStream as Stream>::Item == Self::Item,
 {
     type Item;
