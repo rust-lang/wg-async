@@ -128,7 +128,7 @@ where
 
 ## Next method/struct
 
-We should also implement a next method, similar to [the implementation in the futures crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
+We should also implement a next method, similar to [the implementation in the futures-util crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
 
 In general, we have purposefully kept the core trait definition minimal. There are a number of useful extension methods that are available, for example, in the futures-stream crate, but we have not included them because they involve closure arguments, and we have not yet finalized the design of async closures.
 
