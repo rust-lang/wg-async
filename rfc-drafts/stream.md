@@ -39,10 +39,6 @@ about the trait changing during that time ([citation](http://smallcultfollowing.
 We eventually want dedicated syntax for working with streams, which will require a shared trait. 
 This includes a trait for producing streams and a trait for consuming streams.
 
-## Why is the stream trait defined how it is?
-* It is the "pollable iterator"
-* [dyn compatibility](https://doc.rust-lang.org/std/keyword.dyn.html)
-
 # Guide-level explanation
 [guide-level-explanation]: #guide-level-explanation
 
