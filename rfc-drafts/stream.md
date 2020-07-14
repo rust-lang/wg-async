@@ -586,7 +586,7 @@ that you own or things that were borrowed from your caller.
 ### In Iterators
 
 ```rust
-gen async fn foo() -> Value {
+gen fn foo() -> Value {
     yield value;
 }
 ```
