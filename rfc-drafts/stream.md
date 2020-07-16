@@ -75,6 +75,8 @@ pub trait Stream {
         Self: Unpin;
 }
 ```
+* For information on why `Self: Unpin` is included in the `next` 
+method, please see [this discussion on the draft RFC](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r452482084).
 
 The arguments to `poll_next` match that of the [`Future::poll`] method:
 
@@ -130,9 +132,14 @@ where
 
 We should also implement a next method, similar to [the implementation in the futures-util crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
 
-In general, we have purposefully kept the core trait definition minimal. There are a number of useful extension methods that are available, for example, in the futures-stream crate, but we have not included them because they involve closure arguments, and we have not yet finalized the design of async closures.
+In general, we have purposefully kept the core trait definition minimal. 
+There are a number of useful extension methods that are available, for example, 
+in the futures-stream crate, but we have not included them because they involve 
+closure arguments, and we have not yet finalized the design of async closures.
 
-However, the core methods alone are extremely unergonomic. You can't even iterate over the items coming out of the stream. Therefore, we include a few minimal convenience methods that are not dependent on any unstable features. Most notably, next
+However, the core methods alone are extremely unergonomic. You can't even iterate 
+over the items coming out of the stream. Therefore, we include a few minimal 
+convenience methods that are not dependent on any unstable features. Most notably, next
 
 ```rust
 /// A future that advances the stream and returns the next value.
@@ -225,7 +232,8 @@ Why should we *not* do this?
 
 ## Where should stream live?
 
-As mentioned above, `core::stream` is analogous to `core::future`. But, do we want to find some other naming scheme that can scale up to other future additions, such as io traits or channels?
+As mentioned above, `core::stream` is analogous to `core::future`. But, do we want to find 
+some other naming scheme that can scale up to other future additions, such as io traits or channels?
 
 # Prior art
 [prior-art]: #prior-art
@@ -439,6 +447,12 @@ pub trait Stream {
 }
 ```
 
+When drafting this RFC, there was [discussion](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r451182595) 
+about whether to implement from_stream for all T where `T: FromIterator` as well.
+`FromStream` is perhaps more general than `FromIterator` because the await point is allowed to suspend execution of the 
+current function, but doesn't have too. Therefore, many (if not all) existing impls of `FromIterator` would work
+for `FromStream` as well. While this would be a good point for a future discussion, it is not in the scope of this RFC.
+
 ## Other Traits
 
 Eventually, we may also want to add some (if not all) of the roster of traits we found useful for `Iterator`.
@@ -480,11 +494,16 @@ There has been much discussion around lending streams (also referred to as attac
 [Source](https://smallcultfollowing.com/babysteps/blog/2019/12/10/async-interview-2-cramertj-part-2/#the-need-for-streaming-streams-and-iterators)
 
 
-In a **lending** stream (also known as an "attached" stream), the `Item` that gets returned by `Stream` may be borrowed from `self`. It can only be used as long as the `self` reference remains live.
+In a **lending** stream (also known as an "attached" stream), the `Item` that gets 
+returned by `Stream` may be borrowed from `self`. It can only be used as long as 
+the `self` reference remains live.
 
-In a **non-lending** stream (also known as a "detached" stream), the `Item` that gets returned by `Stream` is "detached" from self. This means it can be stored and moved about independently from `self`.
+In a **non-lending** stream (also known as a "detached" stream), the `Item` that 
+gets returned by `Stream` is "detached" from self. This means it can be stored 
+and moved about independently from `self`.
 
-This RFC does not cover the addition of lending streams (streams as implemented through this RFC are all non-lending streams).
+This RFC does not cover the addition of lending streams (streams as implemented through 
+this RFC are all non-lending streams).
 
 We can add the `Stream` trait to the standard library now and delay
 adding in this distinction between the two types of streams - lending and
@@ -547,7 +566,8 @@ become non-lending ones?
 
 **Coherence**
 
-The impl above has a problem. As the Rust language stands today, we cannot cleanly convert impl Stream to impl LendingStream due to a coherence conflict.
+The impl above has a problem. As the Rust language stands today, we cannot cleanly convert 
+impl Stream to impl LendingStream due to a coherence conflict.
 
 If you have other impls like:
 
@@ -569,7 +589,8 @@ Resolving this would require either an explicit “wrapper” step or else some 
 
 It should be noted that the same applies to Iterator, it is not unique to Stream.
 
-These use cases for lending/non-lending streams need more thought, which is part of the reason it is out of the scope of this particular RFC.
+These use cases for lending/non-lending streams need more thought, which is part of the reason it 
+is out of the scope of this particular RFC.
 
 ## Generator syntax
 [generator syntax]: #generator-syntax
