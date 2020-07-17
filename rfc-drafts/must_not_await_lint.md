@@ -1,8 +1,8 @@
-# RFC: Deny await lint
+# RFC: Must not await lint
 
 # Summary
 
-Introduce a `#[deny_await]` lint in the compiler that will warn the user when they are incorrectly holding a struct across an await boundary. 
+Introduce a `#[must_not_await]` lint in the compiler that will warn the user when they are incorrectly holding a struct across an await boundary.
 
 # Motivation
 
@@ -15,7 +15,7 @@ The big reason for including a lint like this is because under the hood the comp
 Provide a lint that can be attached to structs to let the compiler know that this struct can not be held accross an await boundary.
 
 ```rust
-    #[deny_await]
+    #[must_not_await]
     struct MyStruct {}
 ```
 
