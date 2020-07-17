@@ -12,7 +12,7 @@ The big reason for including a lint like this is because under the hood the comp
 
 # Guide-level explanation
 
-Provide a lint that can be attached to structs to let the compiler know that this struct can not be held accross an await boundary.
+Provide a lint that can be attached to structs to let the compiler know that this struct can not be held across an await boundary.
 
 ```rust
     #[must_not_await]
@@ -44,7 +44,7 @@ Example use cases for this lint:
 
 - `tracing::Span` has the ability to enter the span via the `tracing::span::Entered` guard. While entering a span is totally normal, during an async fn the span only needs to be entered once before the `.await` call, which might potentially yield the execution.
 
-- Any RAII guard might possibly create unintended behavior if held accross an await boundary.
+- Any RAII guard might possibly create unintended behavior if held across an await boundary.
 
 This lint will enable the compiler to warn the user that the generated MIR could produce unforeseen side effects. Some examples of this are:
 
@@ -54,6 +54,21 @@ This lint will enable the compiler to warn the user that the generated MIR could
 This will be a best effort lint to signal to the user about unintended side-effects of using certain types across an await boundary.
 
 # Reference-level explanation
+
+Going throuogh the prior are we see two systems currently which provide simailar/semantically similar behavior:
+
+## Clippy `#[await_holding_lock]` lint
+This lint goes through all types in `generator_interior_types` looking for `MutexGuard`, `RwLockReadGuard` and `RwLockWriteGuard`. While this is a first great step, we think that this can be further extended to handle not only the hardcoded lock guards, but any type which is should not be held across an await point. By marking a type as `#[must_not_await]` we can warn when any arbitrary type is being held across an await boundary. An additional benefit to this approach is that this behaviour can be extended to any type which holds a `#[must_not_await]` type inside of it.
+
+## `#[must_use]` attribute
+The `#[must_use]` attribute ensures that if a type or the result of a function is not used, a warning is displayed. This ensures that the user is notified about the importance of said value. Currently the attribute does not automatically get applied to any type which contains a type declared as `#[must_use]`, but the implementation for both `#[must_not_await]` and `#[must_use]` should be similar in their behavior.
+
+### Auto trait vs attribute
+`#[must_use]` is implemented as an attribute, and from prior art and [other literature][linear-types], we can gather that the decision was made due to the complexity of implementing true linear types in Rust. [`std::panic::UnwindSafe`][UnwindSafe] on the other hand is implemented as a marker trait with structural composition.
+
+[linear-types]: https://gankra.github.io/blah/linear-rust/
+[UnwindSafe]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
+
 
 **TODO**
 
@@ -76,5 +91,5 @@ This will be a best effort lint to signal to the user about unintended side-effe
 # Future possibilities
 
 - Propagate the lint in nested structs/enums. Similar to the use case for the `must_use` attribute. These likely should be solved together.
- 
+
 
