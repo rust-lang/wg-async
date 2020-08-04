@@ -94,7 +94,7 @@ The arguments to `poll_next` match that of the [`Future::poll`] method:
 
 When drafting this RFC, there was a [good deal of discussion](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r452482084) around why the `next` method requires `Self:Unpin`.
 
-To understand this, it helps to take a closer look at the definition of `Next` (this struct is further discussed later in this RFC) in the [futures-util crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12)).
+To understand this, it helps to take a closer look at the definition of `Next` (this struct is further discussed later in this RFC) in the [futures-util crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
 
 ```rust
 pub struct Next<'a, St: ?Sized> {
@@ -235,7 +235,7 @@ Stream` values without the need to monomorphize the functions that work
 with them.
 
 Unfortunately, the use of poll does mean that it is harder to write
-stream implementations. The long-term fix for this, discussed in the [Future possibilities][future-possibilities] section, is dedicated [generator syntax].
+stream implementations. The long-term fix for this, discussed in the [Future possibilities] section, is dedicated [generator syntax].
 
 # Drawbacks
 [drawbacks]: #drawbacks
@@ -684,7 +684,7 @@ gen_fn().pin_somehow().adapter1().adapter2()
 
 With streams, the core interface _is_ pinned, so pinning occurs at the last moment.
 
-The general shap would be 
+The general shape would be 
 
 ```rust
 async_gen_fn().adapter1().adapter2().pin_somehow()
