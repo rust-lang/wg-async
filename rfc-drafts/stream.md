@@ -690,7 +690,7 @@ The general shape would be
 async_gen_fn().adapter1().adapter2().pin_somehow()
 ```
 
-Pinning at the end, like with a stream, lets you build and return those adapters and then apply pinning at the end. This may be the more efficient setup and implies that, in order to have a `gen fn` that produces iterators, we will need to potentially disalllow borrowing yields or implement some kind of `PinnedIterator` trait that can be "adapted" into an iterator by pinning.
+Pinning at the end, like with a stream, lets you build and return those adapters and then apply pinning at the end. This may be the more efficient setup and implies that, in order to have a `gen fn` that produces iterators, we will need to potentially disallow borrowing yields or implement some kind of `PinnedIterator` trait that can be "adapted" into an iterator by pinning.
 
 For example: 
 
