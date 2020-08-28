@@ -66,8 +66,17 @@ The `#[must_use]` attribute ensures that if a type or the result of a function i
 ### Auto trait vs attribute
 `#[must_use]` is implemented as an attribute, and from prior art and [other literature][linear-types], we can gather that the decision was made due to the complexity of implementing true linear types in Rust. [`std::panic::UnwindSafe`][UnwindSafe] on the other hand is implemented as a marker trait with structural composition.
 
+
+## High level design overview
+
+From a 10000ft view, generators currently analyze the body of the async block to [build the list of values][resolve-interior] which live across a yield point. This is done as a part of the [typechecking phase][typechk] of the compiler. We can use this list of types to check whether or not any of them have been marked as `#[must_not_await]`. In order to do so, we can leverage the HIR definition of the types which would include the annotation.
+
+The attribute can be found by querying the session by the `DefId` of each of the captured type, and a warning can issued based on whether or not the types captured in the generator have the attribute associated with them.
+
 [linear-types]: https://gankra.github.io/blah/linear-rust/
 [UnwindSafe]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
+[resolve-interior]: https://github.com/rust-lang/rust/blob/master/src/librustc_typeck/check/generator_interior.rs#L122
+[typechk]: https://github.com/rust-lang/rust/blob/3e041cec75c45e78730972194db3401af06b72ef/src/librustc_typeck/check/mod.rs#L1113
 
 
 **TODO**
