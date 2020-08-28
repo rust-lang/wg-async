@@ -69,20 +69,17 @@ The `#[must_use]` attribute ensures that if a type or the result of a function i
 
 ## High level design overview
 
-From a 10000ft view, generators currently analyze the body of the async block to [build the list of values][resolve-interior] which live across a yield point. This is done as a part of the [typechecking phase][typechk] of the compiler. We can use this list of types to check whether or not any of them have been marked as `#[must_not_await]`. In order to do so, we can leverage the HIR definition of the types which would include the annotation.
+
+The main body of finding the types which are captured in the state machine for an async block are done during the [typechecking][typechk] phase. From a 10000ft view, generators currently analyze the body of the async block to [build the list of values][resolve-interior] which live across a yield point. We can use this list of types to check whether or not any of them have been marked as `#[must_not_await]`. In order to do so, we can leverage the HIR definition of the types which would include the annotation.
 
 The attribute can be found by querying the session by the `DefId` of each of the captured type, and a warning can issued based on whether or not the types captured in the generator have the attribute associated with them.
+
+We also have the option of precomputing the presence of an attribute on a type during parsing and storing this information on the type flags for the type. In my opinion this would be the more efficient way of implementing this check as queriying the `Session` object for a large list of types could become an expensive operation.
 
 [linear-types]: https://gankra.github.io/blah/linear-rust/
 [UnwindSafe]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
 [resolve-interior]: https://github.com/rust-lang/rust/blob/master/src/librustc_typeck/check/generator_interior.rs#L122
 [typechk]: https://github.com/rust-lang/rust/blob/3e041cec75c45e78730972194db3401af06b72ef/src/librustc_typeck/check/mod.rs#L1113
-
-
-**TODO**
-
- - [ ] Draw ideas from `#[must_use]` implementation
- - [ ] Go through generator implementation to understand how values are captured in state machine.
 
  - Reference link on how mir transfroms async fn https://tmandry.gitlab.io/blog/posts/optimizing-await-2/
 
