@@ -295,7 +295,6 @@ and to come back to the problem of extending it with combinators.
 
 [outstanding design issues]: https://rust-lang.github.io/wg-async-foundations/design_notes/async_closures.html
 
-Another reason to defer adding combinators is because of the possibility
 This path does carry some risk. Adding combinator methods can cause
 existing code to stop compiling due to the ambiguities in method
 resolution. We have had problems in the past with attempting to migrate
