@@ -75,8 +75,6 @@ pub trait Stream {
         Self: Unpin;
 }
 ```
-* For information on why `Self: Unpin` is included in the `next` 
-method, please see [this discussion on the draft RFC](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r452482084).
 
 The arguments to `poll_next` match that of the [`Future::poll`] method:
 
@@ -92,6 +90,23 @@ The arguments to `poll_next` match that of the [`Future::poll`] method:
 [pinned]: https://doc.rust-lang.org/std/pin/struct.Pin.html
 [context]: https://doc.rust-lang.org/std/task/struct.Context.html
 [Waker]: https://doc.rust-lang.org/std/task/struct.Waker.html
+
+### Why does next require Self:Unpin?
+
+When drafting this RFC, there was a [good deal of discussion](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r452482084) around why the `next` method requires `Self:Unpin`.
+
+To understand this, it helps to take a closer look at the definition of `Next` (this struct is further discussed later in this RFC) in the [futures-util crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
+
+```rust
+pub struct Next<'a, St: ?Sized> {
+    stream: &'a mut St,
+}
+```
+Since `Stream::poll_next` takes a pinned reference, the next future needs `S` to be `Unpin` in order to safely construct a `Pin<&mut S>` from a `&mut S`.
+
+An alternative approach we could take would be to have the `next` method take `Pin<&mut S>`, rather than `&mut S`. However, this would require pinning even when the type is `Unpin`. The current approach requires pinning only when the type is not `Unpin`.
+
+At the moment, we do not see many `Unpin!` streams in practice (though there is one in the [futures-intrusive crate](https://github.com/Matthias247/futures-intrusive/blob/master/src/channel/mpmc.rs#L565-L625)). Where they will become important is when we introduce async generators, as discussed in [future-possibilities].
 
 In summary, an async stream:
 * has a pinned receiver
@@ -240,7 +255,7 @@ Stream` values without the need to monomorphize the functions that work
 with them.
 
 Unfortunately, the use of poll does mean that it is harder to write
-stream implementations. The long-term fix for this, discussed in the [Future possibilities][future-possibilities] section, is dedicated [generator syntax].
+stream implementations. The long-term fix for this, discussed in the [Future possiblilities](future-possibilities) section, is dedicated [generator syntax].
 
 # Drawbacks
 [drawbacks]: #drawbacks
@@ -668,6 +683,69 @@ fn foo() -> impl Stream<Item = Value>
 If we introduce `-> Stream` first, we will have to permit `LendingStream` in the future. 
 Additionally, if we introduce `LendingStream` later, we'll have to figure out how
 to convert a `LendingStream` into a `Stream` seamlessly.
+
+### Differences between Iterator generators and Async generators
+
+We want `Stream` and `Iterator` to work as analogously as possible, including when used with generators. However, in the current design, there is a crucial difference between the two. 
+
+Consider Iterator's core `next` method:
+
+```rust
+pub trait Iterator {
+    type Item;
+
+    fn next(&mut self) -> Option<Self::Item>;
+}
+```
+And then compare it to the proposed Stream `next` method:
+
+```rust
+pub trait Stream {
+    type Item;
+
+    fn next(&mut self) -> Next<'_, Self>
+    where
+        Self: Unpin;
+}
+```
+
+Iterator does not require pinning its core next method. In order for a `gen fn` to operate with the Iterator ecosystem, there must be some kind of initial pinning step that converts its result into an iterator. This will be tricky, since you can't return a pinned value except by boxing. 
+
+The general shape will be:
+
+```rust
+gen_fn().pin_somehow().adapter1().adapter2()
+```
+
+With streams, the core interface _is_ pinned, so pinning occurs at the last moment.
+
+The general shape would be 
+
+```rust
+async_gen_fn().adapter1().adapter2().pin_somehow()
+```
+
+Pinning at the end, like with a stream, lets you build and return those adapters and then apply pinning at the end. This may be the more efficient setup and implies that, in order to have a `gen fn` that produces iterators, we will need to potentially disallow borrowing yields or implement some kind of `PinnedIterator` trait that can be "adapted" into an iterator by pinning.
+
+For example: 
+
+```rust
+trait PinIterator {
+    type Item;
+    fn next(self: Pin<&mut Self>) -> Self::Item;
+    // combinators can go here (duplicating Iterator for the most part)
+}
+impl<I: PinIterator, P: Deref<Target = I> + DerefMut> Iterator for Pin<P> {
+    type Item = <I as PinIterator>::Item;
+    fn next(&mut self) -> Self::Item { self.as_mut().next() }
+}
+
+// this would be nice.. but would lead to name resolution ambiguity for our combinators 😬 
+default impl<T: Iterator> PinIterator for T { .. }
+```
+Pinning also applies to the design of AsyncRead/AsyncWrite, which currently uses Pin even through there is no clear plan to make them implemented with generator type syntax. The asyncification of a signature is current understood as pinned receiver + context arg + return poll.
+
+### Yielding
 
 It would be useful to be able to yield from inside a for loop, as long as the for loop is
 over a borrowed input and not something owned by the stack frame.
