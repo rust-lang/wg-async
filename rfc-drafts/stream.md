@@ -93,6 +93,11 @@ The arguments to `poll_next` match that of the [`Future::poll`] method:
 [context]: https://doc.rust-lang.org/std/task/struct.Context.html
 [Waker]: https://doc.rust-lang.org/std/task/struct.Waker.html
 
+In summary, an async stream:
+* has a pinned receiver
+* that takes `cx` context
+* and returns a `Poll`
+
 ## Initial impls
 
 There are a number of simple "bridge" impls that are also provided:
@@ -182,6 +187,21 @@ while let Some(v) = stream.next().await {
 
 }
 ```
+
+We could also consdier adding a try_next? function, allowing
+a user to write:
+
+```rust
+while let Some(x) = s.try_next().await?
+```
+
+One thing to note, if a user is using an older version of `futures-util`,
+they would experience ambiguity when trying to use the `next` method that
+is added to the standard library (and redirected to from `futures-core`).
+
+This can be done as a non-breaking change, but would require everyone to 
+upgrade rustc. We will want to create a transition plan on what this
+means for users and pick the timing carefully.
 
 # Reference-level explanation
 [reference-level-explanation]: #reference-level-explanation
@@ -276,8 +296,6 @@ and to come back to the problem of extending it with combinators.
 [outstanding design issues]: https://rust-lang.github.io/wg-async-foundations/design_notes/async_closures.html
 
 Another reason to defer adding combinators is because of the possibility
-that some combinators may work best 
-
 This path does carry some risk. Adding combinator methods can cause
 existing code to stop compiling due to the ambiguities in method
 resolution. We have had problems in the past with attempting to migrate
@@ -483,6 +501,16 @@ We may wish to extend the `for` loop so that it works over streams as well.
 for elem in stream { ... }
 ```
 
+One of the complications of using `while let` syntax is the need to pin.
+A `for` loop syntax that takes ownership of the stream would be able to
+do the pinning for you. 
+
+We may not want to make sequential processing "too easy" without also enabling
+parallel/concurrent processing, which people frequently want. One challenge is
+that parallel processing wouldn't naively permit early returns and other complex
+control flow. We could add a `par_stream()` method, similar to 
+[Rayon's](https://github.com/rayon-rs/rayon) `par_iter()`.
+
 Designing this extension is out of scope for this RFC. However, it could be prototyped using procedural macros today.
 
 ## "Lending" streams
@@ -589,6 +617,14 @@ Resolving this would require either an explicit “wrapper” step or else some 
 
 It should be noted that the same applies to Iterator, it is not unique to Stream.
 
+We may eventually want a super trait relationship available in the Rust language
+
+```rust
+trait Stream: LendingStream
+```
+
+This would allow us to leverage `default impl`.
+
 These use cases for lending/non-lending streams need more thought, which is part of the reason it 
 is out of the scope of this particular RFC.
 
@@ -633,5 +669,13 @@ fn foo() -> impl Stream<Item = Value>
 If we introduce `-> Stream` first, we will have to permit `LendingStream` in the future. 
 Additionally, if we introduce `LendingStream` later, we'll have to figure out how
 to convert a `LendingStream` into a `Stream` seamlessly.
+
+It would be useful to be able to yield from inside a for loop, as long as the for loop is
+over a borrowed input and not something owned by the stack frame.
+
+In the spirit of experimentation, boats has written the [propane](https://github.com/withoutboats/propane) 
+crate. This crate includes a `#[propane] fn` that changes the function signature
+to return `impl Iterator` and lets you `yield`. The non-async version uses 
+`static generator` that is currently in nightly only.
 
 Further designing generator functions is out of the scope of this RFC.
