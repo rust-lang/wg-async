@@ -6,7 +6,9 @@ Introduce a `#[must_not_await]` lint in the compiler that will warn the user whe
 
 # Motivation
 
-Enable users to fearlessly write concurrent async code without the need to understand the internals of runtimes and how their code will be affected. The goal is to provide a best effort warning that will let the user know of a possible side effect that is not visible by reading the code right away. Some examples of these side effects are holding a `MutexGuard` across an await bound in a single threaded runtime. In this case the resulting generated future will resolve to `!Send` but could still hold the lock when the future yields back to the executor. This opens up for the possibility of causing a deadlock since the future holding onto the lock did not relinquish it back before it yielded control. This can become even more problematic for futures that run on single-threaded runtimes (`!Send`) where holding a local after a yield will result in a deadlock.
+Enable users to fearlessly write concurrent async code without the need to understand the internals of runtimes and how their code will be affected. The goal is to provide a best effort warning that will let the user know of a possible side effect that is not visible by reading the code right away.
+
+One example of these side effects is holding a `MutexGuard` across an await bound. This opens up the possibility of causing a deadlock since the future holding onto the lock did not relinquish it back before it yielded control. This is a problem for futures that run on single-threaded runtimes (`!Send`) where holding a local after a yield will result in a deadlock. Even on multi-threaded runtimes, it would be nice to provide a custom error message that explains why the user doesn't want to do this instead of only a generic message about their future not being `Send`. Any other kind of RAII guard which depends on behavior similar to that of a `MutexGuard` will have the same issue.
 
 The big reason for including a lint like this is because under the hood the compiler will automatically transform async fn into a state machine which can store locals. This process is invisible to users and will produce code that is different than what is in the actual rust file. Due to this it is important to inform users that their code may not do what they expect.
 
@@ -15,18 +17,18 @@ The big reason for including a lint like this is because under the hood the comp
 Provide a lint that can be attached to structs to let the compiler know that this struct can not be held across an await boundary.
 
 ```rust
-    #[must_not_await]
-    struct MyStruct {}
+#[must_not_await = "Your error message here"]
+struct MyStruct {}
 ```
 
-This struct if held across an await boundary would cause a warning:
+This struct if held across an await boundary would cause a deny-by-default warning:
 
 ```rust
-    async fn foo() {
-      let my_struct = MyStruct {};
-      my_async_op.await;
-      println!("{:?}", my_struct);
-    }
+async fn foo() {
+  let my_struct = MyStruct {};
+  my_async_op.await;
+  println!("{:?}", my_struct);
+}
 ```
 
 The compiler might output something along the lines of:
@@ -51,42 +53,90 @@ This lint will enable the compiler to warn the user that the generated MIR could
 - [`std::sync::MutexGuard`](https://doc.rust-lang.org/std/sync/struct.MutexGuard.html)
 - [`tracing::span::Entered`](https://docs.rs/tracing/0.1.15/tracing/span/struct.Entered.html)
 
-This will be a best effort lint to signal to the user about unintended side-effects of using certain types across an await boundary.
+This will be a best effort lint to signal the user about unintended side-effects of using certain types across an await boundary.
 
 # Reference-level explanation
 
-Going throuogh the prior are we see two systems currently which provide simailar/semantically similar behavior:
+The `must_not_await` attribute is used to issue a diagnostic warning when a value is not "used". It can be applied to user-defined composite types (structs, enums and unions), functions and traits.
+
+The `must_not_await` attribute may include a message by using the [`MetaNameValueStr`] syntax such as `#[must_not_await = "example message"]`.  The message will be given alongside the warning.
+
+When used on a user-defined composite type, if the [expression] of an [expression statement] has this type and is used across an await point, then this lint is violated.
+
+
+```rust
+#[must_not_await = "Your error message here"]
+struct MyStruct {}
+
+async fn foo() {
+  let my_struct = MyStruct {};
+  my_async_op.await;
+  println!("{:?}", my_struct);
+}
+```
+
+When used on a function, if the [expression] of an [expression statement] is a [call expression] to that function, and the expression is held across an await point, this lint is violated.
+
+```rust
+#[must_not_await]
+fn foo() -> i32 { 5i32 }
+
+async fn foo() {
+  let bar = foo();
+  my_async_op.await;
+  println!("{:?}", bar);
+}
+```
+
+When used on a [trait declaration], a [call expression] of an [expression statement] to a function that returns an [impl trait] of that trait and if the value is held across an await point, the lint is violated.
+
+```rust
+trait Trait {
+    #[must_not_await]
+    fn foo(&self) -> i32;
+}
+
+impl Trait for i32 {
+    fn foo(&self) -> i32 { 0i32 }
+}
+
+async fn foo() {
+  let bar = 5i32.foo();
+  my_async_op.await;
+  println!("{:?}", bar);
+}
+```
+
+When used on a function in a trait implementation, the attribute does nothing.
+
+[`MetaNameValueStr`]: https://doc.rust-lang.org/reference/attributes.html#meta-item-attribute-syntax
+[expression]: https://doc.rust-lang.org/reference/expressions.html
+[expression statement]: https://doc.rust-lang.org/reference/statements.html#expression-statements
+[call expression]: https://doc.rust-lang.org/reference/expressions/call-expr.html
+[trait declaration]: https://doc.rust-lang.org/reference/items/traits.html
+[impl trait]: https://doc.rust-lang.org/reference/types/impl-trait.html
+
+### Auto trait vs attribute
+`#[must_use]` is implemented as an attribute, and from prior art and [other literature][linear-types], we can gather that the decision was made due to the complexity of implementing true linear types in Rust. [`std::panic::UnwindSafe`][UnwindSafe] on the other hand is implemented as a marker trait with structural composition.
+
+
+[linear-types]: https://gankra.github.io/blah/linear-rust/
+[UnwindSafe]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
+
+ - Reference link on how mir transfroms async fn https://tmandry.gitlab.io/blog/posts/optimizing-await-2/
+
+# Drawbacks
+- There is a possibility it can produce a false positive warning and it could get noisy. But using the `allow` attribute would work similar to other `deny-by-default` lints.
+
+# Rationale and alternatives
+
+Going through the prior are we see two systems currently which provide simailar/semantically similar behavior:
 
 ## Clippy `#[await_holding_lock]` lint
 This lint goes through all types in `generator_interior_types` looking for `MutexGuard`, `RwLockReadGuard` and `RwLockWriteGuard`. While this is a first great step, we think that this can be further extended to handle not only the hardcoded lock guards, but any type which is should not be held across an await point. By marking a type as `#[must_not_await]` we can warn when any arbitrary type is being held across an await boundary. An additional benefit to this approach is that this behaviour can be extended to any type which holds a `#[must_not_await]` type inside of it.
 
 ## `#[must_use]` attribute
 The `#[must_use]` attribute ensures that if a type or the result of a function is not used, a warning is displayed. This ensures that the user is notified about the importance of said value. Currently the attribute does not automatically get applied to any type which contains a type declared as `#[must_use]`, but the implementation for both `#[must_not_await]` and `#[must_use]` should be similar in their behavior.
-
-### Auto trait vs attribute
-`#[must_use]` is implemented as an attribute, and from prior art and [other literature][linear-types], we can gather that the decision was made due to the complexity of implementing true linear types in Rust. [`std::panic::UnwindSafe`][UnwindSafe] on the other hand is implemented as a marker trait with structural composition.
-
-
-## High level design overview
-
-
-The main body of finding the types which are captured in the state machine for an async block are done during the [typechecking][typechk] phase. From a 10000ft view, generators currently analyze the body of the async block to [build the list of values][resolve-interior] which live across a yield point. We can use this list of types to check whether or not any of them have been marked as `#[must_not_await]`. In order to do so, we can leverage the HIR definition of the types which would include the annotation.
-
-The attribute can be found by querying the session by the `DefId` of each of the captured type, and a warning can issued based on whether or not the types captured in the generator have the attribute associated with them.
-
-We also have the option of precomputing the presence of an attribute on a type during parsing and storing this information on the type flags for the type. In my opinion this would be the more efficient way of implementing this check as queriying the `Session` object for a large list of types could become an expensive operation.
-
-[linear-types]: https://gankra.github.io/blah/linear-rust/
-[UnwindSafe]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
-[resolve-interior]: https://github.com/rust-lang/rust/blob/master/src/librustc_typeck/check/generator_interior.rs#L122
-[typechk]: https://github.com/rust-lang/rust/blob/3e041cec75c45e78730972194db3401af06b72ef/src/librustc_typeck/check/mod.rs#L1113
-
- - Reference link on how mir transfroms async fn https://tmandry.gitlab.io/blog/posts/optimizing-await-2/
-
-# Drawbacks
-- There is a possibility it can produce a false positive warning and it could get noisy. We likely want to allow overriding via some sort of module level `allow` attribute.
-
-# Rationale and alternatives
 
 
 # Prior art
