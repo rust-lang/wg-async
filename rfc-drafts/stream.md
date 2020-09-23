@@ -743,7 +743,7 @@ impl<I: PinIterator, P: Deref<Target = I> + DerefMut> Iterator for Pin<P> {
 // this would be nice.. but would lead to name resolution ambiguity for our combinators 😬 
 default impl<T: Iterator> PinIterator for T { .. }
 ```
-Pinning also applies to the design of AsyncRead/AsyncWrite, which currently uses Pin even through there is no clear plan to make them implemented with generator type syntax. The asyncification of a signature is current understood as pinned receiver + context arg + return poll.
+Pinning also applies to the design of AsyncRead/AsyncWrite, which currently uses Pin even through there is no clear plan to make them implemented with generator type syntax. The asyncification of a signature is currently understood as pinned receiver + context arg + return poll.
 
 ### Yielding
 
