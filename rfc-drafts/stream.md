@@ -91,28 +91,6 @@ The arguments to `poll_next` match that of the [`Future::poll`] method:
 [context]: https://doc.rust-lang.org/std/task/struct.Context.html
 [Waker]: https://doc.rust-lang.org/std/task/struct.Waker.html
 
-### Why does next require Self:Unpin?
-
-When drafting this RFC, there was a [good deal of discussion](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r452482084) around why the `next` method requires `Self:Unpin`.
-
-To understand this, it helps to take a closer look at the definition of `Next` (this struct is further discussed later in this RFC) in the [futures-util crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
-
-```rust
-pub struct Next<'a, St: ?Sized> {
-    stream: &'a mut St,
-}
-```
-Since `Stream::poll_next` takes a pinned reference, the next future needs `S` to be `Unpin` in order to safely construct a `Pin<&mut S>` from a `&mut S`.
-
-An alternative approach we could take would be to have the `next` method take `Pin<&mut S>`, rather than `&mut S`. However, this would require pinning even when the type is `Unpin`. The current approach requires pinning only when the type is not `Unpin`.
-
-At the moment, we do not see many `!Unpin` streams in practice (though there is one in the [futures-intrusive crate](https://github.com/Matthias247/futures-intrusive/blob/master/src/channel/mpmc.rs#L565-L625)). Where they will become important is when we introduce async generators, as discussed in [Future possibilities](future-possibilities).
-
-In summary, an async stream:
-* has a pinned receiver
-* that takes `cx` context
-* and returns a `Poll`
-
 ## Initial impls
 
 There are a number of simple "bridge" impls that are also provided:
@@ -203,12 +181,16 @@ while let Some(v) = stream.next().await {
 }
 ```
 
-We could also consider adding a try_next? function, allowing
+We could also consider adding a try_next? function (similar to the one in the [futures-rs](https://docs.rs/futures/0.3.5/futures/stream/trait.TryStreamExt.html#method.try_next) crate, allowing
 a user to write:
 
 ```rust
 while let Some(x) = s.try_next().await?
 ```
+
+Adding the `try_next` method is out of the scope of this RFC to keep us focused
+on adding the critical methods needed for async streams first, then adding in 
+additional ones at a later date.
 
 One thing to note, if a user is using an older version of `futures-util`,
 they would experience ambiguity when trying to use the `next` method that
@@ -217,6 +199,24 @@ is added to the standard library (and redirected to from `futures-core`).
 This can be done as a non-breaking change, but would require everyone to 
 upgrade rustc. We will want to create a transition plan on what this
 means for users and pick the timing carefully.
+
+### Why does next require Self:Unpin?
+
+When drafting this RFC, there was a [good deal of discussion](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r452482084) around why the `next` method requires `Self:Unpin`.
+
+To understand this, it helps to take a closer look at the definition of `Next` (this struct is further discussed later in this RFC) in the [futures-util crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
+
+```rust
+pub struct Next<'a, St: ?Sized> {
+    stream: &'a mut St,
+}
+```
+Since `Stream::poll_next` takes a pinned reference, the next future needs `S` to be `Unpin` in order to safely construct a `Pin<&mut S>` from a `&mut S`.
+
+An alternative approach we could take would be to have the `next` method take `Pin<&mut S>`, rather than `&mut S`. However, this would require pinning even when the type is `Unpin`. The current approach requires pinning only when the type is not `Unpin`. Additionally, if you already have a `Pin<&mut S>`, you can access `.next()` through the implementation described below because `Pin<P>: Unpin`.
+
+At the moment, we do not see many `!Unpin` streams in practice (though there is one in the [futures-intrusive crate](https://github.com/Matthias247/futures-intrusive/blob/master/src/channel/mpmc.rs#L565-L625)). Where they will become important is when we introduce async generators, as discussed in [Future possibilities](future-possibilities).
+
 
 # Reference-level explanation
 [reference-level-explanation]: #reference-level-explanation
@@ -519,7 +519,7 @@ One of the complications of using `while let` syntax is the need to pin.
 A `for` loop syntax that takes ownership of the stream would be able to
 do the pinning for you. 
 
-We may not want to make sequential processing "too easy" without also enabling
+On the other hand, we may not want to make sequential processing "too easy" without also enabling
 parallel/concurrent processing, which people frequently want. One challenge is
 that parallel processing wouldn't naively permit early returns and other complex
 control flow. We could add a `par_stream()` method, similar to 
