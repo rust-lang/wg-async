@@ -33,9 +33,8 @@ async fn foo() {
 
 The compiler might output something along the lines of:
 
-TODO: Write a better error message.
 ```
-warning: Holding `MyStruct` across the await bound on line 3 might cause side effects.
+warning: `MyStruct` should not be held across an await point.
 ```
 
 Example use cases for this lint:
@@ -116,14 +115,6 @@ When used on a function in a trait implementation, the attribute does nothing.
 [trait declaration]: https://doc.rust-lang.org/reference/items/traits.html
 [impl trait]: https://doc.rust-lang.org/reference/types/impl-trait.html
 
-### Auto trait vs attribute
-`#[must_use]` is implemented as an attribute, and from prior art and [other literature][linear-types], we can gather that the decision was made due to the complexity of implementing true linear types in Rust. [`std::panic::UnwindSafe`][UnwindSafe] on the other hand is implemented as a marker trait with structural composition.
-
-
-[linear-types]: https://gankra.github.io/blah/linear-rust/
-[UnwindSafe]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
-
- - Reference link on how mir transfroms async fn https://tmandry.gitlab.io/blog/posts/optimizing-await-2/
 
 # Drawbacks
 - There is a possibility it can produce a false positive warning and it could get noisy. But using the `allow` attribute would work similar to other `deny-by-default` lints.
@@ -138,13 +129,20 @@ This lint goes through all types in `generator_interior_types` looking for `Mute
 ## `#[must_use]` attribute
 The `#[must_use]` attribute ensures that if a type or the result of a function is not used, a warning is displayed. This ensures that the user is notified about the importance of said value. Currently the attribute does not automatically get applied to any type which contains a type declared as `#[must_use]`, but the implementation for both `#[must_not_await]` and `#[must_use]` should be similar in their behavior.
 
+### Auto trait vs attribute
+`#[must_use]` is implemented as an attribute, and from prior art and [other literature][linear-types], we can gather that the decision was made due to the complexity of implementing true linear types in Rust. [`std::panic::UnwindSafe`][UnwindSafe] on the other hand is implemented as a marker trait with structural composition.
+
+[linear-types]: https://gankra.github.io/blah/linear-rust/
+[UnwindSafe]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
+
 
 # Prior art
 
 * [Clippy lint for holding locks across await points](https://github.com/rust-lang/rust-clippy/pull/5439)
 * [Must use for functions](https://github.com/iopq/rfcs/blob/f4b68532206f0a3e0664877841b407ab1302c79a/text/1940-must-use-functions.md)
+* Reference link on how mir transfroms async fn https://tmandry.gitlab.io/blog/posts/optimizing-await-2/
 
-# Future possibilities
+# Unresolved questions
 
 - Propagate the lint in nested structs/enums. Similar to the use case for the `must_use` attribute. These likely should be solved together.
 
