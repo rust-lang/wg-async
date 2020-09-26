@@ -73,6 +73,7 @@ pub trait Stream {
     fn next(&mut self) -> Next<'_, Self>
     where
         Self: Unpin;
+    { ... }
 }
 ```
 
