@@ -73,10 +73,9 @@ pub trait Stream {
     fn next(&mut self) -> Next<'_, Self>
     where
         Self: Unpin;
+    { ... }
 }
 ```
-* For information on why `Self: Unpin` is included in the `next` 
-method, please see [this discussion on the draft RFC](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r452482084).
 
 The arguments to `poll_next` match that of the [`Future::poll`] method:
 
@@ -183,6 +182,43 @@ while let Some(v) = stream.next().await {
 }
 ```
 
+We could also consider adding a try_next? function (similar to the one in the [futures-rs](https://docs.rs/futures/0.3.5/futures/stream/trait.TryStreamExt.html#method.try_next) crate, allowing
+a user to write:
+
+```rust
+while let Some(x) = s.try_next().await?
+```
+
+Adding the `try_next` method is out of the scope of this RFC to keep us focused
+on adding the critical methods needed for async streams first, then adding in 
+additional ones at a later date.
+
+One thing to note, if a user is using an older version of `futures-util`,
+they would experience ambiguity when trying to use the `next` method that
+is added to the standard library (and redirected to from `futures-core`).
+
+This can be done as a non-breaking change, but would require everyone to 
+upgrade rustc. We will want to create a transition plan on what this
+means for users and pick the timing carefully.
+
+### Why does next require Self:Unpin?
+
+When drafting this RFC, there was a [good deal of discussion](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r452482084) around why the `next` method requires `Self:Unpin`.
+
+To understand this, it helps to take a closer look at the definition of `Next` (this struct is further discussed later in this RFC) in the [futures-util crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
+
+```rust
+pub struct Next<'a, St: ?Sized> {
+    stream: &'a mut St,
+}
+```
+Since `Stream::poll_next` takes a pinned reference, the next future needs `S` to be `Unpin` in order to safely construct a `Pin<&mut S>` from a `&mut S`.
+
+An alternative approach we could take would be to have the `next` method take `Pin<&mut S>`, rather than `&mut S`. However, this would require pinning even when the type is `Unpin`. The current approach requires pinning only when the type is not `Unpin`. Additionally, if you already have a `Pin<&mut S>`, you can access `.next()` through the implementation described below because `Pin<P>: Unpin`.
+
+At the moment, we do not see many `!Unpin` streams in practice (though there is one in the [futures-intrusive crate](https://github.com/Matthias247/futures-intrusive/blob/master/src/channel/mpmc.rs#L565-L625)). Where they will become important is when we introduce async generators, as discussed in [Future possibilities](future-possibilities).
+
+
 # Reference-level explanation
 [reference-level-explanation]: #reference-level-explanation
 
@@ -220,7 +256,7 @@ Stream` values without the need to monomorphize the functions that work
 with them.
 
 Unfortunately, the use of poll does mean that it is harder to write
-stream implementations. The long-term fix for this, discussed in the [Future possibilities][future-possibilities] section, is dedicated [generator syntax].
+stream implementations. The long-term fix for this, discussed in the [Future possiblilities](future-possibilities) section, is dedicated [generator syntax].
 
 # Drawbacks
 [drawbacks]: #drawbacks
@@ -274,9 +310,6 @@ decided to enable progress on the stream trait by stabilizing a core,
 and to come back to the problem of extending it with combinators.
 
 [outstanding design issues]: https://rust-lang.github.io/wg-async-foundations/design_notes/async_closures.html
-
-Another reason to defer adding combinators is because of the possibility
-that some combinators may work best 
 
 This path does carry some risk. Adding combinator methods can cause
 existing code to stop compiling due to the ambiguities in method
@@ -483,6 +516,16 @@ We may wish to extend the `for` loop so that it works over streams as well.
 for elem in stream { ... }
 ```
 
+One of the complications of using `while let` syntax is the need to pin.
+A `for` loop syntax that takes ownership of the stream would be able to
+do the pinning for you. 
+
+On the other hand, we may not want to make sequential processing "too easy" without also enabling
+parallel/concurrent processing, which people frequently want. One challenge is
+that parallel processing wouldn't naively permit early returns and other complex
+control flow. We could add a `par_stream()` method, similar to 
+[Rayon's](https://github.com/rayon-rs/rayon) `par_iter()`.
+
 Designing this extension is out of scope for this RFC. However, it could be prototyped using procedural macros today.
 
 ## "Lending" streams
@@ -589,6 +632,14 @@ Resolving this would require either an explicit “wrapper” step or else some 
 
 It should be noted that the same applies to Iterator, it is not unique to Stream.
 
+We may eventually want a super trait relationship available in the Rust language
+
+```rust
+trait Stream: LendingStream
+```
+
+This would allow us to leverage `default impl`.
+
 These use cases for lending/non-lending streams need more thought, which is part of the reason it 
 is out of the scope of this particular RFC.
 
@@ -633,5 +684,76 @@ fn foo() -> impl Stream<Item = Value>
 If we introduce `-> Stream` first, we will have to permit `LendingStream` in the future. 
 Additionally, if we introduce `LendingStream` later, we'll have to figure out how
 to convert a `LendingStream` into a `Stream` seamlessly.
+
+### Differences between Iterator generators and Async generators
+
+We want `Stream` and `Iterator` to work as analogously as possible, including when used with generators. However, in the current design, there is a crucial difference between the two. 
+
+Consider Iterator's core `next` method:
+
+```rust
+pub trait Iterator {
+    type Item;
+
+    fn next(&mut self) -> Option<Self::Item>;
+}
+```
+And then compare it to the proposed Stream `next` method:
+
+```rust
+pub trait Stream {
+    type Item;
+
+    fn next(&mut self) -> Next<'_, Self>
+    where
+        Self: Unpin;
+}
+```
+
+Iterator does not require pinning its core next method. In order for a `gen fn` to operate with the Iterator ecosystem, there must be some kind of initial pinning step that converts its result into an iterator. This will be tricky, since you can't return a pinned value except by boxing. 
+
+The general shape will be:
+
+```rust
+gen_fn().pin_somehow().adapter1().adapter2()
+```
+
+With streams, the core interface _is_ pinned, so pinning occurs at the last moment.
+
+The general shape would be 
+
+```rust
+async_gen_fn().adapter1().adapter2().pin_somehow()
+```
+
+Pinning at the end, like with a stream, lets you build and return those adapters and then apply pinning at the end. This may be the more efficient setup and implies that, in order to have a `gen fn` that produces iterators, we will need to potentially disallow borrowing yields or implement some kind of `PinnedIterator` trait that can be "adapted" into an iterator by pinning.
+
+For example: 
+
+```rust
+trait PinIterator {
+    type Item;
+    fn next(self: Pin<&mut Self>) -> Self::Item;
+    // combinators can go here (duplicating Iterator for the most part)
+}
+impl<I: PinIterator, P: Deref<Target = I> + DerefMut> Iterator for Pin<P> {
+    type Item = <I as PinIterator>::Item;
+    fn next(&mut self) -> Self::Item { self.as_mut().next() }
+}
+
+// this would be nice.. but would lead to name resolution ambiguity for our combinators 😬 
+default impl<T: Iterator> PinIterator for T { .. }
+```
+Pinning also applies to the design of AsyncRead/AsyncWrite, which currently uses Pin even through there is no clear plan to make them implemented with generator type syntax. The asyncification of a signature is currently understood as pinned receiver + context arg + return poll.
+
+### Yielding
+
+It would be useful to be able to yield from inside a for loop, as long as the for loop is
+over a borrowed input and not something owned by the stack frame.
+
+In the spirit of experimentation, boats has written the [propane](https://github.com/withoutboats/propane) 
+crate. This crate includes a `#[propane] fn` that changes the function signature
+to return `impl Iterator` and lets you `yield`. The non-async version uses 
+`static generator` that is currently in nightly only.
 
 Further designing generator functions is out of the scope of this RFC.
