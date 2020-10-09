@@ -119,7 +119,7 @@ When used on a function in a trait implementation, the attribute does nothing.
 
 Going through the prior are we see two systems currently which provide simailar/semantically similar behavior:
 
-## Clippy `#[await_holding_lock]` lint
+## Clippy `await_holding_lock` lint
 This lint goes through all types in `generator_interior_types` looking for `MutexGuard`, `RwLockReadGuard` and `RwLockWriteGuard`. While this is a first great step, we think that this can be further extended to handle not only the hardcoded lock guards, but any type which is should not be held across an await point. By marking a type as `#[must_not_await]` we can warn when any arbitrary type is being held across an await boundary. An additional benefit to this approach is that this behaviour can be extended to any type which holds a `#[must_not_await]` type inside of it.
 
 ## `#[must_use]` attribute
