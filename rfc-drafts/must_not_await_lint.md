@@ -47,7 +47,7 @@ Example use cases for this lint:
 
 - Any RAII guard might possibly create unintended behavior if held across an await boundary.
 
-This lint will enable the compiler to warn the user that the generated MIR could produce unforeseen side effects. Some examples of this are:
+This lint will enable the compiler to warn the user that the code could produce unforeseen side effects. Some examples of this are:
 
 - [`std::sync::MutexGuard`](https://doc.rust-lang.org/std/sync/struct.MutexGuard.html)
 - [`tracing::span::Entered`](https://docs.rs/tracing/0.1.15/tracing/span/struct.Entered.html)
@@ -60,7 +60,7 @@ The `must_not_await` attribute is used to issue a diagnostic warning when a valu
 
 The `must_not_await` attribute may include a message by using the [`MetaNameValueStr`] syntax such as `#[must_not_await = "example message"]`.  The message will be given alongside the warning.
 
-When used on a user-defined composite type, if the [expression] of an [expression statement] has this type and is used across an await point, then this lint is violated.
+When used on a user-defined composite type, if a value exists across an await point, then this lint is violated.
 
 
 ```rust
@@ -74,7 +74,7 @@ async fn foo() {
 }
 ```
 
-When used on a function, if the [expression] of an [expression statement] is a [call expression] to that function, and the expression is held across an await point, this lint is violated.
+When used on a function, if the value returned by a function is held across an await point, this lint is violated.
 
 ```rust
 #[must_not_await]
@@ -87,7 +87,7 @@ async fn foo() {
 }
 ```
 
-When used on a [trait declaration], a [call expression] of an [expression statement] to a function that returns an [impl trait] of that trait and if the value is held across an await point, the lint is violated.
+When used on a [trait declaration], if the value implementing that trait is held across an await point, the lint is violated.
 
 ```rust
 trait Trait {
@@ -109,11 +109,7 @@ async fn foo() {
 When used on a function in a trait implementation, the attribute does nothing.
 
 [`MetaNameValueStr`]: https://doc.rust-lang.org/reference/attributes.html#meta-item-attribute-syntax
-[expression]: https://doc.rust-lang.org/reference/expressions.html
-[expression statement]: https://doc.rust-lang.org/reference/statements.html#expression-statements
-[call expression]: https://doc.rust-lang.org/reference/expressions/call-expr.html
 [trait declaration]: https://doc.rust-lang.org/reference/items/traits.html
-[impl trait]: https://doc.rust-lang.org/reference/types/impl-trait.html
 
 
 # Drawbacks
