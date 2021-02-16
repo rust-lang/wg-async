@@ -29,7 +29,13 @@ He gets to the [Async Ecosystem chapter] and he realizes that he has to pick a r
 
 Bob eventually picks a runtime and starts working through the tutorial[^other_sections]. He extends his first async-await program to one that invokes a few helper routines and awaits them:
 
-```rust
+```rust,edition2018
+# struct X { }
+# struct Y { }
+# struct Z { }
+# async fn first_thing() -> X { X { } }
+# async fn second_thing() -> Y { Y { } }
+# async fn third_thing() -> Z { Z { } }
 async fn do_the_thing() -> (X, Y, Z) {
     let x = first_thing();
     let y = second_thing();
@@ -42,7 +48,16 @@ When Bob runs the program, he is surprised to see that these three functions see
 
 Reading into the book a bit more, Bob learns that Rust's asynchronous functions are *lazy*, and they don't start running until they are awaited. He reads about the various options (`FuturesUnordered`, etc) and ultimately opts to add in some calls to `spawn` from his favorite runtime:
 
-```rust
+```rust,edition2018
+# struct X { }
+# struct Y { }
+# struct Z { }
+# async fn first_thing() -> X { X { } }
+# async fn second_thing() -> Y { Y { } }
+# async fn third_thing() -> Z { Z { } }
+# mod runtime { 
+#    pub async fn spawn<T>(x: impl std::future::Future<Output = T>) -> T { x.await } 
+# }
 async fn do_the_thing() -> (X, Y, Z) {
     let x = runtime::spawn(first_thing());
     let y = runtime::spawn(second_thing());

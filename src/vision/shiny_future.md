@@ -20,7 +20,7 @@ Following the book's instructions, she quickly stands up some simple examples us
 
 Still playing around, Sally starts to extend her 'guessing game' project with some new functionality. She adds a function that launches a few web requests to help her pick the random number and get a nice "quote of the day" to include in the website:
 
-```rust
+```rust,ignore
 async fn guessing_game_configuration() -> std::io::Result<(usize, String)> {
     let random_number = async_io::request::fetch("https://random-number.org/").await?;
     let quotd = async_io::request::fetch("https://qotd.org/").await?;
@@ -30,7 +30,7 @@ async fn guessing_game_configuration() -> std::io::Result<(usize, String)> {
 
 Here, she is using the standard API for launching web requests. When she puts this into her IDE, she gets a lint warning:
 
-```
+```notrust
 warning[E2222]: synchronized request fetch
  --> src/main.rs:2:13
   |
