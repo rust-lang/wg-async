@@ -1,6 +1,11 @@
 # Summary
 
 - [Welcome](./welcome.md)
+- [The vision](./vision.md)
+   - [Design tenets for async](./vision/tenets.md)
+   - [User stories: Where we are now](./vision/status_quo.md)
+   - [User stories: Where we want to get to](./vision/shiny_future.md)
+- [The roadmap: what we're doing in 2021](./roadmap.md)
 - [Design notes](./design_notes.md)
     - [Yield-safe lint](./design_notes/yield_safe.md)
     - [Stream trait](./design_notes/stream.md)
