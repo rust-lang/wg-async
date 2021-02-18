@@ -8,7 +8,7 @@ Working group dedicated to improving the foundations of async I/O in Rust
 
 ## Getting involved
 
-Our meetings take place at [11:30 AM PST](https://everytimezone.com/s/8c679f10) every Thursday in our [Zulip stream][zulip]. Feel free to stop by then (or any time!) to introduce yourself.
+Our meetings take place at [10:00 AM PST](https://everytimezone.com/s/4d2f61f4) every Friday in our [Zulip stream][zulip]. Feel free to stop by then (or any time!) to introduce yourself.
 
 **If you'd like something to work on, check our [mentored issues][E-mentor] for places to get started.** Feel free to claim one of these by adding a comment with the text `@rustbot claim`.
 
