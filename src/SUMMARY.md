@@ -1,6 +1,7 @@
 # Summary
 
 - [Welcome](./welcome.md)
+- [Triage](./triage.md)
 - [Design notes](./design_notes.md)
     - [Yield-safe lint](./design_notes/yield_safe.md)
     - [Stream trait](./design_notes/stream.md)
