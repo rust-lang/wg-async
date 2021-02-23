@@ -1,4 +1,4 @@
-# Generator syntax
+# ⚡  Generator syntax
 
 * It would be useful to be able to write a function to return an iterator or (in the async context) a generator
 * The basic shape might be (modulo bikeshedding) `gen fn` that contains `yield`

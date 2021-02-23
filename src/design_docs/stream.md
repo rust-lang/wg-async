@@ -1,4 +1,4 @@
-# Stream trait
+# ☔ Stream trait
 
 * [Current definition](https://docs.rs/futures/0.3/futures/stream/trait.Stream.html)
 

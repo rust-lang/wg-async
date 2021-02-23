@@ -247,7 +247,7 @@ trait Stream {
 
 Unfortunately, async methods in traits are not currently supported,
 and there [are a number of challenges to be
-resolved](https://rust-lang.github.io/wg-async-foundations/design_notes/async_fn_in_traits.html)
+resolved](https://rust-lang.github.io/wg-async-foundations/design_docs/async_fn_in_traits.html)
 before they can be added. 
 
 Moreover, it is not clear yet how to make traits that contain async
@@ -309,7 +309,7 @@ design issues] to be resolved before they are added. Therefore, we've
 decided to enable progress on the stream trait by stabilizing a core,
 and to come back to the problem of extending it with combinators.
 
-[outstanding design issues]: https://rust-lang.github.io/wg-async-foundations/design_notes/async_closures.html
+[outstanding design issues]: https://rust-lang.github.io/wg-async-foundations/design_docs/async_closures.html
 
 This path does carry some risk. Adding combinator methods can cause
 existing code to stop compiling due to the ambiguities in method

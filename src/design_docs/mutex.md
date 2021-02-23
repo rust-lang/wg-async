@@ -1,4 +1,4 @@
-# Mutex (future-aware)
+# 🔒 Mutex (future-aware)
 
 [Description of various challenges with async mutexes][blog]
 

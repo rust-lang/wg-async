@@ -1,4 +1,4 @@
-# Async fn in traits
+# 🧬 Async fn in traits
 
 * [Why async fn in traits are hard][wafth]
 
@@ -81,3 +81,8 @@ trait MyMethod {
     async fn foo(&self);
 }
 ```
+
+## 🤔 Frequently Asked Questions
+
+* **What do people say about this to their friends on twitter?**
+    * (Explain your key points here)

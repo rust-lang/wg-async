@@ -1,4 +1,4 @@
-# Triage meetings
+# 🔍 Triage meetings
 
 ## When, where
 

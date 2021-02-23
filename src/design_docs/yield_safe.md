@@ -1,4 +1,4 @@
-# Yield-safe lint
+# ⚠️ Yield-safe lint
 
 ## Use-case
 
