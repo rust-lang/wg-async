@@ -1,4 +1,4 @@
-# Completion-based futures
+# ⏳ Completion-based futures
 
 [Notes on io_uring][withoutboats-blog]
 
