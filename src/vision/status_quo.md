@@ -2,9 +2,16 @@
 
 ## What is this
 
-The "status quo" stories are here to state our "theory of the case". That is, they present (and prove) our hypotheses as to what the various challenges are for users of Async I/O in Rust. These hypotheses are presented in narrative form, by telling the story of a specific [character] as they try (and typically fail in dramatic fashion) to achieve their goals.
+The "status quo" stories document the experience of using Async Rust today. Each story narrates the challenges encountered by [one of our characters][cc] as they try (and typically fail in dramatic fashion) to achieve their goals.
 
-[character]: ./characters.md
+[cc]: ./characters.md
+
+Writing "status quo" stories helps us compensate for the [curse of knowledge][cok] -- in particular, the folks working on Async Rust tend to be experts in Async Rust. We've gotten used to the [workarounds] required to be productive, and we know the little tips and tricks that can get you out of a jam. 
+
+Writing the "status quo" stories gives us a concrete way to put ourselves in [our characters'][cc] shoes. They help us to estimate the cumulative impact all the paper cuts can have on someone still learning their way around. This gives us the data we need to prioritize.
+
+[cok]: https://en.wikipedia.org/wiki/Curse_of_knowledge
+[workarounds]: https://rust-lang.github.io/async-book/07_workarounds/01_chapter.html
 
 ### Based on a true story
 
@@ -23,16 +30,16 @@ These stories are not made up. They are always based on real-life experiences of
 This is not a static document! There are lots of ways you can help to expand it! Take a look at the [How to Vision Doc](./how_to_vision_doc.md) for more details.
 
 [Alan]: ./characters.md#alan-the-startup-guy-trying-to-stand-up-a-web-stack-quickly
-[Grace]: ./characters.md#grace-the-principal-engineer-hacking-on-t4-a-new-storage-service
+[Grace]: ./characters.md#grace-the-principal-engineer-hacking-on-a-data-storage-service
 [Niklaus]: ./characters.md#niklaus-the-developer-building-generic-rust-libraries-and-frameworks
 [Barbara]: ./characters.md#barbara-embedded-developer-doing-networking
 [Volunteer wanted]: ./how_to_vision_doc.md#how-can-i-finish-or-add-a-section-to-the-document
 
 ## Alan has trouble getting started
 
-| Character | Shiny Future | Assigned To |
-| --- | --- | --- |
-| [Alan] | [Alan has a blast standing up a web server](./shiny_future.md#alan-has-a-blast-standing-up-a-web-server) | Shane and estebank |
+| Character | Shiny Future |
+| --- | --- |
+| [Alan] | [Alan has a blast standing up a web server](./shiny_future.md#alan-has-a-blast-standing-up-a-web-server) |
 
 Outline:
 
@@ -46,8 +53,7 @@ Outline:
 
 [Bob Ross]: https://www.pbs.org/show/best-joy-painting/
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+#### 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
     * Many people cite that picking a runtime is a stressful choice.
@@ -63,14 +69,11 @@ Outline:
 * **Why doesn't Alan go to the tutorial for some specific runtime?**
     * It's true that there are a number of excellent tutorials out there, like the one from [tokio](https://tokio.rs/tokio/tutorial) and [async-std](https://book.async.rs/tutorial/index.html). Unfortunately, Alan doesn't know about those runtimes yet! Alan wants to learn Rust, so that's where he started.
 
-</p>
-</details>
-
 ## Alan finds the experience of writing async code is a lot more painful than sync code
 
-| Character | Shiny Future | Assigned To |
+| Character | Shiny Future |
 | --- | --- | --- |
-| [Alan] | not yet written | ✋ [Volunteer wanted] ✋ |
+| [Alan] | not yet written |
 
 Outline:
 
@@ -80,22 +83,18 @@ Outline:
 * Alan gets a confusing compiler error about a variable being live across an await point that doesn’t seem to be live
 * Bobs gets an error message that exceeds the memory limits in his terminal program, crashes his computer, and forces him to reboot
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+#### 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
     * (Explain your key points here)
 * **Are you just making this stuff up?**
     * (Cite important sources here; feel free to add files into the conversations folder for more details)
 
-</p>
-</details>
-
 ## Grace tries to write a stream and pin breaks her mind
 
 | Character | Shiny Future | Assigned To |
 | --- | --- | --- |
-| [Grace] | [Grace discovers the joy of generators](./shiny_future.html#grace-discovers-the-joy-of-generators) | ✋ [Volunteer wanted] ✋ |
+| [Grace] | [Grace discovers the joy of generators](./shiny_future.html#grace-discovers-the-joy-of-generators) |
 
 Outline:
 
@@ -109,49 +108,43 @@ Outline:
 * it kind of works but it’s a pain to maintain and she doesn’t like fixing bugs in that code
     * she transfers to another team and somebody else deletes the file, starts over, and repeats her experience
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+#### 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
     * (Explain your key points here)
 * **Are you just making this stuff up?**
     * (Cite important sources here; feel free to add files into the conversations folder for more details)
-
-</p>
-</details>
 
 ## Grace deploys her service and hits obstacles
 
-| Character | Shiny Future | Assigned To |
-| --- | --- | --- |
-| [Grace] | [Grace deploys her service and is able to fix problems] | pnkfelix? |
+| Character | Shiny Future |
+| --- | --- |
+| [Grace] | [Grace deploys her service and is able to fix problems] |
 
 [Grace deploys her service and is able to fix problems]: ./shiny_future.md#grace-deploys-her-service-and-is-able-to-fix-problems
 
-Outline:
+When examining metrics for her service in the past, Grace has noticed tail latencies in the P99 that exceed their SLA, and identified GC in the routing layer as the problem. She decides to investigate rewriting the routing service in Rust. A few months of frantic hacking follow:
 
-* She gets stack traces from her production users and they are 10s of KB and she can’t make heads or tails of them
-    * Back in the olden days of C# they were able to fix bugs more often than not based just on the stack trace, but now they can’t even figure out what code it is talking about
-* Tasks are stuck
-* Performance is good but one customer has 10x latency —- why?
-* She wants to use tracing but it’s not stable
+<img src="https://media.giphy.com/media/ule4vhcY1xEKQ/giphy.gif" alt="montage of cats typing" width=200></img>
+ 
+Soon enough, she and her team have a proof of concept working. They run some local stress tests and notice that 5% of requests hang and fail to respond and the client eventually times out. She is unable to reproduce this problem when running one-off requests locally, it only shows up when sending above 200 requests-per-second. 
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+She realizes that she doesn't have any tooling that can give her insight into what's going on. She starts to add lots of logging, attempting to tie log entries to specific connections. Using an operating system tool, she is able to identify the socket addresses for the hung connections, so she also includes the socket addresses in each log message. She can then grep the logs to find those that are associated with the hung connections. Of course, the logs only tell her what the connection managed to do successfully, they don't tell her why it stopped -- so she has to keep going back and adding more logs until she can narrow down the exact call that hangs.
+
+Eventually, she identifies that the last log message is right before calling the HMAC authentication library that is written C, and is synchronous, but only when refreshing the private authentication token from the source of truth. 
+
+#### 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
     * (Explain your key points here)
 * **Are you just making this stuff up?**
     * (Cite important sources here; feel free to add files into the conversations folder for more details)
 
-</p>
-</details>
-
 ## Grace wants to use io-uring
 
-| Character | Shiny Future | Assigned To |
-| --- | --- | --- |
-| [Grace] | not yet written | carllerche? |
+| Character | Shiny Future |
+| --- | --- |
+| [Grace] | not yet written |
 
 Outline:
 
@@ -161,24 +154,21 @@ Outline:
     * [rio](https://crates.io/crates/rio) -- "but users should beware that use-after-free bugs are still possible without unsafe when using rio."
     * [tokio-rs/io-uring](https://github.com/tokio-rs/io-uring)
     * [quininer/ritsu](https://github.com/quininer/ritsu)
+    * ...and probably more
 * the AsyncRead trait is not a perfect fit
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+#### 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
     * (Explain your key points here)
 * **Are you just making this stuff up?**
     * (Cite important sources here; feel free to add files into the conversations folder for more details)
 
-</p>
-</details>
-
 ## Niklaus goes to write SLOW but it’s annoying
 
-| Character | Shiny Future | Assigned To |
-| --- | --- | --- |
-| [Niklaus] | not yet written | seanmonstar? |
+| Character | Shiny Future |
+| --- | --- | 
+| [Niklaus] | not yet written |
 
 Outline:
 
@@ -190,22 +180,19 @@ Outline:
     * xxx some of them are in futures??
 * maybe he wants to target WASM?
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+#### 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
     * (Explain your key points here)
 * **Are you just making this stuff up?**
     * (Cite important sources here; feel free to add files into the conversations folder for more details)
 
-</p>
-</details>
 
 ## Niklaus builds his web framework
 
-| Character | Shiny Future | Assigned To |
-| --- | --- | --- |
-| [Niklaus] | not yet written | ✋ [Volunteer wanted] ✋ |
+| Character | Shiny Future |
+| --- | --- |
+| [Niklaus] | not yet written |
 
 Outline:
 
@@ -213,35 +200,28 @@ Outline:
 * He uses the `async-trait` procedural macro but it feels weird to have that in a public, stable API.
 * As with the SLOW library, he would to make it independent of a specific runtime, but that's very difficult
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+#### 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
     * (Explain your key points here)
 * **Are you just making this stuff up?**
     * (Cite important sources here; feel free to add files into the conversations folder for more details)
 
-</p>
-</details>
-
 ## Barbara tries to use the embedded runtime
 
-| Character | Shiny Future | Assigned To |
-| --- | --- | --- |
-| [Barbara] | not yet written | ✋ [Volunteer wanted] ✋ |
+| Character | Shiny Future |
+| --- | --- |
+| [Barbara] | not yet written |
 
 Outline:
 
 * She doesn’t want to use allocation and `dyn Trait` but async fns in traits are not available on stable rust
 * She is not wanting to use nightly
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+#### 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
     * (Explain your key points here)
 * **Are you just making this stuff up?**
     * (Cite important sources here; feel free to add files into the conversations folder for more details)
 
-</p>
-</details>

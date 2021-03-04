@@ -7,3 +7,7 @@ title = "wg-async-foundations"
 
 [rust]
 edition = "2018"
+
+[output.html.fold]
+enable = true
+level = 0

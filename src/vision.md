@@ -2,41 +2,22 @@
 
 ## What is this
 
-This section lays out a general vision and set of goals for Async I/O in Rust. This document is being written in January of 2021. The core pieces of async-await are stable, but there remains a lot of work for it to feel like a "first class" feature of Rust. 
+We believe Rust can become one of the most popular choices for building network applications and services. People are already building all kinds of networked applications using Async Rust, ranging from embedded devices to clients and servers to foundational cloud services. We want those people to love using Async Rust. For that to happen, we need to move Async Rust beyond the "MVP" state it's in today and make it accessible to everyone.
 
-This section describes three things:
+This document is a collaborative effort to build a shared vision for Async Rust. **Our goal is to engage the entire community in a collective act of the imagination: how can we make the end-to-end experience of using Async I/O not only a pragmatic choice, but a joyful one?**
 
-* The **design tenets**, or principles, that we are using to drive our work on Async I/O in Rust;
-* Descriptions of how writing Async I/O code in Rust **feels today**;
-* Descriptions of how we think writing Async I/O code in Rust **should feel eventually**.
+## Involving the whole community
 
-## Status and schedule
+Building a truly great experience for Async Rust takes more than just `async fn`. We need to think about the end-to-end experience -- everything from what happens when people first learn Async Rust, to what happens as they are building their application, to what happens after deployment.
 
-**This document is currently being formed.** 
-We expect to publish the first version on March 31.
-Once that version is published, we intend to revisit the document once per quarter to keep it up to date.
-
-| Phase | Date |
-| --- | --- |
-| **Drafting initial stories and proposals** | **until March 31** |
-| 2021 Q1 revision published | March 31 |
-| 2021 Q2 revision process begins | June 14 - June 30 |
-| 2021 Q2 revision published | June 30 |
-| 2021 Q3 revision process begins | Sep 13 - Sep 30 |
-| 2021 Q3 revision published | Sep 30 |
-| 2021 Q4 revision process begins | Nov 29 - Dec 10 |
-| 2021 Q4 revision published | Dec 10 |
-
-## Think big -- too big, if you have to
-
-You'll notice that the ideas in this document are **maximalist and ambitious**. They stake out an opinionated position on how the ergonomics of Async I/O should feel. This position may not, in truth, be attainable, and for sure there will be changes along the way. Sometimes the realities of how computers actually work may prevent us from doing all that we'd like to. That's ok. This is a dream and a goal.
+The challenge for us is to drive that holistic product experience while retaining the loosely coupled, exploration-oriented ecosystem we have built. Async Rust was intentionally designed not to have a "one size fits all" mindset, and we don't want to change that. But we need a forum where we can coordinate on the overall experience we are all shooting for. That is what this document is for!
 
 ## The vision drives the work
 
 The vision is not just idle speculation. It is the central document that we use to organize ourselves. When we think about our [roadmap](./roadmap.md) for any given year, it is always with the aim of moving us closer to the vision we lay out here. 
 
-## This is a group effort
+[cc]: ./vision/charaters.md
 
-As the leads of the Async Foundation group, Niko and Tyler are driving and organizing this document. But writing it and shaping it is a group effort. If you think there is a part of the async experience that is not reflected here, we want to hear from you! Check out the [How to vision doc] for more details on how to contribute.
+## 🚧 Under construction! Help needed! 🚧
 
-[How to vision doc]: ./vision/how_to_vision_doc.md
+This document is not yet complete! We are actively working on it as part of the working group, and we would like your help! Check out the [How to vision doc](./vision/how_to_vision_doc.md) page for more details.
