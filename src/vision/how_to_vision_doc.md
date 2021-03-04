@@ -6,19 +6,37 @@ This page describes the process for contributing to the vision doc.
 [sf]: shiny_future.md
 [r]: roadmap.md
 [dd]: ../design_docs.md
+[wgl]: ../welcome.md#leads
+
+## 🚧 Under construction! Help needed! 🚧
+
+This document is not yet complete! We are actively working on it as part of the working group, and we would like your help! This page talks about what you can do to contribute.
+
+## Schedule and status
+
+We are currently working to complete a first draft of the **status quo** section. 
+
+## Use Async Rust? Tell us about your experiences!
+
+We want to make sure all Async Rust users and their experiences are reflected in the async vision doc, so please tell us your story! Share it in any form you want: blog posts, tweets, letters to the editor, whatever, as long as it has a URL. Be sure to include two things:
+
+* Which of the [cast of characters][cc] fits you best? If none of them seem to fit you, then tell us what makes you different from them.
+* What are some of the challenges that you've encountered? Bonus points if you write in narrative style.
+
+After you write your post, let us know about it by submitting the URL using this [google form][gf]. Also, if you tweet about it, use the hashtag `#asyncvisiondoc`. If you want to read other people's stories, the URLs submitted via that form can be found [in this spreadsheet][gr].
 
 ## Who owns this document?
 
 This document is owned and maintained by the leads of the Async Foundations Working Group.
 They decide what content to accept or reject. 
 This decision is made in consultation with the Rust teams that will be making the ultimate decisions. 
-For example, if a design doc or part of the shiny future is describing a new language feature, the leads ought to  discuss that with the language design team, since that team will ultimately have to approve the RFCs for its design.
+For example, if a design doc or part of the shiny future is describing a new language feature, the leads ought to discuss that with the language design team, since that team will ultimately have to approve the RFCs for its design.
 
 ## How can I finish or add a section to the document?
 
-If you'd like to volunteer to finish a section in the document, ping nikomatsakis and tmandry on Zulip, either in privmsg or the `#wg-async-foundations` stream.
+If you'd like to volunteer to finish a section in the document, ping the [working group leads][wgl] on Zulip, either in privmsg or the `#wg-async-foundations` stream.
 
-If you think you have a new section you'd like to add, write up a short description or general outline and float it on `#wg-async-foundations`. Again, please ping nikomatsakis and tmandry.
+If you think you have a new section you'd like to add, write up a short description or general outline and float it on `#wg-async-foundations`. Again, please ping the [working group leads][wgl].
 
 Assuming you get positive feedback, you can open a PR. The PR should add one or more of the following things:
 
@@ -65,7 +83,9 @@ The required FAQs vary by depending on what kind of section it is.
     * What key things did the Rust org do to make this happen?
     * What things did the other groups do to make this happen?
 * Characters
-    * Which of the async tenets would NAME put first and which would they put last? Why?
+    * What is most important to NAME about async Rust? Why?
+    * What is least important to NAME about async Rust? Why?
+    * What are key parts of NAME's background or story that distinguishes them from the other characters?
 * Design docs
     * What assumptions are you using as the basis for this design?
     * Why not do ALTERNATIVE-X? (For each compelling alternative)
@@ -73,4 +93,4 @@ The required FAQs vary by depending on what kind of section it is.
 
 ## The roadmap
 
-The roadmap describes the work we plan to do over the next year. 
+The roadmap describes the work we plan to do over the next year. It consists of a series of design documents. If you want to add something to the list, the first thing is to create the relevant design doc, and then talk to the [working group leads][wgl].

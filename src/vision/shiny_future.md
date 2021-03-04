@@ -1,21 +1,30 @@
 # ✨ Shiny future: Where we want to get to
 
+## What it this
+
 The "shiny future" is here to tell you what we are trying to build over the next 2-3 years. That is, it presents our "best guess" as to what will look like a few years from now. When describing specific features, it also embeds links to [design notes] that describe the constraints and general plans around that feature.
 
 [design notes]: ../design_notes.md
 
-Predicting the future is a tricky business! Many of the things described in the "shiny future" doc have a lot of uncertainty. We fully expect that the designs and narratives described in this document will change as we work towards realizing them. When there are areas of particular uncertainty, we use the Frequently Asked Questions and the design docs to call them out.
+### Think big -- too big, if you have to
+
+You'll notice that the ideas in this document are **maximalist and ambitious**. They stake out an opinionated position on how the ergonomics of Async I/O should feel. This position may not, in truth, be attainable, and for sure there will be changes along the way. Sometimes the realities of how computers actually work may prevent us from doing all that we'd like to. That's ok. This is a dream and a goal.
+
+We fully expect that the designs and narratives described in this document will change as we work towards realizing them. When there are areas of particular uncertainty, we use the Frequently Asked Questions and the design docs to call them out.
+
+### Help wanted
 
 **Help wanted.** This is not a static document! There are lots of ways you can help to expand it! Take a look at the [How to Vision Doc](./how_to_vision_doc.md) for more details.
 
 [Alan]: ./characters.md#alan-the-startup-guy-trying-to-stand-up-a-web-stack-quickly
-[Grace]: ./characters.md#grace-the-principal-engineer-hacking-on-t4-a-new-storage-service
+[Grace]: ./characters.md#grace-the-principal-engineer-hacking-on-a-data-storage-service
 [Niklaus]: ./characters.md#niklaus-the-developer-building-generic-rust-libraries-and-frameworks
 [Barbara]: ./characters.md#barbara-embedded-developer-doing-networking
 [Volunteer wanted]: ./how_to_vision_doc.md#how-can-i-finish-or-add-a-section-to-the-document
 
+## Shiny future stories
 
-## Alan has a blast standing up a web server
+### Alan has a blast standing up a web server
 
 | Character | Status quo | Assigned To |
 | --- | --- | --- |
@@ -28,13 +37,11 @@ Outline:
 ...
 
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+#### 🤔 Frequently Asked Questions
 * Write these
-</p>
-</details>
 
-## Grace deploys her service and is able to fix problems
+
+### Grace deploys her service and is able to fix problems
 
 | Character | Status quo | Assigned To |
 | --- | --- | --- |
@@ -48,13 +55,10 @@ Outline:
 * Hits a stalled task, debugs the problem
 * Customers complain about poor performance, she tracks it down
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+#### 🤔 Frequently Asked Questions
 * Write these
-</p>
-</details>
 
-## Grace discovers the joy of generators
+### Grace discovers the joy of generators
 
 | Character | Status quo | Assigned To |
 | --- | --- | --- |
@@ -67,8 +71,5 @@ Outline:
 * Grace uses generators and the code writes itself. It's ALMOST TOO EASY.
 
 
-<details><summary>🤔 <b>Frequently Asked Questions</b></summary>
-<p>
+#### 🤔 Frequently Asked Questions
 * Write these
-</p>
-</details>

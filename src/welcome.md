@@ -2,7 +2,9 @@
 
 Welcome to the wg-async-foundations website!
 
-**Leads**: [@tmandry] and [@nikomatsakis]
+## Leads
+
+The leads of this working group are [@tmandry] and [@nikomatsakis]. Both of them can be found on [Zulip].
 
 [@tmandry]: https://github.com/tmandry
 [@nikomatsakis]: https://github.com/nikomatsakis
