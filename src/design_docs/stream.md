@@ -26,7 +26,7 @@ pub trait Stream {
 
 * You have to think about Pin if you implement this trait.
 * Combinators can be more difficult.
-* One solution: [generator syntax](./generator_trait.md).
+* One solution: [generator syntax](./generator_syntax.md).
 
 ### Attached streams are commonly desired
 

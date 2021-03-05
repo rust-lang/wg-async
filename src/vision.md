@@ -14,7 +14,7 @@ The challenge for us is to drive that holistic product experience while retainin
 
 ## The vision drives the work
 
-The vision is not just idle speculation. It is the central document that we use to organize ourselves. When we think about our [roadmap](./roadmap.md) for any given year, it is always with the aim of moving us closer to the vision we lay out here. 
+The vision is not just idle speculation. It is the central document that we use to organize ourselves. When we think about our [roadmap](./vision/roadmap.md) for any given year, it is always with the aim of moving us closer to the vision we lay out here.
 
 [cc]: ./vision/charaters.md
 

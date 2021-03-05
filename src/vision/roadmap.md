@@ -19,4 +19,4 @@ It is updated on a monthly basis.
 | --- | --- | --- | --- |
 | [Async functions in traits] | nikomatsakis | 🥬 | 2021-02 |
 
-[Async functions in traits]: ../design_docs/async_fns_in_traits.md
+[Async functions in traits]: ../design_docs/async_fn_in_traits.md
