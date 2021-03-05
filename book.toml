@@ -8,6 +8,9 @@ title = "wg-async-foundations"
 [rust]
 edition = "2018"
 
+[output.html]
+site-url = "/wg-async-foundations/"
+
 [output.html.fold]
 enable = true
 level = 0
