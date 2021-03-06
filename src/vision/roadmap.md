@@ -3,6 +3,10 @@
 This page describes the current plans for 2021.
 It is updated on a monthly basis.
 
+### 🛑 Not time for this yet 🛑
+
+We're not really ready to work on this section yet. We're still focused on writing out the [status quo](./status_quo.md). What you see here are really just placeholders to give you the idea of what this section might look like.
+
 ## Key
 
 | Emoji | Meaning |
