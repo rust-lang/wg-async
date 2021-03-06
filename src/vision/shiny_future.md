@@ -12,9 +12,9 @@ You'll notice that the ideas in this document are **maximalist and ambitious**. 
 
 We fully expect that the designs and narratives described in this document will change as we work towards realizing them. When there are areas of particular uncertainty, we use the Frequently Asked Questions and the design docs to call them out.
 
-### Help wanted
+### 🛑 Not time for this yet 🛑
 
-**Help wanted.** This is not a static document! There are lots of ways you can help to expand it! Take a look at the [How to Vision Doc](./how_to_vision_doc.md) for more details.
+We're not really ready to work on this section yet. We're still focused on writing out the [status quo](./status_quo.md). What you see here are really just placeholders to give you the idea of what this section might look like.
 
 [Alan]: ./characters.md#alan-the-startup-guy-trying-to-stand-up-a-web-stack-quickly
 [Grace]: ./characters.md#grace-the-principal-engineer-hacking-on-a-data-storage-service

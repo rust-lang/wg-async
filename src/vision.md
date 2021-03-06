@@ -2,9 +2,11 @@
 
 ## What is this
 
-We believe Rust can become one of the most popular choices for building network applications and services. People are already building all kinds of networked applications using Async Rust, ranging from embedded devices to clients and servers to foundational cloud services. We want those people to love using Async Rust. For that to happen, we need to move Async Rust beyond the "MVP" state it's in today and make it accessible to everyone.
+Async-await first [stabilized] in November 2019, and today people are building all kinds of applications using it. We believe Rust can become one of the most popular choices for building distributed systems, ranging from embedded devices to foundational cloud services.
 
-This document is a collaborative effort to build a shared vision for Async Rust. **Our goal is to engage the entire community in a collective act of the imagination: how can we make the end-to-end experience of using Async I/O not only a pragmatic choice, but a joyful one?**
+Regardless of their application, we want all developers to love using Async Rust. For that to happen, we need to move Async Rust beyond the "MVP" state it's in today and make it accessible to everyone.
+
+This document is a collaborative effort to build a shared vision for Async Rust. **Our goal is to engage the entire community in a collective act of the imagination:** how can we make the end-to-end experience of using Async I/O not only a pragmatic choice, but a *joyful* one?
 
 ## Involving the whole community
 

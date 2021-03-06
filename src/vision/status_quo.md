@@ -72,7 +72,7 @@ Outline:
 ## Alan finds the experience of writing async code is a lot more painful than sync code
 
 | Character | Shiny Future |
-| --- | --- | --- |
+| --- | --- |
 | [Alan] | not yet written |
 
 Outline:
@@ -92,8 +92,8 @@ Outline:
 
 ## Grace tries to write a stream and pin breaks her mind
 
-| Character | Shiny Future | Assigned To |
-| --- | --- | --- |
+| Character | Shiny Future |
+| --- | --- |
 | [Grace] | [Grace discovers the joy of generators](./shiny_future.html#grace-discovers-the-joy-of-generators) |
 
 Outline:
