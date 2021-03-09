@@ -1,23 +1,16 @@
 # 🙋‍♀️ Cast of characters
 
-### Barbara: embedded developer doing networking
+## Barbara: the experienced Rust developer
 
-Barbara is building a sensor grid system using Rust. The sensors communicate wirelessly to relay their results, and Barbara is responsible for the networking component. These sensors are relatively simple devices with limited resources, so she is coding in a `#[no_std]` environment and is very careful about things like allocation.
+Barbara has been using Rust since the 0.1 release. She remembers some of the crazy syntax in Ye Olde Rust of Yore and secretly still misses the `alt` keyword (don't tell anyone). Lately she's maintaining libraries and frameworks in the async space.
 
 [axes]: ../characters.md#axes
 
-#### 🤔 Frequently Asked Questions
+## 🤔 Frequently Asked Questions
 
-* How would you describe Barbara in terms of the [axes]?
-    * *Programming language background:* C, C++
-    * *Overall programming experience:* Advanced
-    * *Async experience:* Writing custom state machines in C
-    * *Target applications:* Embedded networking
-    * *Role:* Team member
-* What is most important to Barbara about async Rust? Why?
-    * Barbara needs low-level control. She can't use typical tools.
-    * She also cares about portability: few people work in her space, and she would like to be able to use as many tools and libraries as posible.
-* What is least important to Barbara about async Rust? Why?
-    * XXX
-* What are key parts of Barbara's background or story that distinguishes them from the other characters?
-    * Working in embedded.
+* What does Barbara want most from Async Rust?
+    * She is using Rust for its feeling of productivity, and she expects Async Rust to continue in that tradition.
+    * She maintains several existing projects, so stability is important to her.
+* What expectations does Barbara bring from her current environment?
+    * She wants a design that feels like the rest of Rust.
+    * She loves Rust and she expects Async Rust to share its overall values.

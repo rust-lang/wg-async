@@ -1,24 +1,20 @@
 # 🙋‍♀️ Cast of characters
 
-### Alan: the full stack developer
+## Alan: the experienced "GC'd language" developer, new to Rust
 
-Alan is a "full stack" developer who has been solving problems for customers in many companies. He's used node.js, Ruby-on-Rails, Django, and a couple other frameworks besides. Alan was recently hired at `fido.io`, a pioneering dog-food delivery business that uses a combination of deep learning and [IoT] to select the optimum dog food for your pet's health. Fido has chosen to build their networking stack in Rust. They were already using Rust for their deep learning code and they wanted to keep to a single language. For the time being, their needs are relatively simple. They want to stand up a server that serves up pages and connects to various back-end and cloud services.
+### Variant A: Dynamic languages
 
-[IoT]: https://en.wikipedia.org/wiki/Internet_of_things
+Alan has been programming for years. He has built systems in Ruby on Rails, node.js, and used Django too. Lately he's been learning Rust and he is tinkering with integrating Rust into some of his projects to get better performance and reliability. He's also building some projects entirely in Rust.
+
+### Variant B: Java
+
+Alan works at a Java shop. They run a number of network services built in Java, along with some that use Kotlin or Scala. He's very familiar with the Java ecosystem and the tooling that the JVM offers. He's also sometimes had to tweak his code to work around garbage collector latencies or to reduce overall memory usage. He's curious to try porting some systems to Rust to see how it works.
 
 [axes]: ../characters.md#axes
 
-#### 🤔 Frequently Asked Questions
+## 🤔 Frequently Asked Questions
 
-* How would you describe Alan in terms of the [axes]?
-    * *Programming language background:* JS, Python, Ruby
-    * *Overall programming experience:* Advanced
-    * *Async experience:* From JS
-    * *Target application:* Web sites
-    * *Role:* Team member
-* What is most important to Alan about async Rust? Why?
-    * Alan prioritizes flexibility and ergonomics. He wants to be able to stand up a site quickly and be able to easily extend it to meet his future needs.
-* What is least important to Alan about async Rust? Why?
-    * Alan is not overly concerned about performance. The site has to be "fast enough" but they're not handling a ton of network traffic at the moment.
-* What are key parts of Alan's background or story that distinguishes them from the other characters?
-    * Alan's background is in dynamic languages like JavaScript, Ruby, and Python. Many of these languages have an async-await feature, but it works differently from Rust in some particulars.
+* What does Alan want most from Async Rust?
+    * The promise of better performance and memory usage than the languages he's been using. Rust's safety guarantees are important too; he's considered using C++ in the but always judged the maintenance burden would be too high.
+* What expectations does Alan bring from his current environment?
+    * A focus on ease of use, a strong ecosystem, and great tooling.
