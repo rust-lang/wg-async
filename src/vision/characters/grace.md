@@ -1,23 +1,23 @@
 # 🙋‍♀️ Cast of characters
 
-### Grace: the principal engineer hacking on a data storage service
+## Grace: the systems programming expert, new to Rust
 
-Grace is a principal engineer who has been building high-performance networking systems in Java and C++ for a number of years. She currently works on a distributed data storage service that is used in a lot of the world's largest web properties. This service is implemented in Java, with certain key components written in C++. Grace is currently working on introducing Rust into the system.
+### Variant A: Networking systems
+
+Grace has been building high-performance networking systems in C and C++ for a number of years. She's accustomed to hacking lots of low-level details to coax the most performance she can from her network stack. She's also experienced her share of epic debugging sessions resulting from memory errors in C. She's intrigued by Rust: she likes the idea of getting the same control and performance she gets from C but with the productivity benefits she gets from memory safety. She's currently experimenting with introducing Rust into some of the systems she works on, and she's considering Rust for a few greenfield projects as well.
 
 [axes]: ../characters.md#axes
 
-#### 🤔 Frequently Asked Questions
+### Variant B: Embedded
 
-* How would you describe Grace in terms of the [axes]?
-    * *Programming language background:* C(++), Java
-    * *Overall programming experience:* Advanced
-    * *Async experience:* Writing custom state machines in C
-    * *Target application:* High performance server
-    * *Role:* Principal
-* What is most important to Grace about async Rust? Why?
-    * Grace prioritizes performance, correctness, and reliability.
-* What is least important to Grace about async Rust? Why?
-    * XXX this is tricky
-* What are key parts of Grace's background or story that distinguishes them from the other characters?
-    * Grace has been working on network services for years in different languages. She's fairly familiar with existing tools and is often able to cobble together a fix to overcome obstacles.
-    * At the same time, Grace is also accustomed to a certain suite of tools being available. She's used to monitoring her Java services 
+Grace is building a sensor mesh on microcontrollers using Rust. The nodes communicate wirelessly to relay their results, and Grace is responsible for the networking component. These sensors are built using very constrained and low power hardware without operating system, so she is coding in a `#[no_std]` environment and is very careful about available resources.
+
+(Read more about [embedded applications](../applications/embedded.md).)
+
+## 🤔 Frequently Asked Questions
+
+* What does Grace want most from Async Rust?
+    * Grace is most interested in memory safety. She is comfortable with C and C++ but she's also aware of the maintenance burden that arises from the lack of memory safety.
+* What expectations does Grace bring from her current environment?
+    * Grace expects to be able to be able to get the same performance she used to get from C or C++.
+    * Grace is accustomed to various bits of low-level tooling, such as gdb or perf. It's nice if Rust works reasonably well with those tools, but she'd be happy to have access to better alternatives if they were available. She's happy using `cargo` instead of `make`, for example.

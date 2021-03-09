@@ -9,6 +9,8 @@
       - [Niklaus](./vision/characters/niklaus.md)
       - [Barbara](./vision/characters/barbara.md)
    - [⚡ Applications](./vision/applications.md)
+      - [Operating systems](./vision/applications/os.md)
+      - [Embedded devices](./vision/applications/embedded.md)
    - [😱 Status quo](./vision/status_quo.md)
    - [✨ Shiny future](./vision/shiny_future.md)
    - [📅 Roadmap for 2021](./vision/roadmap.md)
