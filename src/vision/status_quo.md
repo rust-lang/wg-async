@@ -146,7 +146,7 @@ She fixes the bug. The service is now working as expected and meeting Grace's pe
         * Examples: [seastar](http://seastar.io/) and [Glommio](https://www.datadoghq.com/blog/engineering/introducing-glommio/)
     * There is a lack of debugging tools for async.
     * Writing futures by hand is error prone.
-* **Are you just making this stuff up?**
+* **What are the sources for this story??**
     * This is based on user conversations.
 
 ## Grace wants to use io-uring
@@ -233,4 +233,3 @@ Outline:
     * (Explain your key points here)
 * **Are you just making this stuff up?**
     * (Cite important sources here; feel free to add files into the conversations folder for more details)
-
