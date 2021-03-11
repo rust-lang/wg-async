@@ -8,6 +8,8 @@ Regardless of their application, we want all developers to love using Async Rust
 
 This document is a collaborative effort to build a shared vision for Async Rust. **Our goal is to engage the entire community in a collective act of the imagination:** how can we make the end-to-end experience of using Async I/O not only a pragmatic choice, but a *joyful* one?
 
+[stabilized]: https://blog.rust-lang.org/2019/11/07/Async-await-stable.html
+
 ## Involving the whole community
 
 Building a truly great experience for Async Rust takes more than just `async fn`. We need to think about the end-to-end experience -- everything from what happens when people first learn Async Rust, to what happens as they are building their application, to what happens after deployment.
@@ -22,4 +24,4 @@ The vision is not just idle speculation. It is the central document that we use 
 
 ## 🚧 Under construction! Help needed! 🚧
 
-This document is not yet complete! We are actively working on it as part of the working group, and we would like your help! Check out the [How to vision doc](./vision/how_to_vision_doc.md) page for more details.
+This document is not yet complete! We are actively working on it as part of the working group, and we would like your help! Check out the [How to vision doc](./vision/how_to_vision.md) page for more details.
