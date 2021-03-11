@@ -12,7 +12,7 @@
 
 ## The big picture
 
-The plan is for work to proceed in two phases, **brainstorming** and **harmonizing**.
+The process for writing the vision doc encourages active collaboration and "position sum" thinking. It begins with a **brainstorming period** in which we are inviting people to describe their experiences as "status quo" stories; later on, we'll start accepting "shiny future" stories. At the end of the brainstorming period, we will be giving [awards] and then work on **harmonizing** the stories into a coherent whole.
 
 ### Brainstorming
 
@@ -20,10 +20,10 @@ The brainstorming period runs until 2021-04-30:
 
 * Folks [open status quo][hvsq] and (eventually) [shiny future][hvsf] narrative PRs.
 * We collectively [comment] on these PRs, helping to improve them and make them more complete.
-* **This is brainstorming**, so the attitude is "the more the merrier". 
-    * If a status quo is totally different from your experience, or you have an alternate idea for what the shiny future might look like, just open up your own PR!
 * At the end of the brainstorming period, we will vote and give [awards] for things like "most amusing". (We'd like suggestions on the best categories!)
 * All PRs opened in this section will be merged into a "brainstorming" folder; they become the basis for the final document.
+
+**During this brainstorming period, we want to focus on getting as many ideas as we can.** Having multiple "shiny futures" that address the same problem is a feature, not a bug, as it will let us mix-and-match later to try and find the best overall plan. Comments and questions will be used as a [tool for improving understanding or sharpening proposals.][c] Presenting alternative ideas is done by [writing an alternative narrative][alt].
 
 ### Harmonizing
 

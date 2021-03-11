@@ -10,7 +10,9 @@ Alan has been programming for years. He has built systems in Ruby on Rails, node
 
 Alan works at a Java shop. They run a number of network services built in Java, along with some that use Kotlin or Scala. He's very familiar with the Java ecosystem and the tooling that the JVM offers. He's also sometimes had to tweak his code to work around garbage collector latencies or to reduce overall memory usage. He's curious to try porting some systems to Rust to see how it works.
 
-[axes]: ../characters.md#axes
+### Variant C: Kotlin
+
+Alan is developing networking programs in Kotlin. He loves Kotlin for its expressive syntax and clean integration with Java. Still, he sometimes encounters problems running his services due to garbage collection latencies or overall memory usage. He's heard that Rust can be fun to use too, and is curious to try it out.
 
 ## 🤔 Frequently Asked Questions
 
