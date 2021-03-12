@@ -1,7 +1,8 @@
 # 🔮 The vision
 
 [cc]: ./vision/characters.md
-[Grace]: ./vision/characters/Grace.md
+[Grace]: ./vision/characters/grace.md
+[Alan]: ./vision/characters/alan.md
 [gba]: ./vision/characters/grace.md#variant-a-networking-systems
 [gba]: ./vision/characters/grace.md#variant-b-embedded
 [sq]: ./vision/status_quo.md
