@@ -6,7 +6,7 @@ We're not really ready to work on this section yet. We're still focused on writi
 
 ## What it this
 
-The "shiny future" is here to tell you what we are trying to build over the next 2-3 years. That is, it presents our "best guess" as to what will look like a few years from now. When describing specific features, it also embeds links to [design notes] that describe the constraints and general plans around that feature.
+The "shiny future" is here to tell you what we are trying to build over the next 2 to 3 years. That is, it presents our "best guess" as to what will look like a few years from now. When describing specific features, it also embeds links to [design notes] that describe the constraints and general plans around that feature.
 
 [design notes]: ../design_notes.md
 

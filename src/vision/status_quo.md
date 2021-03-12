@@ -12,16 +12,13 @@ The "status quo" stories document the experience of using Async Rust today. Each
 
 [cc]: ./characters.md
 
-Writing "status quo" stories helps us compensate for the [curse of knowledge][cok] -- in particular, the folks working on Async Rust tend to be experts in Async Rust. We've gotten used to the [workarounds] required to be productive, and we know the little tips and tricks that can get you out of a jam. 
-
-Writing the "status quo" stories gives us a concrete way to put ourselves in [our characters'][cc] shoes. They help us to estimate the cumulative impact all the paper cuts can have on someone still learning their way around. This gives us the data we need to prioritize.
+Writing the "status quo" stories helps us to compensate for the [curse of knowledge][cok]: the folks working on Async Rust tend to be experts in Async Rust. We've gotten used to the workarounds required to be productive, and we know the little tips and tricks that can get you out of a jam. The stories help us gauge the cumulative impact all the paper cuts can have on someone still learning their way around. This gives us the data we need to prioritize.
 
 [cok]: https://en.wikipedia.org/wiki/Curse_of_knowledge
-[workarounds]: https://rust-lang.github.io/async-book/07_workarounds/01_chapter.html
 
 ### Based on a true story
 
-These stories are not made up. They are always based on real-life experiences of actual people. Each story contains a "Frequently Asked Questions" section, and that will include notes the sources used to create the story. In some cases, it may link to notes or summaries in the [conversations] section, though that is not required. The "Frequently Asked Questions" section also contains a summary of what the "morals" of the story are (i.e., what are the key takeaways), along with answers to questions that people have raised along the way.
+These stories may not be true, but they are not fiction. They are based on real-life experiences of actual people. Each story contains a "Frequently Asked Questions" section, and that will include notes the sources used to create the story. In some cases, it may link to notes or summaries in the [conversations] section, though that is not required. The "Frequently Asked Questions" section also contains a summary of what the "morals" of the story are (i.e., what are the key takeaways), along with answers to questions that people have raised along the way.
 
 [conversations]: ../conversations.md
 
