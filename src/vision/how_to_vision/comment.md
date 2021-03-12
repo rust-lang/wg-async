@@ -16,7 +16,7 @@ The golden rule is that when you leave a comment, you are looking to understand 
 
 For status quo stories, remember that these are true stories about people's experiences -- they can't be *wrong* (though they could be inaccurate). It may be that somebody tries for days to solve a problem that would've been easy if they had just known to call a particular method. That story is not wrong, it's an opportunity to write a shiny future story in which you explain how they would've learned about that method, or perhaps about how that method would become unnecessary.
 
-For shiny future stories, even if you don't like the idea, you should ask comments with the goal of better undersatnding what the author likes about it. Understanding that may give you an idea for how to get those same benefits in a way that you are happier with. It's also valid to encourage the author to elaborate on the impact their story will have on different characters.
+For shiny future stories, even if you don't like the idea, you should ask comments with the goal of better understanding what the author likes about it. Understanding that may give you an idea for how to get those same benefits in a way that you are happier with. It's also valid to encourage the author to elaborate on the impact their story will have on different characters.
 
 ## You might just want to write your own story
 
