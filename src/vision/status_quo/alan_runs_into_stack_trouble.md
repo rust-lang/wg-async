@@ -25,7 +25,7 @@ thread 'main' has overflowed its stack
 
 ### Searching for the solution
 
-Having really only ever seen stack overflow issues caused by recursive functions, Alan desperately tries to find the source of the bug but searching through the codebase for recursive functions only to find none. Having learned that Rust favors stack allocation over heap allocation (a concept Alan didn't really need to worry about before), he decided to also search for structs that looked large but none appeared in his code.
+Having really only ever seen stack overflow issues caused by recursive functions, Alan desperately tries to find the source of the bug but searching through the codebase for recursive functions only to find none. Having learned that Rust favors stack allocation over heap allocation (a concept Alan didn't really need to worry about before), he started manually looking through his code, searching for structs that looked "too large"; he wasn't able to find any candidates.
 
 Confused, Alan reached out to Grace for her advice. She suggested making the stack size larger. Although she wasn't a Windows expert, she remembers hearing that stack sizes on Windows might be smaller than on Linux. After much searching, Alan discovers an option do just that: `RUSTFLAGS = "-C link-args=-Wl,-zstack-size=<size in bytes>"`.
 
