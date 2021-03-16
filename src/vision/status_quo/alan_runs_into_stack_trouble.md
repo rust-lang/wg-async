@@ -9,7 +9,7 @@
 
 ### The problem
 
-Alan is working on a networking service written using async Rust and the tokio async runtime. One day, after many changes to his code base, Alan runs his application and hits an error:
+One day, as Alan is working on his async Rust project, he runs his application and hits an error:
 
 ```
 $ .\target\debug\application.exe
