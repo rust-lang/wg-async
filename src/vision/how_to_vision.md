@@ -18,7 +18,7 @@ The process for writing the vision doc encourages active collaboration and "posi
 
 The brainstorming period runs until 2021-04-30:
 
-* Folks [open status quo][hvsq] and (eventually) [shiny future][hvsf] narrative PRs.
+* Folks [open status quo][hvsq] and (eventually) [shiny future][hvsf] narrative [PRs][repo].
 * We collectively [comment] on these PRs, helping to improve them and make them more complete.
 * At the end of the brainstorming period, we will vote and give [awards] for things like "most amusing". (We'd like suggestions on the best categories!)
 * All PRs opened in this section will be merged into a "brainstorming" folder; they become the basis for the final document.
@@ -46,6 +46,7 @@ This meant to be a **living document**. We plan to revisit it regularly to track
 [awards]: ./how_to_vision/awards.md
 [wg leads]: ../welcome.md#leads
 [hva]: ./how_to_vision/applications.md
+[repo]: https://github.com/rust-lang/wg-async-foundations
 
 ## Wait, did somebody say awards?
 
