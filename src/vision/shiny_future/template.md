@@ -1,5 +1,9 @@
 # ✨ Shiny future stories: template
 
+*This is a template for adding new "shiny future" stories. See the [instructions] for more details on how to add new "shiny future" stories!*
+
+[instructions]: ../how_to_vision/shiny_future.md
+
 ### 🛑 Not time for this yet 🛑
 
 We are not yet accepting shiny future story ideas!

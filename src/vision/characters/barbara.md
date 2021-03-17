@@ -2,7 +2,7 @@
 
 ## Barbara: the experienced Rust developer
 
-Barbara has been using Rust since the 0.1 release. She remembers some of the crazy syntax in Ye Olde Rust of Yore and secretly still misses the `alt` keyword (don't tell anyone). Lately she's maintaining libraries and frameworks in the async space.
+Barbara has been using Rust since the 0.1 release. She remembers some of the crazy syntax in Ye Olde Rust of Yore and secretly still misses the `alt` keyword (don't tell anyone). Lately she's maintaining various projects in the async space.
 
 [axes]: ../characters.md#axes
 

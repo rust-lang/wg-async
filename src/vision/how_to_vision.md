@@ -12,7 +12,7 @@
 
 ## The big picture
 
-The process for writing the vision doc encourages active collaboration and "position sum" thinking. It begins with a **brainstorming period** in which we are inviting people to describe their experiences as "status quo" stories; later on, we'll start accepting "shiny future" stories. At the end of the brainstorming period, we will be giving [awards] and then work on **harmonizing** the stories into a coherent whole.
+The process for writing the vision doc encourages active collaboration and "positive sum" thinking. It begins with a **brainstorming period** in which we are inviting people to describe their experiences as "status quo" stories; later on, we'll start accepting "shiny future" stories. At the end of the brainstorming period, we will be giving [awards] and then work on **harmonizing** the stories into a coherent whole.
 
 ### Brainstorming
 

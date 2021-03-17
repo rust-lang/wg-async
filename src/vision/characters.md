@@ -4,16 +4,12 @@
 
 We've created four characters that we use to guide our thinking. These characters are the protagonists of our [status quo] and [shiny future] stories, and they help us to think about the different kinds of priorities and expectations that people bring to Async Rust. Having names and personalities also makes the stories more fun and approachable.
 
-In some cases, the characters have multiple variants. For example, the "systems programming expert" Grace has both a [networking systems variant] and an [embedded variant]. This makes sense so long as all those variants share the same fundamental priorities and expectations.
-
 [Alan]: ./characters/alan.md
 [Grace]: ./characters/grace.md
 [Niklaus]: ./characters/niklaus.md
 [Barbara]: ./characters/barbara.md
 [status quo]: ./status_quo.md
 [shiny future]: ./shiny_future.md
-[networking systems variant]: ./characters/grace.md#variant-a-networking-systems
-[embedded variant]: ./characters/grace.md#variant-b-embedded
 
 ## The characters
 
