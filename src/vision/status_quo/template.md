@@ -1,5 +1,9 @@
 # 😱 Status quo stories: Template
 
+*This is a template for adding new "status quo" stories. See the [instructions] for more details on how to add new "status quo" stories!*
+
+[instructions]: ../how_to_vision/status_quo.md
+
 ## 🚧 Warning: Draft status 🚧
 
 This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
