@@ -7,6 +7,12 @@
 
 [Grace deploys her service and is able to fix problems]: ./shiny_future.md#grace-deploys-her-service-and-is-able-to-fix-problems
 
+## 🚧 Warning: Draft status 🚧
+
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
+
+## The story
+
 When examining her service metrics, [Grace] notices tail latencies in the P99 that exceed their target. She identifies GC in the routing layer as the culprit. Grace follows industry trends and is already aware of Rust and its ecosystem at a high level. She decides to investigate rewriting the routing service in Rust.
 
 To meet throughput requirements, Grace has already decided to use a thread-per-core model and minimize cross-thread communication. She explores available ecosystem options and finds no option that gets her exactly what she is looking for out of the box. However, she can use Tokio with minimal configuration to achieve her architecture.

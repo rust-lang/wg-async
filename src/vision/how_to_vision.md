@@ -18,10 +18,14 @@ The process for writing the vision doc encourages active collaboration and "posi
 
 The brainstorming period runs until 2021-04-30:
 
-* Folks [open status quo][hvsq] and (eventually) [shiny future][hvsf] narrative [PRs][repo].
+* Folks open status quo and (eventually) shiny future narrative PRs against the [wg-async-foundations repo][repo].
+    * [Templates and instructions for status quo stories can be found here.][hvsq] 
+    * You can also browse the [open "status quo" issues] for ideas!
+    * [Templates and instructions for shiny future stories can be found here.][hvsf]
 * We collectively [comment] on these PRs, helping to improve them and make them more complete.
+* Unless they contain factual inaccuracies, the aim is to merge **all** PRs opened in the brainstorming period.
+    * We also expect people to sometimes extend other stories with additional details or FAQs.
 * At the end of the brainstorming period, we will vote and give [awards] for things like "most amusing". (We'd like suggestions on the best categories!)
-* All PRs opened in this section will be merged into a "brainstorming" folder; they become the basis for the final document.
 
 **During this brainstorming period, we want to focus on getting as many ideas as we can.** Having multiple "shiny futures" that address the same problem is a feature, not a bug, as it will let us mix-and-match later to try and find the best overall plan. Comments and questions will be used as a [tool for improving understanding or sharpening proposals.][c] Presenting alternative ideas is done by [writing an alternative narrative][alt].
 
@@ -47,6 +51,7 @@ This meant to be a **living document**. We plan to revisit it regularly to track
 [wg leads]: ../welcome.md#leads
 [hva]: ./how_to_vision/applications.md
 [repo]: https://github.com/rust-lang/wg-async-foundations
+[open "status quo" issues]: https://github.com/rust-lang/wg-async-foundations/labels/status-quo-story-ideas
 
 ## Wait, did somebody say awards?
 

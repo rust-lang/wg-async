@@ -6,7 +6,20 @@ We want to make sure all Async Rust users and their experiences are reflected in
 [character]: ../characters.md
 [comment]: ./comment.md
 
-## Goals of a status quo PR
+## Optional: open an issue to discuss your story or find others with similar experiences
+
+If you have a story idea but you don't time to write about it, or if you would like to know whether other folks have encountered the same sorts of problems, you can [open up a "status quo" story issue][issue] on the wg-async-foundations repository. Alternatively, if you're looking for a story to write, you can browse the [open issues tagged as status-quo-story-idea][oi] and see if anything catches your eye. If you see people describing problems you have hit, or have questions about the experiences people are sharing, then please leave a comment -- but remember to [comment supportively][comment]. (You can also come to [Zulip] to discuss.)
+
+[sqsi]: https://github.com/rust-lang/wg-async-foundations/labels/status-quo-story-ideas
+[Zulip]: ../../welcome.md#Zulip
+[issue]: https://github.com/rust-lang/wg-async-foundations/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
+[oi]: https://github.com/rust-lang/wg-async-foundations/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
+
+## How to open a PR
+
+If you have an idea you'd like to write about, please [open a PR using this template][template] and adding a new file into [the `status_quo` directory][sqd]. Don't forget to add your file to [`SUMMARY.md`] as well.
+
+## Goals of a status quo PR 
 
 When writing a [status quo][sq] narrative, your goal is to present what you see as a major challenge for Async Rust. You want to draw upon people's experiences (sometimes multiple people) to show all the aspects of the problem in an engaging and entertaining way.
 
@@ -40,7 +53,8 @@ The goal is that, at the end of the review process, the status quo story has a l
 ## 🤔 Frequently Asked Questions
 
 * What is the process to propose a status quo story?
-    * Just open a PR!
+    * Just open a PR [using this template][template].
+    * Don't forget to add your chapter to [`SUMMARY.md`].
 * What if my story applies to multiple characters?
     * Look at the "morals" of your story and decide which character will let you get those across the best.
     * Use the FAQ to talk about how other characters might have been impacted.
@@ -54,3 +68,7 @@ The goal is that, at the end of the review process, the status quo story has a l
     * It doesn't have to be perfect. Pick the one that seems like the closest fit. If you really feel stuck, though, come talk to us on [Zulip] about it!
 * How should I describe the "evidence" for my status quo story?
     * The more specific you can get, the better. If you can link to tweets or blog posts, that's ideal. You can also add notes into the [conversations] folder and link to those. Of course, you should be sure people are ok with that.
+
+[template]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo/template.md
+[sqd]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
