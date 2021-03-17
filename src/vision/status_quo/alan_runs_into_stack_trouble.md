@@ -5,25 +5,25 @@
 [Niklaus]: ../characters/niklaus.md
 [Barbara]: ../characters/barbara.md
 
-[Alan runs into stack allocation trouble and is able to fix problems]: TODO
+## 
 
-### The problem
+## The problem
 
 One day, as Alan is working on his async Rust project, he runs his application and hits an error:
 
-```
+```ignore
 $ .\target\debug\application.exe
 thread 'main' has overflowed its stack
 ```
 
 Perplexed, Alan sees if anything with his application works by seeing if he can get output when the `--help` flag is passed, but he has no luck:
 
-```
+```ignore
 $ .\target\debug\application.exe --help
 thread 'main' has overflowed its stack
 ```
 
-### Searching for the solution
+## Searching for the solution
 
 Having really only ever seen stack overflow issues caused by recursive functions, Alan desperately tries to find the source of the bug but searching through the codebase for recursive functions only to find none. Having learned that Rust favors stack allocation over heap allocation (a concept Alan didn't really need to worry about before), he started manually looking through his code, searching for structs that looked "too large"; he wasn't able to find any candidates.
 
@@ -33,7 +33,7 @@ While eventually Alan gets the program to run, the stack size must be set to 4GB
 
 Alan reaches out to Barbara for her expertise in Rust to see if she has something to suggest. Barbara recommends using `RUSTFLAGS = "-Zprint-type-sizes` to print some type sizes and see if anything jumps out. Barbara noted that if Alan does find a type that stands out, it's usually as easy as putting some boxes in that type to provide some indirection and not have everything be stack allocated. Alan never needs the nightly toolchain, but this option requires it so he installs it using `rustup`. After searching through types, one did stand out as being quite large. Ultimately, this was a red herring, and putting parts of it in `Box`es did not help.
 
-### Finding the solution
+## Finding the solution
 
 After getting no where, Alan went home for the weekend defeated. On Monday, he decided to take another look. One piece of code, stuck out to him: the use of the `select!` macro from the `futures` crate. This macro allowed multiple futures to race against each other, returning the value of the first one to finish. This macro required the futures to be pinned which the docs had shown could be done by using `pin_mut!`. Alan didn't fully grasp what `pin_mut!` was actually doing when he wrote that code. The compiler had complained to him that the futures he was passing to `select!` needed to be pinned, and `pin_mut!` was what he found to make the compiler happy.
 

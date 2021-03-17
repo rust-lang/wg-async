@@ -13,6 +13,10 @@ We're not ready for this yet! See the [how to vision](../how_to_vision.md) page 
 [Barbara]: ../characters/barbara.md
 [applications]: ../applications.md
 
+## How to open a PR
+
+If you have an idea you'd like to write about, please [open a PR using this template][template] and adding a new file into [the `shiny_future` directory][sfd]. Don't forget to add your file to [`SUMMARY.md`] as well.
+
 ## Goals of a shiny future PR
 
 Shiny future PRs "retell" the story from one or more status quo PRs. The story is now taking place 2-3 years in the future, when Async Rust has had the chance to make all sorts of improvements. **Shiny future stories are aspirational:** we don't have to know exactly how they will be achieved yet! (Of course, it never hurts to have a plan too.)
@@ -24,7 +28,7 @@ Like [status quo stories], each shiny future story is always presented from the 
 Every shiny future PR includes a FAQ. This FAQ should always include answers to some standard questions:
 
 * What status quo story or stories are you retelling?
-    * List out the PRs here. If there isn't a story that you're retelling, [write it](./status_quo.md)!
+    * Link to the status quo stories here. If there isn't a story that you're retelling, [write it](./status_quo.md)!
 * What is [Alan] most excited about in this future? Is he disappointed by anything?
     * Think about Alan's top priority (performance) and the expectations he brings (ease of use, tooling, etc). How do they fare in this future?
 * What is [Grace] most excited about in this future? Is she disappointed by anything?
@@ -34,7 +38,7 @@ Every shiny future PR includes a FAQ. This FAQ should always include answers to 
 * What is [Barbara] most excited about in this future? Is she disappointed by anything?
     * Think about Barbara's top priority (productivity, maintenance over time) and the expectations she brings (fits well with Rust). How do they fare in this future?
 * If this is an alternative to another shiny future, which one, and what motivated you to write an alternative?
-    * Cite the PR. Be specific, but focus on what you like about your version, not what you dislike about the other.
+    * Cite the story. Be specific, but focus on what you like about your version, not what you dislike about the other.
     * If this is not an alternative, you can skip this one. =)
 * What [applications] benefit the most from this future?
 * Are there any [applications] that are hindered by this future?
@@ -62,7 +66,8 @@ The goal is that, at the end of the review process, the status quo story has a l
 ## 🤔 Frequently Asked Questions
 
 * What is the process to propose a shiny future story?
-    * Just open a PR!
+    * Just open a PR [using this template][template].
+    * Don't forget to add your chapter to [`SUMMARY.md`].
 * What character should I use for my shiny future story?
     * Usually you would use the same character from the status quo story you are retelling.
     * If for some reason you chose a different character, add a FAQ to explain why.
@@ -77,3 +82,7 @@ The goal is that, at the end of the review process, the status quo story has a l
     * You don't have to know how your idea will work yet. You can add FAQs to try and clarify what parts you do know and what parts still need to be figured out.
 * What do I do if somebody leaves a comment about how my idea will work and I don't know the answer?
     * Add it to the FAQ!
+
+[template]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future/template.md
+[sfd]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md

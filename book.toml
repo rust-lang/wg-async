@@ -10,6 +10,7 @@ edition = "2018"
 
 [output.html]
 site-url = "/wg-async-foundations/"
+git-repository-url = "https://github.com/rust-lang/wg-async-foundations"
 
 [output.html.fold]
 enable = true
