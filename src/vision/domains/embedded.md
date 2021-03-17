@@ -1,4 +1,4 @@
-# ⚡ Applications: Embedded devices
+# ⚡ Domain: Embedded devices
 
 ## Brief description
 
@@ -6,7 +6,7 @@ Threading and communication on embedded systems that often lack basics like an o
 
 ## 🤔 Frequently Asked Questions
 
-* What are some of the "special requirements" for embedded applications?
+* What are some of the "special requirements" for embedded domains?
     * Embedded developers need to write error-free applications outside of the comfort zone of an operating system. Rust helps to prevent many classes of programming errors at compile time which inspires confidence in the software quality and and cuts time intensive build-flash-test iterations.
     * Embedded developers needs good hardware abstraction. Frameworks in other languages do not provide the sophistacted memory mapped IO to safe type abstraction tooling which have been created by the Rust teams.
     * Embedded developers care about hard real time capabilities; the concept of "you only pay for what you use" is very important in embedded applications. The combination of the inherently asynchronous interrupt handling of microcontrollers with the Rust async building blocks are a perfect match to effortlessly create applications with hard realtime capabilities.

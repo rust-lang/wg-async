@@ -1,4 +1,4 @@
-# ⚡ Applications: Operating systems
+# ⚡ Domain: Operating systems
 
 ## Brief description
 

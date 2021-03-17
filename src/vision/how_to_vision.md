@@ -4,7 +4,7 @@
 
 | When | What |
 | --- | --- |
-| ✅ **Now!** | Improve the [application descriptions][hva] |
+| ✅ **Now!** | Improve the [domain descriptions][hva] |
 | ✅ **Now!** | Propose new [status quo narratives][hvsq] or [comment] on existing PRs |
 | ✅ **Now!** | Propose [awards] for the narratives |
 | 🛑 Starting 2021-04-02 | Propose new [shiny future narratives][hvsf] or [comment] on existing PRs |
@@ -45,7 +45,7 @@ This meant to be a **living document**. We plan to revisit it regularly to track
 [comment]: ./how_to_vision/comment.md
 [awards]: ./how_to_vision/awards.md
 [wg leads]: ../welcome.md#leads
-[hva]: ./how_to_vision/applications.md
+[hva]: ./how_to_vision/domains.md
 [repo]: https://github.com/rust-lang/wg-async-foundations
 
 ## Wait, did somebody say awards?

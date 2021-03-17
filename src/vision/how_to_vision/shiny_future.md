@@ -11,7 +11,7 @@ We're not ready for this yet! See the [how to vision](../how_to_vision.md) page 
 [Grace]: ../characters/grace.md
 [Niklaus]: ../characters/niklaus.md
 [Barbara]: ../characters/barbara.md
-[applications]: ../applications.md
+[domains]: ../domains.md
 
 ## Goals of a shiny future PR
 
@@ -36,8 +36,8 @@ Every shiny future PR includes a FAQ. This FAQ should always include answers to 
 * If this is an alternative to another shiny future, which one, and what motivated you to write an alternative?
     * Cite the PR. Be specific, but focus on what you like about your version, not what you dislike about the other.
     * If this is not an alternative, you can skip this one. =)
-* What [applications] benefit the most from this future?
-* Are there any [applications] that are hindered by this future?
+* What [domains] benefit the most from this future?
+* Are there any [domains] that are hindered by this future?
 
 There are also some optional questions:
 

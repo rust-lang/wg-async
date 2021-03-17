@@ -39,7 +39,7 @@ In some cases, the characters have multiple variants. For example, the "systems 
 * I see myself in more than one of these characters!
     * Yeah, me too.
 
-[applications]: ./applications.md
+[domains]: ./domains.md
 [Alan Turing]: https://en.wikipedia.org/wiki/Alan_Turing
 [Grace Hopper]: https://en.wikipedia.org/wiki/Grace_Hopper
 [Niklaus Wirth]: https://en.wikipedia.org/wiki/Niklaus_Wirth

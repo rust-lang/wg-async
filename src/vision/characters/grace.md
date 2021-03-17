@@ -12,7 +12,7 @@ Grace has been building high-performance networking systems in C and C++ for a n
 
 Grace is building a sensor mesh on microcontrollers using Rust. The nodes communicate wirelessly to relay their results, and Grace is responsible for the networking component. These sensors are built using very constrained and low power hardware without operating system, so she is coding in a `#[no_std]` environment and is very careful about available resources.
 
-(Read more about [embedded applications](../applications/embedded.md).)
+(Read more about the [embedded domain](../domains/embedded.md).)
 
 ## 🤔 Frequently Asked Questions
 

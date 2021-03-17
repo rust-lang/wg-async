@@ -1,11 +1,11 @@
-# ❓ How to vision: Applications
+# ❓ How to vision: Domains
 
-[la]: ../applications.md
+[ld]: ../domains.md
 [wg leads]: ../welcome.md#leads
 
 ## What is this?
 
-We aim for the [list of applications][la] to be comprehensive. Feel free to open PRs that either add new applications or adjust the wording on 
+We aim for the [list of domains][ld] to be comprehensive. Feel free to open PRs that either add new domains or adjust the wording on 
 existing ones. The [wg leads] may choose however not to add an application, or to generalize an existing category instead.
 
 ## FAQs to answer in your PR
