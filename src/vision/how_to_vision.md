@@ -5,15 +5,15 @@
 | When | What |
 | --- | --- |
 | ✅ **Now** till 2021-04-30 | Improve the [sample projects][hvp] |
-| ✅ **Now** till 2021-04-30 | Propose new [status quo narratives][hvsq] or [comment] on existing PRs |
-| 🛑 Starting 2021-04-02 | Propose new [shiny future narratives][hvsf] or [comment] on existing PRs |
-| 🛑 Starting 2021-04-30 | Vote for the [awards] on the status quo and shiny future narratives! |
+| ✅ **Now** till 2021-04-30 | Propose new ["status quo" stories][hvsq] or [comment] on existing PRs |
+| 🛑 Starting 2021-04-02 | Propose new ["shiny future" stories][hvsf] or [comment] on existing PRs |
+| 🛑 Starting 2021-04-30 | Vote for the [awards] on the status quo and shiny future stories! |
 
 ## The big picture
 
 The process we are using to write the vision doc encourages active collaboration and "positive sum" thinking. It starts with a brainstorming period, during which we aim to collect as many "status quo" and "shiny future" stories as we can. 
 
-This brainstorming period runs for six weeks, until the end of April. For the first two weeks (until 2021-04-02), we are collecting "status quo" stories only. After that, we will accept both "status quo" and "shiny future" stories until the end of the brainstorming period. Finally, to cap off the brainstorming period, we will select winners for [awards] like "Most Humorous Story" or "Must Supportive Contributor". 
+This brainstorming period runs for six weeks, until the end of April. For the first two weeks (until 2021-04-02), we are collecting ["status quo" stories][hvsq] only. After that, we will accept both ["status quo"][hvsq] and ["shiny future" stories][hvsf] until the end of the brainstorming period. Finally, to cap off the brainstorming period, we will select winners for [awards] like "Most Humorous Story" or "Must Supportive Contributor". 
 
 Once the brainstorming period is complete, the working group leads will begin work on assembling the various stories and shiny futures into a coherent draft. This draft will be reviewed by the community and the Rust teams and adjusted based on feedback.
 
@@ -21,7 +21,7 @@ Once the brainstorming period is complete, the working group leads will begin wo
 
 The brainstorming period runs until 2021-04-30:
 
-* Folks open status quo and (eventually) shiny future narrative PRs against the [wg-async-foundations repo][repo].
+* Folks open "status quo" and (starting 2021-04-02) "shiny future" story PRs against the [wg-async-foundations repo][repo].
     * [Templates and instructions for status quo stories can be found here.][hvsq] 
     * You can also browse the [open "status quo" issues] for ideas!
     * [Templates and instructions for shiny future stories can be found here.][hvsf]
@@ -32,7 +32,7 @@ The brainstorming period runs until 2021-04-30:
 
 #### The more the merrier!
 
-**During this brainstorming period, we want to focus on getting as many ideas as we can.** Having multiple "shiny futures" that address the same problem is a feature, not a bug, as it will let us mix-and-match later to try and find the best overall plan. Comments and questions will be used as a [tool for improving understanding or sharpening proposals.][comment] Presenting alternative ideas is done by [writing an alternative narrative][alt].
+**During this brainstorming period, we want to focus on getting as many ideas as we can.** Having multiple "shiny futures" that address the same problem is a feature, not a bug, as it will let us mix-and-match later to try and find the best overall plan. Comments and questions will be used as a [tool for improving understanding or sharpening proposals.][comment] Presenting alternative ideas is done by [writing an alternative story][alt].
 
 [alt]: https://nikomatsakis.github.io/wg-async-foundations/vision/how_to_vision/comment.html#you-might-just-want-to-write-your-own-story
 

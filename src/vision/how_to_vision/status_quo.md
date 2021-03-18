@@ -35,7 +35,7 @@ If you have an idea you'd like to write about, please [open a PR using this temp
 
 ## Goals of a status quo PR 
 
-When writing a [status quo][sq] narrative, your goal is to present what you see as a major challenge for Async Rust. You want to draw upon people's experiences (sometimes multiple people) to show all the aspects of the problem in an engaging and entertaining way.
+When writing a [status quo][sq] story, your goal is to present what you see as a major challenge for Async Rust. You want to draw upon people's experiences (sometimes multiple people) to show all the aspects of the problem in an engaging and entertaining way.
 
 Each story is always presented from the POV of a particular [character]. Stories should be detailed, not abstract -- it's better to give specifics than generalities. Don't say "Grace visited a website to find the answer to her question", tell us whether she went to stackoverflow, asked on reddit, or found the answer on some random blog post. Ideally you should get this detail from whatever your "source" of the story is -- but if you are using multiple sources and they disagree, you can pick one and use the FAQ to convey some of the other alternatives.
 
