@@ -17,6 +17,6 @@ Alan is developing networking programs in Kotlin. He loves Kotlin for its expres
 ## 🤔 Frequently Asked Questions
 
 * What does Alan want most from Async Rust?
-    * The promise of better performance and memory usage than the languages he's been using. Rust's safety guarantees are important too; he's considered using C++ in the but always judged the maintenance burden would be too high.
+    * The promise of better performance and memory usage than the languages he's been using. Rust's safety guarantees are important too; he's considered using C++ in the past but always judged the maintenance burden would be too high.
 * What expectations does Alan bring from his current environment?
     * A focus on ease of use, a strong ecosystem, and great tooling.
