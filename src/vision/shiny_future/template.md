@@ -1,8 +1,16 @@
 # ✨ Shiny future stories: template
 
-*This is a template for adding new "shiny future" stories. See the [instructions] for more details on how to add new "shiny future" stories!*
+*This is a template for adding new "shiny future" stories. To propose a new shiny future PR, do the following:*
 
-[instructions]: ../how_to_vision/shiny_future.md
+* *Create a new file in the [`shiny_future`] directory named something like `Alan_loves_foo.md` or `Grace_does_bar_and_its_great.md`, and start from [the raw source from this template]. You can replace all the italicized stuff. :)*
+* *Do not add a link to your story to the [`SUMMARY.md`] file; we'll do it after merging, otherwise there will be too many conflicts.*
+
+*For more detailed instructions, see the [How To Vision: Shiny Future] page!*
+
+[How To Vision: Shiny Future]: ../how_to_vision/shiny_future.md
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/shiny_future/template.md
+[`shiny_future`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
 
 ### 🛑 Not time for this yet 🛑
 

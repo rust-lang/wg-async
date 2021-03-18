@@ -13,9 +13,17 @@ We're not ready for this yet! See the [how to vision](../how_to_vision.md) page 
 [Barbara]: ../characters/barbara.md
 [applications]: ../applications.md
 
+## TL;DR
+
+Just want to get started? Here are quick instructions to get you going:
+
+* **To write your own story:**
+    * Create a PR adding a new file to [the `shiny_future` directory][sfd] based on the ["shiny future" template][template]. 
+    * Do not add your file to [`SUMMARY.md`] -- that will create conflicts, we'll do it manually after merging.
+
 ## How to open a PR
 
-If you have an idea you'd like to write about, please [open a PR using this template][template] and adding a new file into [the `shiny_future` directory][sfd]. Don't forget to add your file to [`SUMMARY.md`] as well.
+If you have an idea you'd like to write about, please [open a PR using this template][template] and adding a new file into [the `shiny_future` directory][sfd]. Do not add your file to [`SUMMARY.md`], that will create conflicts. We'll do it after merging.
 
 ## Goals of a shiny future PR
 
@@ -65,22 +73,22 @@ The goal is that, at the end of the review process, the status quo story has a l
 
 ## 🤔 Frequently Asked Questions
 
-* What is the process to propose a shiny future story?
+* **What is the process to propose a shiny future story?**
     * Just open a PR [using this template][template].
-    * Don't forget to add your chapter to [`SUMMARY.md`].
-* What character should I use for my shiny future story?
+    * Do not add your file to [`SUMMARY.md`], that will create conflicts. We'll do it after merging.
+* **What character should I use for my shiny future story?**
     * Usually you would use the same character from the status quo story you are retelling.
     * If for some reason you chose a different character, add a FAQ to explain why.
-* What do I do if there is no status quo story for my shiny future?
+* **What do I do if there is no status quo story for my shiny future?**
     * [Write the status quo story first!](./status_quo.md)
-* How much detail should I give? How specific should I be?
+* **How much detail should I give? How specific should I be?**
     * Detailed is generally better, but only if those details are helpful for understanding the morals of your story.
     * Specific is generally better, since an abstract story doesn't feel as real.
-* What do I do when I get to details that I don't know yet?
+* **What do I do when I get to details that I don't know yet?**
     * Take your best guess and add a FAQ explaining which details are still up in the air.
-* What do I do if I don't know that my idea is technically feasible?
+* **What do I do if I don't know that my idea is technically feasible?**
     * You don't have to know how your idea will work yet. You can add FAQs to try and clarify what parts you do know and what parts still need to be figured out.
-* What do I do if somebody leaves a comment about how my idea will work and I don't know the answer?
+* **What do I do if somebody leaves a comment about how my idea will work and I don't know the answer?**
     * Add it to the FAQ!
 
 [template]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future/template.md

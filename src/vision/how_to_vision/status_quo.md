@@ -17,7 +17,7 @@ Just want to get started? Here are quick instructions to get you going:
     * Remember to [comment supportively][comment].
 * **To write your own story:**
     * Create a PR adding a new file to [the `status_quo` directory][sqd] based on the [status quo template][template]. 
-    * Don't forget to add your file to [`SUMMARY.md`] as well!
+    * Do not add your file to [`SUMMARY.md`] -- that will create conflicts, we'll do it manually after merging.
 
 ## Optional: open an issue to discuss your story or find others with similar experiences
 
@@ -31,7 +31,7 @@ If you have a story idea but you don't time to write about it, or if you would l
 
 ## How to open a PR
 
-If you have an idea you'd like to write about, please [open a PR using this template][template] and adding a new file into [the `status_quo` directory][sqd]. Don't forget to add your file to [`SUMMARY.md`] as well.
+If you have an idea you'd like to write about, please [open a PR using this template][template] and adding a new file into [the `status_quo` directory][sqd]. Do not add your file to [`SUMMARY.md`] -- that will create conflicts, we'll do it manually after merging.
 
 ## Goals of a status quo PR 
 
@@ -66,21 +66,21 @@ The goal is that, at the end of the review process, the status quo story has a l
 
 ## 🤔 Frequently Asked Questions
 
-* What is the process to propose a status quo story?
+* **What is the process to propose a status quo story?**
     * Just open a PR [using this template][template].
-    * Don't forget to add your chapter to [`SUMMARY.md`].
-* What if my story applies to multiple characters?
+    * Do not add your file to [`SUMMARY.md`], that will create conflicts. We'll do it after merging.
+* **What if my story applies to multiple characters?**
     * Look at the "morals" of your story and decide which character will let you get those across the best.
     * Use the FAQ to talk about how other characters might have been impacted.
     * If the story would play out really differently for other characters, maybe write it more than once!
-* How much detail should I give? How specific should I be?
+* **How much detail should I give? How specific should I be?**
     * Detailed is generally better, but only if those details are helpful for understanding the morals of your story.
     * Specific is generally better, since an abstract story doesn't feel as real.
-* What should I do when I'm trying to be specific but I have to make an arbitrary choice?
+* **What should I do when I'm trying to be specific but I have to make an arbitrary choice?**
     * Add a FAQ with some of the other alterantives, or just acknowledging that you made an arbitrary choice there.
-* None of the characters are a fit for my story.
+* **None of the characters are a fit for my story.**
     * It doesn't have to be perfect. Pick the one that seems like the closest fit. If you really feel stuck, though, come talk to us on [Zulip] about it!
-* How should I describe the "evidence" for my status quo story?
+* **How should I describe the "evidence" for my status quo story?**
     * The more specific you can get, the better. If you can link to tweets or blog posts, that's ideal. You can also add notes into the [conversations] folder and link to those. Of course, you should be sure people are ok with that.
 
 [template]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo/template.md
