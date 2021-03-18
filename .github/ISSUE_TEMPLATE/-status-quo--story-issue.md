@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
-* Character: (Alan | Grace | ...)
 * Brief summary:
+* Character (if known; see [cast]): (Alan | Grace | ...)
 * Key points or morals (if known):
+
+[cast]: https://rust-lang.github.io/wg-async-foundations/vision/characters.html
