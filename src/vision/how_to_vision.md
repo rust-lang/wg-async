@@ -13,7 +13,7 @@
 
 The process we are using to write the vision doc encourages active collaboration and "positive sum" thinking. It starts with a brainstorming period, during which we aim to collect as many "status quo" and "shiny future" stories as we can. 
 
-This brainstorming period runs for six weeks, until the end of April. For the first two weeks (until 2021-04-02), we are collecting ["status quo" stories][hvsq] only. After that, we will accept both ["status quo"][hvsq] and ["shiny future" stories][hvsf] until the end of the brainstorming period. Finally, to cap off the brainstorming period, we will select winners for [awards] like "Most Humorous Story" or "Must Supportive Contributor". 
+This brainstorming period runs for six weeks, until the end of April. For the first two weeks (until 2021-04-02), we are collecting ["status quo" stories][hvsq] only. After that, we will accept both ["status quo"][hvsq] and ["shiny future" stories][hvsf] until the end of the brainstorming period. Finally, to cap off the brainstorming period, we will select winners for [awards] like "Most Humorous Story" or "Most Supportive Contributor". 
 
 Once the brainstorming period is complete, the working group leads will begin work on assembling the various stories and shiny futures into a coherent draft. This draft will be reviewed by the community and the Rust teams and adjusted based on feedback.
 
