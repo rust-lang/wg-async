@@ -18,4 +18,7 @@ This is a sample project for use within the various ["status quo"] or ["shiny fu
 ## 🤔 Frequently Asked Questions
 
 * **What makes this project different from others?**
-* **Are there existing crates that are similar to this project?**
+* **Does this project require a custom tailored runtime?**
+* **How much of this project is likely to be built with open source components from crates.io?**
+* **What is of most concern to this project?**
+* **What is of least concern to this project?**
