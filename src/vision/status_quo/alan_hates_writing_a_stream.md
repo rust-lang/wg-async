@@ -12,7 +12,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 After a couple weeks learning Rust basics, Alan quickly understands `async` and `await`, and therefore has several routes built for his application that await a few things and then construct an HTTP response and send a buffered body. To build the buffered response bodies, Alan was reading a file, and then appending a signature, and putting that all into a single buffer of bytes.
 
-Eventually, Alan realizes that some responses have enormous bodies, and would like stream them instead of buffering them fully in memory. He's *used* the `Stream` trait before. Using it was very natural, and followed a similar pattern to regular `async`/`await`:
+Eventually, Alan realizes that some responses have enormous bodies, and would like to stream them instead of buffering them fully in memory. He's *used* the `Stream` trait before. Using it was very natural, and followed a similar pattern to regular `async`/`await`:
 
 ```rust
 while let Some(chunk) = body.next().await? {
@@ -61,11 +61,11 @@ error[E0658]: yield syntax is experimental
    = note: see issue #43122 <https://github.com/rust-lang/rust/issues/43122> for more information
 ```
 
-After reading about how yield is experimental, and giving up reading the 100+ comments in the linked issue, Alan figures he's just got to implement `Stream` manually.
+After reading about how yield is experimental, and giving up reading the 100+ comments in the [linked issue](https://github.com/rust-lang/rust/issues/43122), Alan figures he's just got to implement `Stream` manually.
 
 ### Implementing `Stream`
 
-Implementing a `Stream` means writing async code in a way that doesn't _feel_ like all the other `async` code that the user has already written. The user is introduced to writing a `poll` function, which forces these three things into their face:
+Implementing a `Stream` means writing async code in a way that doesn't _feel_ like the `async fn` that Alan has written so far. He needs to write a `poll` function and it has a lot of unfamiliar concepts:
 
 - `Pin`
 - State machines
@@ -89,7 +89,7 @@ impl Stream for SigningFile {
 
 #### Pin :scream:
 
-First, he notices `Pin`. Alan wonders, "Why does `self` have bounds? I've only ever seen `self`, `&self`, and `&mut self` before". Curious, he reads the `std::pin` page, and a bunch of jargon about pinning data in memory. He also reads that this is useful to guarantee that an object cannot move, and he wonders why he cares about that. The only example on the page explains how to write a ["self-referential struct"][self-ref], but notices it needs `unsafe` code, and that triggers an internal alarm in Alan: "I thought Rust was safe..."
+First, he notices `Pin`. Alan wonders, "Why does `self` have bounds? I've only ever seen `self`, `&self`, and `&mut self` before". Curious, he reads the [`std::pin`](https://doc.rust-lang.org/std/pin/struct.Pin.html) page, and a bunch of jargon about pinning data in memory. He also reads that this is useful to guarantee that an object cannot move, and he wonders why he cares about that. The only example on the page explains how to write a ["self-referential struct"][self-ref], but notices it needs `unsafe` code, and that triggers an internal alarm in Alan: "I thought Rust was safe..."
 
 Eventually (how?), Alan realizes that the types he's depending on are `Unpin`, and so he doesn't need to worry about the unsafe stuff. It's just a more-annoying pointer type.
 
@@ -174,7 +174,7 @@ A little later, Alan needs to add some response body transforming to some routes
 
 * **What are the morals of the story?**
     * Writing an async `Stream` is drastically different than writing an `async fn`.
-    * `Pin` is explained in an abstract way, but do most users who run into `Pin` for the first time need all that? It looks so scary.
+    * The documentation for `Pin` doesn't provide much practical guidance in how to use it, instead focusing on more abstract considerations.
     * Missing a waker registration is a runtime error, and very hard to debug. If it's even possible, a compiler warning or hint would go a long way.
 * **What are the sources for this story?**
     * Part of this story is based on the original motivation for `async`/`await` in Rust, since similar problems exist writing `impl Future`.
