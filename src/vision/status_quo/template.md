@@ -1,8 +1,16 @@
 # 😱 Status quo stories: Template
 
-*This is a template for adding new "status quo" stories. See the [instructions] for more details on how to add new "status quo" stories!*
+*This is a template for adding new "status quo" stories. To propose a new status quo PR, do the following:*
 
-[instructions]: ../how_to_vision/status_quo.md
+* *Create a new file in the [`status_quo`] directory named something like `Alan_tries_to_foo.md` or `Grace_does_bar.md`, and start from [the raw source from this template]. You can replace all the italicized stuff. :)*
+* *Add a link to your story to the [`SUMMARY.md`] file in the appropriate spot.*
+
+*For more detailed instructions, see the [How To Vision: Status Quo] page!*
+
+[How To Vision: Status Quo]: ../how_to_vision/status_quo.md
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
+[`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
 
 ## 🚧 Warning: Draft status 🚧
 
@@ -15,6 +23,8 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 *Write your story here! Feel free to add subsections, citations, links, code examples, whatever you think is best.*
 
 ## 🤔 Frequently Asked Questions
+
+*Here are some standard FAQ to get you started. Feel free to add more!*
 
 * **What are the morals of the story?**
     * *Talk about the major takeaways-- what do you see as the biggest problems.*
