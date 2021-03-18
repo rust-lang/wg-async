@@ -22,3 +22,5 @@ This is a sample project for use within the various ["status quo"] or ["shiny fu
     * Yes! The tradeoffs for an embedded application like MonsterMesh and a typical server are very different. Further, most server-grade frameworks are not `#[no_std]` compatible and far exceeded the available footprint on the sensor nodes.
 * **How much of this project is likely to be built with open source components from crates.io?**
     * Having no operating system to provide abstractions to it, MonsterMesh will contain all the logic it needs to run. Much of this, especially around the hardware-software-interface is unlikely to be unique to MonsterMesh and will be sourced from crates.io. However, the further up the stack one goes, the more specialized the requirements will become.
+* **How did you pick the name?**
+    * So glad you asked! Please watch this [entertaining video](https://www.youtube.com/watch?v=vNuVifA7DSU).

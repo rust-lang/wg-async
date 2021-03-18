@@ -35,7 +35,6 @@ We've created four characters that we use to guide our thinking. These character
 * I see myself in more than one of these characters!
     * Yeah, me too.
 
-[applications]: ./applications.md
 [Alan Turing]: https://en.wikipedia.org/wiki/Alan_Turing
 [Grace Hopper]: https://en.wikipedia.org/wiki/Grace_Hopper
 [Niklaus Wirth]: https://en.wikipedia.org/wiki/Niklaus_Wirth

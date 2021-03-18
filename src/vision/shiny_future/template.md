@@ -1,8 +1,16 @@
 # ✨ Shiny future stories: template
 
-*This is a template for adding new "shiny future" stories. See the [instructions] for more details on how to add new "shiny future" stories!*
+*This is a template for adding new "shiny future" stories. To propose a new shiny future PR, do the following:*
 
-[instructions]: ../how_to_vision/shiny_future.md
+* *Create a new file in the [`shiny_future`] directory named something like `Alan_loves_foo.md` or `Grace_does_bar_and_its_great.md`, and start from [the raw source from this template]. You can replace all the italicized stuff. :)*
+* *Do not add a link to your story to the [`SUMMARY.md`] file; we'll do it after merging, otherwise there will be too many conflicts.*
+
+*For more detailed instructions, see the [How To Vision: Shiny Future] page!*
+
+[How To Vision: Shiny Future]: ../how_to_vision/shiny_future.md
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/shiny_future/template.md
+[`shiny_future`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
 
 ### 🛑 Not time for this yet 🛑
 
@@ -27,8 +35,8 @@ We are not yet accepting shiny future story ideas!
 * **If this is an alternative to another shiny future, which one, and what motivated you to write an alternative?** (Optional)
     * *Cite the other story. Be specific, but focus on what you like about your version, not what you dislike about the other.*
     * *If this is not an alternative, you can skip this one.*
-* **What [applications] benefit the most from this future?**
-* **Are there any [applications] that are hindered by this future?**
+* **What [projects] benefit the most from this future?**
+* **Are there any [projects] that are hindered by this future?**
 * **What are the incremental steps towards realizing this shiny future?** (Optional)
     * *Talk about the actual work we will do. You can link to [design docs](../design_docs.md) or even add new ones, as appropriate.*
     * *You don't have to have the whole path figured out yet!*
@@ -42,4 +50,4 @@ We are not yet accepting shiny future story ideas!
 [Grace]: ../characters/grace.md
 [Niklaus]: ../characters/niklaus.md
 [Barbara]: ../characters/barbara.md
-[applications]: ../applications.md
+[projects]: ../projects.md
