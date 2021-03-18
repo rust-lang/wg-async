@@ -35,8 +35,8 @@ We are not yet accepting shiny future story ideas!
 * **If this is an alternative to another shiny future, which one, and what motivated you to write an alternative?** (Optional)
     * *Cite the other story. Be specific, but focus on what you like about your version, not what you dislike about the other.*
     * *If this is not an alternative, you can skip this one.*
-* **What [applications] benefit the most from this future?**
-* **Are there any [applications] that are hindered by this future?**
+* **What [projects] benefit the most from this future?**
+* **Are there any [projects] that are hindered by this future?**
 * **What are the incremental steps towards realizing this shiny future?** (Optional)
     * *Talk about the actual work we will do. You can link to [design docs](../design_docs.md) or even add new ones, as appropriate.*
     * *You don't have to have the whole path figured out yet!*
@@ -50,4 +50,4 @@ We are not yet accepting shiny future story ideas!
 [Grace]: ../characters/grace.md
 [Niklaus]: ../characters/niklaus.md
 [Barbara]: ../characters/barbara.md
-[applications]: ../applications.md
+[projects]: ../projects.md

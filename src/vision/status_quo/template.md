@@ -46,6 +46,5 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 [Grace]: ../characters/grace.md
 [Niklaus]: ../characters/niklaus.md
 [Barbara]: ../characters/barbara.md
-[applications]: ../applications.md
 [htvsq]: ../how_to_vision/status_quo.md
 [cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

@@ -11,14 +11,14 @@ We're not ready for this yet! See the [how to vision](../how_to_vision.md) page 
 [Grace]: ../characters/grace.md
 [Niklaus]: ../characters/niklaus.md
 [Barbara]: ../characters/barbara.md
-[applications]: ../applications.md
+[projects]: ../projects.md
 
 ## TL;DR
 
 Just want to get started? Here are quick instructions to get you going:
 
 * **To write your own story:**
-    * Create a PR adding a new file to [the `shiny_future` directory][sfd] based on the ["shiny future" template][template]. 
+    * Create a PR based on the ["shiny future" template][template]. 
     * Do not add your file to [`SUMMARY.md`] -- that will create conflicts, we'll do it manually after merging.
 
 ## How to open a PR
@@ -48,8 +48,8 @@ Every shiny future PR includes a FAQ. This FAQ should always include answers to 
 * If this is an alternative to another shiny future, which one, and what motivated you to write an alternative?
     * Cite the story. Be specific, but focus on what you like about your version, not what you dislike about the other.
     * If this is not an alternative, you can skip this one. =)
-* What [applications] benefit the most from this future?
-* Are there any [applications] that are hindered by this future?
+* What [projects] benefit the most from this future?
+* Are there any [projects] that are hindered by this future?
 
 There are also some optional questions:
 

@@ -10,14 +10,14 @@ We want to make sure all Async Rust users and their experiences are reflected in
 
 Just want to get started? Here are quick instructions to get you going:
 
+* **To write your own story:**
+    * Create a PR based on the ["status quo" template][template]. 
+    * Do not add your file to [`SUMMARY.md`] -- that will create conflicts, we'll do it manually after merging.
 * **To get feedback on a story idea, or look for someone else to write it:**
     * Open up a ["status quo" story issue][issue] on the [wg-async-foundations repository].
 * **To find ideas of what to write, or to share your experiences:**
     * Search the [open issues tagged as status-quo-story-idea][oi].
     * Remember to [comment supportively][comment].
-* **To write your own story:**
-    * Create a PR adding a new file to [the `status_quo` directory][sqd] based on the [status quo template][template]. 
-    * Do not add your file to [`SUMMARY.md`] -- that will create conflicts, we'll do it manually after merging.
 
 ## Optional: open an issue to discuss your story or find others with similar experiences
 

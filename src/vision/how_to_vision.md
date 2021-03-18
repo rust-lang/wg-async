@@ -4,15 +4,19 @@
 
 | When | What |
 | --- | --- |
-| ✅ **Now!** | Improve the [application descriptions][hva] |
-| ✅ **Now!** | Propose new [status quo narratives][hvsq] or [comment] on existing PRs |
-| ✅ **Now!** | Propose [awards] for the narratives |
+| ✅ **Now** till 2021-04-30 | Improve the [sample projects][hvp] |
+| ✅ **Now** till 2021-04-30 | Propose new [status quo narratives][hvsq] or [comment] on existing PRs |
+| ✅ **Now** till 2021-04-30 | Propose [awards] for the narratives |
 | 🛑 Starting 2021-04-02 | Propose new [shiny future narratives][hvsf] or [comment] on existing PRs |
 | 🛑 Starting 2021-04-30 | [Vote] for the [awards] on the status quo and shiny future narratives! |
 
 ## The big picture
 
-The process for writing the vision doc encourages active collaboration and "positive sum" thinking. It begins with a **brainstorming period** in which we are inviting people to describe their experiences as "status quo" stories; later on, we'll start accepting "shiny future" stories. At the end of the brainstorming period, we will be giving [awards] and then work on **harmonizing** the stories into a coherent whole.
+The process we are using to write the vision doc encourages active collaboration and "positive sum" thinking. It starts with a brainstorming period, during which we aim to collect as many "status quo" and "shiny future" stories as we can. 
+
+This brainstorming period runs for six weeks, until the end of April. For the first two weeks (until 2021-04-02), we are collecting "status quo" stories only. After that, we will accept both "status quo" and "shiny future" stories until the end of the brainstorming period. Finally, to cap off the brainstorming period, we will select winners for [awards] like "Most Humorous Story" or "Must Supportive Contributor". 
+
+Once the brainstorming period is complete, the working group leads will begin work on assembling the various stories and shiny futures into a coherent draft. This draft will be reviewed by the community and the Rust teams and adjusted based on feedback.
 
 ### Brainstorming
 
@@ -27,7 +31,11 @@ The brainstorming period runs until 2021-04-30:
     * We also expect people to sometimes extend other stories with additional details or FAQs.
 * At the end of the brainstorming period, we will vote and give [awards] for things like "most amusing". (We'd like suggestions on the best categories!)
 
-**During this brainstorming period, we want to focus on getting as many ideas as we can.** Having multiple "shiny futures" that address the same problem is a feature, not a bug, as it will let us mix-and-match later to try and find the best overall plan. Comments and questions will be used as a [tool for improving understanding or sharpening proposals.][c] Presenting alternative ideas is done by [writing an alternative narrative][alt].
+#### The more the merrier!
+
+**During this brainstorming period, we want to focus on getting as many ideas as we can.** Having multiple "shiny futures" that address the same problem is a feature, not a bug, as it will let us mix-and-match later to try and find the best overall plan. Comments and questions will be used as a [tool for improving understanding or sharpening proposals.][comment] Presenting alternative ideas is done by [writing an alternative narrative][alt].
+
+[alt]: https://nikomatsakis.github.io/wg-async-foundations/vision/how_to_vision/comment.html#you-might-just-want-to-write-your-own-story
 
 ### Harmonizing
 
@@ -49,7 +57,7 @@ This meant to be a **living document**. We plan to revisit it regularly to track
 [comment]: ./how_to_vision/comment.md
 [awards]: ./how_to_vision/awards.md
 [wg leads]: ../welcome.md#leads
-[hva]: ./how_to_vision/applications.md
+[hvp]: ./how_to_vision/projects.md
 [repo]: https://github.com/rust-lang/wg-async-foundations
 [open "status quo" issues]: https://github.com/rust-lang/wg-async-foundations/labels/status-quo-story-ideas
 
