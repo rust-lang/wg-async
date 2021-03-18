@@ -21,7 +21,7 @@ Just want to get started? Here are quick instructions to get you going:
 
 ## Optional: open an issue to discuss your story or find others with similar experiences
 
-If you have a story idea but you don't time to write about it, or if you would like to know whether other folks have encountered the same sorts of problems, you can [open up a "status quo" story issue][issue] on the [wg-async-foundations repository]. Alternatively, if you're looking for a story to write, you can browse the [open issues tagged as status-quo-story-idea][oi] and see if anything catches your eye. If you see people describing problems you have hit, or have questions about the experiences people are sharing, then please leave a comment -- but remember to [comment supportively][comment]. (You can also come to [Zulip] to discuss.)
+If you have a story idea but you don't have the time to write about it, or if you would like to know whether other folks have encountered the same sorts of problems, you can [open up a "status quo" story issue][issue] on the [wg-async-foundations repository]. Alternatively, if you're looking for a story to write, you can browse the [open issues tagged as status-quo-story-idea][oi] and see if anything catches your eye. If you see people describing problems you have hit, or have questions about the experiences people are sharing, then please leave a comment -- but remember to [comment supportively][comment]. (You can also come to [Zulip] to discuss.)
 
 [sqsi]: https://github.com/rust-lang/wg-async-foundations/labels/status-quo-story-ideas
 [Zulip]: ../../welcome.md#Zulip
