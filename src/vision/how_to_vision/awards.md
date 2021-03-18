@@ -22,8 +22,4 @@ Here are some ideas we've come up with so far:
 
 ## Voting
 
-At the end of the [brainstorming period][htvbp], we're going to have a voting session to select which PRs and people win the awards.
-
-## Award prizes
-
-Prizes are TBD.
+At the end of the [brainstorming period][htvbp], we're going to have a voting session to select which PRs and people win the awards. The winners will be featured in a blog post. 🏆
