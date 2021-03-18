@@ -6,14 +6,28 @@ We want to make sure all Async Rust users and their experiences are reflected in
 [character]: ../characters.md
 [comment]: ./comment.md
 
+## TL;DR
+
+Just want to get started? Here are quick instructions to get you going:
+
+* **To get feedback on a story idea, or look for someone else to write it:**
+    * Open up a ["status quo" story issue][issue] on the [wg-async-foundations repository].
+* **To find ideas of what to write, or to share your experiences:**
+    * Search the [open issues tagged as status-quo-story-idea][oi].
+    * Remember to [comment supportively][comment].
+* **To write your own story:**
+    * Create a PR adding a new file to [the `status_quo` directory][sqd] based on the [status quo template][template]. 
+    * Don't forget to add your file to [`SUMMARY.md`] as well!
+
 ## Optional: open an issue to discuss your story or find others with similar experiences
 
-If you have a story idea but you don't time to write about it, or if you would like to know whether other folks have encountered the same sorts of problems, you can [open up a "status quo" story issue][issue] on the wg-async-foundations repository. Alternatively, if you're looking for a story to write, you can browse the [open issues tagged as status-quo-story-idea][oi] and see if anything catches your eye. If you see people describing problems you have hit, or have questions about the experiences people are sharing, then please leave a comment -- but remember to [comment supportively][comment]. (You can also come to [Zulip] to discuss.)
+If you have a story idea but you don't time to write about it, or if you would like to know whether other folks have encountered the same sorts of problems, you can [open up a "status quo" story issue][issue] on the [wg-async-foundations repository]. Alternatively, if you're looking for a story to write, you can browse the [open issues tagged as status-quo-story-idea][oi] and see if anything catches your eye. If you see people describing problems you have hit, or have questions about the experiences people are sharing, then please leave a comment -- but remember to [comment supportively][comment]. (You can also come to [Zulip] to discuss.)
 
 [sqsi]: https://github.com/rust-lang/wg-async-foundations/labels/status-quo-story-ideas
 [Zulip]: ../../welcome.md#Zulip
 [issue]: https://github.com/rust-lang/wg-async-foundations/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
 [oi]: https://github.com/rust-lang/wg-async-foundations/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
+[wg-async-foundations repository]: https://github.com/rust-lang/wg-async-foundations/
 
 ## How to open a PR
 
