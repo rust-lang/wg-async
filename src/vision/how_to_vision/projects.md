@@ -1,7 +1,8 @@
 # ❓ How to vision: Projects
 
-[la]: ../projects.md
+[pjd]: ../projects.md
 [wg leads]: ../welcome.md#leads
+[template]: ../status_quo/template.md
 
 ## How to open a PR
 
