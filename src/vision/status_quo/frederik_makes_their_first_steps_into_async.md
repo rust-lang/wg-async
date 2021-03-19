@@ -15,7 +15,7 @@ After all, a fast networked application is exactly what they are trying to make.
 To further solidify the decision of using async, Barbara goes looking for some information and opinions on async in Rust. Doubts created by reading some tweets about how most people should be using threads instead of async for simplicity reasons are quickly washed away by helpful conversations on the Rust discord.
 
 ### Learning about Async
-Still enarmored with the first edition of the Rust book, they decide to go looking for an updated version, hoping that it will teach them async in the same manner that it taught them so much about the language and design patterns for Rust. Dissapointed, they find no mention of async in the book, aside from a note that it exists as a keyword.
+Still enarmored with the first edition of the Rust book, they decide to go looking for an updated version, hoping that it will teach them async in the same manner that it taught them so much about the language and design patterns for Rust. Disappointed, they find no mention of async in the book, aside from a note that it exists as a keyword.
 
 Not to be deterred, they go looking further, and start looking for similarly great documentation about async.
 After stumbling upon the async book, their disappointment is briefly replaced with relief as the async book does a good job at solidifying what they have already learned in various blog posts about async, why one would use it and even a bit about how it all works under the hood.
