@@ -36,6 +36,10 @@ The brainstorming period runs until 2021-04-30:
 
 [alt]: https://nikomatsakis.github.io/wg-async-foundations/vision/how_to_vision/comment.html#you-might-just-want-to-write-your-own-story
 
+#### Reviewing contributions 
+
+To merge a story or project PR, any member of the working group can open a topic on Zulip and propose it be merged. Ideally there will be no outstanding concerns. If a second member of the working group approves, the PR can then be merged.
+
 ### Harmonizing
 
 At this point, the [wg leads] will write the draft vision document, drawing on the status quo and shiny future stories that were submitted.
