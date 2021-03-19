@@ -44,6 +44,8 @@ To this day the lack of a blessed approach leaves Frederik unsure about the choi
     * When entering Rust's async world without previous async experience, and no benchmarks for what good async design patters look like, getting started with async can be a bit overwhelming.
     * Other languages which only have a single ecosystem seem to have a much better story for beginners since there's no fear of lock in, or ecosystem fomo about making the wrong choices early on.
 * **What are the sources for their story?**
+    * This is based on the author's personal experience
+* **What documentation did the character read during this story?**
     * Various blog posts of withoutboats
     * A blog post which spurred a lot of discussion about blocking in async: https://async.rs/blog/stop-worrying-about-blocking-the-new-async-std-runtime/
     * A nice blog post about blocking in Tokio, which still doesn't have any nice design patterns: https://ryhl.io/blog/async-what-is-blocking/
