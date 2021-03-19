@@ -18,7 +18,7 @@ To further solidify the decision of using async, Frederik goes looking for some 
 Still enarmored with the first edition of the Rust book, they decide to go looking for an updated version, hoping that it will teach them async in the same manner that it taught them so much about the language and design patterns for Rust. Dissapointed, they find no mention of async in the book, aside from a note that it exists as a keyword.
 
 Not to be deterred, they go looking further, and start looking for similarly great documentation about async.
-After stumbling upon the async book, their dissapointment is briefly replaced with relief as the async book does a good job at solidifying what they have already learned in various blog posts about async, why one would use it and even a bit about how it all works under the hood.
+After stumbling upon the async book, their disappointment is briefly replaced with relief as the async book does a good job at solidifying what they have already learned in various blog posts about async, why one would use it and even a bit about how it all works under the hood.
 They skim over the parts that seem a bit too in depth for now like pinning, as they're looking to quickly get their hands dirty.
 Chapter 8: The Async Ecosystem teaches them what they already picked up on through blog posts and contentious tweets: the choice of the runtime has large implications on what libraries they can use.
 
@@ -32,13 +32,13 @@ Their paranoia about choosing the right ecosystem is eased after a few days of r
 Being reasonably confident in their choice of ecosystem, Frederik starts building their distributed system.
 After a while, they want to introduce another networking library of which the api isn't async. Luckily Frederik picked up on that blocking was not allowed in async (or at least not in any of the currently existing executors), through reading some blog posts about async. More reddit discussions point them towards spawn\_blocking in Tokio, and even rayon. But they're none the wiser about how to apply these paradigms in a neat manner.
 
-Previously the design patterns learned in other languages, combined with the patterns thaught in the book, were usually sufficient to come to reasonably neat designs.
+Previously the design patterns learned in other languages, combined with the patterns taught in the book, were usually sufficient to come to reasonably neat designs.
 But neither their previous experience, nor the async book nor the Tokio tutorial were of much use when trying to neatly incorporate blocking code into their previously fully async project.
 
 ### Confused ever after
 To this day the lack of a blessed approach leaves Frederik unsure about the choices they've made so far and misconceptions they might still have, evermore wondering if the original tweets they read about most how most people should just stick to threads were right all along.
 
-🤔 Frequently Asked Questions
+## 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
     * When entering Rust's async world without previous async experience, and no benchmarks for what good async design patters look like, getting started with async can be a bit overwhelming.
