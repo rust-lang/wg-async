@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-### Brief summary:
+### Brief summary
 
 *Give a brief summary of the story or experience here*
 
