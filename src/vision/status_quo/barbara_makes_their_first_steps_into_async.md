@@ -36,7 +36,7 @@ Previously the design patterns learned in other languages, combined with the pat
 But neither their previous experience, nor the async book nor the Tokio tutorial were of much use when trying to neatly incorporate blocking code into their previously fully async project.
 
 ### Confused ever after
-To this day the lack of a blessed approach leaves Barbara unsure about the choices they've made so far and misconceptions they might still have, evermore wondering if the original tweets they read about most how most people should just stick to threads were right all along.
+To this day the lack of a blessed approach leaves Barbara unsure about the choices they've made so far and misconceptions they might still have, evermore wondering if the original tweets they read about how most people should just stick to threads were right all along.
 
 ## 🤔 Frequently Asked Questions
 
