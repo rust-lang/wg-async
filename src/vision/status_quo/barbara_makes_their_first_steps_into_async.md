@@ -53,7 +53,7 @@ To this day the lack of a blessed approach leaves Barbara unsure about the choic
     * An example of design patterns being discussed for sync Rust in the book: https://doc.rust-lang.org/book/ch17-03-oo-design-patterns.html#trade-offs-of-the-state-pattern
     * Perhaps I should've read a bit more of Niko's blogs and his async interviews.
 * **Why did you choose Barbara to tell their story?**
-    * Like the author of this story, Barbara had previous experience with Rust, and was new to Async. Knowing where to find the community also played a significant part in this story.
+    * Like the author of this story, Barbara had previous experience with Rust. Knowing where to find the community also played a significant part in this story. This story could be construed as how Barbara got started with async while starting to maintain some async projects.
 * **How would their story have played out differently for the other characters?**
     * Characters with previous async experience would probably have had a better experience getting started with async in Rust since they might know what design patterns to apply to async code.
     On the other hand, since Rust's async story is noticeably different from other languages, having async experience in other languages might even be harmful by requiring the user to unlearn certain habits. I don't know if this is actually the case since I don't have any experience with async in other languages.
