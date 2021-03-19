@@ -40,6 +40,8 @@ The brainstorming period runs until 2021-04-30:
 
 To merge a story or project PR, any member of the working group can open a topic on Zulip and propose it be merged. Ideally there will be no outstanding concerns. If a second member of the working group approves, the PR can then be merged.
 
+Reviewers should ensure that new stories and projects are added to the `SUMMARY.md` file either before merging or directly afterwards.
+
 ### Harmonizing
 
 At this point, the [wg leads] will write the draft vision document, drawing on the status quo and shiny future stories that were submitted.
