@@ -43,6 +43,7 @@ To this day the lack of a blessed approach leaves Barbara unsure about the choic
 * **What are the morals of the story?**
     * When entering Rust's async world without previous async experience, and no benchmarks for what good async design patters look like, getting started with async can be a bit overwhelming.
     * Other languages which only have a single ecosystem seem to have a much better story for beginners since there's no fear of lock in, or ecosystem fomo about making the wrong choices early on.
+    * This lack of documentation on design patterns, and solid guidance about the async ecosystem for unopiniated newcomers is partially made up for by Rust's community which often provides educated opinions on the design and technical choices one should make. Because of this getting started in async favors those who know where to find answers about Rust: blogs, Discord, Reddit, etc.
 * **What are the sources for their story?**
     * This is based on the author's personal experience
 * **What documentation did the character read during this story?**
