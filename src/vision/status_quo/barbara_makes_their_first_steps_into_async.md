@@ -1,5 +1,9 @@
 # 😱 Status quo stories: Barbara makes their first foray into async
 
+## 🚧 Warning: Draft status 🚧
+
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
+
 ## Barbara's first big project in Rust: a journey marred by doubt
 
 It's Barbara's last year at their university and for their master's thesis, they have chosen to create a distributed database.
