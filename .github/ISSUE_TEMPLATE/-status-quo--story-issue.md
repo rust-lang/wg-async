@@ -28,4 +28,4 @@ assignees: ''
 [Alan]: https://rust-lang.github.io/wg-async-foundations/vision/characters/alan.html
 [Grace]: https://rust-lang.github.io/wg-async-foundations/vision/characters/grace.html
 [Niklaus]: https://rust-lang.github.io/wg-async-foundations/vision/characters/niklaus.html
-[Barabara]: https://rust-lang.github.io/wg-async-foundations/vision/characters/barbara.html
+[Barbara]: https://rust-lang.github.io/wg-async-foundations/vision/characters/barbara.html
