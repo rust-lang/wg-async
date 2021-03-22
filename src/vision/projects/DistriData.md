@@ -15,7 +15,7 @@ DistriData is the latest in containerized, micro-service distributed database te
 
 * **What makes DistriData different from others?**
     * This project is meant to be used in many different ways in many different projects, and is not unique to any one application.
-    * Many of those using this project will not even need or want to know that's written in Rust.
+    * Many of those using this project will not even need or want to know that it's written in Rust.
 * **Does DistriData require a custom tailored runtime?**
     * DistriData's concerns are at a higher level than the runtime. A fast, reliable, and resource conscious general purpose runtime will serve DistriData's needs.
 * **How much of this project is likely to be built with open source components from crates.io?**
