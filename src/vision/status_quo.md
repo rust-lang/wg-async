@@ -18,7 +18,7 @@ Writing the "status quo" stories helps us to compensate for the [curse of knowle
 
 ### Based on a true story
 
-These stories may not be true, but they are not fiction. They are based on real-life experiences of actual people. Each story contains a "Frequently Asked Questions" section, and that will include notes the sources used to create the story. In some cases, it may link to notes or summaries in the [conversations] section, though that is not required. The "Frequently Asked Questions" section also contains a summary of what the "morals" of the story are (i.e., what are the key takeaways), along with answers to questions that people have raised along the way.
+These stories may not be true, but they are not fiction. They are based on real-life experiences of actual people. Each story contains a "Frequently Asked Questions" section referencing sources used to create the story. In some cases, it may link to notes or summaries in the [conversations] section, though that is not required. The "Frequently Asked Questions" section also contains a summary of what the "morals" of the story are (i.e., what are the key takeaways), along with answers to questions that people have raised along the way.
 
 [conversations]: ../conversations.md
 
