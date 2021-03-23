@@ -168,7 +168,7 @@ So far, Alan hasn't paid too much attention to `Context` and `Poll`. It's been f
 
 ```rust
 // zooming in!
-match ready!(file.poll_next(cx)) {
+match ready!(Pin::new(file).poll_next(cx)) {
     Some(result) => {
         let chunk = result?;
         sig.push(&chunk);
