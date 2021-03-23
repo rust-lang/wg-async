@@ -15,7 +15,7 @@ Niklaus has typically minimized the use of crates in documentation like this as 
 
 But Niklaus would really really like to document async to avoid disappointing [people like Barbara]!
 
-Niklaus was excited about [the RFC proposing that `block_on` be added to the stdlib][block-on-rfc], but understands that everyone is busy. However, if that RFC came to be, that would solve Niklaus' problems and make it more likely that `async` would be added to the documentation. Niklaus would really like to include `async` in a big update to the documentation that would likely happen with the Rust 2021 Edition. No pressure.
+Niklaus was excited about [the RFC proposing that `block_on` be added to the stdlib][block-on-rfc], because it seemed like that would solve Niklaus' problems. Niklaus would really like to include `async` in a big update to the documentation. No pressure.
 
 [trpl]: https://doc.rust-lang.org/stable/book/
 [people like Barbara]: https://github.com/rust-lang/wg-async-foundations/blame/5ce418ac4076850f515034010cc51b707441f695/src/vision/status_quo/barbara_makes_their_first_steps_into_async.md#L22
