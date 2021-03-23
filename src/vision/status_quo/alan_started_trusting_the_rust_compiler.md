@@ -19,9 +19,32 @@ He knows what he can do with external libraries, he does not need to fear concur
 His trust in the compiler solidifies further the more he codes in Rust.
 
 ### The first async project
-Alan now starts with his first async project. He sees that there is no async in the standard library, but finds a crate that provides some async versions of the standard library functions.
-He has some code written, but the compiler complains that `await` is only allowed in `async` functions. He now notices that all the examples use `#[async_std::main]` 
-as an attribute on the `main` function in order to be able to turn it into an `async main`, so he does the same to get his code compiling.
+Alan now starts with his first async project. He sees that there is no async in the standard library, but after googling for "rust async file open", he finds 'async_std', a crate that provides some async versions of the standard library functions.
+He has some code written that asynchrously interacts with some files:
+```rust
+use async_std::fs::File;
+use async_std::prelude::*;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut file = File::create("a.txt").await?;
+    file.write_all(b"Hello, world!").await?;
+    Ok(())
+}
+```
+But now the compiler complains that `await` is only allowed in `async` functions. He now notices that all the examples use `#[async_std::main]` 
+as an attribute on the `main` function in order to be able to turn it into an `async main`, so he does the same to get his code compiling:
+```rust
+use async_std::fs::File;
+use async_std::prelude::*;
+
+#[async_std::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut file = File::create("a.txt").await?;
+    file.write_all(b"Hello, world!").await?;
+
+    Ok(())
+}
+```
 
 This aligns with what he knows from C#, where you also change the entry point of the program to be async, in order to use `await`.
 Everything is great now, the compiler is happy, so no runtime problems, so Alan is happy.
@@ -29,13 +52,33 @@ Everything is great now, the compiler is happy, so no runtime problems, so Alan 
 The project is working like a charm.
 
 ### Fractured futures, fractured trust
-The project Alan is building is starting to grow, and he decides to add a new feature. He starts using _async-library-that-does-not-run-on-current-executor_ in order to help him achieve this task.
+The project Alan is building is starting to grow, and he decides to add a new feature that needs to make some API calls. He starts using `reqwest` in order to help him achieve this task.
 After a lot of refactoring to make the compiler accept the program again, Alan is satisfied that his refactoring is done.
-He runs his project but is suddenly greeted with a runtime error? How is this even possible? His project doesn't contain any out-of-bounds accesses, he never uses `.unwrap` or `.expect`?
-At the top of the error message he sees: `This async thing needs to run in the context of this other async library, and not the one you are using.` 
+His program now boils down to:
+```rust
+use async_std::fs::File;
+use async_std::prelude::*;
 
-Coming from a "simpler" async country, he now learns about Executors, Wakers, `Pin`,... Things he had not need to heed in C#. 
-He understands the current problems and why there is no one-size-fits-all executor (yet).
+#[async_std::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut file = File::create("a.txt").await?;
+    file.write_all(b"Hello, world!").await?;
+
+    let body = reqwest::get("https://www.rust-lang.org")
+        .await?
+        .text()
+        .await?;
+    println!("{}", body);
+
+    Ok(())
+}
+```
+
+He runs his project but is suddenly greeted with a runtime error? How is this even possible? His project doesn't contain any out-of-bounds accesses, he never uses `.unwrap` or `.expect`?
+At the top of the error message he sees: `thread 'main' panicked at 'there is no reactor running, must be called from the context of a Tokio 1.x runtime'` 
+
+He searches what "Tokio" is in Rust, and he finds that it also provides an attribute to put on `main`, namely `[tokio::main]`, but what is the difference with `[async_std::main]`? His curiosity leads him to watch videos/read blogs/scour reddit,... on why there are multiple runtimes in Rust. This leads him into a rabbit hole and now he learns about Executors, Wakers, `Pin`,... He has a basic grasp of what they are, but does not have a good understanding of them or how they all fit together exactly. These are all things he had not need to know nor heed in C#. 
+He does understand the current problems and why there is no one-size-fits-all executor (yet).
 
 But now he realizes that there is a whole new area of runtime problems that he did not have to deal with in C#, but he does in Rust.
 Can he even trust the Rust compiler anymore? What other kinds of runtime problems can occur in Rust that can't in C#?
