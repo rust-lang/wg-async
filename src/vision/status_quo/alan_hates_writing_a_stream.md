@@ -14,7 +14,7 @@ After a couple weeks learning Rust basics, Alan quickly understands `async` and 
 
 Eventually, Alan realizes that some responses have enormous bodies, and would like to stream them instead of buffering them fully in memory. He's *used* the `Stream` trait before. Using it was very natural, and followed a similar pattern to regular `async`/`await`:
 
-```rust
+```rust,ignore
 while let Some(chunk) = body.next().await? {
     file.write_all(&chunk).await?;
 }
@@ -26,7 +26,7 @@ However, _implementing_ `Stream` turns out to be rather different. With a quick 
 
 Alan first hoped he could simply write signing stream imperatively, reusing his new knowledge of `async` and `await`, and assuming it'd be similar to JavaScript:
 
-```rust
+```rust,ignore
 async* fn sign(file: ReaderStream) -> Result<Vec<u8>, Error> {
     let mut sig = Signature::new();
 
@@ -41,7 +41,7 @@ async* fn sign(file: ReaderStream) -> Result<Vec<u8>, Error> {
 
 Unfortunately, that doesn't work. The compiler first complains about the `async* fn` syntax:
 
-```
+```notrust
 error: expected item, found keyword `async`
   --> src/lib.rs:21:1
    |
@@ -51,7 +51,7 @@ error: expected item, found keyword `async`
 
 Less hopeful, Alan tries just deleting the asterisk:
 
-```
+```notrust
 error[E0658]: yield syntax is experimental
   --> src/lib.rs:27:9
    |
@@ -73,7 +73,7 @@ Implementing a `Stream` means writing async code in a way that doesn't _feel_ li
 
 Unsure of what the final code will look like, he starts with:
 
-```rust
+```rust,ignore
 struct SigningFile;
 
 impl Stream for SigningFile {
@@ -101,7 +101,7 @@ With `Pin` hopefully ignored, Alan next notices that in the imperative style he 
 
 He thinks about his stream's states, and settles on the following structure:
 
-```rust
+```rust,ignore
 struct SigningFile {
     state: State,
     file: ReaderStream,
@@ -118,7 +118,7 @@ enum State {
 
 It turns out it was more complicated than Alan thought (the author made this same mistake). The `digest` method of `Signature` is `async`, _and_ it consumes the signature, so the state machine needs to be adjusted. The signature needs to be able to be moved out, and it needs to be able to store a future from an `async fn`. Trying to figure out how to represent that in the type system was difficult. He considered adding a generic `T: Future` to the `State` enum, but then wasn't sure what to set that generic to. Then, he tries just writing `Signing(impl Future)` as a state variant, but that triggers a compiler error that `impl Trait` isn't allowed outside of function return types. Patient [Barbara] helped again, so that Alan learns to just store a `Pin<Box<dyn Future>>`, wondering if the `Pin` there is important.
 
-```rust
+```rust,ignore
 struct SigningFile {
     state: State,
 }
@@ -132,7 +132,7 @@ enum State {
 
 Now he tries to write the `poll_next` method, checking readiness of individual steps (thankfully, Alan remembers `ready!` from the futures 0.1 blog posts he read) and proceeding to the next state, while grumbling away the weird `Pin` noise:
 
-```rust
+```rust,ignore
 match self.state {
     State::File(ref mut file, ref mut sig) => {
         match ready!(Pin::new(file).poll_next(cx)) {
@@ -166,7 +166,7 @@ Oh well, at least it _works_, right?
 
 So far, Alan hasn't paid too much attention to `Context` and `Poll`. It's been fine to simply pass them along untouched. There's a confusing bug in his state machine. Let's look more closely:
 
-```rust
+```rust,ignore
 // zooming in!
 match ready!(Pin::new(file).poll_next(cx)) {
     Some(result) => {
@@ -188,7 +188,7 @@ The compiler doesn't help at all, and he re-reads his code multiple times, but b
 
 All too often, since we don't want to duplicate code in multiple branches, the solution for Alan is to add an odd `loop` around the whole thing, so that the next match branch uses the `Context`:
 
-```rust
+```rust,ignore
 loop {
     match self.state {
         State::File(ref mut file, ref mut sig) => {

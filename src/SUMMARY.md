@@ -24,6 +24,7 @@
    - [😱 Status quo](./vision/status_quo.md)
       - [Template](./vision/status_quo/template.md)
       - [Alan runs into stack trouble](./vision/status_quo/alan_runs_into_stack_trouble.md)
+      - [Alan hates writing a `Stream`](./vision/status_quo/alan_hates_writing_a_stream.md)
       - [Barbara makes their first foray into async](./vision/status_quo/barbara_makes_their_first_steps_into_async.md)
       - [Grace deploys her service and hits obstacles](./vision/status_quo/grace_deploys_her_service.md)
       - [Niklaus wants to share knowledge](./vision/status_quo/niklaus_wants_to_share_knowledge.md)
