@@ -1,4 +1,4 @@
-# 😱 Status quo stories: Alan started trusting the Rust compiler
+# 😱 Status quo stories: Alan started trusting the Rust compiler, but then... async
 
 
 ## 🚧 Warning: Draft status 🚧
