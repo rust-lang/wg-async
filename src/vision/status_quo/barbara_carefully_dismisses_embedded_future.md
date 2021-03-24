@@ -31,9 +31,10 @@ sequence of events for a console print:
 
 Barbara tries to implement the API using
 [`core::future::Future`](https://doc.rust-lang.org/stable/core/future/trait.Future.html)
-so that the library can be compatible with the async Rust ecosystem. To do
-this, she decides to make the buffer printing API return a Future. She starts
-with a skeleton:
+so that the library can be compatible with the async Rust ecosystem. The OS
+kernel does not expose a Future-based interface, so Barbara has to implement
+`Future` by hand rather than using async/await syntax. She starts with a
+skeleton:
 
 ```rust
 /// Passes `buffer` to the kernel, and prints it to the console. Returns a
@@ -113,21 +114,23 @@ She then modifies `poll` to set `PRINT_WAKER`:
     }
 ```
 
-At this point, Barbara starts to think about the size impact of these changes.
 `PRINT_WAKER` is stored in `.bss`, which occupies space in RAM but not flash. It
 is two words in size. It points to a
 [`RawWakerVTable`](https://doc.rust-lang.org/stable/core/task/struct.RawWakerVTable.html)
-that is provided by the executor. Considering that this code is designed to run
-without `alloc`, `RawWakerVTable` seems awfully wasteful. `drop` is a no-op,
-`clone` seems like it will be a no-op, and `wake`/`wake_by_ref` seem like
-duplicates.
+that is provided by the executor. `RawWakerVTable` does not appear to be
+designed for a no-`alloc` environment. In a no-`alloc` environment, `drop` and
+`clone` are generally no-ops, and `wake`/`wake_by_ref` seem like duplicates.
+Looking at `RawWakerVTable` made Barbara think about the size impact of using
+`Future`.
 
-At this point, Barbara thought about the overhead and decided it would be worth
-it if it made it easy to work with future combinators from external crates, and
-could function as a lightweight form of multithreading. To support this, Barbara
-decides to implement an executor designed to function like a background thread.
-This executor is started using a `spawn` function, and otherwise runs entirely
-in kernel callbacks.
+Barbara decided the overhead would be worth it if it made it easy to work with
+future combinators from external crates *and* could function as a lightweight
+form of multithreading. To support this, Barbara decides to implement an
+executor designed to function like a background thread. Because `alloc` is not
+available, this executor contains a single future. The executor has a `spawn`
+function that accepts a future and starts running that future (overwriting the
+existing future in the executor if one is already present). Once started, the
+executor runs entirely in kernel callbacks.
 
 Barbara identifies several factors that add branching and error handling code to
 the executor:
@@ -143,9 +146,11 @@ the executor:
    a future is being polled then the future should be re-polled, even if the
    current `poll` returns `Poll::Pending`. This requires putting a retry loop
    into the executor.
-1. A kernel callback may call `Waker::wake` after its future finishes executing,
-   and the executor must ignore those wakeups. This duplicates the "ignore
-   spurious wakeups" functionality that exists in the future itself.
+1. A kernel callback may call `Waker::wake` after its future returns
+   `Poll::Ready`. After `poll` returns `Poll::Ready`, the executor should not
+   `poll` the future again, so Barbara adds code to ignore those wakeups. This
+   duplicates the "ignore spurious wakeups" functionality that exists in the
+   future itself.
 
 Ultimately, this made the executor logic [quite
 nontrivial](https://github.com/tock/design-explorations/blob/master/size_comparison/futures/src/task.rs).
@@ -166,8 +171,36 @@ Barbara publishes an
 [analysis](https://github.com/tock/design-explorations/tree/master/size_comparison)
 of the relative sizes of the two app implementations, finding a large percentage
 increase in both code size and RAM usage (note: stack usage was not
-investigated). Barbara concludes that **`core::future::Future` is not suitable
-for highly-resource-constrained environments** due to the amount of code and RAM
+investigated). Most of the code size increase is from the future combinator
+code. There are two kernel callbacks in use (one that notifies the app of a
+button press and one that notifies it of a timer expiration).
+
+In the no-`Future` version of the app, a kernel callback causes the following:
+
+1. The kernel callback calls the application logic's event-handling function for
+   the specific event type.
+2. The application handles the event.
+
+The call in step 1 is inlined, so the compiled kernel callback consists only of
+the application's event-handling logic.
+
+In the `Future`-based version of the app, a kernel callback causes the
+following:
+
+1. The kernel callback updates some global state to indicate the event happened.
+2. The kernel callback invokes `Waker::wake`.
+3. `Waker::wake` calls `poll` on the application future.
+4. The application future has to look at the state saved in step 1 to determine
+   what event happened.
+5. The application future handles the event.
+
+LLVM is unable to devirtualize the call in step 2, so the optimizer is unable to
+simplify the above steps. Steps 1-4 only exist in the future-based version of
+the code, and add over 200 bytes of code (note: Barbara believes this could be
+reduced to between 100 and 200 bytes at the expense of execution speed).
+
+Barbara concludes that **`Future` is not suitable for
+highly-resource-constrained environments** due to the amount of code and RAM
 required to implement executors and combinators.
 
 Barbara redesigns the library she is building to use a [different
@@ -175,7 +208,16 @@ concept](https://github.com/tock/design-explorations/tree/master/zst_pointer_asy
 for implementing async APIs in Rust that are much lighter weight. She has moved
 on from `Future` and is refining her [async
 traits](https://github.com/tock/libtock-rs/blob/master/core/platform/src/async_traits.rs)
-instead.
+instead. Here are some ways in which these APIs are lighter weight than a
+`Future` implementation:
+
+1. After monomorphization, kernel callbacks directly call application code. This
+   allows the application code to be inlined into the kernel callback.
+2. The callback invocation is more precise: these APIs don't make spurious
+   wakeups, so application code does not need to handle spurious wakeups.
+3. The async traits lack an equivalent of `Waker`. Instead, all callbacks are
+   expected to be `'static` (i.e. they modify global state) and passing pointers
+   around is replaced by static dispatch.
 
 ## 🤔 Frequently Asked Questions
 
@@ -183,6 +225,8 @@ instead.
     * `core::future::Future` isn't suitable for every asynchronous API in Rust.
       `Future` has a lot of capabilities, such as the ability to spawn
       dynamically-allocated futures, that are unnecessary in embedded system.
+      These capabilities have a cost, which is unavoidable without
+      backwards-incompatible changes to the trait.
     * We should look at embedded Rust's relationship with `Future` so we don't
       fragment the embedded Rust ecosystem. Other embedded crates use `Future`,
       presumably because they are less space constrained than Barbara's
