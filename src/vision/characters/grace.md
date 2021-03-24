@@ -11,5 +11,5 @@ Grace has been writing C and C++ for a number of years. She's accustomed to hack
 * What does Grace want most from Async Rust?
     * Grace is most interested in memory safety. She is comfortable with C and C++ but she's also aware of the maintenance burden that arises from the lack of memory safety.
 * What expectations does Grace bring from her current environment?
-    * Grace expects to be able to be able to get the same performance she used to get from C or C++.
+    * Grace expects to be able to get the same performance she used to get from C or C++.
     * Grace is accustomed to various bits of low-level tooling, such as gdb or perf. It's nice if Rust works reasonably well with those tools, but she'd be happy to have access to better alternatives if they were available. She's happy using `cargo` instead of `make`, for example.
