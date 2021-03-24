@@ -191,7 +191,6 @@ instead.
     * This story is about someone who is an experienced systems programmer and
       an experienced Rust developer. All the other characters have "new to Rust"
       or "new to programming" as a key characteristic.
-    * [Grace] could as worked as well.
  **How would this story have played out differently for the other characters?**
     * [Alan] would have found the `#![no_std]` crate ecosystem lacking async
       support. He would have moved forward with a `Future`-based implementation,
