@@ -7,7 +7,7 @@ This is a draft "status quo" story submitted as part of the brainstorming period
 
 ## The story
 ### Trust the compiler
-Alan has a a lot of experience in C#, but in the meantime has created some successful projects in Rust.
+Alan has a lot of experience in C#, but in the meantime has created some successful projects in Rust.
 He has dealt with his fair share of race conditions/thread safety issues during runtime in C#, but is now starting to trust that if his Rust code compiles,
 he won't have those annoying runtime problems to deal with.
 
