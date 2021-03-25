@@ -117,20 +117,28 @@ She then modifies `poll` to set `PRINT_WAKER`:
 `PRINT_WAKER` is stored in `.bss`, which occupies space in RAM but not flash. It
 is two words in size. It points to a
 [`RawWakerVTable`](https://doc.rust-lang.org/stable/core/task/struct.RawWakerVTable.html)
-that is provided by the executor. `RawWakerVTable` does not appear to be
-designed for a no-`alloc` environment. In a no-`alloc` environment, `drop` and
-`clone` are generally no-ops, and `wake`/`wake_by_ref` seem like duplicates.
-Looking at `RawWakerVTable` made Barbara think about the size impact of using
-`Future`.
+that is provided by the executor. `RawWakerVTable`'s design is a compromise that
+supports environments both with and without `alloc`. In no-`alloc` environments,
+`drop` and `clone` are generally no-ops, and `wake`/`wake_by_ref` seem like
+duplicates. Looking at `RawWakerVTable` makes Barbara realize that even though
+`Future` was designed to work in embedded contexts, it may have too much
+overhead for her use case.
 
-Barbara decided the overhead would be worth it if it made it easy to work with
-future combinators from external crates *and* could function as a lightweight
-form of multithreading. To support this, Barbara decides to implement an
-executor designed to function like a background thread. Because `alloc` is not
-available, this executor contains a single future. The executor has a `spawn`
-function that accepts a future and starts running that future (overwriting the
-existing future in the executor if one is already present). Once started, the
-executor runs entirely in kernel callbacks.
+Barbara decides to do some benchmarking. She comes up with a sample application
+-- an app that blinks a led and responds to button presses -- and implements it
+twice. One implementation does not use `Future` at all, the other does. Both
+implementations have two asynchronous interfaces: a timer interface and a GPIO
+interface, as well as an application component that uses the interfaces
+concurrently. In the `Future`-based app, the application component functions
+like a future combinator, as it is a `Future` that is almost always waiting for
+a timer or GPIO future to finish.
+
+To drive the application future, Barbara implements an executor. The executor
+functions like a background thread. Because `alloc` is not available, this
+executor contains a single future. The executor has a `spawn` function that
+accepts a future and starts running that future (overwriting the existing future
+in the executor if one is already present). Once started, the executor runs
+entirely in kernel callbacks.
 
 Barbara identifies several factors that add branching and error handling code to
 the executor:
@@ -152,28 +160,21 @@ the executor:
    duplicates the "ignore spurious wakeups" functionality that exists in the
    future itself.
 
-Ultimately, this made the executor logic [quite
-nontrivial](https://github.com/tock/design-explorations/blob/master/size_comparison/futures/src/task.rs).
-The executor logic can be monomorphized for each future, which allows the
-compiler to make inlining optimizations, but results in a significant amount of
-duplicate code. Alternatively, it could be adapted to use function pointers or
-vtables to avoid the code duplication, but then the compiler *definitely* cannot
-inline `Future::poll` into the kernel callbacks.
-
-At this point, Barbara realizes she needs to do some benchmarking. Barbara comes
-up with a sample application -- an app that blinks a led and responds to button
-presses -- and implements it twice. One implementation does not use `Future` at
-all, the other does. In addition to two async drivers (a timer driver and a GPIO
-driver), the `Future`-based app uses Barbara's executor as well as a single
-combinator (that manages the state of the app).
+Ultimately, this made the [executor
+logic](https://github.com/tock/design-explorations/blob/master/size_comparison/futures/src/task.rs)
+nontrivial, and it compiled into 96 bytes of code. The executor logic is
+monomorphized for each future, which allows the compiler to make inlining
+optimizations, but results in a significant amount of duplicate code.
+Alternatively, it could be adapted to use function pointers or vtables to avoid
+the code duplication, but then the compiler *definitely* cannot inline
+`Future::poll` into the kernel callbacks.
 
 Barbara publishes an
 [analysis](https://github.com/tock/design-explorations/tree/master/size_comparison)
 of the relative sizes of the two app implementations, finding a large percentage
 increase in both code size and RAM usage (note: stack usage was not
-investigated). Most of the code size increase is from the future combinator
-code. There are two kernel callbacks in use (one that notifies the app of a
-button press and one that notifies it of a timer expiration).
+investigated). Most of the code size increase is from the future
+combinator code.
 
 In the no-`Future` version of the app, a kernel callback causes the following:
 
@@ -224,13 +225,13 @@ instead. Here are some ways in which these APIs are lighter weight than a
 * **What are the morals of the story?**
     * `core::future::Future` isn't suitable for every asynchronous API in Rust.
       `Future` has a lot of capabilities, such as the ability to spawn
-      dynamically-allocated futures, that are unnecessary in embedded system.
+      dynamically-allocated futures, that are unnecessary in embedded systems.
       These capabilities have a cost, which is unavoidable without
       backwards-incompatible changes to the trait.
     * We should look at embedded Rust's relationship with `Future` so we don't
-      fragment the embedded Rust ecosystem. Other embedded crates use `Future`,
-      presumably because they are less space constrained than Barbara's
-      codebase.
+      fragment the embedded Rust ecosystem. Other embedded crates use `Future`
+      -- `Future` certainly has a lot of advantages over lighter-weight
+      alternatives, if you have the space to use it.
 * **Why did you choose *Barbara* to tell this story?**
     * This story is about someone who is an experienced systems programmer and
       an experienced Rust developer. All the other characters have "new to Rust"
