@@ -56,7 +56,7 @@ You can feel free to add whatever other FAQs seem appropriate. You should also e
 
 ## The review process
 
-When you opan a status quo PR, people will start to [comment] on it. These comments should always be constructive, with the goal not of negating the story but of making it more precise or more persuasive. Ideally, you should respond to every comment in one of two ways:
+When you open a status quo PR, people will start to [comment] on it. These comments should always be constructive, with the goal not of negating the story but of making it more precise or more persuasive. Ideally, you should respond to every comment in one of two ways:
 
 * Adjust the story with more details or to correct factual errors.
 * Add something to the story's FAQ to explain the confusion.
@@ -83,6 +83,7 @@ The goal is that, at the end of the review process, the status quo story has a l
 * **How should I describe the "evidence" for my status quo story?**
     * The more specific you can get, the better. If you can link to tweets or blog posts, that's ideal. You can also add notes into the [conversations] folder and link to those. Of course, you should be sure people are ok with that.
 
+[conversations]: ../../conversations.md
 [template]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo/template.md
 [sqd]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
 [`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
