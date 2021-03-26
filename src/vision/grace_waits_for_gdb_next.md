@@ -57,8 +57,8 @@ Grace hits Ctrl-x a and gets a TUI mode view that includes this:
 │   56              println!("Hello, world!");                                                                                                                                                                                       │
 │   57              let record = Box::new(Mutex::new(Record::new()));                                                                                                                                                                │
 │   58              let record = &*Box::leak(record);                                                                                                                                                                                │
-│   59                                                                                                                                                                                                                               │
-│
+│   59                                                                                                                                                                                                                              
+|
 ```
 
 Excitedly Grace types `next` to continue to the next line of the function.
@@ -79,8 +79,7 @@ So Grace restarts the debugger, and then asks for a breakpoint on the first line
 
 And now it stops on the line that she expected:
 
-```
-   52          }                                                                                                                                                                                                                    │
+```                                                                                                                                                                                                     │
 │   53                                                                                                                                                                                                                               │
 │   54          #[tokio::main]                                                                                                                                                                                                       │
 │   55          pub(crate) async fn main() -> Result<(), Box<dyn Error + Send + Sync + 'static>> {                                                                                                                                   │
