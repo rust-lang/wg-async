@@ -58,7 +58,6 @@ Grace hits Ctrl-x a and gets a TUI mode view that includes this:
 │   57              let record = Box::new(Mutex::new(Record::new()));                                                                                                                                                                │
 │   58              let record = &*Box::leak(record);                                                                                                                                                                                │
 │   59                                                                                                                                                                                                                              
-|
 ```
 
 Excitedly Grace types `next` to continue to the next line of the function.
