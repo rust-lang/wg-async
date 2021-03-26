@@ -53,12 +53,8 @@ let poller_ws_stream = ws_stream.clone();
 async_std::task::spawn(async move {
     while let Some(msg) = ws_receiver.next().await {
         match poller_ws_stream.lock().await.send_string(msg).await {
-            Ok(msg) => {
-                info!("New WS data sent. {:?}", msg);
-            }
-            Err(msg) => {
-                warn!("WS connection closed. {:?}", msg);
-            }
+            Ok(msg) => info!("New WS data sent. {:?}", msg),
+            Err(msg) => warn!("WS connection closed. {:?}", msg),
         };
     }
 });
