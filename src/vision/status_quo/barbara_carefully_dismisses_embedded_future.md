@@ -79,7 +79,7 @@ So far so good. Barbara then works on `poll`:
 ```rust
     fn poll(self: Pin<&mut Self>, cx: &mut Context) -> Poll<Self::Output> {
         if kernel_is_print_done() {
-            Poll::Ready(kernel_get_buffer_back())
+            return Poll::Ready(kernel_get_buffer_back());
         }
         Poll::Pending
     }
