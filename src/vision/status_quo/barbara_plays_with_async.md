@@ -23,7 +23,7 @@ project, she starts with a "playground" where she can try to write some simple
 async rust code to see how it feels and how it compares to how async code feels
 in other languages she knows (like C# and JavaScript).
 
-She starts by open a blank project in VSCode with [rust-analyzer].  Because she's
+She starts by opening a blank project in VSCode with [rust-analyzer].  Because she's
 been following the overall state of rust async, she knows that she needs a runtime,
 and quickly decides to use tokio, because she knows its quite popular and well documented.
 
@@ -227,9 +227,9 @@ let mut futures: Vec<Box<dyn Future<Output=()>>> = Vec::new();
 She then notices that her IDE (VSCode + rust-analyzer) has a new error on
 each call to push.  The code assist on each error says `Store this in the heap
 by calling 'Box::new'`.  She is exactly what she wants, and it happy that
-rust-analzyer perfectly handled this case.
+rust-analyzer perfectly handled this case.
 
-Now each future is boxed up, ut there is one final error yet,
+Now each future is boxed up, but there is one final error still,
 this time on the call to `join_all(futures).await`:
 
 ```
@@ -279,7 +279,7 @@ error[E0658]: async closures are unstable
    = help: to use an async block, remove the `||`: `async {`
 ```
 
-Barbara knows that async are stable and using this nightly feature isn't what
+Barbara knows that async is stable and using this nightly feature isn't what
 she wants.  So the tries the suggestion made by the compiler and removes the `||` bars:
 
 ```rust
