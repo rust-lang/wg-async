@@ -243,8 +243,22 @@ Barbara has been around rust for long enough to know that there is a `Box::pin`
 API, but she doesn't really understand what it does, nor does she have a good
 intuition about what this API is for.  But she is accustomed to just trying
 things in rust to see if they work.  And indeed, after changing `Box::new` to
-`Box::pin` (and adjusting the type of the Vec), the code compiles and runs
-successfully.
+`Box::pin`:
+
+```rust
+futures.push(Box::pin(delay_future.then(|_| {
+    println!("Done!");
+    std::future::ready(())
+})));
+```
+
+and adjusting the type of the Vec:
+
+```rust
+let mut futures: Vec<Pin<Box<dyn Future<Output=()>>>> = Vec::new();
+```
+
+the code compiles and runs successfully.
 
 But even though the run is working correctly, she wishes she had a better idea
 why pinning is necessary here and feels a little uneasy having to use something
