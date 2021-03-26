@@ -77,7 +77,21 @@ So Grace restarts the debugger, and then asks for a breakpoint on the first line
 (gdb) continue
 ```
 
-Now she is able to use `next` to walk through the main function. She does notice that the calls to `tokio::spawn` are skipped over by `next`, but that's not as much of a surprise to her.
+And now it stops on the line that she expected:
+
+```
+   52          }                                                                                                                                                                                                                    │
+│   53                                                                                                                                                                                                                               │
+│   54          #[tokio::main]                                                                                                                                                                                                       │
+│   55          pub(crate) async fn main() -> Result<(), Box<dyn Error + Send + Sync + 'static>> {                                                                                                                                   │
+│B+>56              println!("Hello, world!");                                                                                                                                                                                       │
+│   57              let record = Box::new(Mutex::new(Record::new()));                                                                                                                                                                │
+│   58              let record = &*Box::leak(record);                                                                                                                                                                                │
+│   59                                                                                                                                                                                                                               │
+│   60              let (tx, mut rx) = channel(100);                                                                                                                                                                                 │
+```
+
+Grace is now able to use `next` to walk through the main function. She does notice that the calls to `tokio::spawn` are skipped over by `next`, but that's not as much of a surprise to her, since those are indeed function calls that are taking async blocks. She sets breakpoints on the first line of each async block so that the debugger will stop when control reaches them as she steps through the code.
 
 
 ## 🤔 Frequently Asked Questions
