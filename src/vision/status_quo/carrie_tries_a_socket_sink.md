@@ -65,7 +65,7 @@ while let Some(msg) = ws_stream.lock().await.next().await {
 }
 ```
 
-Alan wonders if he's thinking about it wrong, but the solution isn't as obvious as his earlier Sink approach. Looking around, he realizes a solution to his problems already exists-- as others have been in his shoes before-- within two other nearly-identical pull requests, but they were both closed by the project maintainers. He tries opening a third one with the same code, pointing to an example where it was actually found to be useful. To his joy, his original approach works with the code in the closed pull requests in his local copy! Alan's branch is able to compile for the first time.
+Alan wonders if he's thinking about it wrong, but the solution isn't as obvious as his earlier `Sink` approach. Looking around, he realizes a solution to his problems already exists-- as others have been in his shoes before-- within two other nearly-identical pull requests, but they were both closed by the project maintainers. He tries opening a third one with the same code, pointing to an example where it was actually found to be useful. To his joy, his original approach works with the code in the closed pull requests in his local copy! Alan's branch is able to compile for the first time.
 
 However, almost immediately, his request was also shut down, and the maintainer suggested he try the complex, unobvious, and unspecific solution that he had already tried and just couldn't get it to work.
 
