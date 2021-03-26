@@ -73,7 +73,7 @@ As a result of his frustration, Alan calls out one of the developers of the proj
 
 Because of this heated exchange, Alan grows concerned for his own career, what these well-known community members might think or say about his to others, and his confidence in the community surrounding this language that he really enjoys using is somewhat shaken.
 
-Despite this, Alan takes a walk, gathers his determination, and commits to maintaining his fork with the changes from the other pull requests that were shut down, and publihes his version to Crates.io, vowing to be more welcoming to "misfit" pull requests like the one he needed.
+Despite this, Alan takes a walk, gathers his determination, and commits to maintaining his fork with the changes from the other pull requests that were shut down, and publishes his version to crates.io, vowing to be more welcoming to "misfit" pull requests like the one he needed.
 
 A few weeks later, Alan's work at his project at work is merged with his new forked crate. It's a big deal, his first professional open source contribution to a Rust project, but he still doesn't feel like he has a sense of closure with the community. Meanwhile, his friends say they want to try Rust, but they're worried about its async execution issues, and he doesn't know what else to say, other than to offer a sense of understanding. Maybe the situation will get better someday, he hopes.
 
