@@ -34,7 +34,7 @@ while let Some(msg) = ws_receiver.next().await {
 }
 ```
 
-This is necessary because both sides of the stream are stateful Iterables, if they're kept as one, the lock on the receiver couldn't be released within the loop. He's seen this pattern used in other projects in the Rust community, but is frustrated to find that the Sink trait wasn't implemented in the WebSockets middleware library he's using.
+This is necessary because both sides of the stream are stateful iterators, and if they're kept as one, the lock on the receiver can't be released within the loop. He's seen this pattern used in other projects in the Rust community, but is frustrated to find that the `Sink` trait wasn't implemented in the WebSockets middleware library he's using.
 
 Alan also tries creating a sort of poller worker thread using an intermediary messaging channel, but he has trouble reasoning about the code and wasn't able to get it to compile:
 
