@@ -28,12 +28,8 @@ while let Some(msg) = ws_receiver.next().await {
 
     // Echo the request:
     match ws_sender.lock().await.send_string(msg).await {
-        Ok(_) => {
-            info!("New WS data sent.");
-        }
-        Err(_) => {
-            warn!("WS connection closed.");
-        }
+        Ok(_) => info!("New WS data sent."),
+        Err(_) => warn!("WS connection closed."),
     };
 }
 ```
