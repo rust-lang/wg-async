@@ -69,7 +69,7 @@ Alan wonders if he's thinking about it wrong, but the solution isn't as obvious 
 
 However, almost immediately, his request was also shut down, and the maintainer suggested he try the complex, unobvious, and unspecific solution that he had already tried and just couldn't get it to work.
 
-As a result of his frustration, Alan calls out one of the developers of the project on social media, who he believed had frequently shot down the idea of using `Sink` traits. This is not well-received, the maintainer reacts with a condescending and dismissive attitude, and he later finds out he was blocked. A co-maintainer responds to the thread, defending and supporting the other maintainer's actions, and he's told to "get over it". He's given a link to a blog post with a piece [lamenting the popularity of Sink in the Rust ecosystem](https://blog.yoshuawuyts.com/rust-streams/#why-we-do-not-talk-about-the-sink-trait), and how it's complex,  bad and not worth it. The piece unhelpfully makes no effort to provide examples of how the better alternatives would be used to replace uses of `Sink`.
+As a result of his frustration, Alan calls out one of the developers of the project on social media, who he believed had frequently shot down the idea of using `Sink` traits. This is not well-received, the maintainer reacts with a condescending and dismissive attitude, and he later finds out he was blocked. A co-maintainer responds to the thread, defending and supporting the other maintainer's actions, and he's told to "get over it". He's given a link to a blog post with a piece lamenting the popularity of Sink in the Rust ecosystem, and how it's complex,  bad and not worth it. The piece unhelpfully makes no effort to provide examples of how the better alternatives would be used to replace uses of `Sink`.
 
 Because of this heated exchange, Alan grows concerned for his own career, what these well-known community members might think or say about his to others, and his confidence in the community surrounding this language that he really enjoys using is somewhat shaken.
 
@@ -90,6 +90,7 @@ A few weeks later, Alan's work at his project at work is merged with his new for
     * <https://github.com/cryptoquick/tide-websockets-sink>
     * <https://twitter.com/cryptoquick/status/1370143022801846275>
     * <https://twitter.com/cryptoquick/status/1370155726056738817>
+    * <https://blog.yoshuawuyts.com/rust-streams/#why-we-do-not-talk-about-the-sink-trait>
 * **Why did you choose [Alan](../characters/alan.md) to tell this story?**
     * Alan is more representative of the original author's background in JS, TypeScript, and NodeJS.
 * **How would this story have played out differently for the other characters?**
