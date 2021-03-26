@@ -74,7 +74,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-He runs his project but is suddenly greeted with a runtime error? How is this even possible? His project doesn't contain any out-of-bounds accesses, he never uses `.unwrap` or `.expect`?
+He runs his project but is suddenly greeted with a runtime error. He is quite surprised. "How is this even possible?", he thinks. "I don't have any out-of-bounds accesses, and I never use `.unwrap` or `.expect`."
 At the top of the error message he sees: `thread 'main' panicked at 'there is no reactor running, must be called from the context of a Tokio 1.x runtime'` 
 
 He searches what "Tokio" is in Rust, and he finds that it also provides an attribute to put on `main`, namely `[tokio::main]`, but what is the difference with `[async_std::main]`? His curiosity leads him to watch videos/read blogs/scour reddit,... on why there are multiple runtimes in Rust. This leads him into a rabbit hole and now he learns about Executors, Wakers, `Pin`,... He has a basic grasp of what they are, but does not have a good understanding of them or how they all fit together exactly. These are all things he had not need to know nor heed in C#. (Note: there is another story about troubles/confusion that might arise when learning all these things about async: [Alan hates writing a `Stream`](./alan_hates_writing_a_stream.md))
