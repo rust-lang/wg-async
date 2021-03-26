@@ -12,7 +12,7 @@ Alan is working on a project that uses an alternative popular async framework. H
 
 One of the goals is to switch from a WebSocket implementation using raw TCP sockets to one managed behind an HTTP server library, so both HTTP and WebSocket commands can be forwarded to a transport-agnostic RPC server. He finds an HTTP server that's similar to one he's used to using with the other async framework, and a WebSocket middleware library that goes with it.
 
-However, as he's working, Alan encounters a situation where the socket needs to be written to within an async thread, and the traits just aren't working. He wants to do split the stream into a sender and receiver:
+However, as he's working, Alan encounters a situation where the socket needs to be written to within an async thread, and the traits just aren't working. He wants to split the stream into a sender and receiver:
 
 ```rust
 use futures::{SinkExt, StreamExt};
