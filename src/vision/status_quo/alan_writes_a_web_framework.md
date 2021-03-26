@@ -19,7 +19,7 @@
 
 ## 🚧 Warning: Draft status 🚧
 
-This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
 
 If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!
 
@@ -29,16 +29,28 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 ## 🤔 Frequently Asked Questions
 
-*Here are some standard FAQ to get you started. Feel free to add more!*
+[YouBuy](../projects/YouBuy.md) is written using an async web framework that predates the stabilization of async function syntax. When Alan joins the company, it is using async functions for its business logic, but can't use them for request handlers because the framework doesn't support it yet. It requires the handler's return value to be `Box<dyn Future<...>>`. Rather than switching YouBuy to a different web framework, Alan decides to contribute to the web framework himself.
+
+After a bit of a slog, he manages to make the web framework capable of using an `async fn` as an http request handler. He does this by making a wrapper function that boxes up the `impl Future`.
+
+It's still not fantastically ergonomic though. Because the web framework predates async function syntax, it requires you to take ownership of the request context (`fn handler(state: State)`) and return it alongside your response in the success/error cases (`Ok((state, response))` or `Err((state, error))`). This means that Alan can't use the `?` operator inside his http request handlers. Alan knows answer is to make another wrapper function so that the handler can take an `&mut` reference to `State` for the lifetime of the future, but Alan can't work out how to express this. He submits his pull-request upstream as-is, but it nags on his mind that he has been defeated.
+
+Shortly afterwards, someone raises a bug about `?`, and a few other web framework contributors try to get it to work, but they also get stuck. When Alan tries it, the compiler diagnostics keep sending him around in circles. He can work out how to express the lifetimes for a function that returns a `Box<dyn Future + 'a>` but not an `impl Future` because of how where clauses are expressed. Alan longs to be able to say "this function takes an async function as a callback" (`fn register_handler(handler: impl async Fn(state: &mut State) -> Result<Response, Error>)`) and have Rust elide the lifetimes for him, like how they are elided for async functions.
+
+A month later, one of the contributors finds a forum comment by Barbara explaining how to express what the Alan is after (using higher-order lifetimes and a helper trait). They implement this and merge it.
+
+When Alan sees another open source project struggling with the same issue, he notices that Barbara has helped them out as well.
+
 
 * **What are the morals of the story?**
-    * *Talk about the major takeaways-- what do you see as the biggest problems.*
+    * Callback-based APIs with async callbacks are a bit fiddly, because of the `impl Future` return type, but not insurmountable.
+    * Callback-based APIs with async callbacks that borrow their arguments are almost impossible to write without help.
 * **What are the sources for this story?**
-    * *Talk about what the story is based on, ideally with links to blog posts, tweets, or other evidence.*
-* **Why did you choose *NAME* to tell this story?**
-    * *Talk about the character you used for the story and why.*
+    * This is from the author's [own experience](https://github.com/rust-lang/wg-async-foundations/issues/78#issuecomment-808193936).
+* **Why did you choose Alan/YouBuy to tell this story?**
+    * Callback-based apis are a super-common way to interact with web frameworks. I'm not sure how common they are in other fields.
 * **How would this story have played out differently for the other characters?**
-    * *In some cases, there are problems that only occur for people from specific backgrounds, or which play out differently. This question can be used to highlight that.*
+    * I suspect that even many Barbara-shaped developers would struggle with this problem.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
