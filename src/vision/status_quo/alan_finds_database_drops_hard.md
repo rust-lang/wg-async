@@ -75,8 +75,6 @@ async fn do_the_thing() -> Result<(), sqlx::Error> {
 
 Next, Alan seeks verification and validation of his understanding of the source code from the `sqlx` forum. His advisor states that Rust doesn't have a way to execute async operations in a destructor.
 
-Alan evalutes possible fixes to this problem. His first consideration is whether there is an explicit async method that will close the connection. He then realizes that when a user disconnects and the active future for that user is dropped, his call wouldn't run anyway. 
-
 ## Finding the Solution
 
 Alan briefly considers rearchitecting his application in more extreme ways to retain use of async, but he gives up and seeks a more straight forward solution. He discovers `rusqlite`, a sychronous database library and adopts it. This requires some rearchitecting but solves the problem.
