@@ -20,6 +20,9 @@ Niklaus was excited about [the RFC proposing that `block_on` be added to the std
 [trpl]: https://doc.rust-lang.org/stable/book/
 [people like Barbara]: https://github.com/rust-lang/wg-async-foundations/blame/5ce418ac4076850f515034010cc51b707441f695/src/vision/status_quo/barbara_makes_their_first_steps_into_async.md#L22
 [block-on-rfc]: https://github.com/rust-lang/rust/pull/65875
+[htvsq]: ../how_to_vision/status_quo.md
+[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+
 
 ## 🤔 Frequently Asked Questions
 
