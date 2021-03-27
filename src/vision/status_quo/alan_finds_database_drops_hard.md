@@ -9,8 +9,8 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 ## The problem
 
-Alan has just written a function that extends YouBuy to connect to a database when his application receives a request. The request returns all the data for a single user to a customized page on his website. After launching the beta version of his application, Alan begins receiving complaints that his website sometimes displays a page with an error message and other times it seems to work as intended. When the page with an error message appears the message reads: "Can not open a connection to the database, because a connection is already open".
-
+Alan has been adding an extension to YouBuy that launches a singleton actor which interacts with a Sqlite database using the `sqlx` crate. The Sqlite database only permits a single active connection at a time, but this is not a problem, because the actor is a singleton, and so there only should be one at a time. He consults the documentation for `sqlx` and comes up with the following code to create a connection and do the query he needs:
+  
 ```rust=
 use sqlx::Connection;
 
@@ -31,7 +31,7 @@ async fn main() -> Result<(), sqlx::Error> {
 }
 ```
 
-Alan sees the reports coming in from his beta users, but hasn't received any alarms from his application. He realizes he must start debugging. His initial testing produces the customized page for the current user as expected, but after a number of attempts he sees the page with the error message. His application shows an error that says that there is already an open database handle.
+Things seem to be working fairly well but sometimes when he refreshes the page he encounters a panic with the message "cannot open a new connecton: connection is already open". He is flummoxed.
 
 
 ## Searching for the Solution
