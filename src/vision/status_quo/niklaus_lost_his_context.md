@@ -10,13 +10,14 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Niklaus heard about a project to reimplement a deprecated browser plugin using Rust and WASM. This old technology had the ability to load resources over HTTP; so it makes sense to try and implement that functionality using the Fetch API. He looks up the documentation of `web_sys` and realizes that he needs to take a thing called a `Future` out of the call to `fetch`, do some things to it in Rust, and then send the future off to `spawn_local` as such:
 
-```use wasm_bindgen_futures::spawn_local;
+```rust
+use wasm_bindgen_futures::spawn_local;
 use web_sys::window;
 
 fn load_image(src: &url) {
     spawn_local(async move {
         let url = src.to_string();
-        let request = //request construction in Rust is actually pretty verbose
+        let request = make_request(url);
                       //just pretend it's here
         window().unwrap().fetch_with_request(&request).await;
         log::error!("It worked");
@@ -26,7 +27,8 @@ fn load_image(src: &url) {
 
 Niklaus adds calls to `load_image` where appropriate, sees the message pop up in the console, and figures it's time to now actually do something to that loaded image. At this point, it's important to note that many parts of this project pass around "contexts" - bundles of borrowed state that various parts of the reimplementation are free to alter. (This is necessary because this plugin had multiple scripting runtimes in it.) In synchronous code, this was perfectly fine. However, when we start integrating the function into the player...
 
-```use crate::{Index, Context}
+```rust
+use crate::{Index, Context}
 use wasm_bindgen_futures::spawn_local;
 use web_sys::window;
 use crate::parse_png;
@@ -65,7 +67,7 @@ fn load_image(src: &url, inside_of: Index<Node>, player: Arc<Mutex<Player>>) {
 }
 ```
 
-It works, but it causes problems. Async and contextual code can't really coexist; so async code always has to live at the periphery of the program. More complicated async behaviors, such as reading the image in chunks and progressively decoding it, requires a delicate dance of await followed by update and so on. Niklaus tells Alan about this and he says it has something to do with colored functions, something he isn't quite familiar about.
+It works, but it causes problems. Async and contextual code can't really coexist; so async code always has to live at the periphery of the program. More complicated async behaviors, such as reading the image in chunks and progressively decoding it, requires a delicate dance of await followed by update and so on. Niklaus tells Alan about this and Alan says it has something to do with colored functions, something he isn't quite familiar about.
 
 ## 🤔 Frequently Asked Questions
 
