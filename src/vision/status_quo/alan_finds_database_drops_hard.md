@@ -37,25 +37,45 @@ Things seem to be working fairly well but sometimes when he refreshes the page h
 ## Searching for the Solution
 
 
-Alan tries to figure out what happened from the logs, but is unable to do so. Alan decides to attempt to recreate the scenario by doing extra load testing and trying to emulate the increased traffic. After some time, Alan gets lucky and is able to recreate the error, but he still doesn't know what could be the cause. Alan turns to the documentation for the `sqlx` crate to see if there are flags that might enable extra instrumentation but he can't find any (XXX check what crate offers).
+Alan tries to figure out what happened from the logs, but the only information he sees is that a new connection has been received. Alan turns to the documentation for the `sqlx` crate to see if there are flags that might enable extra instrumentation but he can't find any (XXX check what crate offers).
 
-Alan, next, takes the following steps to determine the most likely source to explain the problem behavior in his application:
-
-1. Check the `sqlx` documentation for possible flags to explicitly close the connection but none are found.
-2. Examine the source code to figure out where the connection gets closed.
-3. Discover that the connection is closed through the destructor, Drop::drop only when it gets cleaned up aftering going out of scope.
-
-Alan realizes he must seek help from someone more experienced and knowledgable. He goes to his friend Barbara, and asks, "How can I get a log statement when the destructor runs?". Barbara tells him to wrap his database handle in another struct which has a destructor and to insert a log into the destructor for that struct we'll call `Foo`. Alan implements `Foo` and sees the new log when the destructor runs in the output. Now that the log works Alan runs program with full load in order to reproduce the problem. Alan analyzes the logs and notices that the new connection is being created and panicing before the destructor has run.
-
-Next, Alan seeks advice from the `sqlx` forum. He learns that the DropImpl for new connections spawns a task in order to close a handle, and therefore, it may not execute right away. His advisor states that Rust doesn't have a way to execute async operations in a destructor.
-
-Alan evalutes possible fixes to this problem. His first consideration is whether there is an explicit async method that will close the connection. He then realizes that when a user disconnects and the active future for that user is dropped, his call wouldn't run anyway. 
+* He does find the [`close` method] which mentions "This method is not required for safe and consistent operation. However, it is recommended to call it instead of letting a connection drop as the database backend will be faster at cleaning up resources."
+* He adds a call to `close` into his code and it helps some but he is still able to reproduce the problem if he refreshes often enough. 
+* He adds a log statement right before calling `close` to see if it is working:
 
 ```rust=
-let handle = ...
-logic(handle).await; // if user disconnects here, call to `handle.close()` will never execute
-handle.close();
+use sqlx::Connection;
+
+#[async_std::main]
+async fn do_the_thing() -> Result<(), sqlx::Error> {
+    // Create a connection
+    let conn = SqliteConnection::connect("sqlite::memory:").await?;
+
+    // Make a simple query to return the given parameter
+    let row: (i64,) = sqlx::query_as("SELECT $1")
+        .bind(150_i64)
+        .fetch_one(&conn).await?; // <----- if this await is cancelled, doesn't help
+
+    assert_eq!(row.0, 150);
+    
+    // he adds this:
+    log!("closing the connection");
+    conn.close();
+
+    Ok(())
+}
 ```
+  
+* He observes that in the cases where he has the problem the log statement never executes.
+* He asks Barbara for help and she explains how `await` can be canceled and it will the destructors for things that are in scope.
+* He reads the [source for the SqliteConnection destructor](https://github.com/launchbadge/sqlx/blob/0ed524d65c2a3ee2e2a6706910b85bf2bb72115f/sqlx-core/src/pool/connection.rs#L70-L74) and finds that destructor spawns a task to actually close the connection.
+* He realizes there is a race condition:
+    * the task may not have actually closed the connection before `do_the_thing` is called a second time
+* He gives up and gets frustrated
+
+Next, Alan seeks verification and validation of his understanding of the source code from the `sqlx` forum. His advisor states that Rust doesn't have a way to execute async operations in a destructor.
+
+Alan evalutes possible fixes to this problem. His first consideration is whether there is an explicit async method that will close the connection. He then realizes that when a user disconnects and the active future for that user is dropped, his call wouldn't run anyway. 
 
 ## Finding the Solution
 
