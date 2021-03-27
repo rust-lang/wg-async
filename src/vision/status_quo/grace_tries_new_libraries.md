@@ -27,7 +27,7 @@ Controller::new(root_kind_api, ListParams::default())
 ```
 (Example code from taken from https://github.com/clux/kube-rs)
 
-So she takes the naiv approach to just convert that as follows:
+So she takes the naive approach to just convert that as follows:
 
 ```
 let controller = Controller::new(root_kind_api, ListParams::default())
