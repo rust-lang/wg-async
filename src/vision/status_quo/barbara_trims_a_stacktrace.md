@@ -86,7 +86,7 @@ stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 ```
 
-Based on this, she is able to figure out who to ping about the problem. She pastes her reduced stack trace into the issue pings Alan, who is responsible that module. Alan thanks her for reducing the stack trace and mentions, "Oh, when I used to work in C#, this is what the stack traces always looked out. I miss those days."
+Based on this, she is able to figure out who to ping about the problem. She pastes her reduced stack trace into the issue pings Alan, who is responsible that module. Alan thanks her for reducing the stack trace and mentions, "Oh, when I used to work in C#, this is what the stack traces always looked like. I miss those days."
 
 Fin.
 
