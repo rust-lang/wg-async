@@ -48,9 +48,18 @@ In C, one might have to set some kind of heartbeat timer for polling. Grace expl
 similar to how the `Waker` object works in a `Future`'s `Context` type, in that it is how often the execution
 environment should re-try the future if the call to `poll` returns `Poll::Pending`.
 
-Something Grace learns to love immediately about Rust is that writing the `Future` here does not require her team to
-write their own execution environment. In fact, the future can be entirely written independent of the execution
-environment. She quickly writes an async method to represent the polling process:
+A member of Grace's team asks her how she was able to understand all this. After all, Grace had been writing Rust about
+as long as the rest of her team. The main difference was that she had many more years of systems programming under C and
+C++ under her belt than they had. Grace responded that for the most part she had just read the documentation for the
+`Future` trait, and that she had intuited how async-await de-sugars itself into a regular function that returns a future
+of some kind. The de-sugaring process was, after all, very similar to how lambda objects in C++ were de-sugared as well.
+She leaves her teammate with [an
+article](//smallcultfollowing.com/babysteps/blog/2019/10/26/async-fn-in-traits-are-hard/) she once found online that
+explained the process in a lot more detail for a problem much harder than they were trying to solve.
+
+Something Grace and her team learn to love immediately about Rust is that writing the `Future` here does not require her
+team to write their own execution environment. In fact, the future can be entirely written independently of the
+execution environment. She quickly writes an async method to represent the polling process:
 
 ```rust
 /// Gets the next frame from the camera, waiting `retry_after` time until polling again if it fails.
