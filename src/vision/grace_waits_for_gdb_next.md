@@ -8,7 +8,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Grace wants to walk through the behavior of a toy program.
 
-She first fires up `cargo run --verbose` to remind himself what the path to the target binary is. Part of the resulting Cargo output is:
+She first fires up `cargo run --verbose` to remind herself what the path to the target binary is. Part of the resulting Cargo output is:
 
 ```
      Running `target/debug/toy`
