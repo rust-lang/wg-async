@@ -91,7 +91,7 @@ Alan briefly considers rearchitecting his application in more extreme ways to re
 * **Why did you choose Alan to tell this story?**
     * His experience and understanding of other languages coupled with his desire to apply Rust would likely lead him to try solutions before deeply researching them.
 * **How would this story have played out differently for the other characters?**
-    * It is likely that Nickalas would have reached out to Barbara or possibly the sqlx community sooner. On the other hand Barbara, given her deep experience in Rust wouldn't have selected async in her initial design.
+    * This story would likely have played out the same for everyone.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
