@@ -82,7 +82,6 @@ Alan briefly considers rearchitecting his application in more extreme ways to re
     * Rust's async story is lacking a way of executing async operations in destructors. Spawning is a workaround, but it can have unexpected side-effects.
     * The story demonstrates solid research steps that Alan uses to understand and resolve his problem.
     * Completion of the [Cancellation and timeouts docs](https://rust-lang.github.io/async-book/06_multiple_futures/01_chapter.html) may have been helpful. It's difficult to know how something absent might have improved the solution search process.
-    * Stating the obvious, with more async experience Alan would shorten his solution search process.
 * **What are the sources for this story?**
     * This specific story describes an actual bug encountered by Sergey Galich at 1Password.
 * **Why did you choose Alan to tell this story?**
