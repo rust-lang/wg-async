@@ -39,7 +39,7 @@ Things seem to be working fairly well but sometimes when he refreshes the page h
 
 Alan tries to figure out what happened from the logs, but the only information he sees is that a new connection has been received. Alan turns to the documentation for the `sqlx` crate to see if there are flags that might enable extra instrumentation but he can't find any.
 
-* He does find the [`close` method] which mentions "This method is not required for safe and consistent operation. However, it is recommended to call it instead of letting a connection drop as the database backend will be faster at cleaning up resources."
+He's a bit confused, because he's accustomed to having things generally be cleaned up automatically when they get dropped (for example, dropping a [`File`](https://doc.rust-lang.org/std/fs/struct.File.html) will close it). Searching the docs, he sees the [`close`](https://docs.rs/sqlx/0.5.1/sqlx/trait.Connection.html#tymethod.close) method, but the comments confirm that he shouldn't have to call it explicitly: "This method is not required for safe and consistent operation. However, it is recommended to call it instead of letting a connection drop as the database backend will be faster at cleaning up resources." Still, just in case, he decides to add a call to `close` into his code. It does seem to help some, but he is still able to reproduce the problem if he refreshes often enough. Feeling confused, he adds a log statement right before calling `close` to see if it is working:
 * He adds a call to `close` into his code and it helps some but he is still able to reproduce the problem if he refreshes often enough. 
 * He adds a log statement right before calling `close` to see if it is working:
 
