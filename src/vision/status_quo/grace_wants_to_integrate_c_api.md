@@ -91,7 +91,8 @@ implement a custom execution loop themselves, so the team decides it is not a to
 
 Doing this a single time is fine, but an end goal of the project is to be able to stream frames from the camera for
 unspecified lengths of time. Grace spends some time searching, and realizes that what she actually wants is a `Stream`
-of some kind, so that her team can write something similar to:
+of some kind. `Stream` objects are the asynchronous equivalent of iterators, and her team wants to eventually write
+something akin to:
 
 ```rust
 let frame_stream = stream_from_camera(camera, Duration::from_millis(5));
@@ -113,8 +114,6 @@ struct StreamState {
     camera: Camera,
     retry_after: Duration,
 }
-
-
 
 fn stream_from_camera(camera: Camera, retry_after: Duration) -> Unfold<Frame, ??, ??> {
     let initial_state = StreamState { camera, retry_after };
@@ -160,6 +159,9 @@ of an equivalent function pointer in C, and slightly laments that Rust cannot ex
       cannot rewrite entirely from scratch. Integrating Rust async code with other languages which might have different
       mental models can sometimes lead to unidiomatic or unsatisfying code, even if the intent of the code in Rust is
       clear.
+    * Grace eventually discovered that the problem was best modeled as a stream, rather than as a single future.
+      However, converting a future into a stream was not necessarily something that was obvious for someone with a C/C++
+      background.
     * Closures and related types can be very hard to write in Rust, and if you are used to being very explicit with your
       types, tricks such as the `impl` trick above for `Stream`s aren't immediately obvious at first glance.
 * **What are the sources for this story?**
