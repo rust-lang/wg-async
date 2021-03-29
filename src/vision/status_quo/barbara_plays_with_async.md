@@ -7,7 +7,7 @@ This is a draft "status quo" story submitted as part of the brainstorming period
 
 If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!
 
-# The story
+## The story
 
 [Barbara] has been following async rust for a long time, in eager anticipation
 of writing some project using async.  The last time she tried to do anything
@@ -328,7 +328,7 @@ futures.push(Box::pin(async move {
 It works!  Satisfied but still thinking about async rust, Barbara takes a break
 to eat a cookie.
 
-# 🤔 Frequently Asked Questions
+## 🤔 Frequently Asked Questions
 
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
