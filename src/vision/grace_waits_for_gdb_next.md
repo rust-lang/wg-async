@@ -79,7 +79,7 @@ Grace is now able to use `next` to walk through the main function. She does noti
 
 * **What are the morals of the story?**
     * A common usage pattern: hitting `next` to go to what seems like the next statement, breaks down due to implementation details of `#[tokio::main]` and `async fn`.
-    * This is one example of where `next` break, in terms of what a user is likely to *want*. The other common scenario where the behavior of `next` is non-ideal is higher-order functions, like `option.and_then(|t| { ... }`, where someone stepping through the code probably *wants* `next` to set
+    * This is one example of where `next` breaks, in terms of what a user is likely to *want*. The other common scenario where the behavior of `next` is non-ideal is higher-order functions, like `option.and_then(|t| { ... }`, where someone stepping through the code probably *wants* `next` to set
 a temporary breakpoint in the `...` of the closure.
 * **What are the sources for this story?**
     * Personal experience. I haven't acquired the muscle memory to stop using `next`, even though it breaks down in such cases.
