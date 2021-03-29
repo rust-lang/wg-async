@@ -23,19 +23,19 @@ thread 'main' panicked at 'something bad happened here', src/main.rs:16:5
 stack backtrace:
    0: std::panicking::begin_panic
              at /home/serg/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/panicking.rs:519:12
-   1: stacks_rs::process_one::{{closure}}
+   1: slow_rs::process_one::{{closure}}
              at ./src/main.rs:16:5
    2: <core::future::from_generator::GenFuture<T> as core::future::future::Future>::poll
              at /home/serg/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/future/mod.rs:80:19
-   3: stacks_rs::process_many::{{closure}}
+   3: slow_rs::process_many::{{closure}}
              at ./src/main.rs:10:5
    4: <core::future::from_generator::GenFuture<T> as core::future::future::Future>::poll
              at /home/serg/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/future/mod.rs:80:19
-   5: stacks_rs::main::{{closure}}::{{closure}}
+   5: slow_rs::main::{{closure}}::{{closure}}
              at ./src/main.rs:4:9
    6: <core::future::from_generator::GenFuture<T> as core::future::future::Future>::poll
              at /home/serg/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/future/mod.rs:80:19
-   7: stacks_rs::main::{{closure}}
+   7: slow_rs::main::{{closure}}
              at ./src/main.rs:3:5
    8: <core::future::from_generator::GenFuture<T> as core::future::future::Future>::poll
              at /home/serg/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/future/mod.rs:80:19
@@ -59,7 +59,7 @@ stack backtrace:
              at /home/serg/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.3.0/src/runtime/thread_pool/mod.rs:71:9
   18: tokio::runtime::Runtime::block_on
              at /home/serg/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.3.0/src/runtime/mod.rs:452:43
-  19: stacks_rs::main
+  19: slow_rs::main
              at ./src/main.rs:1:1
   20: core::ops::function::FnOnce::call_once
              at /home/serg/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ops/function.rs:227:5
@@ -77,12 +77,12 @@ She's a bit confused by the `::{closure}` lines on her symbols but she learned b
 ```
 thread 'main' panicked at 'something bad happened here', src/main.rs:16:5
 stack backtrace:
-   1: stacks_rs::process_one::{{closure}} at ./src/main.rs:16:5
-   3: stacks_rs::process_many::{{closure}} at ./src/main.rs:10:5
-   5: stacks_rs::main::{{closure}}::{{closure}} at ./src/main.rs:4:9
-   7: stacks_rs::main::{{closure}} at ./src/main.rs:3:5
+   1: slow_rs::process_one::{{closure}} at ./src/main.rs:16:5
+   3: slow_rs::process_many::{{closure}} at ./src/main.rs:10:5
+   5: slow_rs::main::{{closure}}::{{closure}} at ./src/main.rs:4:9
+   7: slow_rs::main::{{closure}} at ./src/main.rs:3:5
   13: <tokio stuff> 
-  19: stacks_rs::main
+  19: slow_rs::main
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 ```
 
