@@ -71,7 +71,7 @@ async fn do_the_thing() -> Result<(), sqlx::Error> {
     * the task may not have actually closed the connection before `do_the_thing` is called a second time
 * At this point, he is feeling pretty frustrated!
 
-Next, Alan seeks verification and validation of his understanding of the source code from the `sqlx` forum. His advisor states that Rust doesn't have a way to execute async operations in a destructor.
+Next, Alan seeks verification and validation of his understanding of the source code from the `sqlx` forum. Someone on the forum explains why the destructor launches a fresh task: Rust doesn't have a way to execute async operations in a destructor.
 
 ## Finding the Solution
 
