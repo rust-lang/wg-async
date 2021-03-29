@@ -86,7 +86,7 @@ Alan briefly considers rearchitecting his application in more extreme ways to re
     * Completion of the [Cancellation and timeouts docs](https://rust-lang.github.io/async-book/06_multiple_futures/01_chapter.html) may have been helpful. It's difficult to know how something absent might have improved the solution search process.
     * Stating the obvious, with more async experience Alan would shorten his solution search process.
 * **What are the sources for this story?**
-    * Sergey Galich reported this problem, among many others.
+    * This specific story describes an actual bug encountered by Sergey Galich at 1Password.
 * **Why did you choose Alan to tell this story?**
     * His experience and understanding of other languages coupled with his desire to apply Rust would likely lead him to try solutions before deeply researching them.
 * **How would this story have played out differently for the other characters?**
