@@ -31,13 +31,13 @@ async fn main() -> Result<(), sqlx::Error> {
 }
 ```
 
-Things seem to be working fairly well but sometimes when he refreshes the page he encounters a panic with the message "cannot open a new connecton: connection is already open". He is flummoxed.
+Things seem to be working fairly well but sometimes when he refreshes the page he encounters a panic with the message "Cannot open a new connecton: connection is already open". He is flummoxed.
 
 
 ## Searching for the Solution
 
 
-Alan tries to figure out what happened from the logs, but the only information he sees is that a new connection has been received. Alan turns to the documentation for the `sqlx` crate to see if there are flags that might enable extra instrumentation but he can't find any (XXX check what crate offers).
+Alan tries to figure out what happened from the logs, but the only information he sees is that a new connection has been received. Alan turns to the documentation for the `sqlx` crate to see if there are flags that might enable extra instrumentation but he can't find any [sqlx::Connection::close](https://docs.rs/sqlx/0.5.1/sqlx/trait.Connection.html#required-methods).
 
 * He does find the [`close` method] which mentions "This method is not required for safe and consistent operation. However, it is recommended to call it instead of letting a connection drop as the database backend will be faster at cleaning up resources."
 * He adds a call to `close` into his code and it helps some but he is still able to reproduce the problem if he refreshes often enough. 
@@ -84,13 +84,15 @@ Alan briefly considers rearchitecting his application in more extreme ways to re
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
 * **What are the morals of the story?**
-    * *Talk about the major takeaways-- what do you see as the biggest problems.*
+    * The story demonstrates solid research steps that Alan uses to understand and resolve his problem.
+    * Completion of the [Cancellation and timeouts docs](https://rust-lang.github.io/async-book/06_multiple_futures/01_chapter.html) may have been helpful. It's difficult to know how something absent might have improved the solution search process.
+    * Stating the obvious, with more async experience Alan would shorten his solution search process.
 * **What are the sources for this story?**
-    * *Talk about what the story is based on, ideally with links to blog posts, tweets, or other evidence.*
-* **Why did you choose *NAME* to tell this story?**
-    * *Talk about the character you used for the story and why.*
+    * Sergey Galich reported this problem, among many others.
+* **Why did you choose Alan to tell this story?**
+    * His experience and understanding of other languages coupled with his desire to apply Rust would likely lead him to try solutions before deeply researching them.
 * **How would this story have played out differently for the other characters?**
-    * *In some cases, there are problems that only occur for people from specific backgrounds, or which play out differently. This question can be used to highlight that.*
+    * It is likely that Nickalas would have reached out to Barbara or possibly the sqlx community sooner. On the other hand Barbara, given her deep experience in Rust wouldn't have selected async in her initial design.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
