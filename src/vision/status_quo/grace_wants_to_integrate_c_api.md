@@ -148,9 +148,9 @@ of an equivalent function pointer in C, and slightly laments that Rust cannot ex
       safety they would gain from switching to Rust, or exploring async code in a more rigorous way.
     * The async code is actually much simpler than writing the entire execution loop in C themselves. However, the
       assumption that you would write the entire execution loop is baked into the underlying library which Grace's team
-      cannot rewrite entirely from scratch. This makes it feel weird to work with async code in Rust that formalizes
-      concepts such as wake-ups. Even though Grace's team hasn't done anything particularly egregious by sleeping the
-      active task, it still "feels" unsatisfying coming from other languages where such a pattern might be a code smell.
+      cannot rewrite entirely from scratch. Integrating Rust async code with other languages which might have different
+      mental models can sometimes lead to unidiomatic or unsatisfying code, even if the intent of the code in Rust is
+      clear.
     * Closures and related types can be very hard to write in Rust, and if you are used to being very explicit with your
       types, tricks such as the `impl` trick above for `Stream`s aren't immediately obvious at first glance.
 * **What are the sources for this story?**
