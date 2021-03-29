@@ -37,7 +37,7 @@ Things seem to be working fairly well but sometimes when he refreshes the page h
 ## Searching for the Solution
 
 
-Alan tries to figure out what happened from the logs, but the only information he sees is that a new connection has been received. Alan turns to the documentation for the `sqlx` crate to see if there are flags that might enable extra instrumentation but he can't find any [sqlx::Connection::close](https://docs.rs/sqlx/0.5.1/sqlx/trait.Connection.html#required-methods).
+Alan tries to figure out what happened from the logs, but the only information he sees is that a new connection has been received. Alan turns to the documentation for the `sqlx` crate to see if there are flags that might enable extra instrumentation but he can't find any.
 
 * He does find the [`close` method] which mentions "This method is not required for safe and consistent operation. However, it is recommended to call it instead of letting a connection drop as the database backend will be faster at cleaning up resources."
 * He adds a call to `close` into his code and it helps some but he is still able to reproduce the problem if he refreshes often enough. 
