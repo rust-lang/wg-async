@@ -29,9 +29,9 @@ To help those who followed after her, Barbara sat down to write out her experien
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
 * **What are the morals of the story?**
-    * Async streams do not offer useful asynchrony in and of themselves. They open up asynchrony only during the `.next()` step and are unable to offer asynchrony between steps.
-    * The names Future and Stream feel misleading. At a minimum, "async streams" should be instead called "async iterators" to help underscore their use case and help developers more quickly understand their limitations.
-    * Async streams without having language support for generators means that the result code is very difficult to get correct, requires learning an additional set of borrowchecker-friendly code patterns, and can give obtuse error messages.
+    * Easy to get the wrong idea. The current state of documentation does not make the use cases clear, so it's easy to grab this as an abstraction because it's the closest that fits.
+    * Async streams are just iterators. Async streams do not offer useful asynchrony in and of themselves. A possible help here might be renaming "async streams" to "async iterators" to help underscore their use case and help developers more quickly understand their limitations.
+    * A single async stream can not be operated on in parallel. They open up asynchrony only during the `.next()` step and are unable to offer asynchrony between steps (eg by calling `.next()` twice and operating on the resulting Futures).
 * **What are the sources for this story?**
     * Two years of experience with async streams in Nushell.
     * You can watch a [recording of the on-going experimentation](https://youtu.be/2AknX7canvw) as well.
