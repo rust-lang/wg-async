@@ -88,6 +88,8 @@ A few weeks later, Alan's work at his project at work is merged with his new for
 * **What are the morals of the story?**
     * There are often many sources of opinion in the community regarding futures and async, but these opinions aren't always backed up with examples of how it should be better accomplished. Sometimes we just find a thing that works and would prefer to stick with it, but others argue that some traits make implementations unnecessarily complex, and choose to leave it out. Disagreements like these in the ecosystem can be harmful to the reputation of the project and the participants.
     * If there's a source of substantial disagreement, the community becomes even further fragmented, and this may cause additional confusion in newcomers.
+    * Alan is used to fragmentation from the communities he comes from, so this isn't too discouraging, but what's difficult is that there's enough functionality overlap in async libraries that it's tempting to get them to interop with each other as-needed, and this can lead to architectural challenges resulting from a difference in design philosophies.
+    * It's also unclear if Futures are core to the Rust asynchronous experience, much as Promises are in JavaScript, or if the situation is actually more complex.
 * **What are the sources for this story?**
     * <https://github.com/http-rs/tide-websockets>
         * <https://github.com/http-rs/tide-websockets/pull/17> - Third pull request
