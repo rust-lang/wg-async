@@ -26,11 +26,14 @@ let ws_sender = Arc::new(Mutex::new(ws_sender));
 while let Some(msg) = ws_receiver.next().await {
     debug!("Received new WS RPC message: {:?}", msg);
 
-    // Echo the request:
-    match ws_sender.lock().await.send_string(msg).await {
-        Ok(_) => info!("New WS data sent."),
-        Err(_) => warn!("WS connection closed."),
-    };
+    async_std::task::spawn(async move {
+        let res = call_rpc(msg).await?;
+
+        match ws_sender.lock().await.send_string(res).await {
+            Ok(_) => info!("New WS data sent."),
+            Err(_) => warn!("WS connection closed."),
+        };
+    });
 }
 ```
 
@@ -60,8 +63,10 @@ async_std::task::spawn(async move {
 });
 
 while let Some(msg) = ws_stream.lock().await.next().await {
-    // Echo the request?
-    ws_sender.send(msg);
+    async_std::task::spawn(async move {
+        let res = call_rpc(msg).await?;
+        ws_sender.send(res);
+    });
 }
 ```
 
@@ -85,7 +90,10 @@ A few weeks later, Alan's work at his project at work is merged with his new for
     * If there's a source of substantial disagreement, the community becomes even further fragmented, and this may cause additional confusion in newcomers.
 * **What are the sources for this story?**
     * <https://github.com/http-rs/tide-websockets>
-        * <https://github.com/http-rs/tide-websockets/pull/17>
+        * <https://github.com/http-rs/tide-websockets/pull/17> - Third pull request
+        * <https://github.com/http-rs/tide-websockets/issues/15#issuecomment-797090892> - Suggestion to use a broadcast channel
+    * <https://github.com/ChainSafe/forest/commit/ff2691bab92823a8595d1d456ed5fa9683641d76#diff-2770a30d9f259666fb470d6f11cf1851ebb2d579a1480a8173d3855572748385> - Where some of the original polling work is replaced
+        * <https://github.com/ChainSafe/forest/blob/b9fccde00e7356a5e336665a7e482d4ef439d714/node/rpc/src/rpc_ws_handler.rs#L121> - File with Sink solution
     * <https://github.com/cryptoquick/tide-websockets-sink>
     * <https://twitter.com/cryptoquick/status/1370143022801846275>
     * <https://twitter.com/cryptoquick/status/1370155726056738817>
