@@ -83,7 +83,9 @@ Ready to pinpoint the issue, Alan presses `Ctrl+C` and then types `bt` to get a 
 </details>
 
 Puzzled, the only line Alan even recognizes is the `main` entry point function for the service.
-"Maybe I need to look at another thread?" he thinks and then consults the cheatsheet for the appropriate command.
+He knows that async tasks in Rust aren't run individually on their own threads which allows them to scale better and use fewer resources but surely there has to be a thread somewhere that's running his code?
+Alan doesn't completely understand how async works in Rust but he's seen the `Future::poll` method so he assumes that there is a thread which constantly polls tasks to see if they are ready to wake up.
+"Maybe I can find that thread and inspect its state?" he thinks and then consults the cheatsheet for the appropriate command to see the threads in the program.
 `info threads` seems promising so he tries that:
 
 <details><summary>(gdb) info threads</summary>
@@ -99,9 +101,10 @@ Puzzled, the only line Alan even recognizes is the `main` entry point function f
 
 Alan is now even more confused: "Where are my tasks?" he thinks.
 After looking through the cheatsheet and StackOverflow, he discovers there isn't a way to see which async tasks are waiting to be woken up in the debugger.
+Taking a shot in the dark, Alan concludes that this thread must be thread which is polling his tasks since it is the only one in the program.
+He googles "epoll_wait rust async tasks" but the results aren't very helpful and inspecting the stack frame doesn't yield him any clues as to where his tasks are so this seems to be a dead end.
 
-After thinking a bit, Alan realizes the runtime must have some way of knowing what tasks are waiting to be woken up.
-Maybe he can have the service ask the async runtime for that list of tasks every 10 seconds and print them to stdout? 
+After thinking a bit, Alan realizes that since the runtime must know what tasks are waiting to be woken up, perhaps he can have the service ask the async runtime for that list of tasks every 10 seconds and print them to stdout? 
 While crude, this would probably also help him diagnose the hang.
 Alan gets to work and opens the runtime docs to figure out how to get that list of tasks.
 After spending 30 minutes reading the docs, looking at StackOverflow questions and even posting on users.rust-lang.org, he discovers this simply isn't possible and he will have to add tracing to his application to figure out what's going on.
