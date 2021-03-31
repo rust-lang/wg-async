@@ -248,10 +248,30 @@ instead. Here are some ways in which these APIs are lighter weight than a
       would've gotten conflicting advice from the community.
 * **`Future` has a lot of features that Barbara's traits don't have -- aren't
     those worth the cost?**
-    * `Future` has a lot of additional features that are nice-to-have. However,
-      the code size impact is a deal-breaker, and no number of nice-to-have
-      features can outweigh a deal-breaker. Barbara's traits have every feature
-      she *needs*.
+    * `Future` has many additional features that are nice-to-have:
+        1. `Future` works smoothly in a multithreaded environment. Futures can
+           be `Send` and/or `Sync`, and do not need to have interior mutability,
+           which avoids the need for internal locking.
+           * Manipulating arbitrary Rust types without locking allows `async fn`
+             to be efficient.
+        1. Futures can be spawned and dropped in a dynamic manner: an executor
+           that supports dynamic allocation can manage an arbitrary number of
+           futures at runtime, and futures may easily be dropped to stop their
+           execution.
+           * Dropping a future will also drop futures it owns, conveniently
+             providing good cancellation semantics.
+           * A future that creates other futures (e.g. an `async fn` that calls
+             other `async fn`s) can be spawned with only a single memory
+             allocation, whereas callback-based approaches need to allocate for
+             each asynchronous component.
+        1. Community and ecosystem support. This isn't a feature of `Future` per
+           se, but the Rust language has special support for `Future`
+           (`async`/`await`) and practically the entire async Rust ecosystem is
+           based on `Future`. The ability to use existing async crates is a very
+           strong reason to use `Future` over any alternative async abstraction.
+    * However, the code size impact of `Future` is a deal-breaker, and no number
+      of nice-to-have features can outweigh a deal-breaker. Barbara's traits
+      have every feature she *needs*.
     * Using `Future` saves developer time relative to building your own async
       abstractions. Developers can use the time they saved to minimize code size
       elsewhere in the project. In some cases, this may result in a net decrease
