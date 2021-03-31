@@ -43,7 +43,7 @@ and then it is registered like this:
     router_builder.get("/").to(get_products_handler);
 ```
 
-The handler code is forced to drift to the right a lot, because of the async block, and the lack of ability to use `?` forces the use of a match block, which drifts even further to the right.
+The handler code is forced to drift to the right a lot, because of the async block, and the lack of ability to use `?` forces the use of a match block, which drifts even further to the right. This goes against [what he has learned from his days writing go](https://github.com/uber-go/guide/blob/master/style.md#reduce-nesting).
 
 Rather than switching YouBuy to a different web framework, Alan decides to contribute to the web framework himself. After a bit of a slog and a bit of where-clause-soup, he manages to make the web framework capable of using an `async fn` as an http request handler. He does this by extending the router builder with a closure that boxes up the `impl Future` from the async fn and then passes that closure on to `.to()`.
 
