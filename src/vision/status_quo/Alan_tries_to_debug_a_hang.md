@@ -10,10 +10,10 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Alan's startup has officially launched and YouBuy is live for the world to use.
 The whole team is very excited especially as this will be their first use of Rust in production! 
-Normally, as a .Net shop, they would have written the entire application in C# but because of the scalability and latency requirements on their inventory service, they decided to write that microservice in Rust utilizing the `async` features they've heard so much about. 
+Normally, as a .NET shop, they would have written the entire application in C#, but because of the scalability and latency requirements on their inventory service, they decided to write a microservice in Rust utilizing the `async` features they've heard so much about.
 
 The day's excitement soon turns into concern as reports begin coming into support of customers who can't checkout.
-After a few cases, a pattern begins to emerge: when a customer is trying to buy the last available item, the checkout process hangs forever.
+After a few cases, a pattern begins to emerge: when a customer tries to buy the last available item, the checkout process hangs forever.
 
 Alan suspects there is an issue with the lock used in the inventory service to prevent multiple people from buying the last available item at the same time.
 With this hunch, he builds the latest code and opens this local dev environment to conduct some tests.
@@ -24,11 +24,11 @@ In the past, Alan has used Visual Studio's debugger to [diagnose a very similar 
 The debugger was able to show him all the async Tasks currently waiting, their call stacks and what resource they were waiting on.
 
 Alan hasn't used a debugger with Rust before, usually a combination of the strict compiler and a bit of manual testing has been enough to fix all the bugs he's previously encountered.
-He does a quick Google search to see what debugger he should use and decides to go with `gdb` since that's already installed on his system and it sounds like it should work.
-Alan also pulls up a blog that has a helpful cheatsheet of `gdb` commands since he's not familiar with the debugger.
+He does a quick Google search to see what debugger he should use and decides to go with `gdb` because it is already installed on his system and sounds like it should work.
+Alan also pulls up a blog post that has a helpful cheatsheet of `gdb` commands since he's not familiar with the debugger.
 
 Alan restarts the inventory service under `gdb` and gets to work reproducing the issue.
-He reproduces the issue a few times to hopefully make it easier to identify what's going on.
+He reproduces the issue a few times in the hope of making it easier to identify the cause of the problem.
 Ready to pinpoint the issue, Alan presses `Ctrl+C` and then types `bt` to get a backtrace:
 
 <details><summary>(gdb) bt</summary>
@@ -98,7 +98,7 @@ Puzzled, the only line Alan even recognizes is the `main` entry point function f
 </details>
 
 Alan is now even more confused: "Where are my tasks?" he thinks.
-After looking through the cheatsheet and StackOverflow, he discovers there isn't a way to see what async tasks are waiting to be woken up in the debugger.
+After looking through the cheatsheet and StackOverflow, he discovers there isn't a way to see which async tasks are waiting to be woken up in the debugger.
 
 After thinking a bit, Alan realizes the runtime must have some way of knowing what tasks are waiting to be woken up.
 Maybe he can have the service ask the async runtime for that list of tasks every 10 seconds and print them to stdout? 
@@ -106,7 +106,7 @@ While crude, this would probably also help him diagnose the hang.
 Alan gets to work and opens the runtime docs to figure out how to get that list of tasks.
 After spending 30 minutes reading the docs, looking at StackOverflow questions and even posting on users.rust-lang.org, he discovers this simply isn't possible and he will have to add tracing to his application to figure out what's going on.
 
-Disgruntled, Alan beings the arduous, boring task of instrumenting the application in the hope that the logs will be able to help him. 
+Disgruntled, Alan begins the arduous, boring task of instrumenting the application in the hope that the logs will be able to help him.
 
 ## 🤔 Frequently Asked Questions
 
