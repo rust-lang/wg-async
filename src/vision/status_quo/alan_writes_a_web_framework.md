@@ -88,7 +88,54 @@ async fn get_products_handler(state: State) -> HandlerResult {
 }
 ```
 
-It's still not fantastically ergonomic though. [[Because the web framework predates async function syntax, it requires you to take ownership of the request context (`fn handler(state: State)`) and return it alongside your response in the success/error cases (`Ok((state, response))` or `Err((state, error))`).]] This means that Alan can't use the `?` operator inside his http request handlers. Alan knows answer is to make another wrapper function so that the handler can take an `&mut` reference to `State` for the lifetime of the future, but Alan can't work out how to express this. He submits his pull-request upstream as-is, but it nags on his mind that he has been defeated.
+It's still not fantastically ergonomic though. Because the handler takes ownership of State and returns it in tuples in the result, Alan can't use the `?` operator inside his http request handlers. If he tries use `?` in a handler, like this:
+
+```rust
+async fn get_products_handler(state: State) -> HandlerResult {
+    use crate::schema::products::dsl::*;
+
+    let repo = Repo::borrow_from(&state);
+    let prods = repo
+        .run(move |conn| products.load::<Product>(&conn))
+        .await?;
+    let body = serde_json::to_string(&prods).expect("Failed to serialize prods.");
+    let res = create_response(&state, StatusCode::OK, mime::APPLICATION_JSON, body);
+    Ok((state, res))
+}
+```
+then he receives:
+```
+error[E0277]: `?` couldn't convert the error to `(gotham::state::State, HandlerError)`
+  --> examples/diesel/src/main.rs:84:15
+   |
+84 |         .await?;
+   |               ^ the trait `From<diesel::result::Error>` is not implemented for `(gotham::state::State, HandlerError)`
+   |
+   = note: the question mark operation (`?`) implicitly performs a conversion on the error value using the `From` trait
+   = note: required by `std::convert::From::from`
+```
+
+Alan knows that the answer is to make another wrapper function, so that the handler can take an `&mut` reference to `State` for the lifetime of the future, like this:
+
+```rust
+async fn get_products_handler(state: &mut State) -> Result<Response<Body>, HandlerError> {
+    use crate::schema::products::dsl::*;
+
+    let repo = Repo::borrow_from(&state);
+    let prods = repo
+        .run(move |conn| products.load::<Product>(&conn))
+        .await?;
+    let body = serde_json::to_string(&prods).expect("Failed to serialize prods.");
+    let res = create_response(&state, StatusCode::OK, mime::APPLICATION_JSON, body);
+    Ok(res)
+}
+```
+and then register it with:
+```rust
+    route.get("/").to_async_borrowing(get_products_handler);
+```
+
+but Alan can't work out how to express the type signature for the `.to_async_borrowing()` helper function. He submits his `.to_async()` pull-request upstream as-is, but it nags on his mind that he has been defeated.
 
 Shortly afterwards, someone raises a bug about `?`, and a few other web framework contributors try to get it to work, but they also get stuck. When Alan tries it, the compiler diagnostics keep sending him around in circles. He can work out how to express the lifetimes for a function that returns a `Box<dyn Future + 'a>` but not an `impl Future` because of how where clauses are expressed. Alan longs to be able to say "this function takes an async function as a callback" (`fn register_handler(handler: impl async Fn(state: &mut State) -> Result<Response, Error>)`) and have Rust elide the lifetimes for him, like how they are elided for async functions.
 
