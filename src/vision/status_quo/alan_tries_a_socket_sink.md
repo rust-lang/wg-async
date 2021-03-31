@@ -8,9 +8,9 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 ## The story
 
-Alan is working on a project that uses async-std. He has worked a bit with tokio in the past and is more familiar with that, but he is interested to learn something how things work in async-std.
+Alan is working on a project that uses `async-std`. He has worked a bit with `tokio` in the past and is more familiar with that, but he is interested to learn something how things work in `async-std`.
 
-One of the goals is to switch from a WebSocket implementation using raw TCP sockets to one managed behind an HTTP server library, so both HTTP and WebSocket commands can be forwarded to a transport-agnostic RPC server. He finds the HTTP server tide and it seems fairly similar to warp, which he was using with tokio. He also finds the WebSocket middleware library *foobar* that goes with it.
+One of the goals is to switch from a WebSocket implementation using raw TCP sockets to one managed behind an HTTP server library, so both HTTP and WebSocket commands can be forwarded to a transport-agnostic RPC server. He finds the HTTP server `tide` and it seems fairly similar to `warp`, which he was using with `tokio`. He also finds the WebSocket middleware library `tide-websockets` that goes with it.
 
 However, as he's working, Alan encounters a situation where the socket needs to be written to within an async thread, and the traits just aren't working. He wants to split the stream into a sender and receiver:
 
