@@ -20,6 +20,10 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 [YouBuy](../projects/YouBuy.md) is written using an async web framework that predates the stabilization of async function syntax. When [Alan] joins the company, it is using async functions for its business logic, but can't use them for request handlers because the framework doesn't support it yet. It requires the handler's return value to be `Box<dyn Future<...>>`. Because the web framework predates async function syntax, it requires you to take ownership of the request context (`State`) and return it alongside your response in the success/error cases. This means that even with async syntax, an http route handler in this web framework looks something like this (from [the Gotham Diesel example](https://github.com/gotham-rs/gotham/blob/9f10935bf28d67339c85f16418736a4b6e1bd36e/examples/diesel/src/main.rs)):
 
 ```rust
+// For reference, the framework defines these type aliases.
+pub type HandlerResult = Result<(State, Response<Body>), (State, HandlerError)>;
+pub type HandlerFuture = dyn Future<Output = HandlerResult> + Send;
+
 fn get_products_handler(state: State) -> Pin<Box<HandlerFuture>> {
     use crate::schema::products::dsl::*;
 
@@ -57,10 +61,17 @@ Rather than switching YouBuy to a different web framework, Alan decides to contr
         self.to(move |s: State| handler(s).boxed())
     }
 ```
+The handler registration then becomes:
+```rust
+    router_builder.get("/").to_async(get_products_handler);
+```
 
 This allows him to strip out the async blocks in his handlers and use `async fn` instead.
 
 ```rust
+// Type the library again, in case you've forgotten:
+pub type HandlerResult = Result<(State, Response<Body>), (State, HandlerError)>;
+
 async fn get_products_handler(state: State) -> HandlerResult {
     use crate::schema::products::dsl::*;
 
