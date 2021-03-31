@@ -137,16 +137,16 @@ and then register it with:
 
 but Alan can't work out how to express the type signature for the `.to_async_borrowing()` helper function. He submits his `.to_async()` pull-request upstream as-is, but it nags on his mind that he has been defeated.
 
-Shortly afterwards, someone raises a bug about `?`, and a few other web framework contributors try to get it to work, but they also get stuck. When Alan tries it, the compiler diagnostics keep sending him around in circles. He can work out how to express the lifetimes for a function that returns a `Box<dyn Future + 'a>` but not an `impl Future` because of how where clauses are expressed. Alan longs to be able to say "this function takes an async function as a callback" (`fn register_handler(handler: impl async Fn(state: &mut State) -> Result<Response, Error>)`) and have Rust elide the lifetimes for him, like how they are elided for async functions.
+Shortly afterwards, someone raises a bug about `?`, and a few other web framework contributors try to get it to work, but they also get stuck. When Alan tries it, the compiler diagnostics keep sending him around in circles <!-- TODO: examples of this. Mabye move this into the paragraph above? -->. He can work out how to express the lifetimes for a function that returns a `Box<dyn Future + 'a>` but not an `impl Future` because of how where clauses are expressed. Alan longs to be able to say "this function takes an async function as a callback" (`fn register_handler(handler: impl async Fn(state: &mut State) -> Result<Response, Error>)`) and have Rust elide the lifetimes for him, like how they are elided for async functions.
 
-A month later, one of the contributors finds a forum comment by Barbara explaining how to express what the Alan is after (using higher-order lifetimes and a helper trait). They implement this and merge it.
+A month later, one of the contributors finds a forum comment by [Barbara] explaining how to express what Alan is after (using higher-order lifetimes and a helper trait). They implement this and merge it <!-- TODO: link to PR and copy final implementation here. -->.
 
 When Alan sees another open source project struggling with the same issue, he notices that Barbara has helped them out as well.
 
 ## 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
-    * Callback-based APIs with async callbacks are a bit fiddly, because of the `impl Future` return type, but not insurmountable.
+    * Callback-based APIs with async callbacks are a bit fiddly, because of the `impl Future` return type forcing you to write where-clause-soup, but not insurmountable.
     * Callback-based APIs with async callbacks that borrow their arguments are almost impossible to write without help.
 * **What are the sources for this story?**
     * This is from the author's [own experience](https://github.com/rust-lang/wg-async-foundations/issues/78#issuecomment-808193936).
