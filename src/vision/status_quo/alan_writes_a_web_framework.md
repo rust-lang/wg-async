@@ -27,8 +27,8 @@ fn get_products_handler(state: State) -> Pin<Box<HandlerFuture>> {
         let repo = Repo::borrow_from(&state);
         let result = repo.run(move |conn| products.load::<Product>(&conn)).await;
         match result {
-            Ok(users) => {
-                let body = serde_json::to_string(&users).expect("Failed to serialize users.");
+            Ok(prods) => {
+                let body = serde_json::to_string(&prods).expect("Failed to serialize prods.");
                 let res = create_response(&state, StatusCode::OK, mime::APPLICATION_JSON, body);
                 Ok((state, res))
             }
@@ -67,8 +67,8 @@ async fn get_products_handler(state: State) -> HandlerResult {
     let repo = Repo::borrow_from(&state);
     let result = repo.run(move |conn| products.load::<Product>(&conn)).await;
     match result {
-        Ok(users) => {
-            let body = serde_json::to_string(&users).expect("Failed to serialize users.");
+        Ok(prods) => {
+            let body = serde_json::to_string(&prods).expect("Failed to serialize prods.");
             let res = create_response(&state, StatusCode::OK, mime::APPLICATION_JSON, body);
             Ok((state, res))
         }
