@@ -18,7 +18,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Barbara is triaging the reported bugs for her SLOW library. For each bug, she tries to quickly see if she can diagnose the basic area of code that is affected so she knows which people to ping to help fix it. She opens a bug report from a user complaining about a panic when too many connections arrive at the same time. The bug report includes a backtrace from the user's code, and it looks like this:
 
-```
+```ignore
 thread 'main' panicked at 'something bad happened here', src/main.rs:16:5
 stack backtrace:
    0: std::panicking::begin_panic
@@ -74,7 +74,7 @@ Barbara finds the text overwhelming. She can't just browse it to figure out what
 
 She's a bit confused by the `::{closure}` lines on her symbols but she learned by now that this is normal for `async fn`. After some work, she has reduced her stack to this:
 
-```
+```ignore
 thread 'main' panicked at 'something bad happened here', src/main.rs:16:5
 stack backtrace:
    1: slow_rs::process_one::{{closure}} at ./src/main.rs:16:5
@@ -117,7 +117,7 @@ Fin.
 <details>
 <summary>(click to see how a backtrace looks in lldb)</summary>
 
-```
+```ignore
 * thread #1, name = 'foo', stop reason = breakpoint 1.1
   * frame #0: 0x0000555555583d24 foo`foo::main::_$u7b$$u7b$closure$u7d$$u7d$::_$u7b$$u7b$closure$u7d$$u7d$::h617d49d0841ffc0d((null)=closure-0 @ 0x00007fffffffae38, (null)=<unavailable>) at main.rs:11:13
     frame #1: 0x0000555555583d09 foo`_$LT$T$u20$as$u20$futures_util..fns..FnOnce1$LT$A$GT$$GT$::call_once::hc559b1f3f708a7b0(self=closure-0 @ 0x00007fffffffae68, arg=<unavailable>) at fns.rs:15:9
