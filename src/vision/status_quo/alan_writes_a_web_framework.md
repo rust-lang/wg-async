@@ -139,9 +139,66 @@ but Alan can't work out how to express the type signature for the `.to_async_bor
 
 Shortly afterwards, someone raises a bug about `?`, and a few other web framework contributors try to get it to work, but they also get stuck. When Alan tries it, the compiler diagnostics keep sending him around in circles <!-- TODO: examples of this. Mabye move this into the paragraph above? -->. He can work out how to express the lifetimes for a function that returns a `Box<dyn Future + 'a>` but not an `impl Future` because of how where clauses are expressed. Alan longs to be able to say "this function takes an async function as a callback" (`fn register_handler(handler: impl async Fn(state: &mut State) -> Result<Response, Error>)`) and have Rust elide the lifetimes for him, like how they are elided for async functions.
 
-A month later, one of the contributors finds a forum comment by [Barbara] explaining how to express what Alan is after (using higher-order lifetimes and a helper trait). They implement this and merge it <!-- TODO: link to PR and copy final implementation here. -->.
+A month later, one of the contributors finds a forum comment by [Barbara] explaining how to express what Alan is after (using higher-order lifetimes and a helper trait). They implement this and merge it. The final `.to_async_borrowing()` implementation ends up looking like this (also from [Gotham](https://github.com/gotham-rs/gotham/blob/89c491fb4322bbc6fbcc8405c3a33e0634f7cbba/gotham/src/router/builder/single.rs)):
 
-When Alan sees another open source project struggling with the same issue, he notices that Barbara has helped them out as well.
+```rust
+pub trait AsyncHandlerFn<'a> {
+    type Res: IntoResponse + 'static;
+    type Fut: std::future::Future<Output = Result<Self::Res, HandlerError>> + Send + 'a;
+    fn call(self, arg: &'a mut State) -> Self::Fut;
+}
+
+impl<'a, Fut, R, F> AsyncHandlerFn<'a> for F
+where
+    F: FnOnce(&'a mut State) -> Fut,
+    R: IntoResponse + 'static,
+    Fut: std::future::Future<Output = Result<R, HandlerError>> + Send + 'a,
+{
+    type Res = R;
+    type Fut = Fut;
+    fn call(self, state: &'a mut State) -> Fut {
+        self(state)
+    }
+}
+
+pub trait HandlerMarker {
+    fn call_and_wrap(self, state: State) -> Pin<Box<HandlerFuture>>;
+}
+
+impl<F, R> HandlerMarker for F
+where
+    R: IntoResponse + 'static,
+    for<'a> F: AsyncHandlerFn<'a, Res = R> + Send + 'static,
+{
+    fn call_and_wrap(self, mut state: State) -> Pin<Box<HandlerFuture>> {
+        async move {
+            let fut = self.call(&mut state);
+            let result = fut.await;
+            match result {
+                Ok(data) => {
+                    let response = data.into_response(&state);
+                    Ok((state, response))
+                }
+                Err(err) => Err((state, err)),
+            }
+        }
+        .boxed()
+    }
+}
+
+...
+    fn to_async_borrowing<F>(self, handler: F)
+    where
+        Self: Sized,
+        F: HandlerMarker + Copy + Send + Sync + RefUnwindSafe + 'static,
+    {
+        self.to(move |state: State| handler.call_and_wrap(state))
+    }
+```
+
+Alan is still not sure whether it can be simplified.
+
+When Alan sees another open source project struggling with the same issue, he notices that Barbara has helped them out as well. Alan wonders how many people in the community would be able to write `.to_async_borrowing()` without help.
 
 ## 🤔 Frequently Asked Questions
 
