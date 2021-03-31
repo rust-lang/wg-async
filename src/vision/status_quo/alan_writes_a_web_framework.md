@@ -1,13 +1,5 @@
 # 😱 Status quo stories: Template
 
-*This is a template for adding new "status quo" stories. To propose a new status quo PR, do the following:*
-
-* *Create a new file in the [`status_quo`] directory named something like `Alan_tries_to_foo.md` or `Grace_does_bar.md`, and start from [the raw source from this template]. You can replace all the italicized stuff. :)*
-* *Do not add a link to your story to the [`SUMMARY.md`] file; we'll do it after merging, otherwise there will be too many conflicts.*
-
-*For more detailed instructions, see the [How To Vision: Status Quo] page!*
-
-*If you're looking for ideas of what to write about, take a look at the [open issues]. You can also [open an issue of your own] to throw out an idea for others.*
 
 [How To Vision: Status Quo]: ../how_to_vision/status_quo.md
 [the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
@@ -25,10 +17,6 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 ## The story
 
-*Write your story here! Feel free to add subsections, citations, links, code examples, whatever you think is best.*
-
-## 🤔 Frequently Asked Questions
-
 [YouBuy](../projects/YouBuy.md) is written using an async web framework that predates the stabilization of async function syntax. When Alan joins the company, it is using async functions for its business logic, but can't use them for request handlers because the framework doesn't support it yet. It requires the handler's return value to be `Box<dyn Future<...>>`. Rather than switching YouBuy to a different web framework, Alan decides to contribute to the web framework himself.
 
 After a bit of a slog, he manages to make the web framework capable of using an `async fn` as an http request handler. He does this by making a wrapper function that boxes up the `impl Future`.
@@ -41,6 +29,7 @@ A month later, one of the contributors finds a forum comment by Barbara explaini
 
 When Alan sees another open source project struggling with the same issue, he notices that Barbara has helped them out as well.
 
+## 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
     * Callback-based APIs with async callbacks are a bit fiddly, because of the `impl Future` return type, but not insurmountable.
