@@ -8,9 +8,9 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 ## The story
 
-Alan is working on a project that uses an alternative popular async framework. He finds the new async framework less familiar, and as he reads through their GitHub issues, he's saddened by the project maintainer's unwelcoming attitude towards their community. He asks his teammates if they can switch to the one he's more familiar with and feels more welcome in, but the teammates are understandably resistant to changing something that important just for one feature. So, he works hard to find workarounds to accomplish his team's goals.
+Alan is working on a project that uses async-std. He has worked a bit with tokio in the past and is more familiar with that, but he is interested to learn something how things work in async-std.
 
-One of the goals is to switch from a WebSocket implementation using raw TCP sockets to one managed behind an HTTP server library, so both HTTP and WebSocket commands can be forwarded to a transport-agnostic RPC server. He finds an HTTP server that's similar to one he's used to using with the other async framework, and a WebSocket middleware library that goes with it.
+One of the goals is to switch from a WebSocket implementation using raw TCP sockets to one managed behind an HTTP server library, so both HTTP and WebSocket commands can be forwarded to a transport-agnostic RPC server. He finds the HTTP server tide and it seems fairly similar to warp, which he was using with tokio. He also finds the WebSocket middleware library *foobar* that goes with it.
 
 However, as he's working, Alan encounters a situation where the socket needs to be written to within an async thread, and the traits just aren't working. He wants to split the stream into a sender and receiver:
 
@@ -67,19 +67,18 @@ while let Some(msg) = ws_stream.lock().await.next().await {
 
 Alan wonders if he's thinking about it wrong, but the solution isn't as obvious as his earlier `Sink` approach. Looking around, he realizes a solution to his problems already exists-- as others have been in his shoes before-- within two other nearly-identical pull requests, but they were both closed by the project maintainers. He tries opening a third one with the same code, pointing to an example where it was actually found to be useful. To his joy, his original approach works with the code in the closed pull requests in his local copy! Alan's branch is able to compile for the first time.
 
-However, almost immediately, his request was shut down like the others, and the maintainer suggests he try the complex, unobvious, and unspecific solution that he had already tried and just couldn't get it to work.
+However, almost immediately, his request is closed with a comment suggesting that he try to create an intermediate polling task instead, much as he was trying before. Alan is feeling frustrated. "I already tried that approach," he thinks, "and it doesn't work!"
 
-As a result of his frustration, Alan calls out one of the developers of the project on social media, who he believed had frequently shot down the idea of using `Sink` traits. This is not well-received, the maintainer reacts with a condescending and dismissive attitude, and he later finds out he was blocked. A co-maintainer responds to the thread, defending and supporting the other maintainer's actions, and he's told to "get over it". He's given a link to a blog post with a piece lamenting the popularity of Sink in the Rust ecosystem, and how it's complex,  bad and not worth it. The piece unhelpfully makes no effort to provide examples of how the better alternatives would be used to replace uses of `Sink`.
+As a result of his frustration, Alan calls out one developer of the project on social media. He knows this developer is opposed to the `Sink` traits. Alan's message is not well-received: the maintainer sends a short response and Alan feels dismissed. Alan later finds out he was blocked. A co-maintainer responds to the thread, defending and supporting the other maintainer's actions, and suggests that Alan "get over it". Alan is given a link to a blog post. The post provides a number of criticisms of `Sink` but, after reading it, Alan isn't sure what he should do instead.
 
 Because of this heated exchange, Alan grows concerned for his own career, what these well-known community members might think or say about his to others, and his confidence in the community surrounding this language that he really enjoys using is somewhat shaken.
 
-Despite this, Alan takes a walk, gathers his determination, and commits to maintaining his fork with the changes from the other pull requests that were shut down, and publishes his version to crates.io, vowing to be more welcoming to "misfit" pull requests like the one he needed.
+Despite this, Alan takes a walk, gathers his determination, and commits to maintaining his fork with the changes from the other pull requests that were shut down. He publishes his version to crates.io, vowing to be more welcoming to "misfit" pull requests like the one he needed.
 
-A few weeks later, Alan's work at his project at work is merged with his new forked crate. It's a big deal, his first professional open source contribution to a Rust project, but he still doesn't feel like he has a sense of closure with the community. Meanwhile, his friends say they want to try Rust, but they're worried about its async execution issues, and he doesn't know what else to say, other than to offer a sense of understanding. Maybe the situation will get better someday, he hopes.
+A few weeks later, Alan's work at his project at work is merged with his new forked crate. It's a big deal, his first professional open source contribution to a Rust project! Still, he  doesn't feel like he has a sense of closure with the community. Meanwhile, his friends say they want to try Rust, but they're worried about its async execution issues, and he doesn't know what else to say, other than to offer a sense of understanding. Maybe the situation will get better someday, he hopes.
 
 ## 🤔 Frequently Asked Questions
 
-*Here are some standard FAQ to get you started. Feel free to add more!*
 
 * **What are the morals of the story?**
     * There are often many sources of opinion in the community regarding futures and async, but these opinions aren't always backed up with examples of how it should be better accomplished. Sometimes we just find a thing that works and would prefer to stick with it, but others argue that some traits make implementations unnecessarily complex, and choose to leave it out. Disagreements like these in the ecosystem can be harmful to the reputation of the project and the participants.
