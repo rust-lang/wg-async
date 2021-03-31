@@ -17,11 +17,67 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 ## The story
 
-[YouBuy](../projects/YouBuy.md) is written using an async web framework that predates the stabilization of async function syntax. When Alan joins the company, it is using async functions for its business logic, but can't use them for request handlers because the framework doesn't support it yet. It requires the handler's return value to be `Box<dyn Future<...>>`. Rather than switching YouBuy to a different web framework, Alan decides to contribute to the web framework himself.
+[YouBuy](../projects/YouBuy.md) is written using an async web framework that predates the stabilization of async function syntax. When [Alan] joins the company, it is using async functions for its business logic, but can't use them for request handlers because the framework doesn't support it yet. It requires the handler's return value to be `Box<dyn Future<...>>`. Because the web framework predates async function syntax, it requires you to take ownership of the request context (`State`) and return it alongside your response in the success/error cases. This means that even with async syntax, an http route handler in this web framework looks something like this (from [the Gotham Diesel example](https://github.com/gotham-rs/gotham/blob/9f10935bf28d67339c85f16418736a4b6e1bd36e/examples/diesel/src/main.rs)):
 
-After a bit of a slog, he manages to make the web framework capable of using an `async fn` as an http request handler. He does this by making a wrapper function that boxes up the `impl Future`.
+```rust
+fn get_products_handler(state: State) -> Pin<Box<HandlerFuture>> {
+    use crate::schema::products::dsl::*;
 
-It's still not fantastically ergonomic though. Because the web framework predates async function syntax, it requires you to take ownership of the request context (`fn handler(state: State)`) and return it alongside your response in the success/error cases (`Ok((state, response))` or `Err((state, error))`). This means that Alan can't use the `?` operator inside his http request handlers. Alan knows answer is to make another wrapper function so that the handler can take an `&mut` reference to `State` for the lifetime of the future, but Alan can't work out how to express this. He submits his pull-request upstream as-is, but it nags on his mind that he has been defeated.
+    async move {
+        let repo = Repo::borrow_from(&state);
+        let result = repo.run(move |conn| products.load::<Product>(&conn)).await;
+        match result {
+            Ok(users) => {
+                let body = serde_json::to_string(&users).expect("Failed to serialize users.");
+                let res = create_response(&state, StatusCode::OK, mime::APPLICATION_JSON, body);
+                Ok((state, res))
+            }
+            Err(e) => Err((state, e.into())),
+        }
+    }
+    .boxed()
+}
+```
+and then it is registered like this:
+```rust
+    router_builder.get("/").to(get_products_handler);
+```
+
+The handler code is forced to drift to the right a lot, because of the async block, and the lack of ability to use `?` forces the use of a match block, which drifts even further to the right.
+
+Rather than switching YouBuy to a different web framework, Alan decides to contribute to the web framework himself. After a bit of a slog and a bit of where-clause-soup, he manages to make the web framework capable of using an `async fn` as an http request handler. He does this by extending the router builder with a closure that boxes up the `impl Future` from the async fn and then passes that closure on to `.to()`.
+
+```rust
+    fn to_async<H, Fut>(self, handler: H)
+    where
+        Self: Sized,
+        H: (FnOnce(State) -> Fut) + RefUnwindSafe + Copy + Send + Sync + 'static,
+        Fut: Future<Output = HandlerResult> + Send + 'static,
+    {
+        self.to(move |s: State| handler(s).boxed())
+    }
+```
+
+This allows him to strip out the async blocks in his handlers and use `async fn` instead.
+
+```rust
+async fn get_products_handler(state: State) -> HandlerResult {
+    use crate::schema::products::dsl::*;
+
+    let repo = Repo::borrow_from(&state);
+    let result = repo.run(move |conn| products.load::<Product>(&conn)).await;
+    match result {
+        Ok(users) => {
+            let body = serde_json::to_string(&users).expect("Failed to serialize users.");
+            let res = create_response(&state, StatusCode::OK, mime::APPLICATION_JSON, body);
+            Ok((state, res))
+        }
+        Err(e) => Err((state, e.into())),
+    }
+}
+```
+
+It's still not fantastically ergonomic though. [[Because the web framework predates async function syntax, it requires you to take ownership of the request context (`fn handler(state: State)`) and return it alongside your response in the success/error cases (`Ok((state, response))` or `Err((state, error))`).]] This means that Alan can't use the `?` operator inside his http request handlers. Alan knows answer is to make another wrapper function so that the handler can take an `&mut` reference to `State` for the lifetime of the future, but Alan can't work out how to express this. He submits his pull-request upstream as-is, but it nags on his mind that he has been defeated.
 
 Shortly afterwards, someone raises a bug about `?`, and a few other web framework contributors try to get it to work, but they also get stuck. When Alan tries it, the compiler diagnostics keep sending him around in circles. He can work out how to express the lifetimes for a function that returns a `Box<dyn Future + 'a>` but not an `impl Future` because of how where clauses are expressed. Alan longs to be able to say "this function takes an async function as a callback" (`fn register_handler(handler: impl async Fn(state: &mut State) -> Result<Response, Error>)`) and have Rust elide the lifetimes for him, like how they are elided for async functions.
 
