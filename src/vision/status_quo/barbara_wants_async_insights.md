@@ -37,8 +37,6 @@ She thinks, "Anyhow it is working now, let's see if we got some performance gain
 
 ## 🤔 Frequently Asked Questions
 
-*Here are some standard FAQ to get you started. Feel free to add more!*
-
 * **What are the morals of the story?**
     * There are very few ways to get insights into running systems. Tracing is state of the art. `console.log` #ftw
     * Tracing is a static activity and there's no way to dynamically gain insights.
@@ -46,17 +44,18 @@ She thinks, "Anyhow it is working now, let's see if we got some performance gain
     * Debugging process for non-trivial issues is almost guaranteed to be painful and expensive.
 * **What are the sources for this story?**
     * [Issue 75](https://github.com/rust-lang/wg-async-foundations/issues/75)
+* **What are Async Insights?**
+    * Custom Events - logging/tracing (Per task?)
+    * Memory consumption per task.
+    * I/O handles in waiting state per task.
+    * Number of tasks and their states over time.
+    * Wake and drop specific tasks.
+    * **Denoised** stack traces and/or stack traces that are task aware.
+    * Who spawned the task?
+    * Worker threads that are blocked from progressing tasks forward.
+    * Tasks that are not progressing.
 * **Why did you choose [Barbara] to tell this story?**
-    * Barbara knows what she's doing, but still there is little way to get insights, such as:
-        * Custom Events - logging/tracing (Per task?)
-        * Memory consumption per task.
-        * I/O handles in waiting state per task.
-        * Number of tasks and their states over time.
-        * Wake and drop specific tasks.
-        * **Denoised** stack traces and/or stack traces that are task aware.
-        * Who spawned the task?
-        * Worker threads that are blocked from progressing tasks forward.
-        * Tasks that are not progressing.
+    * Barbara knows what she's doing, but still there is little way to get insights.
 * **How would this story have played out differently for the other characters?**
     * [Alan] who is an Erlang developer, might miss the highly [debuggable](https://youtu.be/JvBT4XBdoUE) BEAM runtime. He would immediately find out that he can't easily analyze a task during runtime.
 
