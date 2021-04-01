@@ -34,11 +34,17 @@ cameras instead of 1.
 
 She knows from experience that she cannot rely on having 5 threads blocking just for getting camera frames, because the
 embedded system she is deploying to only has 2 cores total! Her team would be introducing a lot of overhead into the
-system with the continuous context switching of every thread.  Fortunately, Grace notices the similarities between the
-polling interface in the underlying C library and the `Poll` type returned by Rust's `Future` trait. "Surely," she
-thinks, "I can asynchronously interleave polls to each camera over a single thread, and process frames as they become
-available!" Such a thing would be quite difficult in C while guaranteeing memory safety was maintained. However, Grace's
-team has already dodged that bullet thanks to writing a thin wrapper in Rust that manages these tricky lifetimes!
+system with the continuous context switching of every thread. Some folks were unsure of Rust's asynchronous
+capabilities, and with the requirements changing there were some that argued maybe they should stick to the tried and
+true in pure C. However, Grace eventually convinced them that the benefits of memory safety were still applicable, and
+that a lot of bugs that have taken weeks to diagnose in the past have already been completely wiped out. The team
+decided to stick with Rust, and dig deeper into implementing this project in async Rust.
+
+Fortunately, Grace notices the similarities between the polling interface in the underlying C library and the `Poll`
+type returned by Rust's `Future` trait. "Surely," she thinks, "I can asynchronously interleave polls to each camera over
+a single thread, and process frames as they become available!" Such a thing would be quite difficult in C while
+guaranteeing memory safety was maintained. However, Grace's team has already dodged that bullet thanks to writing a thin
+wrapper in Rust that manages these tricky lifetimes!
 
 ### The first problem: polls and wake-ups
 
