@@ -190,4 +190,5 @@ of an equivalent function pointer in C, and slightly laments that Rust cannot ex
       execution loop were unexpected benefits when starting down the path of using Rust!
 * **Could Grace have used another runtime to achieve the same objectives?**
     * Grace can use _any_ runtime, which was an unexpected benefit of her work!
-
+* **How did Grace know to use `Unfold` as the return type in the first place?**
+    * She saw it in the [rustdoc](https://docs.rs/futures/0.3.13/futures/stream/fn.unfold.html) for `stream::unfold`.
