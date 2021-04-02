@@ -126,8 +126,6 @@ When you call an async function, all of it's parameters are copied or borrowed i
 
 Barbara suggests changing all of the async function's parameters to be owned types. Alan asks Grace, who architected this project. Grace recommends holding a reference to the `Plugin` that owns the `World`, and then borrowing it whenver you need the `World`. That ultimately looks like the following:
 
-At this point, Alan is looking at either rewriting a good chunk of the program to not use contexts, or rewriting his own code to sidestep the problem. Alan chooses the latter, by holding a reference to the thing that produces the context and then updating it after the async portion of the task has concluded:
-
 ```rust
 async fn load_image(src: String, inside_of: usize, player: Arc<Mutex<Player>>) {
     let request = make_request(&url);
