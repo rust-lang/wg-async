@@ -94,7 +94,7 @@ where
 
 So, `spawn_local` only works with futures that return nothing - so far, so good - and are `'static`. Uh-oh. What does that last bit mean? Alan asks Barbara, who responds that it's the lifetime of the whole program. Yeah, but... the async function is part of the program, no? Why wouldn't it have the `'static` lifetime? Does that mean all functions that borrow values aren't `'static`, or just the async ones?
 
-Barbara explains that when you borrow a value in a function, the function doesn't gain the lifetime of that borrow. Instead, the borrow comes with it's own lifetime, separate from the function's. The only time a function can have a non-`'static` lifetime is if the function *closes over* some other variable, like so:
+Barbara explains that when you borrow a value in a closure, the closure doesn't gain the lifetime of that borrow. Instead, the borrow comes with it's own lifetime, separate from the closure's. The only time a closure can have a non-`'static` lifetime is if one or more of it's borrows is *not* provided by it's caller, like so:
 
 ```rust
 fn benchmark_sort() -> usize {
@@ -110,9 +110,19 @@ fn benchmark_sort() -> usize {
 }
 ```
 
-The function passed to `sort_by` has to borrow something not passed into it, namely the `num_times_called` variable. Hence, it has the lifetime of that borrow, not the whole program, because it can't be called anytime - only when `num_times_called` is a valid thing to read or write.
+The closure passed to `sort_by` has to copy or borrow anything not passed into it. In this case, that would be the `num_times_called` variable. Since we want to modify the variable, it has to be borrowed. Hence, the closure has the lifetime of that borrow, not the whole program, because it can't be called anytime - only when `num_times_called` is a valid thing to read or write.
 
-Async functions, it turns out, *close over all their parameters*! They *have to*, because the futures they return don't actually *have* function parameters that the user controls. So they have to copy everything they get passed into, and if that thing is borrowed, then the entire future is borrowed.
+Async functions, it turns out, *act like closures that don't take parameters*! They *have to*, because all `Future`s have to implement the same trait method `poll`:
+
+```rust
+pub trait Future {
+    type Output;
+
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output>;
+}
+```
+
+When you call an async function, all of it's parameters are copied or borrowed into the `Future` that it returns. Since we need to borrow the `World`, the `Future` has the lifetime of `&'a mut World`, not of `'static`.
 
 Barbara suggests changing all of the async function's parameters to be owned types. Alan asks Grace, who architected this project. Grace recommends holding a reference to the `Plugin` that owns the `World`, and then borrowing it whenver you need the `World`. That ultimately looks like the following:
 
