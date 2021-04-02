@@ -139,6 +139,8 @@ It works, well enough that Alan is able to finish his changes and PR them into t
 ## 🤔 Frequently Asked Questions
 
 * **What are the morals of the story?**
+    * Async functions capture all of their parameters for the entire duration of the function. This allows them to hold borrows of those parameters across await points.
+      * When the parameter represents any kind of "global environment", such as the `World` in this story, it may be useful for that parameter not to be captured by the future but rather supplied anew after each await point.
     * Borrowing means that Rust has three function colors, not two:
       * Sync, which can both own and borrow it's parameters, or close over other variables at the expense of a lifetime.
       * Owned Async, which can only own parameters
