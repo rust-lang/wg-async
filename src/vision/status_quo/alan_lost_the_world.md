@@ -149,10 +149,10 @@ It works, well enough that Alan is able to finish his changes and PR them into t
 * **What are the morals of the story?**
     * Async functions capture all of their parameters for the entire duration of the function. This allows them to hold borrows of those parameters across await points.
       * When the parameter represents any kind of "global environment", such as the `World` in this story, it may be useful for that parameter not to be captured by the future but rather supplied anew after each await point.
-    * Borrowing means that Rust has three function colors, not two:
-      * Sync, which can both own and borrow it's parameters, or close over other variables at the expense of a lifetime.
-      * Owned Async, which can only own parameters
-      * Borrowed Async, which can both own and borrow parameters, but the latter results in closing over a borrow rather than gaining some new lifetime from the outside.
+    * Async programming introduces more complexity to Rust than it does, say, JavaScript. The complexity of async is [sometimes explained in terms of 'color'][WhatColor], where functions of one 'color' can only call those of another under certain conditions, and developers have to keep track of what is sync and what is async. Due to Rust's borrowing rules, we actually have three 'colors', not the two of other languages with async I/O:
+      * Sync, or 'blue' in the original metaphor. This color of function can both own and borrow it's parameters. If made into the form of a closure, it may have a lifetime if it borrows something from the current stack.
+      * Owned Async, or 'red' in the original metaphor. This color of function can only own parameters, by copying them into itself at call time.
+      * Borrowed Async. If an async function borrows at least one parameter, it gains a lifetime, and must fully resolve itself before the lifetime of it's parameters expires.
     * Non-`'static` Futures are of limited use as lifetimes are tied to the sync stack. I think you can use `block_on` with them but that's about it. Most practical executors need `'static` futures.
     * Borrowed Async functions would be useful if there was a way to have a future whose borrows were scoped to the moment they are `poll`ed.
 * **What are the sources for this story?**
@@ -177,3 +177,4 @@ It works, well enough that Alan is able to finish his changes and PR them into t
 [WasmFetch]: https://docs.rs/web-sys/0.3.50/web_sys/struct.Window.html#method.fetch_with_request
 [WasmJsFuture]: https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/struct.JsFuture.html
 [WasmSpawn]: https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/fn.spawn_local.html
+[WhatColor]: https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/
