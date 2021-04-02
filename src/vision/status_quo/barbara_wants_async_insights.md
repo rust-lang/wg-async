@@ -1,4 +1,4 @@
-# 😱 Status quo stories: Template
+# 😱 Status quo stories: Barbara wants Async Insights
 
 ## 🚧 Warning: Draft status 🚧
 
@@ -12,7 +12,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 She does this by sprinkling `async/.await` everywhere, picking an executor, and moving dependencies from sync to async.
 
-Once she has the program compiling, she thinks "oh that was easy". she runs it for the first time and unfortunately when hitting an endpoint, nothing happens.
+Once she has the program compiling, she thinks "oh that was easy". She runs it for the first time and surprisingly she finds out that when hitting an endpoint, nothing happens.
 
 Barbara, always prepared, has already added logging to her service and she checks the logs. As she expected, she sees here that the endpoint handler has been invoked but then... nothing. Barbara exclaims, "Oh no! This was not what I was expecting, but let's dig deeper." 
 
