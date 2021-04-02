@@ -1,8 +1,10 @@
 # ✨ Shiny future: Where we want to get to
 
-### 🛑 Not time for this yet 🛑
+## 🚧 Under construction! Help needed! 🚧
 
-We're not really ready to work on this section yet. We're still focused on writing out the [status quo](./status_quo.md).
+We are still in the process of drafting the vision document. The stories you see on this page are examples meant to give a feeling for how a shiny future story looks; you can expect them to change. We encourage you to propose your own by opening a PR -- see the ["How to vision"][htv] page for instructions and details.
+
+[htv]: ./how_to_vision.md
 
 ## What it this
 

@@ -6,7 +6,7 @@
 | --- | --- |
 | ✅ **Now** till 2021-04-30 | Improve the [sample projects][hvp] |
 | ✅ **Now** till 2021-04-30 | Propose new ["status quo" stories][hvsq] or [comment] on existing PRs |
-| 🛑 Starting 2021-04-02 | Propose new ["shiny future" stories][hvsf] or [comment] on existing PRs |
+| ✅ **Now** till 2021-04-30 | Propose new ["shiny future" stories][hvsf] or [comment] on existing PRs |
 | 🛑 Starting 2021-04-30 | Vote for the [awards] on the status quo and shiny future stories! |
 
 ## The big picture

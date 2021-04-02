@@ -1,8 +1,6 @@
 # ❓ How to vision: "Shiny future" stories
 
-## 🛑 Not time for this yet 🛑
-
-We're not ready for this yet! See the [how to vision](../how_to_vision.md) page for details on the phasing.
+We want all Async Rust users and their hopes and dreams for what Async Rust should be in the future to be reflected in the async vision doc, so please help us by writing 'shiny future' stories about what you would like async Rust to look like! Remember, **shiny future visions can be personal and may differ greatly from person to person. Therefore it's impossible for these visions to be wrong.** 
 
 [character]: ../characters.md
 [comment]: ./comment.md

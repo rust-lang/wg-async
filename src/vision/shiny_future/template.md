@@ -12,9 +12,12 @@
 [`shiny_future`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
 [`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
 
-### 🛑 Not time for this yet 🛑
 
-We are not yet accepting shiny future story ideas!
+## 🚧 Warning: Draft status 🚧
+
+This is a draft "shiny future" story submitted as part of the brainstorming period. It is derived from what actual Rust users wish async Rust should be, and is meant to deal with some of the challenges that Async Rust programmers face today.
+
+If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as peoples needs and desires for async Rust may differ greatly, shiny future stories [cannot be wrong]. At worst they are only useful for a small set of people or their problems might be better solved with alternative solutions). Alternatively, you may wish to [add your own shiny vision story][htvsq]!
 
 ## The story
 
@@ -60,3 +63,5 @@ We are not yet accepting shiny future story ideas!
 [Niklaus]: ../characters/niklaus.md
 [Barbara]: ../characters/barbara.md
 [projects]: ../projects.md
+[htvsq]: ../how_to_vision/shiny_future.md
+[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
