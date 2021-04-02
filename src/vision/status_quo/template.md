@@ -31,14 +31,17 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
-* **What are the morals of the story?**
-    * *Talk about the major takeaways-- what do you see as the biggest problems.*
-* **What are the sources for this story?**
-    * *Talk about what the story is based on, ideally with links to blog posts, tweets, or other evidence.*
-* **Why did you choose *NAME* to tell this story?**
-    * *Talk about the character you used for the story and why.*
-* **How would this story have played out differently for the other characters?**
-    * *In some cases, there are problems that only occur for people from specific backgrounds, or which play out differently. This question can be used to highlight that.*
+### **What are the morals of the story?**
+*Talk about the major takeaways-- what do you see as the biggest problems.*
+
+### **What are the sources for this story?**
+*Talk about what the story is based on, ideally with links to blog posts, tweets, or other evidence.*
+
+### **Why did you choose *NAME* to tell this story?**
+*Talk about the character you used for the story and why.*
+
+### **How would this story have played out differently for the other characters?**
+*In some cases, there are problems that only occur for people from specific backgrounds, or which play out differently. This question can be used to highlight that.*
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md

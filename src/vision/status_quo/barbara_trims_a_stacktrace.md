@@ -94,25 +94,30 @@ Fin.
 
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
-* **What are the morals of the story?**
-    * Rust stack traces -- but async stack traces in particular -- reveal lots of implementation details to the user:
-        * Bits of the runtime and intermediate libraries whose source code is likely not of interest to the user (but it might be);
-        * Intermediate frames from the stdlib;
-        * `::{closure}` symbols on async functions and blocks (even though they don't appear to be closures to the user);
-        * calls to `poll`.
-* **What are the sources for this story?**
-    * [Sergey Galich](https://github.com/rust-lang/wg-async-foundations/issues/69#issuecomment-803208049) reported this problem, among many others.
-* **Why did you choose Barbara to tell this story?**
-    * She knows about the desugarings that give rise to symbols like `::{closure}`, but she still finds them annoying to deal with in practice.
-* **How would this story have played out differently for the other characters?**
-    * Other characters might have wasted a lot of time trying to read through the stack trace in place before editing it.
-    * They might not have known how to trim down the stack trace to something that focused on their code, or it might have taken them much longer to do so.
-* **How does this compare to other languages?**
-    * Rust's async model does have some advantages, because the complete stack trace is available unless there is an intermediate `spawn`.
-    * Other languages have developed special tools to connect async functions to their callers, however, which gives them a nice experience. For example, Chrome has a [UI for enabling stacktraces that cross await points](https://www.html5rocks.com/en/tutorials/developertools/async-call-stack/#toc-enable).
-* **Why doesn't Barbara view this in a debugger?**
-    * Because it came in an issue report (or, freqently, as a crash report or email).
-    * But also, that isn't necessarily an improvement! Expand below if you would like to see what we mean.
+### **What are the morals of the story?**
+* Rust stack traces -- but async stack traces in particular -- reveal lots of implementation details to the user:
+    * Bits of the runtime and intermediate libraries whose source code is likely not of interest to the user (but it might be);
+    * Intermediate frames from the stdlib;
+    * `::{closure}` symbols on async functions and blocks (even though they don't appear to be closures to the user);
+    * calls to `poll`.
+
+### **What are the sources for this story?**
+[Sergey Galich](https://github.com/rust-lang/wg-async-foundations/issues/69#issuecomment-803208049) reported this problem, among many others.
+
+### **Why did you choose Barbara to tell this story?**
+She knows about the desugarings that give rise to symbols like `::{closure}`, but she still finds them annoying to deal with in practice.
+
+### **How would this story have played out differently for the other characters?**
+* Other characters might have wasted a lot of time trying to read through the stack trace in place before editing it.
+* They might not have known how to trim down the stack trace to something that focused on their code, or it might have taken them much longer to do so.
+
+### **How does this compare to other languages?**
+* Rust's async model does have some advantages, because the complete stack trace is available unless there is an intermediate `spawn`.
+* Other languages have developed special tools to connect async functions to their callers, however, which gives them a nice experience. For example, Chrome has a [UI for enabling stacktraces that cross await points](https://www.html5rocks.com/en/tutorials/developertools/async-call-stack/#toc-enable).
+
+### **Why doesn't Barbara view this in a debugger?**
+* Because it came in an issue report (or, freqently, as a crash report or email).
+* But also, that isn't necessarily an improvement! Expand below if you would like to see what we mean.
 
 <details>
 <summary>(click to see how a backtrace looks in lldb)</summary>
@@ -156,8 +161,8 @@ at lib.rs:102:13
 ```
 </details>
 
-* **Doesn't Rust have backtrace trimming support?**
-    * Yes, this **is** the reduced backtrace. You don't even want to know what the [full one](https://gist.github.com/eminence/0b3e697b7c4e686451ff0d37c169c89d) looks like. Don't click it. Don't!
+### **Doesn't Rust have backtrace trimming support?**
+Yes, this **is** the reduced backtrace. You don't even want to know what the [full one](https://gist.github.com/eminence/0b3e697b7c4e686451ff0d37c169c89d) looks like. Don't click it. Don't!
     
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md

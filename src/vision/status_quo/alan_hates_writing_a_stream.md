@@ -224,17 +224,20 @@ A little later, Alan needs to add some response body transforming to some routes
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * Writing an async `Stream` is drastically different than writing an `async fn`.
-    * The documentation for `Pin` doesn't provide much practical guidance in how to use it, instead focusing on more abstract considerations.
-    * Missing a waker registration is a runtime error, and very hard to debug. If it's even possible, a compiler warning or hint would go a long way.
-* **What are the sources for this story?**
-    * Part of this story is based on the original motivation for `async`/`await` in Rust, since similar problems exist writing `impl Future`.
-* **Why did you choose [Alan][] to tell this story?**
-    * Choosing Alan was somewhat arbitrary, but this does get to reuse the experience that Alan may already have around `await` coming from JavaScript.
-* **How would this story have played out differently for the other characters?**
-    * This likely would have been a similar story for any character.
-    * It's possible [Grace][] would be more used to writing state machines, coming from C.
+### **What are the morals of the story?**
+* Writing an async `Stream` is drastically different than writing an `async fn`.
+* The documentation for `Pin` doesn't provide much practical guidance in how to use it, instead focusing on more abstract considerations.
+* Missing a waker registration is a runtime error, and very hard to debug. If it's even possible, a compiler warning or hint would go a long way.
+
+### **What are the sources for this story?**
+Part of this story is based on the original motivation for `async`/`await` in Rust, since similar problems exist writing `impl Future`.
+
+### **Why did you choose [Alan][] to tell this story?**
+Choosing Alan was somewhat arbitrary, but this does get to reuse the experience that Alan may already have around `await` coming from JavaScript.
+
+### **How would this story have played out differently for the other characters?**
+* This likely would have been a similar story for any character.
+* It's possible [Grace][] would be more used to writing state machines, coming from C.
 
 [Alan]: ../characters/alan.md
 [Grace]: ../characters/grace.md

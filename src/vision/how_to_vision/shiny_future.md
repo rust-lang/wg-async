@@ -73,23 +73,29 @@ The goal is that, at the end of the review process, the status quo story has a l
 
 ## 🤔 Frequently Asked Questions
 
-* **What is the process to propose a shiny future story?**
-    * Just open a PR [using this template][template].
-    * Do not add your file to [`SUMMARY.md`], that will create conflicts. We'll do it after merging.
-* **What character should I use for my shiny future story?**
-    * Usually you would use the same character from the status quo story you are retelling.
-    * If for some reason you chose a different character, add a FAQ to explain why.
-* **What do I do if there is no status quo story for my shiny future?**
-    * [Write the status quo story first!](./status_quo.md)
-* **How much detail should I give? How specific should I be?**
-    * Detailed is generally better, but only if those details are helpful for understanding the morals of your story.
-    * Specific is generally better, since an abstract story doesn't feel as real.
-* **What do I do when I get to details that I don't know yet?**
-    * Take your best guess and add a FAQ explaining which details are still up in the air.
-* **What do I do if I don't know that my idea is technically feasible?**
-    * You don't have to know how your idea will work yet. You can add FAQs to try and clarify what parts you do know and what parts still need to be figured out.
-* **What do I do if somebody leaves a comment about how my idea will work and I don't know the answer?**
-    * Add it to the FAQ!
+### **What is the process to propose a shiny future story?**
+* Just open a PR [using this template][template].
+* Do not add your file to [`SUMMARY.md`], that will create conflicts. We'll do it after merging.
+
+### **What character should I use for my shiny future story?**
+* Usually you would use the same character from the status quo story you are retelling.
+* If for some reason you chose a different character, add a FAQ to explain why.
+
+### **What do I do if there is no status quo story for my shiny future?**
+[Write the status quo story first!](./status_quo.md)
+
+### **How much detail should I give? How specific should I be?**
+* Detailed is generally better, but only if those details are helpful for understanding the morals of your story.
+* Specific is generally better, since an abstract story doesn't feel as real.
+
+### **What do I do when I get to details that I don't know yet?**
+Take your best guess and add a FAQ explaining which details are still up in the air.
+
+### **What do I do if I don't know that my idea is technically feasible?**
+You don't have to know how your idea will work yet. You can add FAQs to try and clarify what parts you do know and what parts still need to be figured out.
+
+### **What do I do if somebody leaves a comment about how my idea will work and I don't know the answer?**
+Add it to the FAQ!
 
 [template]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future/template.md
 [sfd]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future

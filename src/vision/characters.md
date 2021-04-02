@@ -28,12 +28,14 @@ We've created four characters that we use to guide our thinking. These character
 
 ## 🤔 Frequently Asked Questions
 
-* Where do the names come from?
-    * Famous programming language designers and theorists. [Alan Turing], [Grace Hopper], [Niklaus Wirth], and [Barbara Liskov].
-* I don't see myself in these characters. What should I do?
-    * Come to Zulip and talk to us about it! Maybe they need to be adjusted!
-* I see myself in more than one of these characters!
-    * Yeah, me too.
+### Where do the names come from?
+Famous programming language designers and theorists. [Alan Turing], [Grace Hopper], [Niklaus Wirth], and [Barbara Liskov].
+
+### I don't see myself in these characters. What should I do?
+Come to Zulip and talk to us about it! Maybe they need to be adjusted!
+
+### I see myself in more than one of these characters!
+Yeah, me too.
 
 [Alan Turing]: https://en.wikipedia.org/wiki/Alan_Turing
 [Grace Hopper]: https://en.wikipedia.org/wiki/Grace_Hopper

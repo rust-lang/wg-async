@@ -104,19 +104,23 @@ Even though this spider-man might have gotten "ill" (his negative experience wit
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * Async I/O includes a new set of runtime errors and misbehaviors that the compiler can't help you find. These include cases like executing blocking operations
-    in an async context but also mixing runtime libraries (something users may not even realize is a factor).
-    * Rust users get used to the compiler giving them error messages for runtime problems but also helping them to fix them. Pushing error messages to runtimes
-    feels surprising and erodes some of their confidence in Rust.
-    * The "cliff" in learning about async is very steep -- at first everything seems simple and similar to other languages, then suddenly you are thrown into a lot of information. It's hard to know what's important and what is not. **But**, at the same time, dipping your toes into async Rust can broaden the understanding a programmer has of asynchronous coding, which can help them even in other languages than Rust.
-* **What are the sources for this story?**
-    * Personal experience of the author.
-* **Why did you choose Alan to tell this story?**
-    * With his experience in C#, Alan probably has experience with async code. Even though C# protects him from certain classes of errors,
-    he can still encounter other classes of errors, which the Rust compiler prevents.
-* **How would this story have played out differently for the other characters?**
-    * For everyone except Barbara, I think these would play out pretty similarly, as this is a kind of problem unique to Rust. Since Barbara has a lot of Rust experience,
-she would probably already be familiar with this aspect.
-* **How would this story have played out differently if Alan came from another GC'd language?**
-    * It would be very close, since all other languages (that I know of) provide async runtimes out of the box and it's not something the programmer needs to concern themselves with.
+### **What are the morals of the story?**
+* Async I/O includes a new set of runtime errors and misbehaviors that the compiler can't help you find. These include cases like executing blocking operations
+  in an async context but also mixing runtime libraries (something users may not even realize is a factor).
+* Rust users get used to the compiler giving them error messages for runtime problems but also helping them to fix them. Pushing error messages to runtimes
+  feels surprising and erodes some of their confidence in Rust.
+* The "cliff" in learning about async is very steep -- at first everything seems simple and similar to other languages, then suddenly you are thrown into a lot of information. It's hard to know what's important and what is not. **But**, at the same time, dipping your toes into async Rust can broaden the understanding a programmer has of asynchronous coding, which can help them even in other languages than Rust.
+
+### **What are the sources for this story?**
+Personal experience of the author.
+
+### **Why did you choose Alan to tell this story?**
+With his experience in C#, Alan probably has experience with async code. Even though C# protects him from certain classes of errors,
+he can still encounter other classes of errors, which the Rust compiler prevents.
+
+### **How would this story have played out differently for the other characters?**
+For everyone except Barbara, I think these would play out pretty similarly, as this is a kind of problem unique to Rust. Since Barbara has a lot of Rust experience,
+  she would probably already be familiar with this aspect.
+
+### **How would this story have played out differently if Alan came from another GC'd language?**
+It would be very close, since all other languages (that I know of) provide async runtimes out of the box and it's not something the programmer needs to concern themselves with.
