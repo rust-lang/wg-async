@@ -8,7 +8,12 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 ## The story
 
-Alan heard about a project to reimplement a deprecated browser plugin using Rust and WASM. This old technology had the ability to load resources over HTTP; so it makes sense to try and implement that functionality using the Fetch API. Alan looks up the documentation of `web_sys` and realizes they need to take a thing called a `Future` from the call to `fetch`, `await` it, and then do something else with the data.
+Alan heard about a project to reimplement a deprecated browser plugin using Rust and WASM. This old technology had the ability to load resources over HTTP; so it makes sense to try and implement that functionality using the Fetch API. Alan looks up the documentation of `web_sys` and realizes they need to...
+
+1. Call one of the [`fetch` methods][WasmFetch], which returns a `Promise`
+2. [Convert the `Promise`][WasmJsFuture] into another thing called a `Future`
+3. `await` the `Future` in an `async` function
+4. Do whatever they want with the resulting data
 
 ```rust
 use web_sys::{Request, window};
@@ -25,7 +30,7 @@ async fn load_image(src: String) {
 }
 ```
 
-Alan adds calls to `load_image` where appropriate, sees the message pop up in the console, and figures it's time to now actually do something to that loaded image.
+Alan adds calls to `load_image` where appropriate. They realize that nothing is happening, so they look through more documentation and find a thing called [`spawn_local`][WasmSpawn]. Once they pass the result of `load_image` into that function, they see their log message pop up in the console, and figure it's time to actually do something to that loaded image data.
 
 At this point, Alan wants to put the downloaded image onto the screen, which in this project means putting it into a `Node` of the current `World`. A `World` is a bundle of global state that's passed around as things are loaded, rendered, and scripts are executed. It looks like this:
 
@@ -159,3 +164,6 @@ It works, well enough that Alan is able to finish his changes and PR them into t
 [htvsq]: ../how_to_vision/status_quo.md
 [cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
 [RuffleAsync]: https://github.com/ruffle-rs/ruffle/blob/master/core/src/loader.rs
+[WasmFetch]: https://docs.rs/web-sys/0.3.50/web_sys/struct.Window.html#method.fetch_with_request
+[WasmJsFuture]: https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/struct.JsFuture.html
+[WasmSpawn]: https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/fn.spawn_local.html
