@@ -154,41 +154,46 @@ of an equivalent function pointer in C, and slightly laments that Rust cannot ex
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * Rust was the correct choice for the team across the board thanks to its memory safety and ownership. The
-      underlying C library was just too complex for any single programmer to be able to maintain in their head all at
-      once while also trying to accomplish other tasks.
-    * Evolving requirements meant that the team would have had to either start over in plain C, giving up a lot of the
-      safety they would gain from switching to Rust, or exploring async code in a more rigorous way.
-    * The async code is actually much simpler than writing the entire execution loop in C themselves. However, the
-      assumption that you would write the entire execution loop is baked into the underlying library which Grace's team
-      cannot rewrite entirely from scratch. Integrating Rust async code with other languages which might have different
-      mental models can sometimes lead to unidiomatic or unsatisfying code, even if the intent of the code in Rust is
-      clear.
-    * Grace eventually discovered that the problem was best modeled as a stream, rather than as a single future.
-      However, converting a future into a stream was not necessarily something that was obvious for someone with a C/C++
-      background.
-    * Closures and related types can be very hard to write in Rust, and if you are used to being very explicit with your
-      types, tricks such as the `impl` trick above for `Stream`s aren't immediately obvious at first glance.
-* **What are the sources for this story?**
-    * My own personal experience trying to incorporate the Intel RealSense library into Rust.
-* **Why did you choose Grace to tell this story?**
-    * I am a C++ programmer who has written many event / callback based systems for streaming from custom camera
-      hardware. I mirror Grace in that I am used to using other systems languages, and even rely on libraries in those
-      languages as I've moved to Rust. I did not want to give up the memory and lifetime benefits of Rust because of
-      evolving runtime requirements.
-    * In particular, C and C++ do not encourage async-style code, and often involve threads heavily. However, some
-      contexts cannot make effective use of threads. In such cases, C and C++ programmers are often oriented towards
-      writing custom execution loops and writing a lot of logic to do so. Grace discovered the benefit of not having to
-      choose an executor upfront, because the async primitives let her express most of the logic without relying on a
-      particular executor's behaviour.
-* **How would this story have played out differently for the other characters?**
-    * [Alan] would have struggled with understanding the embedded context of the problem, where GC'd languages don't see
-      much use.
-    * [Niklaus] and [Barbara] may not have approached the problem with the same assimilation biases from C and C++ as
-      Grace. Some of the revelations in the story such as discovering that Grace's team didn't have to write their own
-      execution loop were unexpected benefits when starting down the path of using Rust!
-* **Could Grace have used another runtime to achieve the same objectives?**
-    * Grace can use _any_ runtime, which was an unexpected benefit of her work!
-* **How did Grace know to use `Unfold` as the return type in the first place?**
-    * She saw it in the [rustdoc](https://docs.rs/futures/0.3.13/futures/stream/fn.unfold.html) for `stream::unfold`.
+### **What are the morals of the story?**
+* Rust was the correct choice for the team across the board thanks to its memory safety and ownership. The
+  underlying C library was just too complex for any single programmer to be able to maintain in their head all at
+  once while also trying to accomplish other tasks.
+* Evolving requirements meant that the team would have had to either start over in plain C, giving up a lot of the
+  safety they would gain from switching to Rust, or exploring async code in a more rigorous way.
+* The async code is actually much simpler than writing the entire execution loop in C themselves. However, the
+  assumption that you would write the entire execution loop is baked into the underlying library which Grace's team
+  cannot rewrite entirely from scratch. Integrating Rust async code with other languages which might have different
+  mental models can sometimes lead to unidiomatic or unsatisfying code, even if the intent of the code in Rust is
+  clear.
+* Grace eventually discovered that the problem was best modeled as a stream, rather than as a single future.
+  However, converting a future into a stream was not necessarily something that was obvious for someone with a C/C++
+  background.
+* Closures and related types can be very hard to write in Rust, and if you are used to being very explicit with your
+  types, tricks such as the `impl` trick above for `Stream`s aren't immediately obvious at first glance.
+
+### **What are the sources for this story?**
+My own personal experience trying to incorporate the Intel RealSense library into Rust.
+
+### **Why did you choose Grace to tell this story?**
+* I am a C++ programmer who has written many event / callback based systems for streaming from custom camera
+  hardware. I mirror Grace in that I am used to using other systems languages, and even rely on libraries in those
+  languages as I've moved to Rust. I did not want to give up the memory and lifetime benefits of Rust because of
+  evolving runtime requirements.
+* In particular, C and C++ do not encourage async-style code, and often involve threads heavily. However, some
+  contexts cannot make effective use of threads. In such cases, C and C++ programmers are often oriented towards
+  writing custom execution loops and writing a lot of logic to do so. Grace discovered the benefit of not having to
+  choose an executor upfront, because the async primitives let her express most of the logic without relying on a
+  particular executor's behaviour.
+
+### **How would this story have played out differently for the other characters?**
+* [Alan] would have struggled with understanding the embedded context of the problem, where GC'd languages don't see
+  much use.
+* [Niklaus] and [Barbara] may not have approached the problem with the same assimilation biases from C and C++ as
+  Grace. Some of the revelations in the story such as discovering that Grace's team didn't have to write their own
+  execution loop were unexpected benefits when starting down the path of using Rust!
+
+### **Could Grace have used another runtime to achieve the same objectives?**
+Grace can use _any_ runtime, which was an unexpected benefit of her work!
+
+### **How did Grace know to use `Unfold` as the return type in the first place?**
+She saw it in the [rustdoc](https://docs.rs/futures/0.3.13/futures/stream/fn.unfold.html) for `stream::unfold`.

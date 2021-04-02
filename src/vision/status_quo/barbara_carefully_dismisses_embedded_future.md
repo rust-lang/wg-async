@@ -222,30 +222,32 @@ instead. Here are some ways in which these APIs are lighter weight than a
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * `core::future::Future` isn't suitable for every asynchronous API in Rust.
-      `Future` has a lot of capabilities, such as the ability to spawn
-      dynamically-allocated futures, that are unnecessary in embedded systems.
-      These capabilities have a cost, which is unavoidable without
-      backwards-incompatible changes to the trait.
-    * We should look at embedded Rust's relationship with `Future` so we don't
-      fragment the embedded Rust ecosystem. Other embedded crates use `Future`
-      -- `Future` certainly has a lot of advantages over lighter-weight
-      alternatives, if you have the space to use it.
-* **Why did you choose *Barbara* to tell this story?**
-    * This story is about someone who is an experienced systems programmer and
-      an experienced Rust developer. All the other characters have "new to Rust"
-      or "new to programming" as a key characteristic.
- **How would this story have played out differently for the other characters?**
-    * [Alan] would have found the `#![no_std]` crate ecosystem lacking async
-      support. He would have moved forward with a `Future`-based implementation,
-      unaware of its impact on code size and RAM usage.
-    * [Grace] would have handled the issue similarly to Barbara, but may not
-      have tried as hard to use `Future`. Barbara has been paying attention to
-      Rust long enough to know how significant the `Future` trait is in the Rust
-      community and ecosystem.
-    * [Niklaus] would really have struggled. If he asked for help, he probably
-      would've gotten conflicting advice from the community.
+### **What are the morals of the story?**
+* `core::future::Future` isn't suitable for every asynchronous API in Rust.
+  `Future` has a lot of capabilities, such as the ability to spawn
+  dynamically-allocated futures, that are unnecessary in embedded systems.
+  These capabilities have a cost, which is unavoidable without
+  backwards-incompatible changes to the trait.
+* We should look at embedded Rust's relationship with `Future` so we don't
+  fragment the embedded Rust ecosystem. Other embedded crates use `Future`
+  -- `Future` certainly has a lot of advantages over lighter-weight
+  alternatives, if you have the space to use it.
+
+### **Why did you choose *Barbara* to tell this story?**
+* This story is about someone who is an experienced systems programmer and
+  an experienced Rust developer. All the other characters have "new to Rust"
+  or "new to programming" as a key characteristic.
+  **How would this story have played out differently for the other characters?**
+
+* [Alan] would have found the `#![no_std]` crate ecosystem lacking async
+  support. He would have moved forward with a `Future`-based implementation,
+  unaware of its impact on code size and RAM usage.
+* [Grace] would have handled the issue similarly to Barbara, but may not
+  have tried as hard to use `Future`. Barbara has been paying attention to
+  Rust long enough to know how significant the `Future` trait is in the Rust
+  community and ecosystem.
+* [Niklaus] would really have struggled. If he asked for help, he probably
+  would've gotten conflicting advice from the community.
 
 [Alan]: ../characters/alan.md
 [Grace]: ../characters/grace.md

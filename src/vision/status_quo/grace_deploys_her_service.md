@@ -31,19 +31,23 @@ She fixes the bug. The service is now working as expected and meeting Grace's pe
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * When coming from a background of network engineering, users will bring their own design choices around architecture.
-        * Examples: [seastar](http://seastar.io/) and [Glommio](https://www.datadoghq.com/blog/engineering/introducing-glommio/)
-    * There is a lack of debugging tools for async.
-    * Writing futures by hand is error prone.
-* **What are the sources for this story?**
-    * This is based on the experiences of helping a tokio user to diagnose a bug in their code.
-* **Why did you choose Grace to tell this story?**
-    * The actual user who experienced this problem fit the profile of Grace.
-    * The story is focused on the experience of people aiming to use workflows they are familiar with from C in a Rust setting.
-* **How would this story have played out differently for the other characters?**
-    * Alan or Niklaus may well have had a much harder time diagnosing the problem due to not having as much of a background in systems programming. For example, they may not have known about the system tool that allowed them to find the list of dangling connections.
-* **Could Grace have used another runtime to achieve the same objectives?**
-    * Maybe! But in this instance the people this story is based on were using tokio, so that's the one we wrote into the story.
-    * (If folks want to expand this answer with details of how to achieve similar goals on other runtimes that would be welcome!)
+### **What are the morals of the story?**
+* When coming from a background of network engineering, users will bring their own design choices around architecture.
+    * Examples: [seastar](http://seastar.io/) and [Glommio](https://www.datadoghq.com/blog/engineering/introducing-glommio/)
+* There is a lack of debugging tools for async.
+* Writing futures by hand is error prone.
+
+### **What are the sources for this story?**
+This is based on the experiences of helping a tokio user to diagnose a bug in their code.
+
+### **Why did you choose Grace to tell this story?**
+* The actual user who experienced this problem fit the profile of Grace.
+* The story is focused on the experience of people aiming to use workflows they are familiar with from C in a Rust setting.
+
+### **How would this story have played out differently for the other characters?**
+Alan or Niklaus may well have had a much harder time diagnosing the problem due to not having as much of a background in systems programming. For example, they may not have known about the system tool that allowed them to find the list of dangling connections.
+
+### **Could Grace have used another runtime to achieve the same objectives?**
+* Maybe! But in this instance the people this story is based on were using tokio, so that's the one we wrote into the story.
+* (If folks want to expand this answer with details of how to achieve similar goals on other runtimes that would be welcome!)
 

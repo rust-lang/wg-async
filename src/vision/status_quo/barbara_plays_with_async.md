@@ -332,58 +332,57 @@ to eat a cookie.
 
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
-* **Why did you choose Barbara to tell this story?**
-    * [Barbara] has years of rust experience that she brings to bear in her async
-    learning experiences.
+### **Why did you choose Barbara to tell this story?**
+[Barbara] has years of rust experience that she brings to bear in her async learning experiences.
 
-* **What are the morals of the story?**
+### **What are the morals of the story?**
     
-    * Due to Barbara's long experience with rust, she knows most of the language
-      pretty well (except for things like async, and advanced concepts like pinned objects).
-      She generally [trusts the rust compiler], and she's learned over the years that she
-      can learn how to use an unfamiliar library by reading the API docs.  As long
-      as she can get the types to line up and the code to compile, things generally
-      work as she expects.
+* Due to Barbara's long experience with rust, she knows most of the language
+  pretty well (except for things like async, and advanced concepts like pinned objects).
+  She generally [trusts the rust compiler], and she's learned over the years that she
+  can learn how to use an unfamiliar library by reading the API docs.  As long
+  as she can get the types to line up and the code to compile, things generally
+  work as she expects.
 
-      But this is not the case with rust async:
-       
-       * There can be new syntax to learn (e.g. async blocks)
-       * It can be hard to find basic functionality (like `futures::future::join_all`)
-       * It's not always clear how the ecosystem all fits together
-         (what functionality is part of tokio?  What is part of the
-         standard library?  What is part of other crates like the
-         `futures` crate?)
-       * Sometimes it looks like there multiple ways to do something:
-         * What's the difference between `futures::future::Future` and `std::future::Future`?
-         * What's the difference between `tokio::time::Instant` and `std::time::Instant`?
-         * What's the difference between `std::future::ready` and ` futures::future::ok`?
+  But this is not the case with rust async:
+   
+   * There can be new syntax to learn (e.g. async blocks)
+   * It can be hard to find basic functionality (like `futures::future::join_all`)
+   * It's not always clear how the ecosystem all fits together
+     (what functionality is part of tokio?  What is part of the
+     standard library?  What is part of other crates like the
+     `futures` crate?)
+   * Sometimes it looks like there multiple ways to do something:
+     * What's the difference between `futures::future::Future` and `std::future::Future`?
+     * What's the difference between `tokio::time::Instant` and `std::time::Instant`?
+     * What's the difference between `std::future::ready` and ` futures::future::ok`?
 
 
-  * Barbara's has a lot to learn.  Her usual methods of learning how to use
-    new crates doesn't really work when learning tokio and async.  She wonders
-    if she actually should have read the long tokio tutorial before starting.
-    She realizes it will take her a while to build up the necessary foundation
-    of knowledge before she can be proficient in async rust.
-  * There were several times where the compiler or the IDE gave helpful error
-    messages and Barbara appreciated these a lot.
+* Barbara's has a lot to learn.  Her usual methods of learning how to use
+  new crates doesn't really work when learning tokio and async.  She wonders
+  if she actually should have read the long tokio tutorial before starting.
+  She realizes it will take her a while to build up the necessary foundation
+  of knowledge before she can be proficient in async rust.
+* There were several times where the compiler or the IDE gave helpful error
+  messages and Barbara appreciated these a lot.
       
-* **What are the sources for this story?**
-    * Personal experiences of the author
+### **What are the sources for this story?**
+Personal experiences of the author
   
-* **How would this story have played out differently for the other characters?**
-    * Other characters would likely have written all the same code as Barbara,
-      and probably would have run into the same problems.  But other characters
-      might have needed quite a bit longer to get to the solution.  
-    
-      For example, it was Barbara's experience with move-closures that led her to try 
-      adding the `move` keyword to the async block.  And it was her general
-      "ambient knowledge" of things that allowed her to remember that things
-      like the `futures` crate exist.  Other characters would have likely needed
-      to resort to an internet search or asking on a rust community.
+### **How would this story have played out differently for the other characters?**
+Other characters would likely have written all the same code as Barbara,
+and probably would have run into the same problems.  But other characters
+might have needed quite a bit longer to get to the solution.  
 
-* What are other related stories?
-    * [Barbara makes their first steps in async] is Barbara in a slightly different universe.
-    * [Alan started trusting the rust compiler][trusts the rust compiler] is a similar story about a different character.
+For example, it was Barbara's experience with move-closures that led her to try 
+adding the `move` keyword to the async block.  And it was her general
+"ambient knowledge" of things that allowed her to remember that things
+like the `futures` crate exist.  Other characters would have likely needed
+to resort to an internet search or asking on a rust community.
+
+### What are other related stories?
+* [Barbara makes their first steps in async] is Barbara in a slightly different universe.
+* [Alan started trusting the rust compiler][trusts the rust compiler] is a similar story about a different character.
 
 [status quo stories]: ./status_quo.md
 [Barbara]: ../characters/barbara.md

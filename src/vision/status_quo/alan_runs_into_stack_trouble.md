@@ -46,18 +46,22 @@ While Alan knew enough about pinning to know how to satisfy the compiler, he did
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * When coming from a background of GCed languages, taking the time to understand the allocation profile of a particular piece of code is not something Alan was used to doing.
-    * It was hard to tell where in his code the stack was being exhausted. Alan had to rely on manually combing his code to find the culprit.
-    * Pinning is relatively confusing, and although the code compiled, Alan didn't fully understand what he wrote and what consequences his decision to use `pin_mut!` would have.
-* **What are the sources for this story?**
-    * This story is adapted from the experiences of the team working on the [Krustlet](https://github.com/deislabs/krustlet) project. You can read about this story in their own words [here](https://deislabs.io/posts/a-heaping-helping-of-stacks/).
-* **Why did you choose Alan to tell this story?**
-    * The programmers this story was based on have an experience mostly in Go, a GCed language.
-    * The story is rooted in the explicit choice of using stack vs heap allocation, a choice that in GCed languages is not in the hands of the programmer.
-* **How would this story have played out differently for the other characters?**
-    * Grace would have likely had a similar hard time with this bug. While she's used to the tradeoffs of stack vs heap allocations, the analogy to the `Pin` API is not present in languages she's used to.
-    * Barbara, as an expert in Rust, may have had the tools to understand that `pin_mut` is used for pinning to the stack while `Box::pin` is for pinning heap allocations.
-    * This problem is somewhat subtle, so someone like Niklaus would probably have had a much harder time figuring this out (or even getting the code to compile in the first place).
-* **Could Alan have used another API to achieve the same objectives?**
-    * Perhaps! Tokio's `select!` macro doesn't require explicit pinning of the futures it's provided, but it's unclear to this author whether it would have been smart enough to avoid pinning large futures to the stack. However, pinning is a part of the way one uses futures in Rust, so it's possible that such an issue would have arisen elsewhere.
+### **What are the morals of the story?**
+* When coming from a background of GCed languages, taking the time to understand the allocation profile of a particular piece of code is not something Alan was used to doing.
+* It was hard to tell where in his code the stack was being exhausted. Alan had to rely on manually combing his code to find the culprit.
+* Pinning is relatively confusing, and although the code compiled, Alan didn't fully understand what he wrote and what consequences his decision to use `pin_mut!` would have.
+
+### **What are the sources for this story?**
+This story is adapted from the experiences of the team working on the [Krustlet](https://github.com/deislabs/krustlet) project. You can read about this story in their own words [here](https://deislabs.io/posts/a-heaping-helping-of-stacks/).
+
+### **Why did you choose Alan to tell this story?**
+* The programmers this story was based on have an experience mostly in Go, a GCed language.
+* The story is rooted in the explicit choice of using stack vs heap allocation, a choice that in GCed languages is not in the hands of the programmer.
+
+### **How would this story have played out differently for the other characters?**
+* Grace would have likely had a similar hard time with this bug. While she's used to the tradeoffs of stack vs heap allocations, the analogy to the `Pin` API is not present in languages she's used to.
+* Barbara, as an expert in Rust, may have had the tools to understand that `pin_mut` is used for pinning to the stack while `Box::pin` is for pinning heap allocations.
+* This problem is somewhat subtle, so someone like Niklaus would probably have had a much harder time figuring this out (or even getting the code to compile in the first place).
+
+### **Could Alan have used another API to achieve the same objectives?**
+Perhaps! Tokio's `select!` macro doesn't require explicit pinning of the futures it's provided, but it's unclear to this author whether it would have been smart enough to avoid pinning large futures to the stack. However, pinning is a part of the way one uses futures in Rust, so it's possible that such an issue would have arisen elsewhere.

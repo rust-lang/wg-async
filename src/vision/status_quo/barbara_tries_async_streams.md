@@ -28,21 +28,24 @@ To help those who followed after her, Barbara sat down to write out her experien
 
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
-* **What are the morals of the story?**
-    * Easy to get the wrong idea. The current state of documentation does not make the use cases clear, so it's easy to grab this as an abstraction because it's the closest that fits.
-    * Async streams are just iterators. Async streams do not offer useful asynchrony in and of themselves. A possible help here might be renaming "async streams" to "async iterators" to help underscore their use case and help developers more quickly understand their limitations.
-    * A single async stream can not be operated on in parallel. They open up asynchrony only during the `.next()` step and are unable to offer asynchrony between steps (eg by calling `.next()` twice and operating on the resulting Futures).
-* **What are the sources for this story?**
-    * Two years of experience with async streams in Nushell.
-    * You can watch a [recording of the on-going experimentation](https://youtu.be/2AknX7canvw) as well.
-    * User stories for the difficulty of using async streams were largely shared with the team on the project [discord](https://discord.gg/NtAbbGn).
-    * We tried a number of different approaches including [using the `async_stream!`](https://crates.io/crates/async_stream) macro, [removing off the `async_stream!` macro](https://github.com/nushell/nushell/pull/1916) because of the error message cliff, and variations of the above.
-* **Why did you choose Barbara to tell this story?**
-    * Barbara is an experienced engineer who may come to async streams and async/await in general with a partially-incorrect set of baseline understanding. It may take her time to understand and see more clearly where her model was wrong because there are things similar to other experiences she's had. For example, Rust futures differ from C++ futures and do not offer the same style of asynchrony. Terms like "streams" sound like they may have more internal functionality, and it would be easy for an experienced developer to trip up with the wrong starting assumption.
-* **How would this story have played out differently for the other characters?**
-    * Alan may have come to a similar idea for an architecture, as async/await is popular in languages like JavaScript and C#. Once Alan attempted to use asynchrony between units of work, namely using async streams, this is where Alan may have failed. The amount of Rust one has to know to succeed here is quite high and includes understanding Arc, Pin, Streams, traits/adapters, the borrowchecker and dealing with different types of errors, and more.
-    * Grace may have chosen a different core abstraction from the start. She has a good chance of thinking through how she'd like the data processing system to work. It's possible she would have found threads and channels a better fit. This would have had different trade-offs.
-    * Niklaus may have also tried to go down the async stream path. The information available is mixed and hype around async/await is too strong. This makes it shine brighter than it should. Without experience with different systems languages to temper the direction, the most likely path would be to experiment with asynchrony and hope that "underneath the surface it does the right thing."
+### **What are the morals of the story?**
+* Easy to get the wrong idea. The current state of documentation does not make the use cases clear, so it's easy to grab this as an abstraction because it's the closest that fits.
+* Async streams are just iterators. Async streams do not offer useful asynchrony in and of themselves. A possible help here might be renaming "async streams" to "async iterators" to help underscore their use case and help developers more quickly understand their limitations.
+* A single async stream can not be operated on in parallel. They open up asynchrony only during the `.next()` step and are unable to offer asynchrony between steps (eg by calling `.next()` twice and operating on the resulting Futures).
+
+### **What are the sources for this story?**
+* Two years of experience with async streams in Nushell.
+* You can watch a [recording of the on-going experimentation](https://youtu.be/2AknX7canvw) as well.
+* User stories for the difficulty of using async streams were largely shared with the team on the project [discord](https://discord.gg/NtAbbGn).
+* We tried a number of different approaches including [using the `async_stream!`](https://crates.io/crates/async_stream) macro, [removing off the `async_stream!` macro](https://github.com/nushell/nushell/pull/1916) because of the error message cliff, and variations of the above.
+
+### **Why did you choose Barbara to tell this story?**
+Barbara is an experienced engineer who may come to async streams and async/await in general with a partially-incorrect set of baseline understanding. It may take her time to understand and see more clearly where her model was wrong because there are things similar to other experiences she's had. For example, Rust futures differ from C++ futures and do not offer the same style of asynchrony. Terms like "streams" sound like they may have more internal functionality, and it would be easy for an experienced developer to trip up with the wrong starting assumption.
+
+### **How would this story have played out differently for the other characters?**
+* Alan may have come to a similar idea for an architecture, as async/await is popular in languages like JavaScript and C#. Once Alan attempted to use asynchrony between units of work, namely using async streams, this is where Alan may have failed. The amount of Rust one has to know to succeed here is quite high and includes understanding Arc, Pin, Streams, traits/adapters, the borrowchecker and dealing with different types of errors, and more.
+* Grace may have chosen a different core abstraction from the start. She has a good chance of thinking through how she'd like the data processing system to work. It's possible she would have found threads and channels a better fit. This would have had different trade-offs.
+* Niklaus may have also tried to go down the async stream path. The information available is mixed and hype around async/await is too strong. This makes it shine brighter than it should. Without experience with different systems languages to temper the direction, the most likely path would be to experiment with asynchrony and hope that "underneath the surface it does the right thing."
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
