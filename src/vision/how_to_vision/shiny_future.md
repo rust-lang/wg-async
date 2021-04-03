@@ -1,6 +1,6 @@
 # ❓ How to vision: "Shiny future" stories
 
-We want all Async Rust users and their hopes and dreams for what Async Rust should be in the future to be reflected in the async vision doc, so please help us by writing 'shiny future' stories about what you would like async Rust to look like! Remember, **shiny future visions can be personal and may differ greatly from person to person. Therefore it's impossible for these visions to be wrong.** 
+We want all Async Rust users and their hopes and dreams for what Async Rust should be in the future to be reflected in the async vision doc, so please help us by writing 'shiny future' stories about what you would like async Rust to look like! **Remember: we are in a brainstorming period.** Please feel free to leave comments in an effort to help someone improve their PRs, but if you would prefer a different approach, you are better off writing your own story. (In fact, you should write your own story even if you like their approach but just have a few alternatives that are worth thinking over.)
 
 [character]: ../characters.md
 [comment]: ./comment.md
