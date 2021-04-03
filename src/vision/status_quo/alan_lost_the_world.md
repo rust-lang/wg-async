@@ -94,7 +94,7 @@ where
 
 So, `spawn_local` only works with futures that return nothing - so far, so good - and are `'static`. Uh-oh. What does that last bit mean? Alan asks Barbara, who responds that it's the lifetime of the whole program. Yeah, but... the async function is part of the program, no? Why wouldn't it have the `'static` lifetime? Does that mean all functions that borrow values aren't `'static`, or just the async ones?
 
-Barbara explains that when you borrow a value in a closure, the closure doesn't gain the lifetime of that borrow. Instead, the borrow comes with it's own lifetime, separate from the closure's. The only time a closure can have a non-`'static` lifetime is if one or more of it's borrows is *not* provided by it's caller, like so:
+Barbara explains that when you borrow a value in a closure, the closure doesn't gain the lifetime of that borrow. Instead, the borrow comes with it's own lifetime, separate from the closure's. The only time a closure can have a non-`'static` lifetime is if one or more of its borrows is *not* provided by it's caller, like so:
 
 ```rust
 fn benchmark_sort() -> usize {
