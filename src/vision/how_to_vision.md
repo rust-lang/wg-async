@@ -21,7 +21,7 @@ Once the brainstorming period is complete, the working group leads will begin wo
 
 The brainstorming period runs until 2021-04-30:
 
-* Folks open "status quo" and (starting 2021-04-02) "shiny future" story PRs against the [wg-async-foundations repo][repo].
+* Folks open "status quo" and "shiny future" story PRs against the [wg-async-foundations repo][repo].
     * [Templates and instructions for status quo stories can be found here.][hvsq] 
     * You can also browse the [open "status quo" issues] for ideas!
     * [Templates and instructions for shiny future stories can be found here.][hvsf]
