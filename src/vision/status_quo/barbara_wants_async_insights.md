@@ -37,27 +37,35 @@ She thinks, "Anyhow it is working now, let's see if we got some performance gain
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * There are very few ways to get insights into running systems. Tracing is state of the art. `console.log` #ftw
-    * Tracing is a static activity and there's no way to dynamically gain insights.
-    * While it's possible to find solutions to these issues, often you don't have insight into if those solutions bring new problems.
-    * Debugging process for non-trivial issues is almost guaranteed to be painful and expensive.
-* **What are the sources for this story?**
-    * [Issue 75](https://github.com/rust-lang/wg-async-foundations/issues/75)
-* **What are Async Insights?**
-    * Custom Events - logging/tracing (Per task?)
-    * Memory consumption per task.
-    * I/O handles in waiting state per task.
-    * Number of tasks and their states over time.
-    * Wake and drop specific tasks.
-    * **Denoised** stack traces and/or stack traces that are task aware.
-    * Who spawned the task?
-    * Worker threads that are blocked from progressing tasks forward.
-    * Tasks that are not progressing.
-* **Why did you choose [Barbara] to tell this story?**
-    * Barbara knows what she's doing, but still there is little way to get insights.
-* **How would this story have played out differently for the other characters?**
-    * [Alan] who is an Erlang developer, might miss the highly [debuggable](https://youtu.be/JvBT4XBdoUE) BEAM runtime. He would immediately find out that he can't easily analyze a task during runtime.
+### **What are the morals of the story?**
+* There are very few ways to get insights into running systems. Tracing is state of the art. `console.log` #ftw
+* Tracing is a static activity and there's no way to dynamically gain insights.
+* While it's possible to find solutions to these issues, often you don't have insight into if those solutions bring new problems.
+* Debugging process for non-trivial issues is almost guaranteed to be painful and expensive.
+
+### **What are the sources for this story?**
+[Issue 75](https://github.com/rust-lang/wg-async-foundations/issues/75)
+
+### **What are examples of the kinds of things a user might want to have insight into?**
+* Custom Events - logging/tracing (Per task?)
+* Memory consumption per task.
+* I/O handles in waiting state per task.
+* Number of tasks and their states over time.
+* Wake and drop specific tasks.
+* **Denoised** stack traces and/or stack traces that are task aware.
+* Who spawned the task?
+* Worker threads that are blocked from progressing tasks forward.
+* Tasks that are not progressing.
+
+### **Why did you choose [Barbara] to tell this story?**
+Barbara knows what she's doing, but still there is little way to get insights.
+
+### **How would this story have played out differently for the other characters?**
+Depending on what languages he was using before, [Alan] would likely have had experience with a stronger tooling story:
+* The highly [debuggable](https://youtu.be/JvBT4XBdoUE) BEAM (a VM), for Erlang.
+* [Delve](https://github.com/go-delve/delve), the debugging tool for Go.
+* Using [Visual Studio](https://devblogs.microsoft.com/visualstudio/how-do-i-debug-async-code-in-visual-studio/) to debug C#.
+* Debugging async Java using [IntelliJ](https://www.jetbrains.com/help/idea/debug-asynchronous-code.html).
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
