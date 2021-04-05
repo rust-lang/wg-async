@@ -198,6 +198,8 @@ where
 
 Alan is still not sure whether it can be simplified.
 
+Later on, other developers on the project attempt to extend this approach to work with closures, but they encounter limitations in rustc that seem to make it not work ([rust-lang/rust#70263](https://github.com/rust-lang/rust/issues/70263)).
+
 When Alan sees another open source project struggling with the same issue, he notices that Barbara has helped them out as well. Alan wonders how many people in the community would be able to write `.to_async_borrowing()` without help.
 
 ## 🤔 Frequently Asked Questions
