@@ -114,18 +114,21 @@ Disgruntled, Alan begins the arduous, boring task of instrumenting the applicati
 ## 🤔 Frequently Asked Questions
 
 
-* **What are the morals of the story?**
-    * Developers, especially coming from an language that has a tightly integrated development environment, expect their debugger to help them particularly in situations where "println" debugging can't.
-    * If the debugger can't help them, developers will often try to reach for a programmatic solution such as debug functions in their runtime that can be invoked at critical code paths.
-    * Trying to debug an issue by adding logging and then triggering the issue is painful because of the long turn-around times when modifying code, compiling and then repro'ing the issue.
-* **What are the sources for this story?**
-    * @erickt's comments in #76, similar comments I've heard from other developers.
-* **Why did you choose Alan to tell this story?**
-    * Coming from a background in managed languages where the IDE, debugger and runtime are tightly integrated, Alan would be used to using those tools to diagnose his issue.
-    * Alan has also been a bit insulated from the underlying OS and expects the debugger to understand the language and runtime even if the OS doesn't have similar concepts such as async tasks.
-* **How would this story have played out differently for the other characters?**
-    * Some of the characters with either a background in Rust or a background in systems programming might know that Rust's async doesn't always map to an underlying system feature and so they might expect that `gdb` or `lldb` is unable to help them.
-    * Barbara, the experienced Rust dev, might also have used a tracing/instrumentation library from the beginning and have that to fall back on rather than having to do the work to add it now.
+### **What are the morals of the story?**
+* Developers, especially coming from an language that has a tightly integrated development environment, expect their debugger to help them particularly in situations where "println" debugging can't.
+* If the debugger can't help them, developers will often try to reach for a programmatic solution such as debug functions in their runtime that can be invoked at critical code paths.
+* Trying to debug an issue by adding logging and then triggering the issue is painful because of the long turn-around times when modifying code, compiling and then repro'ing the issue.
+
+### **What are the sources for this story?**
+* @erickt's comments in #76, similar comments I've heard from other developers.
+
+## **Why did you choose Alan to tell this story?**
+* Coming from a background in managed languages where the IDE, debugger and runtime are tightly integrated, Alan would be used to using those tools to diagnose his issue.
+* Alan has also been a bit insulated from the underlying OS and expects the debugger to understand the language and runtime even if the OS doesn't have similar concepts such as async tasks.
+
+### **How would this story have played out differently for the other characters?**
+* Some of the characters with either a background in Rust or a background in systems programming might know that Rust's async doesn't always map to an underlying system feature and so they might expect that `gdb` or `lldb` is unable to help them.
+* Barbara, the experienced Rust dev, might also have used a tracing/instrumentation library from the beginning and have that to fall back on rather than having to do the work to add it now.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
