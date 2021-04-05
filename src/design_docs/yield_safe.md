@@ -12,7 +12,7 @@ async fn example(x: &Lock<u32>) {
 }
 
 async fn something() { }
-```
+```ignore
 
 In practice, a lot of these issues are avoided because `MutexGuard` is not `Send`, but single-thread runtimes hit these issues.
 

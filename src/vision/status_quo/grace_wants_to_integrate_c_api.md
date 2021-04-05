@@ -67,7 +67,7 @@ Something Grace and her team learn to love immediately about Rust is that writin
 team to write their own execution environment. In fact, the future can be entirely written independently of the
 execution environment. She quickly writes an async method to represent the polling process:
 
-```rust
+```rust,ignore
 /// Gets the next frame from the camera, waiting `retry_after` time until polling again if it fails.
 ///
 /// Returns Some(frame) if a frame is found, or None if the camera is disconnected or goes down before a frame is
@@ -83,7 +83,7 @@ async fn next_frame(camera: &Camera, retry_after: Duration) -> Option<Frame> {
 
     None
 }
-```
+```ignore
 
 The underlying C API doesn't provide any hooks that can be used to wake the `Waker` object on this future up, so Grace
 and her team decide that it is probably best if they just choose a sufficiently balanced `retry_after` period in which
@@ -100,7 +100,7 @@ unspecified lengths of time. Grace spends some time searching, and realizes that
 of some kind. `Stream` objects are the asynchronous equivalent of iterators, and her team wants to eventually write
 something akin to:
 
-```rust
+```rust,ignore
 let frame_stream = stream_from_camera(camera, Duration::from_millis(5));
 
 while let Some(frame) = frame_stream.next().await {
@@ -108,14 +108,14 @@ while let Some(frame) = frame_stream.next().await {
 }
 
 println!("Frame stream closed.");
-```
+```ignore
 
 She scours existing crates, in particular looking for one way to transform the above future into a stream that can be
 executed many times. The only available option to transform a future into a series of futures is [`stream::unfold`],
 which seems to do exactly what Grace is looking for. Grace begins by adding a small intermediate type, and then plugging
 in the remaining holes:
 
-```rust
+```rust,ignore
 struct StreamState {
     camera: Camera,
     retry_after: Duration,
@@ -129,7 +129,7 @@ fn stream_from_camera(camera: Camera, retry_after: Duration) -> Unfold<Frame, ??
         (frame, state)
     })
 }
-```
+```ignore
 
 This looks like it mostly hits the mark, but Grace is left with a couple of questions for how to get the remainder of
 this building:
@@ -142,11 +142,11 @@ Grace spends a lot of time trying to figure out how she might find those types! 
 way to get around this in Rust would be. Barbara explains again how closures don't have concrete types, and that the
 only way to do this will be to use the `impl` keyword.
 
-```rust
+```rust,ignore
 fn stream_from_camera(camera: Camera, retry_after: Duration) -> impl Stream<Item = Frame> {
     // same as before
 }
-```
+```ignore
 
 While Grace was was on the correct path and now her team is able to write the code they want to, she realizes that
 sometimes writing the types out explicitly can be very hard. She reflects on what it would have taken to write the type
