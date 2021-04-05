@@ -10,7 +10,17 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Alan is working on a project that uses `async-std`. He has worked a bit with `tokio` in the past and is more familiar with that, but he is interested to learn something how things work in `async-std`.
 
-One of the goals is to switch from a WebSocket implementation using raw TCP sockets to one managed behind an HTTP server library, so both HTTP and WebSocket commands can be forwarded to a transport-agnostic RPC server. He finds the HTTP server `tide` and it seems fairly similar to `warp`, which he was using with `tokio`. He also finds the WebSocket middleware library `tide-websockets` that goes with it.
+One of the goals is to switch from a WebSocket implementation using raw TCP sockets to one managed behind an HTTP server library, so both HTTP and WebSocket RPC calls can be forwarded to a transport-agnostic RPC server.
+
+In this server implementation:
+
+* RPC call strings can be received over a WebSocket
+* The strings are decoded and sent to an RPC router that calls the methods specified in the RPC call
+* Some of the methods that are called can take some time to return a result, so they are spawned separately
+    * RPC has built-in properties to organize call IDs and methods, so results can be sent in any order
+* Since WebSockets are bidirectional streams (duplex sockets), the response is sent back through the same client socket
+
+He finds the HTTP server `tide` and it seems fairly similar to `warp`, which he was using with `tokio`. He also finds the WebSocket middleware library `tide-websockets` that goes with it.
 
 However, as he's working, Alan encounters a situation where the socket needs to be written to within an async thread, and the traits just aren't working. He wants to split the stream into a sender and receiver:
 
