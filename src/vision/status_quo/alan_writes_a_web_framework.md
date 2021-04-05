@@ -202,15 +202,22 @@ When Alan sees another open source project struggling with the same issue, he no
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * Callback-based APIs with async callbacks are a bit fiddly, because of the `impl Future` return type forcing you to write where-clause-soup, but not insurmountable.
-    * Callback-based APIs with async callbacks that borrow their arguments are almost impossible to write without help.
-* **What are the sources for this story?**
-    * This is from the author's [own experience](https://github.com/rust-lang/wg-async-foundations/issues/78#issuecomment-808193936).
-* **Why did you choose Alan/YouBuy to tell this story?**
-    * Callback-based apis are a super-common way to interact with web frameworks. I'm not sure how common they are in other fields.
-* **How would this story have played out differently for the other characters?**
-    * I suspect that even many Barbara-shaped developers would struggle with this problem.
+### What are the morals of the story?
+
+* Callback-based APIs with async callbacks are a bit fiddly, because of the `impl Future` return type forcing you to write where-clause-soup, but not insurmountable.
+* Callback-based APIs with async callbacks that borrow their arguments are almost impossible to write without help.
+
+### What are the sources for this story?
+
+* This is from the author's [own experience](https://github.com/rust-lang/wg-async-foundations/issues/78#issuecomment-808193936).
+
+### Why did you choose Alan/YouBuy to tell this story?
+
+* Callback-based apis are a super-common way to interact with web frameworks. I'm not sure how common they are in other fields.
+
+### How would this story have played out differently for the other characters?
+
+* I suspect that even many Barbara-shaped developers would struggle with this problem.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
