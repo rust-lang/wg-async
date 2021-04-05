@@ -88,7 +88,7 @@ async fn get_products_handler(state: State) -> HandlerResult {
 }
 ```
 
-It's still not fantastically ergonomic though. Because the handler takes ownership of State and returns it in tuples in the result, Alan can't use the `?` operator inside his http request handlers. If he tries use `?` in a handler, like this:
+It's still not fantastically ergonomic though. Because the handler takes ownership of State and returns it in tuples in the result, Alan can't use the `?` operator inside his http request handlers. If he tries to use `?` in a handler, like this:
 
 ```rust
 async fn get_products_handler(state: State) -> HandlerResult {
