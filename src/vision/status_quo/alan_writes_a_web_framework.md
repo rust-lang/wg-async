@@ -1,4 +1,4 @@
-# 😱 Status quo stories: Template
+# 😱 Status quo stories: Alan writes a web framework
 
 
 [How To Vision: Status Quo]: ../how_to_vision/status_quo.md
