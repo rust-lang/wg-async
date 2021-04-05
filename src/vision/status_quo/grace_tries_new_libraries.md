@@ -11,7 +11,7 @@ This is a draft "status quo" story submitted as part of the brainstorming period
 
 ## The story
 
-When Grace searched crates.io for a library, she found an intersting library that she wants to use. The code examples use a map/reduce style. As Grace is more familiar with C and C++, as a first step she wants to convert them from this style to using loops.
+When Grace searched crates.io for a library, she found an interesting library that she wants to use. The code examples use a map/reduce style. As Grace is more familiar with C and C++, as a first step she wants to convert them from this style to using loops.
 
 ```
 Controller::new(root_kind_api, ListParams::default())
@@ -32,7 +32,7 @@ So she takes the naive approach to just convert that as follows:
 ```
 let controller = Controller::new(root_kind_api, ListParams::default())
     .owns(child_kind_api, ListParams::default())
-    .run(reconcile, error_policy, context)
+    .run(reconcile, error_policy, context);
 
 while let Ok(o) = controller.try_next().await {
     info!("reconciled {:?}", o),
