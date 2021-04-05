@@ -13,7 +13,7 @@ This is a draft "status quo" story submitted as part of the brainstorming period
 
 When Grace searched crates.io for a library, she found an interesting library that she wants to use. The code examples use a map/reduce style. As Grace is more familiar with C and C++, as a first step she wants to convert them from this style to using loops.
 
-```
+```ignore
 Controller::new(root_kind_api, ListParams::default())
     .owns(child_kind_api, ListParams::default())
     .run(reconcile, error_policy, context)
@@ -24,12 +24,12 @@ Controller::new(root_kind_api, ListParams::default())
         }
     })
     .await;
-```
+```ignore
 (Example code from taken from https://github.com/clux/kube-rs)
 
 So she takes the naive approach to just convert that as follows:
 
-```
+```ignore
 let controller = Controller::new(root_kind_api, ListParams::default())
     .owns(child_kind_api, ListParams::default())
     .run(reconcile, error_policy, context);
@@ -37,11 +37,11 @@ let controller = Controller::new(root_kind_api, ListParams::default())
 while let Ok(o) = controller.try_next().await {
     info!("reconciled {:?}", o),
 }
-```
+```ignore
 
 when she compiles her source code she ends up with wall of error messages like the following:
 
-```
+```ignore
 $ cargo run
    Compiling kube-rs-test v0.1.0 (/home/project-gec/src/kube-rs-test)
 error[E0277]: `from_generator::GenFuture<[static generator@watcher<Secret>::{closure#0}::{closure#0} for<'r, 's, 't0, 't1> {ResumeTy, kube::Api<Secret>, &'r kube::Api<Secret>, ListParams, &'s ListParams, watcher::State<Secret>, impl futures::Future, ()}]>` cannot be unpinned
@@ -96,7 +96,7 @@ For more information about this error, try `rustc --explain E0277`.
 error: could not compile `kube-rs-test`
 
 To learn more, run the command again with --verbose.
-```
+```ignore
 
 From her background she has an understanding what could go wrong. So she remembered, that she could box the values to solve the issue with calling `.boxed()` on the controller. But on the other hand she could see no reason why this `while` loop should fail when the original `.for_each()` example just works as expected.
 

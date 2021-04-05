@@ -34,7 +34,7 @@ look at the "[Hello Tokio]" section that shows what feature flags are required b
 ```toml
 [dependencies]
 tokio = { version = "1", features = ["full"] }
-```
+```ignore
 
 Poking around the tokio API docs in search of something to play with, she sees
 a simple future that looks interesting: the [`sleep`][tokio sleep] future
@@ -62,7 +62,7 @@ pub async fn main() {
 
     println!("Done waiting for all futures");
 }
-```
+```ignore
 
 This very first version she wrote compiled on the first try and had no errors
 when running it.  Barbara was pleased about this.
@@ -81,7 +81,7 @@ for _ in 0..10 {
     }));
 }
 println!("Created 10 futures");
-```
+```ignore
 
 But the compiler gives this error:
 
@@ -93,7 +93,7 @@ error[E0277]: `()` is not a future
    |                                                                       ^^^^ `()` is not a future
    |
    = help: the trait `futures::Future` is not implemented for `()`
-```
+```ignore
 
 Even though the error is pointing at the `then` function, Barbara pretty quickly
 recognizes the problem -- her closure needs to return a future, but `()` is not
@@ -113,7 +113,7 @@ for _ in 0..10 {
         std::future::ready(())
     }));
 }
-```
+```ignore
 
 This compiles without error, but when Barbara goes to run the code, the output
 surprises her a little bit:  After waiting running the program, nothing happened
@@ -142,7 +142,7 @@ async function main() {
 
     Promise.all(futures);
 }
-```
+```ignore
 
 After imagining this code, Barbara has an "ah-ha!" moment, and realizes the
 problem is likely how she is waiting for the futures in her rust code.
@@ -174,7 +174,7 @@ println!("Created 10 futures");
 
 futures::future::join_all(futures).await;
 println!("Done");
-```
+```ignore
 It works exactly as expected now!  After having written the code, Barbara begins
 to remember an important detail about rust futures that she once read somewhere:
 rust futures are lazy, and won't make progress unless you await them.
@@ -199,7 +199,7 @@ for counter in 0..10 {
         }));
     }
 }
-```
+```ignore
 
 This fails to compile:
 
@@ -210,7 +210,7 @@ error[E0308]: mismatched types
               found closure `[closure@src\main.rs:21:44: 24:14]`
    = note: no two closures, even if identical, have the same type
    = help: consider boxing your closure and/or using it as a trait object
-```
+```ignore
 
 This error doesn't actually surprise Barbara that much, as she is familiar with
 the idea of having to box objects sometimes.  She does
@@ -222,7 +222,7 @@ She first adds explicit type annotations to the Vec:
 
 ```rust,ignore
 let mut futures: Vec<Box<dyn Future<Output=()>>> = Vec::new();
-```
+```ignore
 
 She then notices that her IDE (VSCode + rust-analyzer) has a new error on
 each call to push.  The code assist on each error says `Store this in the heap
@@ -237,7 +237,7 @@ error[E0277]: `dyn futures::Future<Output = ()>` cannot be unpinned
   --> src\main.rs:34:31
    |
 34 |     futures::future::join_all(futures).await;
-```
+```ignore
 
 Barbara has been around rust for long enough to know that there is a `Box::pin`
 API, but she doesn't really understand what it does, nor does she have a good
@@ -250,13 +250,13 @@ futures.push(Box::pin(delay_future.then(|_| {
     println!("Done!");
     std::future::ready(())
 })));
-```
+```ignore
 
 and adjusting the type of the Vec:
 
 ```rust,ignore
 let mut futures: Vec<Pin<Box<dyn Future<Output=()>>>> = Vec::new();
-```
+```ignore
 
 the code compiles and runs successfully.
 
@@ -277,7 +277,7 @@ futures.push(Box::pin(async || {
     tokio::time::sleep(Duration::from_millis(delay)).await;
     println!("Done after {}ms", delay);
 }));
-```
+```ignore
 
 The compiler gives an error:
 
@@ -291,7 +291,7 @@ error[E0658]: async closures are unstable
    = note: see issue #62290 <https://github.com/rust-lang/rust/issues/62290> for more information
    = help: add `#![feature(async_closure)]` to the crate attributes to enable
    = help: to use an async block, remove the `||`: `async {`
-```
+```ignore
 
 Barbara knows that async is stable and using this nightly feature isn't what
 she wants.  So the tries the suggestion made by the compiler and removes the `||` bars:
@@ -301,7 +301,7 @@ futures.push(Box::pin(async {
     tokio::time::sleep(Duration::from_millis(delay)).await;
     println!("Done after {}ms", delay);
 }));
-```
+```ignore
 
 A new error this time:
 
@@ -309,7 +309,7 @@ A new error this time:
 error[E0597]: `delay` does not live long enough
 15 | |             tokio::time::sleep(Duration::from_millis(delay)).await;
    | |                                                      ^^^^^ borrowed value does not live long enough
-```
+```ignore
 
 This is an error that Barbara is very familiar with.  If she was working with
 a closure, she knows she can use a move-closure (since her `delay` type is `Copy`).
@@ -323,7 +323,7 @@ futures.push(Box::pin(async move {
     tokio::time::sleep(Duration::from_millis(delay)).await;
     println!("Done after {}ms", delay);
 }));
-```
+```ignore
 
 It works!  Satisfied but still thinking about async rust, Barbara takes a break
 to eat a cookie.

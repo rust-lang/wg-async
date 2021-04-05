@@ -55,7 +55,7 @@ impl core::future::Future for PrintFuture {
         // it.
     }
 }
-```
+```ignore
 
 Note: All error handling is omitted to keep things understandable.
 
@@ -72,7 +72,7 @@ fn print_buffer(buffer: &'static mut [u8]) -> PrintFuture {
 extern fn callback() {
     // TODO: Wake up the currently-waiting PrintFuture.
 }
-```
+```ignore
 
 So far so good. Barbara then works on `poll`:
 
@@ -83,7 +83,7 @@ So far so good. Barbara then works on `poll`:
         }
         Poll::Pending
     }
-```
+```ignore
 
 Of course, there's something missing here. How does the callback wake the
 `PrintFuture`? She needs to store the
@@ -100,7 +100,7 @@ extern fn callback() {
         waker.wake_by_ref();
     }
 }
-```
+```ignore
 
 She then modifies `poll` to set `PRINT_WAKER`:
 
@@ -112,7 +112,7 @@ She then modifies `poll` to set `PRINT_WAKER`:
         unsafe { PRINT_WAKER = Some(cx.waker()); }
         Poll::Pending
     }
-```
+```ignore
 
 `PRINT_WAKER` is stored in `.bss`, which occupies space in RAM but not flash. It
 is two words in size. It points to a

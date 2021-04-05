@@ -64,7 +64,7 @@ stack backtrace:
   20: core::ops::function::FnOnce::call_once
              at /home/serg/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ops/function.rs:227:5
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
-```
+```ignore
 
 Barbara finds the text overwhelming. She can't just browse it to figure out what code is affected. Instead, she pops up a new tab with gist.github.com copies the text into that handy text box and starts deleting stuff. To start, she deletes the first few lines until her code appears, then she deletes:
 
@@ -84,7 +84,7 @@ stack backtrace:
   13: <tokio stuff> 
   19: slow_rs::main
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
-```
+```ignore
 
 Based on this, she is able to figure out who to ping about the problem. She pastes her reduced stack trace into the issue pings Alan, who is responsible that module. Alan thanks her for reducing the stack trace and mentions, "Oh, when I used to work in C#, this is what the stack traces always looked like. I miss those days."
 
@@ -158,7 +158,7 @@ at lib.rs:102:13
     frame #30: 0x00005555555842d0 foo`std::rt::lang_start::ha8694bc6fe5182cd(main=(foo`foo::main::h3106d444f509ad81 at main.rs:6), argc=1, argv=0x00007fffffffdc88) at rt.rs:65:5
     frame #31: 0x00005555555790ec foo`main + 28
     frame #32: 0x00007ffff7c2f09b libc.so.6`__libc_start_main(main=(foo`main), argc=1, argv=0x00007fffffffdc88, init=<unavailable>, fini=<unavailable>, rtld_fini=<unavailable>, stack_end=0x00007fffffffdc78) at libc-start.c:308:16
-```
+```ignore
 </details>
 
 ### **Doesn't Rust have backtrace trimming support?**

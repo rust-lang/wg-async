@@ -30,7 +30,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     file.write_all(b"Hello, world!").await?;
     Ok(())
 }
-```
+```ignore
 But now the compiler complains that `await` is only allowed in `async` functions. He now notices that all the examples use `#[async_std::main]` 
 as an attribute on the `main` function in order to be able to turn it into an `async main`, so he does the same to get his code compiling:
 ```rust,ignore
@@ -44,7 +44,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
-```
+```ignore
 
 This aligns with what he knows from C#, where you also change the entry point of the program to be async, in order to use `await`.
 Everything is great now, the compiler is happy, so no runtime problems, so Alan is happy.
@@ -72,7 +72,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
-```
+```ignore
 
 He runs his project but is suddenly greeted with a runtime error. He is quite surprised. "How is this even possible?", he thinks. "I don't have any out-of-bounds accesses, and I never use `.unwrap` or `.expect`."
 At the top of the error message he sees: `thread 'main' panicked at 'there is no reactor running, must be called from the context of a Tokio 1.x runtime'` 
