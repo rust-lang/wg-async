@@ -10,8 +10,8 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Alan heard about a project to reimplement a deprecated browser plugin using Rust and WASM. This old technology had the ability to load resources over HTTP; so it makes sense to try and implement that functionality using the Fetch API. Alan looks up the documentation of `web_sys` and realizes they need to...
 
-1. Call one of the [`fetch` methods][WasmFetch], which returns a `Promise`
-2. [Convert the `Promise`][WasmJsFuture] into another thing called a `Future`
+1. Call one of the [`fetch` methods][WasmFetch], which returns a [`Promise`](https://docs.rs/js-sys/0.3.50/js_sys/struct.Promise.html)
+2. [Convert the `Promise`][WasmJsFuture] into a Rust thing called a `Future`
 3. `await` the `Future` in an `async` function
 4. Do whatever they want with the resulting data
 
