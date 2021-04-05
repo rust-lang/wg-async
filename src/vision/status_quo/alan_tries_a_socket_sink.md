@@ -29,11 +29,10 @@ use futures::{SinkExt, StreamExt};
 use async_std::sync::{Arc, Mutex};
 use log::{debug, info, warn};
 
-/// In the connection handler:
-let (ws_sender, mut ws_receiver) = ws_stream.split();
-let ws_sender = Arc::new(Mutex::new(ws_sender));
-
 async fn rpc_ws_handler(ws_stream: WebSocketConnection) {
+    let (ws_sender, mut ws_receiver) = ws_stream.split();
+    let ws_sender = Arc::new(Mutex::new(ws_sender));
+
     while let Some(msg) = ws_receiver.next().await {
         debug!("Received new WS RPC message: {:?}", msg);
 
@@ -60,14 +59,13 @@ use async_std::channel;
 use async_std::sync::{Arc, Mutex};
 use log::{debug, info, warn};
 
-/// In the connection handler:
-let (ws_sender, mut ws_receiver) = channel::unbounded::<String>();
-let ws_receiver = Arc::new(ws_receiver);
-
-let ws_stream = Arc::new(Mutex::new(ws_stream));
-let poller_ws_stream = ws_stream.clone();
-
 async fn rpc_ws_handler(ws_stream: WebSocketConnection) {
+    let (ws_sender, mut ws_receiver) = channel::unbounded::<String>();
+    let ws_receiver = Arc::new(ws_receiver);
+
+    let ws_stream = Arc::new(Mutex::new(ws_stream));
+    let poller_ws_stream = ws_stream.clone();
+
     async_std::task::spawn(async move {
         while let Some(msg) = ws_receiver.next().await {
             match poller_ws_stream.lock().await.send_string(msg).await {
