@@ -18,7 +18,7 @@ Eventually, Alan realizes that some responses have enormous bodies, and would li
 while let Some(chunk) = body.next().await? {
     file.write_all(&chunk).await?;
 }
-```ignore
+```
 
 However, _implementing_ `Stream` turns out to be rather different. With a quick search, he learned the simple way to turn a `File` into a `Stream` with `ReaderStream`, but the signing part was much harder.
 
@@ -37,7 +37,7 @@ async* fn sign(file: ReaderStream) -> Result<Vec<u8>, Error> {
 
     yield Ok(sig.digest().await)
 }
-```ignore
+```
 
 Unfortunately, that doesn't work. The compiler first complains about the `async* fn` syntax:
 
@@ -47,7 +47,7 @@ error: expected item, found keyword `async`
    |
 21 | async* fn sign(file: ReaderStream) -> Result<Vec<u8>, Error> {
    | ^^^^^ expected item
-```ignore
+```
 
 Less hopeful, Alan tries just deleting the asterisk:
 
@@ -59,7 +59,7 @@ error[E0658]: yield syntax is experimental
    |         ^^^^^^^^^^^^^^^
    |
    = note: see issue #43122 <https://github.com/rust-lang/rust/issues/43122> for more information
-```ignore
+```
 
 After reading about how yield is experimental, and giving up reading the 100+ comments in the [linked issue](https://github.com/rust-lang/rust/issues/43122), Alan figures he's just got to implement `Stream` manually.
 
@@ -85,7 +85,7 @@ impl Stream for SigningFile {
  
     }
 }
-```ignore
+```
 
 ### Pin :scream:
 
@@ -112,7 +112,7 @@ enum State {
     File,
     Sign,
 }
-```ignore
+```
 
 
 
@@ -128,7 +128,7 @@ enum State {
     Signing(Pin<Box<dyn Future<Output = Vec<u8>>>>),
     Done,
 }
-```ignore
+```
 
 Now he tries to write the `poll_next` method, checking readiness of individual steps (thankfully, Alan remembers `ready!` from the futures 0.1 blog posts he read) and proceeding to the next state, while grumbling away the weird `Pin` noise:
 
@@ -158,7 +158,7 @@ match self.state {
     }
     State::Done => Poll::Ready(None),
 }
-```ignore
+```
 
 Oh well, at least it _works_, right?
 
@@ -180,7 +180,7 @@ match ready!(Pin::new(file).poll_next(cx)) {
         return Poll::Pending;
     }
 }
-```ignore
+```
 
 In one of the branches, the state is changed, and `Poll::Pending` is returned. Alan assumes that the task will be polled again with the new state. But, since the file was done (and has returned `Poll::Ready`), there was actually no waker registered to wake the task again. So his stream just hangs forever.
 
@@ -216,7 +216,7 @@ loop {
         State::Done => return Poll::Ready(None),
     }
 }
-```ignore
+```
 
 ### Gives Up
 

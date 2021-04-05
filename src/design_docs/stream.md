@@ -18,7 +18,7 @@ pub trait Stream {
         (0, None)
     }
 }
-```ignore
+```
 
 ## Concerns
 

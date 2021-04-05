@@ -11,7 +11,7 @@ trait Foo {
     // Currently disallowed:
     async fn bar();
 }
-```ignore
+```
 
 ## Concerns
 
@@ -33,7 +33,7 @@ fn foo() -> impl Future<Output = ()> { } // resulting type is Send if it can be
 
 // alternative desugaring we chose not to adopt would require Send
 fn foo() -> impl Future + Send { }
-```ignore
+```
 
 If I want to constrain the future I get back from a method, it is difficult to do without a name:
 
@@ -48,7 +48,7 @@ where
 {
     ...
 }
-```ignore
+```
 
 * Should this be solved at the impl trait layer
 * Or should we specialize something for async functions
@@ -70,7 +70,7 @@ impl Service for MyService {
         async move { .. }
     }
 }
-```ignore
+```
 
 * Dependent on impl Trait, see lang-team repo
 
@@ -80,7 +80,7 @@ impl Service for MyService {
 trait MyMethod {
     async fn foo(&self);
 }
-```ignore
+```
 
 ## 🤔 Frequently Asked Questions
 

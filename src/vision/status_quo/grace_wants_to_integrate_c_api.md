@@ -83,7 +83,7 @@ async fn next_frame(camera: &Camera, retry_after: Duration) -> Option<Frame> {
 
     None
 }
-```ignore
+```
 
 The underlying C API doesn't provide any hooks that can be used to wake the `Waker` object on this future up, so Grace
 and her team decide that it is probably best if they just choose a sufficiently balanced `retry_after` period in which
@@ -108,7 +108,7 @@ while let Some(frame) = frame_stream.next().await {
 }
 
 println!("Frame stream closed.");
-```ignore
+```
 
 She scours existing crates, in particular looking for one way to transform the above future into a stream that can be
 executed many times. The only available option to transform a future into a series of futures is [`stream::unfold`],
@@ -129,7 +129,7 @@ fn stream_from_camera(camera: Camera, retry_after: Duration) -> Unfold<Frame, ??
         (frame, state)
     })
 }
-```ignore
+```
 
 This looks like it mostly hits the mark, but Grace is left with a couple of questions for how to get the remainder of
 this building:
@@ -146,7 +146,7 @@ only way to do this will be to use the `impl` keyword.
 fn stream_from_camera(camera: Camera, retry_after: Duration) -> impl Stream<Item = Frame> {
     // same as before
 }
-```ignore
+```
 
 While Grace was was on the correct path and now her team is able to write the code they want to, she realizes that
 sometimes writing the types out explicitly can be very hard. She reflects on what it would have taken to write the type

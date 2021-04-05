@@ -17,14 +17,14 @@ One day, as Alan is working on his async Rust project, he runs his application a
 ```ignore
 $ .\target\debug\application.exe
 thread 'main' has overflowed its stack
-```ignore
+```
 
 Perplexed, Alan sees if anything with his application works by seeing if he can get output when the `--help` flag is passed, but he has no luck:
 
 ```ignore
 $ .\target\debug\application.exe --help
 thread 'main' has overflowed its stack
-```ignore
+```
 
 ## Searching for the solution
 
