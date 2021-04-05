@@ -36,3 +36,11 @@ The async vision document provides a forum where the Async Rust community can pl
 ## 🚧 Under construction! Help needed! 🚧
 
 This document is not yet complete! We are actively working on it as part of the working group, and we would like your help! Check out the [How to vision doc](./vision/how_to_vision.md) page for more details.
+
+```mermaid
+graph TD;
+A-->B;
+A-->C;
+B-->D;
+C-->D;
+```
