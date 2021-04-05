@@ -33,19 +33,21 @@ use log::{debug, info, warn};
 let (ws_sender, mut ws_receiver) = ws_stream.split();
 let ws_sender = Arc::new(Mutex::new(ws_sender));
 
-while let Some(msg) = ws_receiver.next().await {
-    debug!("Received new WS RPC message: {:?}", msg);
+async fn rpc_ws_handler(ws_stream: WebSocketConnection) {
+    while let Some(msg) = ws_receiver.next().await {
+        debug!("Received new WS RPC message: {:?}", msg);
 
-    let ws_sender = ws_sender.clone();
+        let ws_sender = ws_sender.clone();
 
-    async_std::task::spawn(async move {
-        let res = call_rpc(msg).await?;
+        async_std::task::spawn(async move {
+            let res = call_rpc(msg).await?;
 
-        match ws_sender.lock().await.send_string(res).await {
-            Ok(_) => info!("New WS data sent."),
-            Err(_) => warn!("WS connection closed."),
-        };
-    });
+            match ws_sender.lock().await.send_string(res).await {
+                Ok(_) => info!("New WS data sent."),
+                Err(_) => warn!("WS connection closed."),
+            };
+        });
+    }
 }
 ```
 
@@ -65,20 +67,22 @@ let ws_receiver = Arc::new(ws_receiver);
 let ws_stream = Arc::new(Mutex::new(ws_stream));
 let poller_ws_stream = ws_stream.clone();
 
-async_std::task::spawn(async move {
-    while let Some(msg) = ws_receiver.next().await {
-        match poller_ws_stream.lock().await.send_string(msg).await {
-            Ok(msg) => info!("New WS data sent. {:?}", msg),
-            Err(msg) => warn!("WS connection closed. {:?}", msg),
-        };
-    }
-});
-
-while let Some(msg) = ws_stream.lock().await.next().await {
+async fn rpc_ws_handler(ws_stream: WebSocketConnection) {
     async_std::task::spawn(async move {
-        let res = call_rpc(msg).await?;
-        ws_sender.send(res);
+        while let Some(msg) = ws_receiver.next().await {
+            match poller_ws_stream.lock().await.send_string(msg).await {
+                Ok(msg) => info!("New WS data sent. {:?}", msg),
+                Err(msg) => warn!("WS connection closed. {:?}", msg),
+            };
+        }
     });
+
+    while let Some(msg) = ws_stream.lock().await.next().await {
+        async_std::task::spawn(async move {
+            let res = call_rpc(msg).await?;
+            ws_sender.send(res);
+        });
+    }
 }
 ```
 
