@@ -84,5 +84,5 @@ trait MyMethod {
 
 ## 🤔 Frequently Asked Questions
 
-* **What do people say about this to their friends on twitter?**
-    * (Explain your key points here)
+### **What do people say about this to their friends on twitter?**
+* (Explain your key points here)

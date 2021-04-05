@@ -26,16 +26,19 @@ Niklaus was excited about [the RFC proposing that `block_on` be added to the std
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * Writing documentation to go with the language/stdlib for something that is half in the language/stdlib and half in the ecosystem is hard.
-    * This is related to [Barbara's story](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_makes_their_first_steps_into_async.html) about wanting to get started without needing to pick an executor. 
-    * There are topics of async that apply no matter what executor you pick, but it's hard to explain those topics without picking an executor to demonstrate with.
-    * We all have too much work to do and not enough time.
-* **What are the sources for this story?**
-    * It me and Steve. Surprise!
-    * [We've wanted to add async to the book for a long time](https://github.com/rust-lang/book/issues/1275).
-    * So far, we use exactly one crate in the book, `rand`, and a recent update to `rand` caused readers confusion and caused a bunch of work on our part. [Take a look at all the issues linked to this PR](https://github.com/rust-lang/book/pull/2542). I really really really don't want to use more crates in the book.
-* **Why did you choose *Niklaus* to tell this story?**
-    * Niko said I couldn't add new characters.
-* **How would this story have played out differently for the other characters?**
-    * I happen to know that the next version of Programming Rust, whose authors might be described as different characters, includes `async` and uses `async-std`. So it's possible to just pick an executor and add async to the book, but I don't wanna.
+### **What are the morals of the story?**
+Writing documentation to go with the language/stdlib for something that is half in the language/stdlib and half in the ecosystem is hard.
+This is related to [Barbara's story](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_makes_their_first_steps_into_async.html) about wanting to get started without needing to pick an executor. 
+There are topics of async that apply no matter what executor you pick, but it's hard to explain those topics without picking an executor to demonstrate with.
+We all have too much work to do and not enough time.
+
+### **What are the sources for this story?**
+* It me and Steve. Surprise!
+* [We've wanted to add async to the book for a long time](https://github.com/rust-lang/book/issues/1275).
+* So far, we use exactly one crate in the book, `rand`, and a recent update to `rand` caused readers confusion and caused a bunch of work on our part. [Take a look at all the issues linked to this PR](https://github.com/rust-lang/book/pull/2542). I really really really don't want to use more crates in the book.
+
+### **Why did you choose *Niklaus* to tell this story?**
+Niko said I couldn't add new characters.
+
+### **How would this story have played out differently for the other characters?**
+I happen to know that the next version of Programming Rust, whose authors might be described as different characters, includes `async` and uses `async-std`. So it's possible to just pick an executor and add async to the book, but I don't wanna.

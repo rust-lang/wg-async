@@ -8,9 +8,10 @@ Barbara has been using Rust since the 0.1 release. She remembers some of the cra
 
 ## 🤔 Frequently Asked Questions
 
-* What does Barbara want most from Async Rust?
-    * She is using Rust for its feeling of productivity, and she expects Async Rust to continue in that tradition.
-    * She maintains several existing projects, so stability is important to her.
-* What expectations does Barbara bring from her current environment?
-    * She wants a design that feels like the rest of Rust.
-    * She loves Rust and she expects Async Rust to share its overall values.
+### What does Barbara want most from Async Rust?
+* She is using Rust for its feeling of productivity, and she expects Async Rust to continue in that tradition.
+* She maintains several existing projects, so stability is important to her.
+
+### What expectations does Barbara bring from her current environment?
+* She wants a design that feels like the rest of Rust.
+* She loves Rust and she expects Async Rust to share its overall values.

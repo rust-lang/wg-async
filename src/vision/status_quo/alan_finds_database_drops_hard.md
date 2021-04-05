@@ -11,7 +11,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Alan has been adding an extension to YouBuy that launches a singleton actor which interacts with a Sqlite database using the `sqlx` crate. The Sqlite database only permits a single active connection at a time, but this is not a problem, because the actor is a singleton, and so there only should be one at a time. He consults the documentation for `sqlx` and comes up with the following code to create a connection and do the query he needs:
   
-```rust
+```rust,ignore
 use sqlx::Connection;
 
 #[async_std::main]
@@ -41,7 +41,7 @@ Alan tries to figure out what happened from the logs, but the only information h
 
 He's a bit confused, because he's accustomed to having things generally be cleaned up automatically when they get dropped (for example, dropping a [`File`](https://doc.rust-lang.org/std/fs/struct.File.html) will close it). Searching the docs, he sees the [`close`](https://docs.rs/sqlx/0.5.1/sqlx/trait.Connection.html#tymethod.close) method, but the comments confirm that he shouldn't have to call it explicitly: "This method is not required for safe and consistent operation. However, it is recommended to call it instead of letting a connection drop as the database backend will be faster at cleaning up resources." Still, just in case, he decides to add a call to `close` into his code. It does seem to help some, but he is still able to reproduce the problem if he refreshes often enough. Feeling confused, he adds a log statement right before calling `close` to see if it is working:
 
-```rust
+```rust,ignore
 use sqlx::Connection;
 
 #[async_std::main]
@@ -78,16 +78,19 @@ Alan briefly considers rearchitecting his application in more extreme ways to re
 
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
-* **What are the morals of the story?**
-    * Rust's async story is lacking a way of executing async operations in destructors. Spawning is a workaround, but it can have unexpected side-effects.
-    * The story demonstrates solid research steps that Alan uses to understand and resolve his problem.
-    * Completion of the [Cancellation and timeouts docs](https://rust-lang.github.io/async-book/06_multiple_futures/01_chapter.html) may have been helpful. It's difficult to know how something absent might have improved the solution search process.
-* **What are the sources for this story?**
-    * This specific story describes an actual bug encountered by Sergey Galich at 1Password.
-* **Why did you choose Alan to tell this story?**
-    * His experience and understanding of other languages coupled with his desire to apply Rust would likely lead him to try solutions before deeply researching them.
-* **How would this story have played out differently for the other characters?**
-    * This story would likely have played out the same for everyone.
+### **What are the morals of the story?**
+* Rust's async story is lacking a way of executing async operations in destructors. Spawning is a workaround, but it can have unexpected side-effects.
+* The story demonstrates solid research steps that Alan uses to understand and resolve his problem.
+* Completion of the [Cancellation and timeouts docs](https://rust-lang.github.io/async-book/06_multiple_futures/01_chapter.html) may have been helpful. It's difficult to know how something absent might have improved the solution search process.
+
+### **What are the sources for this story?**
+This specific story describes an actual bug encountered by Sergey Galich at 1Password.
+
+### **Why did you choose Alan to tell this story?**
+His experience and understanding of other languages coupled with his desire to apply Rust would likely lead him to try solutions before deeply researching them.
+
+### **How would this story have played out differently for the other characters?**
+This story would likely have played out the same for everyone.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md

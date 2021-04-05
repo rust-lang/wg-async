@@ -44,24 +44,28 @@ To this day the lack of a blessed approach leaves Barbara unsure about the choic
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * When entering Rust's async world without previous async experience, and no benchmarks for what good async design patters look like, getting started with async can be a bit overwhelming.
-    * Other languages which only have a single ecosystem seem to have a much better story for beginners since there's no fear of lock in, or ecosystem fomo about making the wrong choices early on.
-    * This lack of documentation on design patterns, and solid guidance about the async ecosystem for unopiniated newcomers is partially made up for by Rust's community which often provides educated opinions on the design and technical choices one should make. Because of this getting started in async favors those who know where to find answers about Rust: blogs, Discord, Reddit, etc.
-* **What are the sources for their story?**
-    * This is based on the author's personal experience
-* **What documentation did the character read during this story?**
-    * Various blog posts of withoutboats
-    * A blog post which spurred a lot of discussion about blocking in async: https://async.rs/blog/stop-worrying-about-blocking-the-new-async-std-runtime/
-    * A nice blog post about blocking in Tokio, which still doesn't have any nice design patterns: https://ryhl.io/blog/async-what-is-blocking/
-    * An example of design patterns being discussed for sync Rust in the book: https://doc.rust-lang.org/book/ch17-03-oo-design-patterns.html#trade-offs-of-the-state-pattern
-    * Perhaps I should've read a bit more of Niko's blogs and his async interviews.
-* **Why did you choose Barbara to tell their story?**
-    * Like the author of this story, Barbara had previous experience with Rust. Knowing where to find the community also played a significant part in this story. This story could be construed as how Barbara got started with async while starting to maintain some async projects.
-* **How would their story have played out differently for the other characters?**
-    * Characters with previous async experience would probably have had a better experience getting started with async in Rust since they might know what design patterns to apply to async code.
-    On the other hand, since Rust's async story is noticeably different from other languages, having async experience in other languages might even be harmful by requiring the user to unlearn certain habits. I don't know if this is actually the case since I don't have any experience with async in other languages.
-    * Characters which are less in touch with Rust's community than Barbara might have had a much worse time, since just skimming over the documentation might leave some lost, and unaware of common pitfalls. On the other hand, not having learned a lot about async through blog posts and other materials, might compel someone to read the documentation more thoroughly.
+### **What are the morals of the story?**
+* When entering Rust's async world without previous async experience, and no benchmarks for what good async design patters look like, getting started with async can be a bit overwhelming.
+* Other languages which only have a single ecosystem seem to have a much better story for beginners since there's no fear of lock in, or ecosystem fomo about making the wrong choices early on.
+* This lack of documentation on design patterns, and solid guidance about the async ecosystem for unopiniated newcomers is partially made up for by Rust's community which often provides educated opinions on the design and technical choices one should make. Because of this getting started in async favors those who know where to find answers about Rust: blogs, Discord, Reddit, etc.
+
+### **What are the sources for their story?**
+This is based on the author's personal experience
+
+### **What documentation did the character read during this story?**
+* Various blog posts of withoutboats
+* A blog post which spurred a lot of discussion about blocking in async: https://async.rs/blog/stop-worrying-about-blocking-the-new-async-std-runtime/
+* A nice blog post about blocking in Tokio, which still doesn't have any nice design patterns: https://ryhl.io/blog/async-what-is-blocking/
+* An example of design patterns being discussed for sync Rust in the book: https://doc.rust-lang.org/book/ch17-03-oo-design-patterns.html#trade-offs-of-the-state-pattern
+* Perhaps I should've read a bit more of Niko's blogs and his async interviews.
+
+### **Why did you choose Barbara to tell their story?**
+Like the author of this story, Barbara had previous experience with Rust. Knowing where to find the community also played a significant part in this story. This story could be construed as how Barbara got started with async while starting to maintain some async projects.
+
+### **How would their story have played out differently for the other characters?**
+* Characters with previous async experience would probably have had a better experience getting started with async in Rust since they might know what design patterns to apply to async code.
+  On the other hand, since Rust's async story is noticeably different from other languages, having async experience in other languages might even be harmful by requiring the user to unlearn certain habits. I don't know if this is actually the case since I don't have any experience with async in other languages.
+* Characters which are less in touch with Rust's community than Barbara might have had a much worse time, since just skimming over the documentation might leave some lost, and unaware of common pitfalls. On the other hand, not having learned a lot about async through blog posts and other materials, might compel someone to read the documentation more thoroughly.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md

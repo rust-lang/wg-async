@@ -36,7 +36,7 @@ kernel does not expose a Future-based interface, so Barbara has to implement
 `Future` by hand rather than using async/await syntax. She starts with a
 skeleton:
 
-```rust
+```rust,ignore
 /// Passes `buffer` to the kernel, and prints it to the console. Returns a
 /// future that returns `buffer` when the print is complete. The caller must
 /// call kernel_ready_for_callbacks() when it is ready for the future to return. 
@@ -61,7 +61,7 @@ Note: All error handling is omitted to keep things understandable.
 
 Barbara begins to implement `print_buffer`:
 
-```rust
+```rust,ignore
 fn print_buffer(buffer: &'static mut [u8]) -> PrintFuture {
     kernel_set_print_callback(callback);
     kernel_start_print(buffer);
@@ -76,7 +76,7 @@ extern fn callback() {
 
 So far so good. Barbara then works on `poll`:
 
-```rust
+```rust,ignore
     fn poll(self: Pin<&mut Self>, cx: &mut Context) -> Poll<Self::Output> {
         if kernel_is_print_done() {
             return Poll::Ready(kernel_get_buffer_back());
@@ -92,7 +92,7 @@ somewhere! Barbara puts the `Waker` in a global variable so the callback can
 find it (this is fine because the app is single threaded and callbacks do NOT
 interrupt execution the way Unix signals do):
 
-```rust
+```rust,ignore
 static mut PRINT_WAKER: Option<Waker> = None;
 
 extern fn callback() {
@@ -104,7 +104,7 @@ extern fn callback() {
 
 She then modifies `poll` to set `PRINT_WAKER`:
 
-```rust
+```rust,ignore
     fn poll(self: Pin<&mut Self>, cx: &mut Context) -> Poll<Self::Output> {
         if kernel_is_print_done() {
             return Poll::Ready(kernel_get_buffer_back());
@@ -222,93 +222,103 @@ instead. Here are some ways in which these APIs are lighter weight than a
 
 ## 🤔 Frequently Asked Questions
 
-* **What are the morals of the story?**
-    * `core::future::Future` isn't suitable for every asynchronous API in Rust.
-      `Future` has a lot of capabilities, such as the ability to spawn
-      dynamically-allocated futures, that are unnecessary in embedded systems.
-      These capabilities have a cost, which is unavoidable without
-      backwards-incompatible changes to the trait.
-    * We should look at embedded Rust's relationship with `Future` so we don't
-      fragment the embedded Rust ecosystem. Other embedded crates use `Future`
-      -- `Future` certainly has a lot of advantages over lighter-weight
-      alternatives, if you have the space to use it.
-* **Why did you choose *Barbara* to tell this story?**
-    * This story is about someone who is an experienced systems programmer and
-      an experienced Rust developer. All the other characters have "new to Rust"
-      or "new to programming" as a key characteristic.
-* **How would this story have played out differently for the other characters?**
-    * [Alan] would have found the `#![no_std]` crate ecosystem lacking async
-      support. He would have moved forward with a `Future`-based implementation,
-      unaware of its impact on code size and RAM usage.
-    * [Grace] would have handled the issue similarly to Barbara, but may not
-      have tried as hard to use `Future`. Barbara has been paying attention to
-      Rust long enough to know how significant the `Future` trait is in the Rust
-      community and ecosystem.
-    * [Niklaus] would really have struggled. If he asked for help, he probably
-      would've gotten conflicting advice from the community.
-* **`Future` has a lot of features that Barbara's traits don't have -- aren't
-    those worth the cost?**
-    * `Future` has many additional features that are nice-to-have:
-        1. `Future` works smoothly in a multithreaded environment. Futures can
-           be `Send` and/or `Sync`, and do not need to have interior mutability,
-           which avoids the need for internal locking.
-           * Manipulating arbitrary Rust types without locking allows `async fn`
-             to be efficient.
-        1. Futures can be spawned and dropped in a dynamic manner: an executor
-           that supports dynamic allocation can manage an arbitrary number of
-           futures at runtime, and futures may easily be dropped to stop their
-           execution.
-           * Dropping a future will also drop futures it owns, conveniently
-             providing good cancellation semantics.
-           * A future that creates other futures (e.g. an `async fn` that calls
-             other `async fn`s) can be spawned with only a single memory
-             allocation, whereas callback-based approaches need to allocate for
-             each asynchronous component.
-        1. Community and ecosystem support. This isn't a feature of `Future` per
-           se, but the Rust language has special support for `Future`
-           (`async`/`await`) and practically the entire async Rust ecosystem is
-           based on `Future`. The ability to use existing async crates is a very
-           strong reason to use `Future` over any alternative async abstraction.
-    * However, the code size impact of `Future` is a deal-breaker, and no number
-      of nice-to-have features can outweigh a deal-breaker. Barbara's traits
-      have every feature she *needs*.
-    * Using `Future` saves developer time relative to building your own async
-      abstractions. Developers can use the time they saved to minimize code size
-      elsewhere in the project. In some cases, this may result in a net decrease
-      in code size for the same total effort. However, code size reduction
-      efforts have diminishing returns, so projects that expect to optimize code
-      size regardless likely won't find the tradeoff beneficial.
-* **Is the code size impact of `Future` fundamental, or can the design be
-  tweaked in a way that eliminates the tradeoff?**
-    * `Future` isolates the code that determines a future should wake up (the
-      code that calls `Waker::wake`) from the code that executes the future (the
-      executor). The only information transferred via `Waker::wake` is "try
-      waking up now" -- any other information has to be stored somewhere. When
-      polled, a future has to run logic to identify how it can make progress --
-      in many cases this requires answering "who woke me up?" -- and retrieve
-      the stored information. Most completion-driven async APIs allow
-      information about the event to be transferred directly to the code that
-      handles the event. According to Barbara's analysis, the code required to
-      determine what event happened was the majority of the size impact of
-      `Future`.
-* **I thought `Future` was a zero-cost abstraction?**
-    * Aaron Turon [described futures as zero-cost
-      abstractions](https://aturon.github.io/blog/2016/08/11/futures/#zero-cost).
-      In the linked post, he elaborated on what he meant by zero-cost
-      abstraction, and eliminating their impact on code size was not part of
-      that definition. Since then, the statement that future is a zero-cost
-      abstraction has been repeated many times, mostly without the context that
-      Aaron provided. Rust has many zero-cost abstractions, most of which do not
-      impact code size (assuming optimization is enabled), so it is easy for
-      developers to see "futures are zero-cost" and assume that makes them
-      lighter-weight than they are.
-* **How does Barbara's code handle thread-safety? Is her executor unsound?**
-    * The library Barbara is writing only works in Tock OS' userspace
-      environment. This environment is single-threaded: the runtime does not
-      provide a way to spawn another thread, hardware interrupts do not execute
-      in userspace, and there are no interrupt-style callbacks like Unix
-      signals. All kernel callbacks are invoked synchronously, using a method
-      that is functionally equivalent to a function call.
+### What are the morals of the story?
+
+* `core::future::Future` isn't suitable for every asynchronous API in Rust.
+  `Future` has a lot of capabilities, such as the ability to spawn
+  dynamically-allocated futures, that are unnecessary in embedded systems.
+  These capabilities have a cost, which is unavoidable without
+  backwards-incompatible changes to the trait.
+* We should look at embedded Rust's relationship with `Future` so we don't
+  fragment the embedded Rust ecosystem. Other embedded crates use `Future`
+  -- `Future` certainly has a lot of advantages over lighter-weight
+  alternatives, if you have the space to use it.
+  
+### Why did you choose *Barbara* to tell this story?
+
+* This story is about someone who is an experienced systems programmer and
+  an experienced Rust developer. All the other characters have "new to Rust"
+  or "new to programming" as a key characteristic.
+
+### How would this story have played out differently for the other characters?
+
+* [Alan] would have found the `#![no_std]` crate ecosystem lacking async
+  support. He would have moved forward with a `Future`-based implementation,
+  unaware of its impact on code size and RAM usage.
+* [Grace] would have handled the issue similarly to Barbara, but may not
+  have tried as hard to use `Future`. Barbara has been paying attention to
+  Rust long enough to know how significant the `Future` trait is in the Rust
+  community and ecosystem.
+* [Niklaus] would really have struggled. If he asked for help, he probably
+  would've gotten conflicting advice from the community.
+
+### `Future` has a lot of features that Barbara's traits don't have -- aren't those worth the cost?
+* `Future` has many additional features that are nice-to-have:
+    1. `Future` works smoothly in a multithreaded environment. Futures can
+       be `Send` and/or `Sync`, and do not need to have interior mutability,
+       which avoids the need for internal locking.
+       * Manipulating arbitrary Rust types without locking allows `async fn`
+         to be efficient.
+    1. Futures can be spawned and dropped in a dynamic manner: an executor
+       that supports dynamic allocation can manage an arbitrary number of
+       futures at runtime, and futures may easily be dropped to stop their
+       execution.
+       * Dropping a future will also drop futures it owns, conveniently
+         providing good cancellation semantics.
+       * A future that creates other futures (e.g. an `async fn` that calls
+         other `async fn`s) can be spawned with only a single memory
+         allocation, whereas callback-based approaches need to allocate for
+         each asynchronous component.
+    1. Community and ecosystem support. This isn't a feature of `Future` per
+       se, but the Rust language has special support for `Future`
+       (`async`/`await`) and practically the entire async Rust ecosystem is
+       based on `Future`. The ability to use existing async crates is a very
+       strong reason to use `Future` over any alternative async abstraction.
+* However, the code size impact of `Future` is a deal-breaker, and no number
+  of nice-to-have features can outweigh a deal-breaker. Barbara's traits
+  have every feature she *needs*.
+* Using `Future` saves developer time relative to building your own async
+  abstractions. Developers can use the time they saved to minimize code size
+  elsewhere in the project. In some cases, this may result in a net decrease
+  in code size for the same total effort. However, code size reduction
+  efforts have diminishing returns, so projects that expect to optimize code
+  size regardless likely won't find the tradeoff beneficial.
+  
+### Is the code size impact of `Future` fundamental, or can the design be tweaked in a way that eliminates the tradeoff?
+
+* `Future` isolates the code that determines a future should wake up (the
+  code that calls `Waker::wake`) from the code that executes the future (the
+  executor). The only information transferred via `Waker::wake` is "try
+  waking up now" -- any other information has to be stored somewhere. When
+  polled, a future has to run logic to identify how it can make progress --
+  in many cases this requires answering "who woke me up?" -- and retrieve
+  the stored information. Most completion-driven async APIs allow
+  information about the event to be transferred directly to the code that
+  handles the event. According to Barbara's analysis, the code required to
+  determine what event happened was the majority of the size impact of
+  `Future`.
+  
+### I thought `Future` was a zero-cost abstraction?
+
+* Aaron Turon [described futures as zero-cost
+  abstractions](https://aturon.github.io/blog/2016/08/11/futures/#zero-cost).
+  In the linked post, he elaborated on what he meant by zero-cost
+  abstraction, and eliminating their impact on code size was not part of
+  that definition. Since then, the statement that future is a zero-cost
+  abstraction has been repeated many times, mostly without the context that
+  Aaron provided. Rust has many zero-cost abstractions, most of which do not
+  impact code size (assuming optimization is enabled), so it is easy for
+  developers to see "futures are zero-cost" and assume that makes them
+  lighter-weight than they are.
+  
+### How does Barbara's code handle thread-safety? Is her executor unsound?
+
+* The library Barbara is writing only works in Tock OS' userspace
+  environment. This environment is single-threaded: the runtime does not
+  provide a way to spawn another thread, hardware interrupts do not execute
+  in userspace, and there are no interrupt-style callbacks like Unix
+  signals. All kernel callbacks are invoked synchronously, using a method
+  that is functionally equivalent to a function call.
 
 [Alan]: ../characters/alan.md
 [Grace]: ../characters/grace.md

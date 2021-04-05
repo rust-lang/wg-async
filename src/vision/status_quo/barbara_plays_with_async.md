@@ -43,7 +43,7 @@ that will wait for a certain duration to elapse before resolving.
 Borrowing again from the "Hello Tokio" tutorial to make sure she has the correct
 spelling for the tokio macros, she writes up the following code:
 
-```rust
+```rust,ignore
 #[tokio::main]
 pub async fn main() {
     let mut rng = thread_rng();
@@ -72,7 +72,7 @@ seconds doing nothing, and giving no hints about what it's actually doing.
 So for the next iteration, Barbara wants to have a message printed out
 when each future is resolved.  She tries this code at first:
 
-```rust
+```rust,ignore
 let mut futures = Vec::new();
 for _ in 0..10 {
     let delay = rng.sample(t);
@@ -85,7 +85,7 @@ println!("Created 10 futures");
 
 But the compiler gives this error:
 
-```
+```ignore
 error[E0277]: `()` is not a future
   --> src\main.rs:13:71
    |
@@ -105,7 +105,7 @@ which looks interesting.
 Indeed, this struct is a future that will resolve instantly, which is what
 she wants:
 
-```rust
+```rust,ignore
 for _ in 0..10 {
     let delay = rng.sample(t);
     futures.push(tokio::time::sleep(Duration::from_millis(delay)).then(|_| {
@@ -129,7 +129,7 @@ always printed all at once.
 Barbara has experience writing async code in JavaScript, and so she thinks for
 a moment about how this toy code might have looked like if she was using JS:
 
-```javascript
+```javascript,ignore
 async function main() {
     const futures = [];
     for (let idx = 0; idx < 10; idx++) {
@@ -161,7 +161,7 @@ and remembers that there's a 3rd-party crate called "[futures][futures crate]"
 on crates.io that she's seen mentioned in some /r/rust posts.  She checks the
 docs and finds the `join_all` function which looks like what she wants:
 
-```rust
+```rust,ignore
 let mut futures = Vec::new();
 for _ in 0..10 {
     let delay = rng.sample(t);
@@ -182,7 +182,7 @@ rust futures are lazy, and won't make progress unless you await them.
 Happy with this success, Barbara continues to expand her toy program by making
 a few small adjustments:
 
-```rust
+```rust,ignore
 for counter in 0..10 {
     let delay = rng.sample(t);
     let delay_future = tokio::time::sleep(Duration::from_millis(delay));
@@ -203,7 +203,7 @@ for counter in 0..10 {
 
 This fails to compile:
 
-```
+```ignore
 error[E0308]: mismatched types
 
    = note: expected closure `[closure@src\main.rs:16:44: 19:14]`
@@ -220,7 +220,7 @@ entire future.
 
 She first adds explicit type annotations to the Vec:
 
-```rust
+```rust,ignore
 let mut futures: Vec<Box<dyn Future<Output=()>>> = Vec::new();
 ```
 
@@ -232,7 +232,7 @@ rust-analyzer perfectly handled this case.
 Now each future is boxed up, but there is one final error still,
 this time on the call to `join_all(futures).await`:
 
-```
+```ignore
 error[E0277]: `dyn futures::Future<Output = ()>` cannot be unpinned
   --> src\main.rs:34:31
    |
@@ -245,7 +245,7 @@ intuition about what this API is for.  But she is accustomed to just trying
 things in rust to see if they work.  And indeed, after changing `Box::new` to
 `Box::pin`:
 
-```rust
+```rust,ignore
 futures.push(Box::pin(delay_future.then(|_| {
     println!("Done!");
     std::future::ready(())
@@ -254,7 +254,7 @@ futures.push(Box::pin(delay_future.then(|_| {
 
 and adjusting the type of the Vec:
 
-```rust
+```rust,ignore
 let mut futures: Vec<Pin<Box<dyn Future<Output=()>>>> = Vec::new();
 ```
 
@@ -272,7 +272,7 @@ post about async rust a few weeks ago, and has a vague idea of how it looks.
 
 She tries writing this:
 
-```rust
+```rust,ignore
 futures.push(Box::pin(async || {
     tokio::time::sleep(Duration::from_millis(delay)).await;
     println!("Done after {}ms", delay);
@@ -281,7 +281,7 @@ futures.push(Box::pin(async || {
 
 The compiler gives an error:
 
-```
+```ignore
 error[E0658]: async closures are unstable
   --> src\main.rs:14:31
    |
@@ -296,7 +296,7 @@ error[E0658]: async closures are unstable
 Barbara knows that async is stable and using this nightly feature isn't what
 she wants.  So the tries the suggestion made by the compiler and removes the `||` bars:
 
-```rust
+```rust,ignore
 futures.push(Box::pin(async {
     tokio::time::sleep(Duration::from_millis(delay)).await;
     println!("Done after {}ms", delay);
@@ -305,7 +305,7 @@ futures.push(Box::pin(async {
 
 A new error this time:
 
-```
+```ignore
 error[E0597]: `delay` does not live long enough
 15 | |             tokio::time::sleep(Duration::from_millis(delay)).await;
    | |                                                      ^^^^^ borrowed value does not live long enough
@@ -318,7 +318,7 @@ to an async block), but Barbara's experience with rust tells her that it's a ver
 consistent language.  Maybe the same keyword used in move closures will work here?
 She tries it:
 
-```rust
+```rust,ignore
 futures.push(Box::pin(async move {
     tokio::time::sleep(Duration::from_millis(delay)).await;
     println!("Done after {}ms", delay);
@@ -332,58 +332,57 @@ to eat a cookie.
 
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
-* **Why did you choose Barbara to tell this story?**
-    * [Barbara] has years of rust experience that she brings to bear in her async
-    learning experiences.
+### **Why did you choose Barbara to tell this story?**
+[Barbara] has years of rust experience that she brings to bear in her async learning experiences.
 
-* **What are the morals of the story?**
+### **What are the morals of the story?**
     
-    * Due to Barbara's long experience with rust, she knows most of the language
-      pretty well (except for things like async, and advanced concepts like pinned objects).
-      She generally [trusts the rust compiler], and she's learned over the years that she
-      can learn how to use an unfamiliar library by reading the API docs.  As long
-      as she can get the types to line up and the code to compile, things generally
-      work as she expects.
+* Due to Barbara's long experience with rust, she knows most of the language
+  pretty well (except for things like async, and advanced concepts like pinned objects).
+  She generally [trusts the rust compiler], and she's learned over the years that she
+  can learn how to use an unfamiliar library by reading the API docs.  As long
+  as she can get the types to line up and the code to compile, things generally
+  work as she expects.
 
-      But this is not the case with rust async:
-       
-       * There can be new syntax to learn (e.g. async blocks)
-       * It can be hard to find basic functionality (like `futures::future::join_all`)
-       * It's not always clear how the ecosystem all fits together
-         (what functionality is part of tokio?  What is part of the
-         standard library?  What is part of other crates like the
-         `futures` crate?)
-       * Sometimes it looks like there multiple ways to do something:
-         * What's the difference between `futures::future::Future` and `std::future::Future`?
-         * What's the difference between `tokio::time::Instant` and `std::time::Instant`?
-         * What's the difference between `std::future::ready` and ` futures::future::ok`?
+  But this is not the case with rust async:
+   
+   * There can be new syntax to learn (e.g. async blocks)
+   * It can be hard to find basic functionality (like `futures::future::join_all`)
+   * It's not always clear how the ecosystem all fits together
+     (what functionality is part of tokio?  What is part of the
+     standard library?  What is part of other crates like the
+     `futures` crate?)
+   * Sometimes it looks like there multiple ways to do something:
+     * What's the difference between `futures::future::Future` and `std::future::Future`?
+     * What's the difference between `tokio::time::Instant` and `std::time::Instant`?
+     * What's the difference between `std::future::ready` and ` futures::future::ok`?
 
 
-  * Barbara's has a lot to learn.  Her usual methods of learning how to use
-    new crates doesn't really work when learning tokio and async.  She wonders
-    if she actually should have read the long tokio tutorial before starting.
-    She realizes it will take her a while to build up the necessary foundation
-    of knowledge before she can be proficient in async rust.
-  * There were several times where the compiler or the IDE gave helpful error
-    messages and Barbara appreciated these a lot.
+* Barbara's has a lot to learn.  Her usual methods of learning how to use
+  new crates doesn't really work when learning tokio and async.  She wonders
+  if she actually should have read the long tokio tutorial before starting.
+  She realizes it will take her a while to build up the necessary foundation
+  of knowledge before she can be proficient in async rust.
+* There were several times where the compiler or the IDE gave helpful error
+  messages and Barbara appreciated these a lot.
       
-* **What are the sources for this story?**
-    * Personal experiences of the author
+### **What are the sources for this story?**
+Personal experiences of the author
   
-* **How would this story have played out differently for the other characters?**
-    * Other characters would likely have written all the same code as Barbara,
-      and probably would have run into the same problems.  But other characters
-      might have needed quite a bit longer to get to the solution.  
-    
-      For example, it was Barbara's experience with move-closures that led her to try 
-      adding the `move` keyword to the async block.  And it was her general
-      "ambient knowledge" of things that allowed her to remember that things
-      like the `futures` crate exist.  Other characters would have likely needed
-      to resort to an internet search or asking on a rust community.
+### **How would this story have played out differently for the other characters?**
+Other characters would likely have written all the same code as Barbara,
+and probably would have run into the same problems.  But other characters
+might have needed quite a bit longer to get to the solution.  
 
-* What are other related stories?
-    * [Barbara makes their first steps in async] is Barbara in a slightly different universe.
-    * [Alan started trusting the rust compiler][trusts the rust compiler] is a similar story about a different character.
+For example, it was Barbara's experience with move-closures that led her to try 
+adding the `move` keyword to the async block.  And it was her general
+"ambient knowledge" of things that allowed her to remember that things
+like the `futures` crate exist.  Other characters would have likely needed
+to resort to an internet search or asking on a rust community.
+
+### What are other related stories?
+* [Barbara makes their first steps in async] is Barbara in a slightly different universe.
+* [Alan started trusting the rust compiler][trusts the rust compiler] is a similar story about a different character.
 
 [status quo stories]: ./status_quo.md
 [Barbara]: ../characters/barbara.md

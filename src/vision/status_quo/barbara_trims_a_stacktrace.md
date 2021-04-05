@@ -18,7 +18,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Barbara is triaging the reported bugs for her SLOW library. For each bug, she tries to quickly see if she can diagnose the basic area of code that is affected so she knows which people to ping to help fix it. She opens a bug report from a user complaining about a panic when too many connections arrive at the same time. The bug report includes a backtrace from the user's code, and it looks like this:
 
-```
+```ignore
 thread 'main' panicked at 'something bad happened here', src/main.rs:16:5
 stack backtrace:
    0: std::panicking::begin_panic
@@ -74,7 +74,7 @@ Barbara finds the text overwhelming. She can't just browse it to figure out what
 
 She's a bit confused by the `::{closure}` lines on her symbols but she learned by now that this is normal for `async fn`. After some work, she has reduced her stack to this:
 
-```
+```ignore
 thread 'main' panicked at 'something bad happened here', src/main.rs:16:5
 stack backtrace:
    1: slow_rs::process_one::{{closure}} at ./src/main.rs:16:5
@@ -94,30 +94,35 @@ Fin.
 
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
-* **What are the morals of the story?**
-    * Rust stack traces -- but async stack traces in particular -- reveal lots of implementation details to the user:
-        * Bits of the runtime and intermediate libraries whose source code is likely not of interest to the user (but it might be);
-        * Intermediate frames from the stdlib;
-        * `::{closure}` symbols on async functions and blocks (even though they don't appear to be closures to the user);
-        * calls to `poll`.
-* **What are the sources for this story?**
-    * [Sergey Galich](https://github.com/rust-lang/wg-async-foundations/issues/69#issuecomment-803208049) reported this problem, among many others.
-* **Why did you choose Barbara to tell this story?**
-    * She knows about the desugarings that give rise to symbols like `::{closure}`, but she still finds them annoying to deal with in practice.
-* **How would this story have played out differently for the other characters?**
-    * Other characters might have wasted a lot of time trying to read through the stack trace in place before editing it.
-    * They might not have known how to trim down the stack trace to something that focused on their code, or it might have taken them much longer to do so.
-* **How does this compare to other languages?**
-    * Rust's async model does have some advantages, because the complete stack trace is available unless there is an intermediate `spawn`.
-    * Other languages have developed special tools to connect async functions to their callers, however, which gives them a nice experience. For example, Chrome has a [UI for enabling stacktraces that cross await points](https://www.html5rocks.com/en/tutorials/developertools/async-call-stack/#toc-enable).
-* **Why doesn't Barbara view this in a debugger?**
-    * Because it came in an issue report (or, freqently, as a crash report or email).
-    * But also, that isn't necessarily an improvement! Expand below if you would like to see what we mean.
+### **What are the morals of the story?**
+* Rust stack traces -- but async stack traces in particular -- reveal lots of implementation details to the user:
+    * Bits of the runtime and intermediate libraries whose source code is likely not of interest to the user (but it might be);
+    * Intermediate frames from the stdlib;
+    * `::{closure}` symbols on async functions and blocks (even though they don't appear to be closures to the user);
+    * calls to `poll`.
+
+### **What are the sources for this story?**
+[Sergey Galich](https://github.com/rust-lang/wg-async-foundations/issues/69#issuecomment-803208049) reported this problem, among many others.
+
+### **Why did you choose Barbara to tell this story?**
+She knows about the desugarings that give rise to symbols like `::{closure}`, but she still finds them annoying to deal with in practice.
+
+### **How would this story have played out differently for the other characters?**
+* Other characters might have wasted a lot of time trying to read through the stack trace in place before editing it.
+* They might not have known how to trim down the stack trace to something that focused on their code, or it might have taken them much longer to do so.
+
+### **How does this compare to other languages?**
+* Rust's async model does have some advantages, because the complete stack trace is available unless there is an intermediate `spawn`.
+* Other languages have developed special tools to connect async functions to their callers, however, which gives them a nice experience. For example, Chrome has a [UI for enabling stacktraces that cross await points](https://www.html5rocks.com/en/tutorials/developertools/async-call-stack/#toc-enable).
+
+### **Why doesn't Barbara view this in a debugger?**
+* Because it came in an issue report (or, freqently, as a crash report or email).
+* But also, that isn't necessarily an improvement! Expand below if you would like to see what we mean.
 
 <details>
 <summary>(click to see how a backtrace looks in lldb)</summary>
 
-```
+```ignore
 * thread #1, name = 'foo', stop reason = breakpoint 1.1
   * frame #0: 0x0000555555583d24 foo`foo::main::_$u7b$$u7b$closure$u7d$$u7d$::_$u7b$$u7b$closure$u7d$$u7d$::h617d49d0841ffc0d((null)=closure-0 @ 0x00007fffffffae38, (null)=<unavailable>) at main.rs:11:13
     frame #1: 0x0000555555583d09 foo`_$LT$T$u20$as$u20$futures_util..fns..FnOnce1$LT$A$GT$$GT$::call_once::hc559b1f3f708a7b0(self=closure-0 @ 0x00007fffffffae68, arg=<unavailable>) at fns.rs:15:9
@@ -156,8 +161,8 @@ at lib.rs:102:13
 ```
 </details>
 
-* **Doesn't Rust have backtrace trimming support?**
-    * Yes, this **is** the reduced backtrace. You don't even want to know what the [full one](https://gist.github.com/eminence/0b3e697b7c4e686451ff0d37c169c89d) looks like. Don't click it. Don't!
+### **Doesn't Rust have backtrace trimming support?**
+Yes, this **is** the reduced backtrace. You don't even want to know what the [full one](https://gist.github.com/eminence/0b3e697b7c4e686451ff0d37c169c89d) looks like. Don't click it. Don't!
     
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
