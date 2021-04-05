@@ -19,7 +19,7 @@ Provide a lint that can be attached to structs to let the compiler know that thi
 ```rust,ignore
 #[must_not_await = "Your error message here"]
 struct MyStruct {}
-```ignore
+```
 
 This struct if held across an await boundary would cause a deny-by-default warning:
 
@@ -29,13 +29,13 @@ async fn foo() {
   my_async_op.await;
   println!("{:?}", my_struct);
 }
-```ignore
+```
 
 The compiler might output something along the lines of:
 
 ```ignore
 warning: `MyStruct` should not be held across an await point.
-```ignore
+```
 
 Example use cases for this lint:
 
@@ -72,7 +72,7 @@ async fn foo() {
   my_async_op.await;
   println!("{:?}", my_struct);
 }
-```ignore
+```
 
 When used on a function, if the value returned by a function is held across an await point, this lint is violated.
 
@@ -85,7 +85,7 @@ async fn foo() {
   my_async_op.await;
   println!("{:?}", bar);
 }
-```ignore
+```
 
 When used on a [trait declaration], if the value implementing that trait is held across an await point, the lint is violated.
 
@@ -104,7 +104,7 @@ async fn foo() {
   my_async_op.await;
   println!("{:?}", bar);
 }
-```ignore
+```
 
 When used on a function in a trait implementation, the attribute does nothing.
 

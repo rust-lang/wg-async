@@ -78,7 +78,7 @@ Ready to pinpoint the issue, Alan presses `Ctrl+C` and then types `bt` to get a 
 #19 0x0000555555582094 in tokio::runtime::Runtime::block_on (self=0x7fffffffd2f8, future=...)
     at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/mod.rs:450
 #20 0x000055555557c22f in inventory_service::main () at /home/alan/code/inventory_service/src/main.rs:4
-```ignore
+```
 
 </details>
 
@@ -95,7 +95,7 @@ Alan doesn't completely understand how async works in Rust but he's seen the `Fu
   Id   Target Id                                          Frame 
 * 1    Thread 0x7ffff7c3b5c0 (LWP 1048) "inventory_servi" 0x00007ffff7d5e58a in epoll_wait (epfd=3, events=0x555555711340, 
     maxevents=1024, timeout=49152) at ../sysdeps/unix/sysv/linux/epoll_wait.c:30
-```ignore
+```
 
 </details>
 

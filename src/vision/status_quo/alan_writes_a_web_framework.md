@@ -41,11 +41,11 @@ fn get_products_handler(state: State) -> Pin<Box<HandlerFuture>> {
     }
     .boxed()
 }
-```ignore
+```
 and then it is registered like this:
 ```rust,ignore
     router_builder.get("/").to(get_products_handler);
-```ignore
+```
 
 The handler code is forced to drift to the right a lot, because of the async block, and the lack of ability to use `?` forces the use of a match block, which drifts even further to the right. This goes against [what he has learned from his days writing go](https://github.com/uber-go/guide/blob/master/style.md#reduce-nesting).
 
@@ -60,11 +60,11 @@ Rather than switching YouBuy to a different web framework, Alan decides to contr
     {
         self.to(move |s: State| handler(s).boxed())
     }
-```ignore
+```
 The handler registration then becomes:
 ```rust,ignore
     router_builder.get("/").to_async(get_products_handler);
-```ignore
+```
 
 This allows him to strip out the async blocks in his handlers and use `async fn` instead.
 
@@ -86,7 +86,7 @@ async fn get_products_handler(state: State) -> HandlerResult {
         Err(e) => Err((state, e.into())),
     }
 }
-```ignore
+```
 
 It's still not fantastically ergonomic though. Because the handler takes ownership of State and returns it in tuples in the result, Alan can't use the `?` operator inside his http request handlers. If he tries to use `?` in a handler, like this:
 
@@ -102,7 +102,7 @@ async fn get_products_handler(state: State) -> HandlerResult {
     let res = create_response(&state, StatusCode::OK, mime::APPLICATION_JSON, body);
     Ok((state, res))
 }
-```ignore
+```
 then he receives:
 ```ignore
 error[E0277]: `?` couldn't convert the error to `(gotham::state::State, HandlerError)`
@@ -113,7 +113,7 @@ error[E0277]: `?` couldn't convert the error to `(gotham::state::State, HandlerE
    |
    = note: the question mark operation (`?`) implicitly performs a conversion on the error value using the `From` trait
    = note: required by `std::convert::From::from`
-```ignore
+```
 
 Alan knows that the answer is to make another wrapper function, so that the handler can take an `&mut` reference to `State` for the lifetime of the future, like this:
 
@@ -129,11 +129,11 @@ async fn get_products_handler(state: &mut State) -> Result<Response<Body>, Handl
     let res = create_response(&state, StatusCode::OK, mime::APPLICATION_JSON, body);
     Ok(res)
 }
-```ignore
+```
 and then register it with:
 ```rust,ignore
     route.get("/").to_async_borrowing(get_products_handler);
-```ignore
+```
 
 but Alan can't work out how to express the type signature for the `.to_async_borrowing()` helper function. He submits his `.to_async()` pull-request upstream as-is, but it nags on his mind that he has been defeated.
 
@@ -194,7 +194,7 @@ where
     {
         self.to(move |state: State| handler.call_and_wrap(state))
     }
-```ignore
+```
 
 Alan is still not sure whether it can be simplified.
 

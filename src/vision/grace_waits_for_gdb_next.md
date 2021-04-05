@@ -12,19 +12,19 @@ She first fires up `cargo run --verbose` to remind herself what the path to the 
 
 ```ignore
      Running `target/debug/toy`
-```ignore
+```
 
 From that, Grace tries running `gdb` on the printed path.
 
 ```ignore
     gdb target/debug/toy
-```ignore
+```
 
 and then
 
 ```ignore
 (gdb) start
-```ignore
+```
 
 to start the program and set a breakpoint on the `main` function.
 
@@ -39,7 +39,7 @@ Grace hits Ctrl-x a and gets a TUI mode view that includes this:
 │   57              let record = Box::new(Mutex::new(Record::new()));                                                                                                                                                                │
 │   58              let record = &*Box::leak(record);                                                                                                                                                                                │
 │   59                                                                                                                                                                                                                              
-```ignore
+```
 
 Excitedly Grace types `next` to continue to the next line of the function.
 
@@ -55,7 +55,7 @@ So Grace restarts the debugger, and then asks for a breakpoint on the first line
 (gdb) start
 (gdb) break 56
 (gdb) continue
-```ignore
+```
 
 And now it stops on the line that she expected:
 
@@ -68,7 +68,7 @@ And now it stops on the line that she expected:
 │   58              let record = &*Box::leak(record);                                                                                                                                                                                │
 │   59                                                                                                                                                                                                                               │
 │   60              let (tx, mut rx) = channel(100);                                                                                                                                                                                 │
-```ignore
+```
 
 Grace is now able to use `next` to walk through the main function. She does notice that the calls to `tokio::spawn` are skipped over by `next`, but that's not as much of a surprise to her, since those are indeed function calls that are taking async blocks. She sets breakpoints on the first line of each async block so that the debugger will stop when control reaches them as she steps through the code.
 

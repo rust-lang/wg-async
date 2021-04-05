@@ -28,7 +28,7 @@ async fn load_image(src: String) {
     window().unwrap().fetch_with_request(&request).await;
     log::error!("It worked");
 }
-```ignore
+```
 
 Alan adds calls to `load_image` where appropriate. They realize that nothing is happening, so they look through more documentation and find a thing called [`spawn_local`][WasmSpawn]. Once they pass the result of `load_image` into that function, they see their log message pop up in the console, and figure it's time to actually do something to that loaded image data.
 
@@ -46,7 +46,7 @@ pub struct World<'a> {
 
     // ...
 }
-```ignore
+```
 
 In synchronous code, this was perfectly fine. Alan figures it'll be fine in async code, too. So Alan adds the world as a function parameter and everything else needed to parse an image and add it to our list of nodes:
 
@@ -62,14 +62,14 @@ async fn load_image(src: String, inside_of: usize, world: &mut World<'_>) {
     }
     world.nodes.push(image.into());
 }
-```ignore
+```
 
 Bang! Suddently, the project stops compiling, giving errors like...
 
 ```ignore
 error[E0597]: `world` does not live long enough
   --> src/motionscript/globals/loader.rs:21:43
-```ignore
+```
 
 Hmm, okay, that's kind of odd. We can pass a `World` to a regular function just fine - why do we have a problem here? Alan glances over at `loader.rs`...
 
@@ -80,7 +80,7 @@ fn attach_image_from_net(world: &mut World<'_>, args: &[Value]) -> Result<Value,
 
     spawn_local(load_image(url, this.as_node().ok_or("Not a node!")?, world))
 }
-```ignore
+```
 
 Hmm, the error is in that last line. `spawn_local` is a thing Alan had to put into everything that called `load_image`, otherwise his async code never actually did anything. But why is this a problem? Alan can borrow a `World`, or anything else for that matter, inside of async code; and it should get it's own lifetime like everything else, right?
 
@@ -90,7 +90,7 @@ Alan has a hunch that this `spawn_local` thing might be causing a problem, so Al
 pub fn spawn_local<F>(future: F) 
 where
     F: Future<Output = ()> + 'static
-```ignore
+```
 
 So, `spawn_local` only works with futures that return nothing - so far, so good - and are `'static`. Uh-oh. What does that last bit mean? Alan asks Barbara, who responds that it's the lifetime of the whole program. Yeah, but... the async function is part of the program, no? Why wouldn't it have the `'static` lifetime? Does that mean all functions that borrow values aren't `'static`, or just the async ones?
 
@@ -108,7 +108,7 @@ fn benchmark_sort() -> usize {
 
     num_times_called
 }
-```ignore
+```
 
 The closure passed to `sort_by` has to copy or borrow anything not passed into it. In this case, that would be the `num_times_called` variable. Since we want to modify the variable, it has to be borrowed. Hence, the closure has the lifetime of that borrow, not the whole program, because it can't be called anytime - only when `num_times_called` is a valid thing to read or write.
 
@@ -120,7 +120,7 @@ pub trait Future {
 
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output>;
 }
-```ignore
+```
 
 When you call an async function, all of it's parameters are copied or borrowed into the `Future` that it returns. Since we need to borrow the `World`, the `Future` has the lifetime of `&'a mut World`, not of `'static`.
 
@@ -140,7 +140,7 @@ async fn load_image(src: String, inside_of: usize, player: Arc<Mutex<Player>>) {
         world.nodes.push(image.into());
     });
 }
-```ignore
+```
 
 It works, well enough that Alan is able to finish his changes and PR them into the project. However, Alan wonders if this could be syntactically cleaner, somehow. Right now, async and update code have to be separated - if we need to do something with a `World`, then `await` something else, that requires jumping in and out of this `update` thing. It's a good thing that we only really *have* to be async in these loaders, but it's also a shame that we practically *can't* mix `async` code and `World`s.
 

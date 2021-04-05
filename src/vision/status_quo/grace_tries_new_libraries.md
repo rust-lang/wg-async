@@ -24,7 +24,7 @@ Controller::new(root_kind_api, ListParams::default())
         }
     })
     .await;
-```ignore
+```
 (Example code from taken from https://github.com/clux/kube-rs)
 
 So she takes the naive approach to just convert that as follows:
@@ -37,7 +37,7 @@ let controller = Controller::new(root_kind_api, ListParams::default())
 while let Ok(o) = controller.try_next().await {
     info!("reconciled {:?}", o),
 }
-```ignore
+```
 
 when she compiles her source code she ends up with wall of error messages like the following:
 
@@ -96,7 +96,7 @@ For more information about this error, try `rustc --explain E0277`.
 error: could not compile `kube-rs-test`
 
 To learn more, run the command again with --verbose.
-```ignore
+```
 
 From her background she has an understanding what could go wrong. So she remembered, that she could box the values to solve the issue with calling `.boxed()` on the controller. But on the other hand she could see no reason why this `while` loop should fail when the original `.for_each()` example just works as expected.
 
