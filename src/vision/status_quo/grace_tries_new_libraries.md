@@ -102,4 +102,26 @@ From her background she has an understanding what could go wrong. So she remembe
 
 ## 🤔 Frequently Asked Questions
 
-* TODO
+## 🤔 Frequently Asked Questions
+
+### **What are the morals of the story?**
+
+* Working with async can give huge errors from fairly common place transforms, and requires knowing some "not entirely obvious" workarounds.
+
+### **What are the sources for this story?**
+
+* Personal experience.
+
+### **Why did you choose Grace to tell this story?**
+
+* Reflects the background of the author.
+
+### **How would this story have played out differently for the other characters?**
+
+* Ultimately the only way to know how to solve this problem is to have seen it before and learned how to solve it. The compiler doesn't help and the result is not obvious.
+* So it probably doesn't matter that much which character is used, except that Barbara may be more likely to have seen how to solve it.
+
+[character]: ../characters.md
+[status quo stories]: ./status_quo.md
+[htvsq]: ../how_to_vision/status_quo.md
+[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
