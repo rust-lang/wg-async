@@ -26,6 +26,8 @@ let ws_sender = Arc::new(Mutex::new(ws_sender));
 while let Some(msg) = ws_receiver.next().await {
     debug!("Received new WS RPC message: {:?}", msg);
 
+    let ws_sender = ws_sender.clone();
+
     async_std::task::spawn(async move {
         let res = call_rpc(msg).await?;
 
@@ -72,7 +74,7 @@ while let Some(msg) = ws_stream.lock().await.next().await {
 
 Alan wonders if he's thinking about it wrong, but the solution isn't as obvious as his earlier `Sink` approach. Looking around, he realizes a solution to his problems already exists-- as others have been in his shoes before-- within two other nearly-identical pull requests, but they were both closed by the project maintainers. He tries opening a third one with the same code, pointing to an example where it was actually found to be useful. To his joy, his original approach works with the code in the closed pull requests in his local copy! Alan's branch is able to compile for the first time.
 
-However, almost immediately, his request is closed with a comment suggesting that he try to create an intermediate polling task instead, much as he was trying before. Alan is feeling frustrated. "I already tried that approach," he thinks, "and it doesn't work!"
+However, almost immediately, his request is closed [with a comment suggesting that he try to create an intermediate polling task instead](https://github.com/http-rs/tide-websockets/issues/15#issuecomment-797090892), much as he was trying before. Alan is feeling frustrated. "I already tried that approach," he thinks, "and it doesn't work!"
 
 As a result of his frustration, Alan calls out one developer of the project on social media. He knows this developer is opposed to the `Sink` traits. Alan's message is not well-received: the maintainer sends a short response and Alan feels dismissed. Alan later finds out he was blocked. A co-maintainer responds to the thread, defending and supporting the other maintainer's actions, and suggests that Alan "get over it". Alan is given a link to a blog post. The post provides a number of criticisms of `Sink` but, after reading it, Alan isn't sure what he should do instead.
 
@@ -90,6 +92,9 @@ A few weeks later, Alan's work at his project at work is merged with his new for
     * If there's a source of substantial disagreement, the community becomes even further fragmented, and this may cause additional confusion in newcomers.
     * Alan is used to fragmentation from the communities he comes from, so this isn't too discouraging, but what's difficult is that there's enough functionality overlap in async libraries that it's tempting to get them to interop with each other as-needed, and this can lead to architectural challenges resulting from a difference in design philosophies.
     * It's also unclear if Futures are core to the Rust asynchronous experience, much as Promises are in JavaScript, or if the situation is actually more complex.
+    * The `Sink` trait is complex but it solves a real problem, and the workarounds required to solve problems without it can be unsatisfactory.
+    * Disagreement about core abstractions like `Sink` can make interoperability between runtimes more difficult; it also makes it harder for people to reproduce patterns they are used to from one runtime to another.
+    * It is all too easy for technical discussions like this to become heated; it's important for all participants to try and provide each other with the "benefit of the doubt".
 * **What are the sources for this story?**
     * <https://github.com/http-rs/tide-websockets>
         * <https://github.com/http-rs/tide-websockets/pull/17> - Third pull request
