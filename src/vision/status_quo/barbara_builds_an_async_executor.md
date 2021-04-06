@@ -9,7 +9,7 @@ This is a draft "status quo" story submitted as part of the brainstorming period
 
 Barbara wants to set priorities to the tasks spawned to the executor. However, she finds no existing async executor provides such a feature so she decided to build her own async executor.
 
-First, Barbara found [crossbeam-deque](https://crates.io/crates/crossbeam-deque) provides work-stealing deques of good quality. She decides to use it to build task schedulers. It is not the main part of the story. She plans for each working thread to have a loop which repeatedly gets a task from the deque and polls it.
+First, Barbara found [crossbeam-deque](https://crates.io/crates/crossbeam-deque) provides work-stealing deques of good quality. She decides to use it to build task schedulers. She plans for each working thread to have a loop which repeatedly gets a task from the deque and polls it.
 
 But wait, what should we put into those queues to represent each "task"?
 
