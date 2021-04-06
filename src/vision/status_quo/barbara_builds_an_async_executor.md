@@ -140,15 +140,15 @@ Barbara finished her initial implementation of the async executor. Despite there
 
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
-* **What are the morals of the story?**
+### **What are the morals of the story?**
   * It is difficult to customize any of the current async executors (to my knowledge). To have any bit of special requirement forces building an async executor from scratch.
   * It is also not easy to build an async executor. It needs quite some exploration and is error-prone. [`async-task`](https://github.com/smol-rs/async-task) is a good attempt to simplify the process but it could not satisfy all kinds of needs of customizing the executor (it does not give you the chance to extend the task itself).
-* **What are the sources for this story?**
+### **What are the sources for this story?**
   * The story was from my own experience about writing a new thread pool supporting futures: https://github.com/tikv/yatp.
   * People may feel strange about why we want to set priorities for tasks. Currently, the futures in the thread pool are like user-space threads. They are mostly CPU intensive. But I think people doing async I/O may have the same problem.
-* **Why did you choose Barbara to tell this story?**
+### **Why did you choose Barbara to tell this story?**
   * At the time of the story, I had written Rust for years but I was new to the concepts for async/await like `Pin` and `Waker`.
-* **How would this story have played out differently for the other characters?**
+### **How would this story have played out differently for the other characters?**
   * People with less experience in Rust may be less likely to build their own executor. If they try, I think the story is probably similar.
 
 [character]: ../characters.md
