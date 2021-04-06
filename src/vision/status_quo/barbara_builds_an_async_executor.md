@@ -82,7 +82,7 @@ pub fn poll_task(task: Arc<Task>) {
 
 Luckily, a colleague of Barbara noticed something wrong. The `wake` method could be called multiple times so multiple copies of the task could exist in the scheduler. The scheduler might not work correctly because of it and a more severe problem was that multiple threads might get copies of the same task from the scheduler and cause a race in polling the future.
 
-Barbara soon got a idea to solve it. She added a state field to the `Task`. By carefully maintaining the state of the task, she could guarantee there are no duplicate tasks in the scheduler and no race can happen when polling the future:
+Barbara soon got a idea to solve it. She added a state field to the `Task`. By carefully maintaining the state of the task, she could guarantee there are no duplicate tasks in the scheduler and no race can happen when polling the future.
 
 ```rust
 const NOTIFIED: u64 = 1;
@@ -100,6 +100,8 @@ impl Wake for Task {
         let mut state = self.state.load(Relaxed);
         loop {
             match state {
+                // To prevent a task from appearing in the scheduler twice, only send the task
+                // to the scheduler if the task is not notified nor being polling. 
                 IDLE => match self
                     .state
                     .compare_exchange_weak(IDLE, NOTIFIED, AcqRel, Acquire)
@@ -119,10 +121,13 @@ impl Wake for Task {
         }
     }
 }
+
 pub fn poll_task(task: Arc<Task>) {
     let waker = Waker::from(task.clone());
     let mut cx = Context::from_waker(&waker);
     loop {
+        // We needn't read the task state here because the waker prevents the task from
+        // appearing in the scheduler twice. The state must be NOTIFIED now.
         task.state.store(POLLING, Release);
         if let Poll::Ready(()) = unsafe { Pin::new_unchecked(&mut *task.future).poll(&mut cx) } {
             task.state.store(COMPLETED, Release);
