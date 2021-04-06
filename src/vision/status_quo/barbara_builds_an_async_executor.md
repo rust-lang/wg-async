@@ -32,7 +32,7 @@ pub fn poll_task(task: Task) {
 }
 ```
 
-"How to create a waker?" Barbara asked herself. Quickly, she found the `Wake` trait. Seeing the `wake` method takes an `Arc<Self>`, she realized the task in the scheduler should be stored in an `Arc`. She thinks it makes sense because both the deque in the scheduler and the waker may hold a reference to the task.
+"How to create a waker?" Barbara asked herself. Quickly, she found the `Wake` trait. Seeing the `wake` method takes an `Arc<Self>`, she realized the task in the scheduler should be stored in an `Arc`. After some thought, she thinks it makes sense because both the deque in the scheduler and the waker may hold a reference to the task.
 
 To implement `Wake`, the `Task` should contain the sender of the scheduler. She changed the code to something like this:
 
