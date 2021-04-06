@@ -9,9 +9,9 @@ This is a draft "status quo" story submitted as part of the brainstorming period
 
 Barbara wants to set priorities to the tasks spawned to the executor. However, she finds no existing async executor provides such a feature so she decided to build her own async executor.
 
-First, Barbara found [crossbeam-deque](https://crates.io/crates/crossbeam-deque) provides work-stealing deques of good quality. She could use it to build task schedulers. It is not the main part of the story. Each working thread can get a task from the scheduler and poll it in loop.
+First, Barbara found [crossbeam-deque](https://crates.io/crates/crossbeam-deque) provides work-stealing deques of good quality. She decides to use it to build task schedulers. It is not the main part of the story. She plans for each working thread to have a loop which repeatedly gets a task from the deque and polls it.
 
-But wait, what is a "task"?
+But wait, what should we put into those queues to represent each "task"?
 
 At first, Barbara thought it must contain the `Future` itself and the additional priority which was used by the scheduler. So she first wrote:
 
@@ -32,7 +32,7 @@ pub fn poll_task(task: Task) {
 }
 ```
 
-"How to create a waker?" Barbara asked herself. Quickly, she found the `Wake` trait. Seeing the `wake` method takes an `Arc<Self>`, she realized the task in the scheduler should be stored in an `Arc`. After some thought, she thinks it makes sense because both the deque in the scheduler and the waker may hold a reference to the task.
+"How do I create a waker?" Barbara asked herself. Quickly, she found the `Wake` trait. Seeing the `wake` method takes an `Arc<Self>`, she realized the task in the scheduler should be stored in an `Arc`. After some thought, she realizes it makes sense because both the deque in the scheduler and the waker may hold a reference to the task.
 
 To implement `Wake`, the `Task` should contain the sender of the scheduler. She changed the code to something like this:
 
@@ -61,7 +61,7 @@ pub fn poll_task(task: Arc<Task>) {
 
 The code still needed some change because the `future` in the  `Arc<Task>` became immutable. 
 
-"Okay. I can guarantee `Task` is created from a `Pin<Box<Future>>` and I think the same future will not be polled concurrently in two threads. So let me bypass the safety checks." Barbara confidently used some `unsafe` blocks to make it compile.
+"Okay. I can guarantee `Task` is created from a `Pin<Box<Future>>`, and I think the same future won't be polled concurrently in two threads. So let me bypass the safety checks." Barbara changed the future to a raw pointer and confidently used some `unsafe` blocks to make it compile.
 
 ```rust
 pub struct Task {
@@ -80,7 +80,7 @@ pub fn poll_task(task: Arc<Task>) {
 }
 ```
 
-Luckily, a colleague of Barbara noticed something wrong. The `wake` method could be called multiple times so multiple copies of the task could exist in the scheduler. The scheduler might not work correctly because of it and a more severe problem was that multiple threads might get copies of the same task from the scheduler and cause a race in polling the future.
+Luckily, a colleague of Barbara noticed something wrong. The `wake` method could be called multiple times so multiple copies of the task could exist in the scheduler. The scheduler might not work correctly because of this. What's worse, a more severe problem was that multiple threads might get copies of the same task from the scheduler and cause a race in polling the future.
 
 Barbara soon got a idea to solve it. She added a state field to the `Task`. By carefully maintaining the state of the task, she could guarantee there are no duplicate tasks in the scheduler and no race can happen when polling the future.
 
