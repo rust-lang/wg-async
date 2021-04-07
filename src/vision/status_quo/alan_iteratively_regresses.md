@@ -70,13 +70,17 @@ However, there remains a significant performance delta between the Java version 
 
 ### **What are the morals of the story?**
 
-1. Rust promises great performance, but when performance is not meeting one's targets, it is hard to know what to do next. Rust mostly leans on leveraging existing tools for native code development, but those tools are (a.) foreign to many of our developers, (b.) do not always measure up to what our developers have access to elsewhere, (c.) do not integrate as well with Rust as they might with C or C++. An important specific instance of (c.) is that native code tools do not have any insight into Rust's async model, as that is even more distant from the execution model of C and C++.
+1. Rust promises great performance, but when performance is not meeting one's targets, it is hard to know what to do next. Rust mostly leans on leveraging existing tools for native code development, but those tools are (a.) foreign to many of our developers, (b.) do not always measure up to what our developers have access to elsewhere, (c.) do not integrate as well with Rust as they might with C or C++.
 
 2. Lack of certain language features leads developers to use constructs like `#[async_trait]` which add performance overhead that is (a.) hard to understand and (b.) may be significant.
 
 3. Rust makes some things very explicit, e.g. the distinction between `Box<T>` versus `T` is quite prominent. But Rust's expressive type system also makes it easy to compose types without realizing how large they have gotten.
 
 4. Programmers do not always have a good mental model for where expensive moves are coming from.
+
+5. An important specific instance of (1c.) for the async vision: Native code tools do not have any insight into Rust's async model, as that is even more distant from the execution model of C and C++.
+
+6. We can actually generalize (5.) further: When performance does not match expectations, developers do not have much insight into whether the performance pitfalls arise from issues deep in the async executor that they have selected, or if the problems come directly from overheads built into the code they themselves have written.
 
 ### **What are the sources for this story?**
 
