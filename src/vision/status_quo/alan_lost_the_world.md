@@ -64,7 +64,7 @@ async fn load_image(src: String, inside_of: usize, world: &mut World<'_>) {
 }
 ```
 
-Bang! Suddently, the project stops compiling, giving errors like...
+Bang! Suddenly, the project stops compiling, giving errors like...
 
 ```ignore
 error[E0597]: `world` does not live long enough
@@ -84,7 +84,7 @@ fn attach_image_from_net(world: &mut World<'_>, args: &[Value]) -> Result<Value,
 
 Hmm, the error is in that last line. `spawn_local` is a thing Alan had to put into everything that called `load_image`, otherwise his async code never actually did anything. But why is this a problem? Alan can borrow a `World`, or anything else for that matter, inside of async code; and it should get it's own lifetime like everything else, right?
 
-Alan has a hunch that this `spawn_local` thing might be causing a problem, so Alan reads the documentation. The function signature seems particuarly suspicious:
+Alan has a hunch that this `spawn_local` thing might be causing a problem, so Alan reads the documentation. The function signature seems particularly suspicious:
 
 ```rust,ignore
 pub fn spawn_local<F>(future: F) 
@@ -124,7 +124,7 @@ pub trait Future {
 
 When you call an async function, all of it's parameters are copied or borrowed into the `Future` that it returns. Since we need to borrow the `World`, the `Future` has the lifetime of `&'a mut World`, not of `'static`.
 
-Barbara suggests changing all of the async function's parameters to be owned types. Alan asks Grace, who architected this project. Grace recommends holding a reference to the `Plugin` that owns the `World`, and then borrowing it whenver you need the `World`. That ultimately looks like the following:
+Barbara suggests changing all of the async function's parameters to be owned types. Alan asks Grace, who architected this project. Grace recommends holding a reference to the `Plugin` that owns the `World`, and then borrowing it whenever you need the `World`. That ultimately looks like the following:
 
 ```rust,ignore
 async fn load_image(src: String, inside_of: usize, player: Arc<Mutex<Player>>) {

@@ -102,8 +102,6 @@ From her background she has an understanding what could go wrong. So she remembe
 
 ## 🤔 Frequently Asked Questions
 
-## 🤔 Frequently Asked Questions
-
 ### **What are the morals of the story?**
 
 * Working with async can give huge errors from fairly common place transforms, and requires knowing some "not entirely obvious" workarounds.

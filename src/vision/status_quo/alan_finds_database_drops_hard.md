@@ -31,7 +31,7 @@ async fn main() -> Result<(), sqlx::Error> {
 }
 ```
 
-Things seem to be working fairly well but sometimes when he refreshes the page he encounters a panic with the message "Cannot open a new connecton: connection is already open". He is flummoxed.
+Things seem to be working fairly well but sometimes when he refreshes the page he encounters a panic with the message "Cannot open a new connection: connection is already open". He is flummoxed.
 
 
 ## Searching for the Solution
@@ -72,7 +72,7 @@ Next, Alan seeks verification and validation of his understanding of the source 
 
 ## Finding the Solution
 
-Alan briefly considers rearchitecting his application in more extreme ways to retain use of async, but he gives up and seeks a more straight forward solution. He discovers `rusqlite`, a sychronous database library and adopts it. This requires some rearchitecting but solves the problem.
+Alan briefly considers rearchitecting his application in more extreme ways to retain use of async, but he gives up and seeks a more straight forward solution. He discovers `rusqlite`, a synchronous database library and adopts it. This requires some rearchitecting but solves the problem.
 
 ## 🤔 Frequently Asked Questions
 

@@ -12,7 +12,7 @@ He has dealt with his fair share of race conditions/thread safety issues during 
 he won't have those annoying runtime problems to deal with.
 
 This allows him to try to squeeze his programs for as much performance as he wants, because the compiler will stop him when he tries things that could result in runtime problems.
-After seeing the perfomance and the lack of runtime problems, he starts to trust the compiler more and more with each project finished.
+After seeing the performance and the lack of runtime problems, he starts to trust the compiler more and more with each project finished.
 
 He knows what he can do with external libraries, he does not need to fear concurrency issues if the library cannot be used from multiple threads, because the compiler would tell him.
 
@@ -20,7 +20,7 @@ His trust in the compiler solidifies further the more he codes in Rust.
 
 ### The first async project
 Alan now starts with his first async project. He sees that there is no async in the standard library, but after googling for "rust async file open", he finds 'async_std', a crate that provides some async versions of the standard library functions.
-He has some code written that asynchrously interacts with some files:
+He has some code written that asynchronously interacts with some files:
 ```rust,ignore
 use async_std::fs::File;
 use async_std::prelude::*;
@@ -91,7 +91,7 @@ Do you recall in Spider-Man, that after getting bitten by the radioactive spider
 
 In his work, Alan sees an async call to a C# wrapper around SQLite, his equivalent of a spider-sense (async-sense?) starts tingling. Now knowing from Rust the complexities that arise when trying to create asynchronicity, what kind of complex mechanisms are at play here to enable these async calls from C# that end up in the C/C++ of SQLite?
 
-He quickly discovers that there are no complex mechanism at all! It's actually just a synchronous call all the way down, with just some exta overhead from wrapping it into an asynchronous function. There are no points where the async function will yield. He transforms all these asynchronous calls to their synchronous counterparts, and sees a slight improvement in performance. Alan is happy, product management is happy, customers are happy!
+He quickly discovers that there are no complex mechanism at all! It's actually just a synchronous call all the way down, with just some extra overhead from wrapping it into an asynchronous function. There are no points where the async function will yield. He transforms all these asynchronous calls to their synchronous counterparts, and sees a slight improvement in performance. Alan is happy, product management is happy, customers are happy!
 
 
 Over the next few months, he often takes a few seconds to reflect about why certain parts of the code are async, if they should be, or how other parts of the code might benefit from being async and if it's possible to make them async. He also uses what he learned from async Rust in his C# code reviews to find similar problems or general issues (With great power...). He even spots some lifetime bugs w.r.t. asynchronous code in C#, imagine that.
