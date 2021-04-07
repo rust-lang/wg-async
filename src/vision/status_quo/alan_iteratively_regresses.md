@@ -80,7 +80,7 @@ However, there remains a significant performance delta between the Java version 
 
 5. An important specific instance of (1c.) for the async vision: Native code tools do not have any insight into Rust's async model, as that is even more distant from the execution model of C and C++.
 
-6. We can actually generalize (5.) further: When performance does not match expectations, developers do not have much insight into whether the performance pitfalls arise from issues deep in the async executor that they have selected, or if the problems come directly from overheads built into the code they themselves have written.
+6. We can actually generalize (5.) further: When async performance does not match expectations, developers do not have much insight into whether the performance pitfalls arise from issues deep in the async executor that they have selected, or if the problems come directly from overheads built into the code they themselves have written.
 
 ### **What are the sources for this story?**
 
