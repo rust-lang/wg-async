@@ -31,7 +31,7 @@ Alan asks Barbara whether the problem could be caused by the tokio executor. Bar
 
 Alan and Barbara look at the `perf` data. They find the output of `perf report` difficult to navigate and interpret. The data has stack trace fragments available, which gives them a few hints to follow up on. But when they try to make `perf report` annotate the original source, `perf` only shows disassembled machine code, not the original Rust source code. Alan and Barbara both agree that trying to dissect the problem from the machine code is not an attractive strategy.
 
-For the memory allocator issues, Barbara recommnds that Alan try to eliminate the allocation calls and if they cannot be eliminated, then that Alan try tuning the parameters for the global memory allocator, or even switching which global memory allocator he is using. Alan looks at Barbara in despair: his time tweaking GC settings on the Java Virtual Machine taught him that allocator tuning is often a black art.
+For the memory allocator issues, Barbara recommends that Alan try to eliminate the allocation calls and if they cannot be eliminated, then that Alan try tuning the parameters for the global memory allocator, or even switching which global memory allocator he is using. Alan looks at Barbara in despair: his time tweaking GC settings on the Java Virtual Machine taught him that allocator tuning is often a black art.
 
 Barbara suggests that they investigate where the calls to `memcpy` are arising. From the call stacks in `perf report`, Alan and Barbara decide to skim over the source code files for the corresponding functions.
 
