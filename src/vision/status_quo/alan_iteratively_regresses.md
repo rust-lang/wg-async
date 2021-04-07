@@ -52,7 +52,7 @@ For the memory allocator issues, Barbara recommends that Alan try to eliminate t
 
 Barbara suggests that they investigate where the calls to `memcpy` are arising. From the call stacks in `perf report`, Alan and Barbara decide to skim over the source code files for the corresponding functions.
 
-Upon seeing `#[async_trait]` in Alan's source code, Barbara recommends that if performance is a concern, then Alan should avoid `#[async_trait]`. She explains that `#[async_trait]` [transforms][async-trait transform] a trait's async methods into methods that return `Pin<Box<dyn Future>>`, and the overhead that injects that will be hard to diagnose and impossible to remove.
+Upon seeing `#[async_trait]` in Alan's source code, Barbara recommends that if performance is a concern, then Alan should avoid `#[async_trait]`. She explains that `#[async_trait]` [transforms][async-trait transform] a trait's async methods into methods that return `Pin<Box<dyn Future>>`, and the overhead that injects that will be hard to diagnose and impossible to remove. When Alan asks what other options he could adopt, Barbara thinks for a moment, and says he could make an enum that carries all the different implementations of the code. Alan says he'll consider it, but in the meantime he wants to see how far they can improve the code while keeping `#[async_trait]`.
 
 They continue looking at the code itself, essentially guessing at potential sources of where problematic `memcpy`'s may be arising. They identify two potential sources of moves of large datatypes in the code: pushes and pops on vectors of type `Vec<DistriQuery>`, and functions with return types of the form `Result<SuccessCode, DistriErr>`.
 
