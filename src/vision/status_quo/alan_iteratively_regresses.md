@@ -10,14 +10,31 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 A core part of DistriData, called DDSplit, is in charge of splitting input data records into fragments that are stored on distinct servers, and then reassembling those fragments back into records in response to user queries.
 
-DDSplit was originally implemented using Java code (plus some C, interfaced via JNI). Alan thinks that Rust could provide the same quality of service while requiring less memory, and decides to try reimplementing DDSplit in Rust.
+DDSplit was originally implemented using Java code (plus some C, interfaced via JNI). Alan thinks that Rust could provide the same quality of service while requiring less memory. He decides to try reimplementing DDSplit in Rust, atop tokio.
 
-Alan develops a prototype atop tokio and the [async-trait crate][], leveraging `#[async_trait]`to be able to define `async fn` methods within traits. When Alan finishes the prototype code, he finds the prototype performance has 20% slower throughput compared to the Java version.
+Alan wants to copy some of the abstractions he sees in the Java code that are defined via Java interfaces. Alan sees Rust traits as the closest thing to Java interfaces. However, when he experimentally defines a trait with an `async fn`, he gets the following message from the compiler:
+
+```
+error[E0706]: functions in traits cannot be declared `async`
+ --> src/main.rs:2:5
+  |
+2 |     async fn method() { }
+  |     -----^^^^^^^^^^^^^^^^
+  |     |
+  |     `async` because of this
+  |
+  = note: `async` trait functions are not currently supported
+  = note: consider using the `async-trait` crate: https://crates.io/crates/async-trait
+```
+
+This diagnostic leads Alan to add the [async-trait crate][] as a dependency to his project. Alan then uses the `#[async_trait]` attribute provided by that crate to be able to define `async fn` methods within traits.
+
+When Alan finishes the prototype code, he finds the prototype performance has 20% slower throughput compared to the Java version.
 
 [async-trait crate]: https://crates.io/crates/async-trait
 [async-trait transform]: https://crates.io/crates/async-trait#explanation
 
-Alan is disappointed; his experience has been that Rust code performs great, once you managed to get the code to be accepted by the compiler. Alan was not expecting to suffer a 20% performance hit over the Java code.
+Alan is disappointed; his experience has been that Rust code performs great, (at least once you managed to get the code to be accepted by the compiler). Alan was not expecting to suffer a 20% performance hit over the Java code.
 
 The DDSplit service is being developed on a Linux machine, so Alan is able use the `perf` tool to gather sampling-based profiling data the async/await port of DDSplit. 
 
