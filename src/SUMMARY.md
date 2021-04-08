@@ -32,6 +32,7 @@
       - [Alan started trusting the Rust compiler, but then... async](./vision/status_quo/alan_started_trusting_the_rust_compiler_but_then_async.md)
       - [Alan tries to debug a hang](./vision/status_quo/alan_tries_to_debug_a_hang.md)
       - [Alan writes a web framework](./vision/status_quo/alan_writes_a_web_framework.md)
+      - [Alan needs async in traits](./vision/status_quo/alan_needs_async_in_traits.md)
       - [Barbara anguishes over HTTP](./vision/status_quo/barbara_anguishes_over_http.md)
       - [Barbara carefully dismisses embedded `Future`](./vision/status_quo/barbara_carefully_dismisses_embedded_future.md)
       - [Barbara makes their first foray into async](./vision/status_quo/barbara_makes_their_first_steps_into_async.md)
