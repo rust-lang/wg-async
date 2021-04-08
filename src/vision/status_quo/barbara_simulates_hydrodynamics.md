@@ -21,7 +21,7 @@ What Barbara wanted to do was find a way to more efficiently use threads: have a
 
 As Barbara began working on her new design with `tokio`, her use of `async` went from a general (from the textbook) use of basic `async` features to a more specific implementation leveraging exactly the features that were most suited for her needs.
 
-At first, Barbara was under a false impression about what async executors do. She had assumed that a multi-threaded executor could automatically move the execution of an async block to a worker thread. Then she discovered that async tasks must be explicitly spawned into into a thread pool if they are to be executed on a worker thread. This meant that the algorithm to be parallelized became strongly coupled to both the spawner and the executor. Code that used to cleanly express a physics algorithm now had interspersed references to the task spawner, not only making it harder to understand, but also making it impossible to try different execution strategies, since with Tokio the spawner and executor are the same object (the Tokio runtime). Barbara feels that a better design for data parallelism would enable better separation of concerns: a group of interdependent compute tasks, and a strategy to execute them in parallel.
+At first, Barbara was under a false impression about what async executors do. She had assumed that a multi-threaded executor could automatically move the execution of an async block to a worker thread. Then she discovered that async tasks must be explicitly spawned into a thread pool if they are to be executed on a worker thread. This meant that the algorithm to be parallelized became strongly coupled to both the spawner and the executor. Code that used to cleanly express a physics algorithm now had interspersed references to the task spawner, not only making it harder to understand, but also making it impossible to try different execution strategies, since with Tokio the spawner and executor are the same object (the Tokio runtime). Barbara feels that a better design for data parallelism would enable better separation of concerns: a group of interdependent compute tasks, and a strategy to execute them in parallel.
 
 In order to remove the need for message passing, Barbara moved to a shared state design: she would keep a table tracking the solution state for every grid patch and a specific patch would only start its computation task when solutions were written for all the patches it was dependent on. So, each task needs to access the table with the solution results of all the other tasks. Learning how to properly use shared data with `async` was a new challenge. The initial design:
 
@@ -57,7 +57,7 @@ This new solution works, but Barbara is not satisfied with how complex her code 
 ### **What are the sources for this story?**
 This story is based on the experience of building the [kilonova](https://github.com/clemson-cal/app-kilonova) hydrodynamics simulation solver.
 
-### **Why did you choose *NAME* to tell this story?**
+### **Why did you choose Barbara and Grace to tell this story?**
 I chose Barbara as the primary character in this story because this work was driven by someone with experience in Rust specifically but does not have much systems level experience. Grace was chosen as a supporting character because of that persons experience with C/C++ programming and to avoid repeating characters.
 
 ### **How would this story have played out differently for the other characters?**
