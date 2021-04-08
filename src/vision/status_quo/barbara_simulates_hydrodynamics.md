@@ -61,7 +61,9 @@ This story is based on the experience of building the [kilonova](https://github.
 I chose Barbara as the primary character in this story because this work was driven by someone with experience in Rust specifically but does not have much systems level experience. Grace was chosen as a supporting character because of that persons experience with C/C++ programming and to avoid repeating characters.
 
 ### **How would this story have played out differently for the other characters?**
-For Alan, there's a good chance he would have already had experience working with either async workflows in another language or doing parallelization of compute bound tasks; and so would already know from experience that `async` was not the right place to start.  Grace, likewise, might already have experience with problems like this and would know what to look for when searching for tools. For Niklaus, the experience would probably be the same, as it's very easy to assume that `tokio` is the starting place for concurrency in Rust.
+- Alan: there's a good chance he would have already had experience working with either async workflows in another language or doing parallelization of compute bound tasks; and so would already know from experience that `async` was not the right place to start.  
+- Grace: likewise, might already have experience with problems like this and would know what to look for when searching for tools. 
+- Niklaus: the experience would probably be the same, as it's very easy to assume that `tokio` is the starting place for concurrency in Rust.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
