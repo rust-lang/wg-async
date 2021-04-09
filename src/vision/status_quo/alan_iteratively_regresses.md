@@ -88,7 +88,7 @@ Discussions with engineers at Amazon Web Services.
 
 I chose Alan because he is used to Java, where these issues play out differently.
 
-Java has very mature tooling, including for performance investigations. Alan is frustrated by his attempts to use (or even identify) equivalent tools for Rust.
+Java has very mature tooling, including for performance investigations. Alan has used [JProfiler](https://www.ej-technologies.com/products/jprofiler/overview.html) at his work, and [VisualVM](https://visualvm.github.io/) for personal hobby projects. Alan is frustrated by his attempts to use (or even identify) equivalent tools for Rust.
 
 With respect to memory traffic: In Java, every object is handled via a reference, and those references are cheap to copy. (One pays for that convenience in other ways, of course.)
 
