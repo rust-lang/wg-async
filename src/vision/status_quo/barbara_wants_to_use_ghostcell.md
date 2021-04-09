@@ -1,4 +1,4 @@
-# Niklaus wants to use GhostCell-like cell borrowing with futures
+# Barbara wants to use GhostCell-like cell borrowing with futures
 
 ## 🚧 Warning: Draft status 🚧
 
@@ -15,41 +15,95 @@ status quo story][htvsq]!
 
 ## The story
 
-Niklaus quite likes using statically-checked cell borrowing.  This is
+Barbara quite likes using statically-checked cell borrowing.  This is
 implemented in various ways in
 [GhostCell](http://plv.mpi-sws.org/rustbelt/ghostcell/) and
-[`qcell`](https://docs.rs/qcell/0.4.1/qcell/).  He would like to use
+[`qcell`](https://docs.rs/qcell/0.4.1/qcell/).  She would like to use
 statically-checked cell borrowing within futures, but there is no way
 to get the owner borrow through the `Future::poll` call.
 
-So he is forced to use `RefCell` instead and be very careful not to
+So she is forced to use `RefCell` instead and be very careful not to
 cause panics.  This seems like a step back.  It feels dangerous to use
-`RefCell` and to have to manually-verify that his cell borrows are
+`RefCell` and to have to manually verify that her cell borrows are
 panic-free.
 
 ### The mechanism
 
-Statically-checked cell borrows work by having an owner held by the
-runtime and various instances of a cell held by things running on top
-of the runtime (these cells would typically be behind `Rc`
-references).  A mutable borrow on the owner is passed down the stack,
-which enables safe borrows on all the cells, since a mutable borrow on
-a cell is enabled by temporarily holding onto the mutable borrow of
-the owner.  This is all checked at compile-time.
+Barbara understands that statically-checked cell borrows work by
+having an owner held by the runtime, and various instances of a cell
+held by things running on top of the runtime (these cells would
+typically be behind `Rc` references).  A mutable borrow on the owner
+is passed down the stack, which enables safe borrows on all the cells,
+since a mutable borrow on a cell is enabled by temporarily holding
+onto the mutable borrow of the owner, which is all checked at
+compile-time.
 
-So the mutable borrow needs to be passed through the `poll` call, and
-it seems that requires support from the standard library.
+So the mutable owner borrow needs to be passed through the `poll`
+call, and Barbara realizes that this would require support from the
+standard library.
 
-Right now a `&mut Context<'_>` is passed, and so within `Context`
-would be the ideal place to hold a borrow on the cell owner.  However
-as far as Niklaus can see there are difficulties with all the current
-implementations:
+Right now a `&mut Context<'_>` is passed to `poll`, and so within
+`Context` would be the ideal place to hold a borrow on the cell owner.
+However as far as Barbara can see there are difficulties with all the
+current implementations:
 
-- GhostCell (or qcell::LCell) is the best available solution, because
-  it doesn't have any restrictions on how many runtimes might be
-  running or whatever.  But Rust insists that the lifetimes `<'id>` on
-  methods are explicit, so it seems like that would force a change to
-  the signature of `poll`, which would break the ecosystem.
+- GhostCell (or qcell::LCell) may be the best available solution,
+  because it doesn't have any restrictions on how many runtimes might
+  be running or how they might be nested.  But Rust insists that the
+  lifetimes `<'id>` on methods and types are explicit, so it seems
+  like that would force a change to the signature of `poll`, which
+  would break the ecosystem.
+
+  Here Barbara experiments with a working example of a modified Future
+  trait and a future implementation that makes use of LCell:
+
+```rust
+// Requires dependency: qcell = "0.4"
+use qcell::{LCell, LCellOwner};
+use std::pin::Pin;
+use std::rc::Rc;
+use std::task::Poll;
+
+struct Context<'id, 'a> {
+    cell_owner: &'a mut LCellOwner<'id>,
+}
+
+struct AsyncCell<'id, T>(LCell<'id, T>);
+impl<'id, T> AsyncCell<'id, T> {
+    pub fn new(value: T) -> Self {
+        Self(LCell::new(value))
+    }
+    pub fn rw<'a, 'b: 'a>(&'a self, cx: &'a mut Context<'id, 'b>) -> &'a mut T {
+        cx.cell_owner.rw(&self.0)
+    }
+}
+
+trait Future<'id> {
+    type Output;
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'id, '_>) -> Poll<Self::Output>;
+}
+
+struct MyFuture<'id> {
+    count: Rc<AsyncCell<'id, usize>>,
+}
+impl<'id> Future<'id> for MyFuture<'id> {
+    type Output = ();
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'id, '_>) -> Poll<Self::Output> {
+        *self.count.rw(cx) += 1;
+        Poll::Ready(())
+    }
+}
+
+fn main() {
+    LCellOwner::scope(|mut owner| {
+        let mut cx = Context { cell_owner: &mut owner };
+        let count = Rc::new(AsyncCell::new(0_usize));
+        let mut fut = Box::pin(MyFuture { count: count.clone() });
+        let _ = fut.as_mut().poll(&mut cx);
+        assert_eq!(1, *count.rw(&mut cx));
+    });
+}
+```
 
 - The other `qcell` types (QCell, TCell and TLCell) have various
   restrictions or overheads which might make them unsuitable as a
@@ -58,41 +112,115 @@ implementations:
   signature of `poll`.  It looks like they could be added to `Context`
   without breaking anything.
 
-So right now Niklaus thinks there isn't an easy way for this to be
-done, but still it is a desirable feature so maybe someone can think
-of a way around the problems.
+  Here Barbara tries using `TLCell`, and finds that the signature of
+  `poll` doesn't need to change:
+
+```rust
+// Requires dependency: qcell = "0.4"
+use qcell::{TLCell, TLCellOwner};
+use std::pin::Pin;
+use std::rc::Rc;
+use std::task::Poll;
+
+struct AsyncMarker;
+struct Context<'a> {
+    cell_owner: &'a mut TLCellOwner<AsyncMarker>,
+}
+
+struct AsyncCell<T>(TLCell<AsyncMarker, T>);
+impl<T> AsyncCell<T> {
+    pub fn new(value: T) -> Self {
+        Self(TLCell::new(value))
+    }
+    pub fn rw<'a, 'b: 'a>(&'a self, cx: &'a mut Context<'b>) -> &'a mut T {
+        cx.cell_owner.rw(&self.0)
+    }
+}
+
+trait Future {
+    type Output;
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output>;
+}
+
+struct MyFuture {
+    count: Rc<AsyncCell<usize>>,
+}
+impl Future for MyFuture {
+    type Output = ();
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
+        *self.count.rw(cx) += 1;
+        Poll::Ready(())
+    }
+}
+
+fn main() {
+    let mut owner = TLCellOwner::new();
+    let mut cx = Context { cell_owner: &mut owner };
+    let count = Rc::new(AsyncCell::new(0_usize));
+    let mut fut = Box::pin(MyFuture { count: count.clone() });
+    let _ = fut.as_mut().poll(&mut cx);
+    assert_eq!(1, *count.rw(&mut cx));
+}
+```
+
+  (For comparison, `TCell` only allows one owner per marker type in
+  the whole process.  `QCell` allows many owners, but requires a
+  runtime check to make sure you're using the right owner to access a
+  cell.  `TLCell` allows only one owner per thread per marker type,
+  but also lets cells migrate between threads and be borrowed locally,
+  which the others don't -- see [qcell
+  docs](https://docs.rs/qcell/0.4.1/qcell/).)
+
+So the choice is GhostCell/LCell and lifetimes everywhere, or various
+other cell types that may be too restrictive.
+
+Right now Barbara thinks that none of these solutions is likely to be
+acceptable for the standard library.  However still it is a desirable
+feature, so maybe someone can think of a way around the problems.  Or
+maybe someone has a different perspective on what would be acceptable.
 
 ### Proof of concept
 
 The [Stakker](https://crates.io/crates/stakker) runtime makes use of
 qcell-based statically-checked cell borrowing.  It uses this to get
-zero-cost access to actors, guaranteeing at compile time that no
-actor can access any other actor's state.  It also uses it to allow
+zero-cost access to actors, guaranteeing at compile time that no actor
+can access any other actor's state.  It also uses it to allow
 inter-actor [shared
 state](https://docs.rs/stakker/0.2.1/stakker/struct.Share.html) to be
 accessed safely and zero-cost, without RefCell.
 
+(For example within a Stakker actor, you can access the contents of a
+`Share<T>` via the actor context `cx` as follows: `share.rw(cx)`,
+which blocks borrowing or accessing `cx` until that borrow on `share`
+has been released.  `Share<T>` is effectively a `Rc<ShareCell<T>` and
+`cx` has access to an active borrow on the `ShareCellOwner`, just as
+in the long examples above.)
+
 Stakker doesn't use GhostCell (LCell) because of the need for `<'id>`
-annotations on methods.  Instead it uses the other three cell types
-according to how many Stakker instances will be run, either one
-Stakker only, one per thread, or multiple per thread.  This is
-selected by cargo features.
+annotations on methods and types.  Instead it uses the other three
+cell types according to how many Stakker instances will be run, either
+one Stakker instance only, one per thread, or multiple per thread.
+This is selected by cargo features.
 
 Switching implementations like this doesn't seem like an option for
 the standard library.
 
 ### Way forward
 
-If the feature is of interest, it needs some brain-time from someone
-to see if there's any way to add this.  For example could the compiler
-derive the `<'id>` annotations automatically for GhostCell?  Or is
-there any other way of making this work in the standard library?
+Barbara wonders whether there is any way this can be made to work.
+For example, could the compiler derive all those `<'id>` annotations
+automatically for GhostCell/LCell?
 
-Or for multi-threaded runtimes, could
-[`qcell::TLCell`](https://docs.rs/qcell/0.4.1/qcell/) work?  This
-allows a single cell-owner in every thread.  So several borrows can be
-going on at the same time in different threads, but this is safe
-because the cell isn't `Sync`.
+Or for multi-threaded runtimes, would
+[`qcell::TLCell`](https://docs.rs/qcell/0.4.1/qcell/) be acceptable?
+This allows a single cell-owner in every thread.  So it would not
+allow nested runtimes of the same type.  However it does allow borrows
+to happen at the same time independently in different threads, and it
+also allows the migration of cells between threads, which is safe
+because that kind of cell isn't `Sync`.
+
+Or is there some other form of cell-borrowing that could be devised
+that would work better for this?
 
 The interface between cells and `Context` should be straightforward
 once a particular cell type is demonstrated to be workable with the
@@ -104,20 +232,21 @@ let rc = Rc::new(AsyncCell::new(1_u32));
 *rc.rw(cx) = 2;
 ```
 
-So effectively/logically you obtain read-write access to a cell by
-naming the authority by which you claim access, in this case the poll
-Context.  In this case it really is naming rather than accessing since
-the checks are done at compile time and the address that `cx`
-represents doesn't actually get passed anywhere or evaluated.
+So logically you obtain read-write access to a cell by naming the
+authority by which you claim access, in this case the poll context.
+In this case it really is naming rather than accessing since the
+checks are done at compile time and the address that `cx` represents
+doesn't actually get passed anywhere or evaluated, once inlining and
+optimisation is complete.
 
 
 ## 🤔 Frequently Asked Questions
 
 ### **What are the morals of the story?**
 
-The main problem is that Niklaus has got used to a safer environment
-and it feels dangerous to go back to RefCell and have to
-manually-verify that his cell borrows are panic-free.
+The main problem is that Barbara has got used to a safer environment
+and it feels dangerous to go back to RefCell and have to manually
+verify that her cell borrows are panic-free.
 
 ### **What are the sources for this story?**
 
@@ -126,18 +255,14 @@ futures.
 
 ### **Why did you choose *NAME* to tell this story?**
 
-Niklaus seems to be the wildcard.  The main thing is that Niklaus is
-claimed to have an unconventional background.  So that means he's not
-part of the establishment.  He's a new programmer to async/await, but
-in this interpretation he isn't a new programmer.  Maybe he's like
-Grace or Barbara, but he doesn't have his thinking limited by any
-particular existing conventions or trained methodology.
+Barbara has enough Rust knowledge to understand the benefits that
+GhostCell/qcell-like borrowing might bring.
 
 ### **How would this story have played out differently for the other characters?**
 
 The other characters perhaps wouldn't have heard of statically-checked
-cell borrows (at least until the recent GhostCell announcement) so
-would be unaware of the possibility of things being safer.
+cell borrows so would be unaware of the possibility of making things
+safer.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
