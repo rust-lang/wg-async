@@ -31,7 +31,7 @@ Alan combines the knowledge he has from programming in synchronous Rust and asyn
 
 ### First problem: incompatible runtimes
 
-The first problem he runs into is very similar to the one described in [the compiler trust story](https://github.com/rust-lang/wg-async-foundations/blob/master/src/vision/status_quo/alan_started_trusting_the_rust_compiler_but_then_async.md#fractured-futures-fractured-trust).
+The first problem he runs into is very similar to the one described in [the compiler trust story](alan_started_trusting_the_rust_compiler_but_then_async.md#fractured-futures-fractured-trust).
 
 In short, Alan has problems because Tide is based on `std-async` and reqwest on the latest version of `tokio`. This is a real pain for Alan as he has now to change either the http client or the server so that they use the same runtime.
 
