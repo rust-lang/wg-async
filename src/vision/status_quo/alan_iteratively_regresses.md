@@ -38,7 +38,7 @@ Alan is disappointed; his experience has been that Rust code performs great, (at
 
 The DDSplit service is being developed on a Linux machine, so Alan is able use the `perf` tool to gather sampling-based profiling data the async/await port of DDSplit. 
 
-Looking at a [flamegraph][] for the call stacks, Alan  identified many calls into the memory allocator, and many calls to `memcpy`.
+Looking at a [flamegraph][] for the call stacks, Alan identified two sources of execution time overhead that he did not expect: calls into the memory allocator (`malloc`) with about 1% of the execution time, and calls to move values in memory (`memcpy`), with about 8% of execution time.
 
 [flamegraph]: https://crates.io/crates/flamegraph
 
