@@ -66,8 +66,6 @@ However, there remains a significant performance delta between the Java version 
 
 ## 🤔 Frequently Asked Questions
 
-*Here are some standard FAQ to get you started. Feel free to add more!*
-
 ### **What are the morals of the story?**
 
 1. Rust promises great performance, but when performance is not meeting one's targets, it is hard to know what to do next. Rust mostly leans on leveraging existing tools for native code development, but those tools are (a.) foreign to many of our developers, (b.) do not always measure up to what our developers have access to elsewhere, (c.) do not integrate as well with Rust as they might with C or C++.
