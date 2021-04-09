@@ -31,7 +31,7 @@ Alan combines the knowledge he has from programming in synchronous Rust and asyn
 
 ### First problem: incompatible runtimes
 
-The first problem he runs into is very similar to the one described in [the compiler trust story](alan_started_trusting_the_rust_compiler_but_then_async.md#fractured-futures-fractured-trust).
+The first problem he runs into is very similar to the one described in [the compiler trust story](alan_started_trusting_the_rust_compiler_but_then_async.md#fractured-futures-fractured-trust): `thread 'main' panicked at 'there is no reactor running, must be called from the context of a Tokio 1.x runtime`.
 
 In short, Alan has problems because Tide is based on `std-async` and reqwest on the latest version of `tokio`. This is a real pain for Alan as he has now to change either the http client or the server so that they use the same runtime.
 
@@ -39,7 +39,7 @@ He decides to switch to Actix web.
 
 ### Second problem: incompatible versions of the same runtime
 
-Alan does all the changes and again the compiler seems to be happy. To his surprise, the same problem happens again. The program panics with the message `there is no reactor running, must be called from the context of a Tokio 1.x runtime`. He is utterly puzzled as Actix web is based on Tokio just like reqwest.
+Alan migrates to Actix web and again the compiler seems to be happy. To his surprise, the same problem happens again. The program panics with the message as before: `there is no reactor running, must be called from the context of a Tokio 1.x runtime`. He is utterly puzzled as Actix web is based on Tokio just like reqwest. Didn't he just fixed problem number 1?
 
 It turns out that the issue is that Alan's using v0.11.2 of reqwest, which uses tokio v1, and v3.3.2 of actix-web, which uses tokio v0.3.
 
@@ -52,8 +52,7 @@ This experience has made Alan think twice about whether Rust is indeed web ready
 ## 🤔 Frequently Asked Questions
 
 ### **What are the morals of the story?**
-* Rust's ecosystem has a lot of great components that may individually be ready for the web, but combining them is still a fraught proposition. It can also be confusing to web developers that are new to Rust, who may struggle with the idea that before picking a web server, they have to pick an async runtime.
-* In a typical web server project, dependencies that use async features form an intricate web which is hard to decipher for both new and seasoned Rust developers. Alan picked Tide and reqwest, only to realise later that they are not compatible. How many more situations like this will he face? Can Alan be confident that it won't happen again?
+* Rust's ecosystem has a lot of great components that may individually be ready for the web, but combining them is still a fraught proposition. In a typical web server project, dependencies that use async features form an intricate web which is hard to decipher for both new and seasoned Rust developers. Alan picked Tide and reqwest, only to realise later that they are not compatible. How many more situations like this will he face? Can Alan be confident that it won't happen again? New users especially are not accustomed to having to think about what "runtime" they are using, since there is usually not a choice in the matter.
 * The situation is so complex that it's not enough knowing that all dependencies use the same runtime. They all have to actually be compatible with the same runtime **and** version. Newer versions of reqwest are incompatible with the latest stable version of actix web (verified at the time of writing)
 * Developers that need a stable environment may be fearful of the complexity that comes with managing async dependencies in Rust. For example, if reqwest had a security or bug fix in one of the latest versions that's not backported to older ones, Alan would not be able to upgrade because actix web is holding him back. He has in fact to wait until **ALL** dependencies are using the same runtime to apply fixes and upgrades.
 
