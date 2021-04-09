@@ -39,7 +39,7 @@ He decides to switch to Actix web.
 
 ### Second problem: incompatible versions of the same runtime
 
-Alan migrates to Actix web and again the compiler seems to be happy. To his surprise, the same problem happens again. The program panics with the message as before: `there is no reactor running, must be called from the context of a Tokio 1.x runtime`. He is utterly puzzled as Actix web is based on Tokio just like reqwest. Didn't he just fixed problem number 1?
+Alan migrates to Actix web and again the compiler seems to be happy. To his surprise, the same problem happens again. The program panics with the message as before: `there is no reactor running, must be called from the context of a Tokio 1.x runtime`. He is utterly puzzled as Actix web is based on Tokio just like reqwest. Didn't he just fix problem number 1?
 
 It turns out that the issue is that Alan's using v0.11.2 of reqwest, which uses tokio v1, and v3.3.2 of actix-web, which uses tokio v0.3.
 
