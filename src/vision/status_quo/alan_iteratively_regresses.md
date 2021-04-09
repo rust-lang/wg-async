@@ -95,7 +95,7 @@ With respect to memory traffic: In Java, every object is handled via a reference
 
 ### **How would this story have played out differently for the other characters?**
 
-From her C and C++ background, [Grace][] probably would avoid letting her types get so large. But then again, C and C++ do not have enums with a payload, so Grace would likely have fallen in the same trap that Alan did (of assuming that the cost of moving an enum value is proportional to its current variant, rather than to its type's overall size).
+From her C and C++ background, [Grace][] probably would avoid letting her types get so large. But then again, C and C++ do not have enums with a payload, so Grace would likely have fallen in the same trap that Alan did (of assuming that the cost of moving an enum value is proportional to its current variant, rather than to its type's overall size). Also, Grace might report that her experience with gcc-based projects yielded programs that worked better with `perf`, due in part to gcc producing higher quality DWARF debuginfo.
 
 [Barbara][] probably would have added direct instrumentation via the `tracing` crate, potentially even to tokio itself, rather than spend much time wrestling with `perf`.
 
