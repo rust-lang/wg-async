@@ -15,17 +15,57 @@ status quo story][htvsq]!
 
 ## The story
 
-Barbara quite likes using statically-checked cell borrowing.  This is
-implemented in various ways in
-[GhostCell](http://plv.mpi-sws.org/rustbelt/ghostcell/) and
-[`qcell`](https://docs.rs/qcell/0.4.1/qcell/).  She would like to use
-statically-checked cell borrowing within futures, but there is no way
-to get the owner borrow through the `Future::poll` call.
+Barbara quite likes using statically-checked cell borrowing.  "Cell"
+in Rust terminology refers to types like `Cell` or `RefCell` that
+enable interior mutability, i.e. modifying or mutably borrowing stuff
+even if you've only got an immutable reference to it.
+Statically-checked cell borrowing is a technique whereby one object
+(an "owner") acts as a gatekeeper for borrow-access to a set of other
+objects ("cells").  So if you have mutable borrow access to the owner,
+you can temporarily transfer that mutable borrow access to a cell in
+order to modify it.  This is all checked at compile-time, hence
+"statically-checked".
 
-So she is forced to use `RefCell` instead and be very careful not to
-cause panics.  This seems like a step back.  It feels dangerous to use
-`RefCell` and to have to manually verify that her cell borrows are
+In comparison `RefCell` does borrow-checking, but it is checked at
+runtime and it will panic if you make a coding mistake.  The advantage
+of statically-checked borrowing is that it cannot panic at runtime,
+i.e. all your borrowing bugs show up at compile time.  The history
+goes way back, and the technique has been reinvented at least 2-3
+times as far as Barbara is aware.  This is implemented in various
+forms in [GhostCell](http://plv.mpi-sws.org/rustbelt/ghostcell/) and
+[`qcell`](https://docs.rs/qcell/0.4.1/qcell/).
+
+Barbara would like to use statically-checked cell borrowing within
+futures, but there is no way to get the owner borrow through the
+`Future::poll` call, i.e. there is no argument or object that the
+runtime could save the borrow in.  Mostly this does not cause a
+problem, because there are other ways for a runtime to share data,
+e.g. data can be incorporated into the future when it is created.
+However in this specific case, for the specific technique of
+statically-checked cell borrows, we need an active borrow to the owner
+to be passed down the call stack through all the poll calls.
+
+So Barbara is forced to use `RefCell` instead and be very careful not
+to cause panics.  This seems like a step back.  It feels dangerous to
+use `RefCell` and to have to manually verify that her cell borrows are
 panic-free.
+
+There are good habits that you can adopt to offset the dangers of
+course.  If you are very careful to make sure that you call no other
+method or function which might in turn call code which might attempt
+to get another borrow on the same cell, then the `RefCell::borrow_mut`
+panics can be avoided.  However this is easy to overlook, and it is
+easy to fail to anticipate what indirect calls will be made by a given
+call, and of course this may change later on due to maintenance and
+new features.  A borrow may stay active longer than expected, so calls
+which appear safe might actually panic.  Sometimes it's necessary to
+manually drop the borrow to be sure.  In addition you'll never know
+what indirect calls might be made until all the possible code-paths
+have been explored, either through testing or through running in
+production.
+
+So Barbara prefers to avoid all these problems, and use
+statically-checked cell borrowing where possible.
 
 ### The mechanism
 
