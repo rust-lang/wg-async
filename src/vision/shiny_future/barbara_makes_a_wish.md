@@ -4,7 +4,7 @@
 
 This is a draft "shiny future" story submitted as part of the brainstorming period. It is a speculative sketch of what life might be like in 2 to 3 years, if things go well.
 
-If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' dreams, status quo stories [cannot be wrong], only unclear or over-ambitious). Alternatively, you may wish to [add your own shiny future story][htvsf]!
+If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' dreams, shiny future stories [cannot be wrong], only unclear or over-ambitious). Alternatively, you may wish to [add your own shiny future story][htvsf]!
 
 ## The story
 
