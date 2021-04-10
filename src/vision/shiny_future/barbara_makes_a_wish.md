@@ -64,9 +64,9 @@ Barbara skims the task view for the channel reader, since she wants to determine
 
 ### Alternate History
 
-The original status quo story just said that Barbara's problem was resolved (sort of) by switching to an unbounded channel. I, much like Barbara, could not tell *why* this resolved her problem. In particular, I could not tell whether there was an outright deadlock due to a cycle in the task-resource dependency chain that, or if there something more subtle happening. In the story above, I assumed it was the second case: something subtle.
+*The original status quo story just said that Barbara's problem was resolved (sort of) by switching to an unbounded channel. I, much like Barbara, could not tell *why* this resolved her problem. In particular, I could not tell whether there was an outright deadlock due to a cycle in the task-resource dependency chain that, or if there something more subtle happening. In the story above, I assumed it was the second case: something subtle.*
 
-Here's an important alternate history though, for the first case of a cycle. Its the same story, right up to when Barbara first runs `consolation`:
+*Here's an important alternate history though, for the first case of a cycle. Its ...* the same story, right up to when Barbara first runs `consolation`:
 
 ```
 % rustup install wish4-consolation
