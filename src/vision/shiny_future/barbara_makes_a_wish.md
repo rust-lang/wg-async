@@ -76,7 +76,7 @@ Barbara skims the task view for the channel reader, since she wants to determine
 
 This brings up a terminal window that looks similar to the Unix `top` program, except that instead of a list of OS processes, this offers a list of tasks, and shows their status (i.e. running, ready to poll, or blocked), as well as some metrics about how long the tasks spend in each state.
 
-At the top of the screen, Barbara sees highlighted warnin: "deadlock cycle was detected. hit `P` for more info."
+At the top of the screen, Barbara sees highlighted warning: "deadlock cycle was detected. hit `P` for more info."
 
 Barbara types capital `P`. The terminal switches to "problem view," which shows
 
