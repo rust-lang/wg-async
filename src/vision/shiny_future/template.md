@@ -16,6 +16,12 @@
 
 We are not yet accepting shiny future story ideas!
 
+## 🚧 Warning: Draft status 🚧
+
+This is a draft "shiny future" story submitted as part of the brainstorming period. It is a speculative sketch of what life might be like in 2 to 3 years, if things go well.
+
+If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' dreams, shiny future stories [cannot be wrong], only unclear or over-ambitious). Alternatively, you may wish to [add your own shiny future story][htvsf]!
+
 ## The story
 
 *Write your story here! Feel free to add subsections, citations, links, code examples, whatever you think is best.*
@@ -59,4 +65,6 @@ We are not yet accepting shiny future story ideas!
 [Grace]: ../characters/grace.md
 [Niklaus]: ../characters/niklaus.md
 [Barbara]: ../characters/barbara.md
+[htvsf]: ../how_to_vision/shiny_future.md
+[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
 [projects]: ../projects.md
