@@ -18,7 +18,7 @@ Barbara, always prepared, has already added logging to her service and she check
 
 She checks the code and sees that the endpoint spawns several tasks, but unfortunately those tasks don't have much logging in them.
 
-Barbara now remembers hearing something about an `wish4-async-insight` crate, which has gotten some buzz on her Rust-related social media channels. She decides to give that a shot.
+Barbara now remembers hearing something about a `wish4-async-insight` crate, which has gotten some buzz on her Rust-related social media channels. She decides to give that a shot.
 
 She adds the crate as a dependency to her `Cargo.toml`, renaming it to just `insight` to make it easier to reference in her code, and then initializes it in her main async function.
 
@@ -29,7 +29,7 @@ async fn accept_loop(addr: impl ToSocketAddrs) -> Result<()> {
 }
 ```
 
-Barbara rebuilds and run her program again. She doesn't see anything different in the terminal output for the program itself though, and the behavior is the same as before: hitting an endpoint, nothing happens. She double-checks the readme for the `async-executor-insight` crate, and realizes that she needs to connect other programs to her service to observe the insights being gathered. Barbara decides that she wants to customize the port that `insight` is listening on before she starts her experiments with those programs.
+Barbara rebuilds and runs her program again. She doesn't see anything different in the terminal output for the program itself though, and the behavior is the same as before: hitting an endpoint, nothing happens. She double-checks the readme for the `async-executor-insight` crate, and realizes that she needs to connect other programs to her service to observe the insights being gathered. Barbara decides that she wants to customize the port that `insight` is listening on before she starts her experiments with those programs.
 
 ```rust,ignore
 async fn accept_loop(addr: impl ToSocketAddrs) -> Result<()> {
@@ -50,11 +50,11 @@ One such program, `consolation`, can run in the terminal. Barbara is currently j
 
 This brings up a terminal window that looks similar to the Unix `top` program, except that instead of a list of OS processes, this offers a list of tasks, with each task having a type, ID, and status history (i.e. percentage of time spent in running, ready to poll, or blocked). Barbara skims the output in the list, and sees that one task is listed as currently blocked.
 
-Barbara taps the arrow-keys and sees that this causes a cursor to highlight different tasks in the list. She highlights the blocked task and hits the Enter key. This cause the terminal to switch to a Task view, describing more details about that task and its status.
+Barbara taps the arrow-keys and sees that this causes a cursor to highlight different tasks in the list. She highlights the blocked task and hits the Enter key. This causes the terminal to switch to a Task view, describing more details about that task and its status.
 
 The Task view here says that the task is blocked, references a file and line number, and also includes the line from the source code, which says `chan.send(value).await`. The blocked task also lists the resources that the task is waiting on: `prototype_channel`, and next to that there is text on a dark red background: "waiting on channel capacity." Again, Barbara taps the arrow-keys and sees that she can select the line for the resource.
 
-Barbara notices that this whole time, at the bottom of the terminal, there was a line that says "For help, hit `?` key"; she taps question mark. This brings up a help message in a scrollable subwindow explaining the task view in general, sa well as link to online documentation. The help message notes that the user can follow the chain: One can go from the blocked task to the resource its waiting on, and from that resource to a list of tasks responsible for freeing up the resource.
+Barbara notices that this whole time, at the bottom of the terminal, there was a line that says "For help, hit `?` key"; she taps question mark. This brings up a help message in a scrollable subwindow explaining the task view in general as well as link to online documentation. The help message notes that the user can follow the chain: One can go from the blocked task to the resource it's waiting on, and from that resource to a list of tasks responsible for freeing up the resource.
 
 Barbara hits the Escape key to close the help window. The highlight is still on the line that says "prototype_channel: waiting on channel capacity"; Barbara hits Enter, and this brings up a list with just one task on it: The channel reader task. Barbara realizes what this is saying: The channel resource is blocking the sender because it is full, and the only way that can be resolved is if the channel reader manages to receive some inputs from the channel.
 
@@ -93,7 +93,7 @@ Barbara hits `D` and stares at the resulting graph.
 
 Barbara suddenly realizes her mistake: She had constructed a single task that was sometimes enqueuing work (by sending messages on the channel), and sometimes dequeuing work, but she had not put any controls into place to ensure that the dequeuing (via `recv`) would get prioritized as the channel filled up.
 
-Barbara reflects on the matter: she knows that she could swap in an unbounded channel to resolve this, but she think that she would be better off thinking a bit more about her system design, to see if she can figure out a way to supply back-pressure so that the send rate will go down as the channel fills up.
+Barbara reflects on the matter: she knows that she could swap in an unbounded channel to resolve this, but she thinks that she would be better off thinking a bit more about her system design, to see if she can figure out a way to supply back-pressure so that the send rate will go down as the channel fills up.
 
 
 ## 🤔 Frequently Asked Questions
