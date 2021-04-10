@@ -62,6 +62,8 @@ Barbara opens the help window again, and brings up the link to the online docume
 
 Barbara skims the task view for the channel reader, since she wants to determine why it is not making progress. However, she is eager to see if her service as a whole is workable apart from this issue, so she also adopts the quick fix of swapping in an unbounded channel. Barbara is betting that if this works, she can use the data from `wish4-async-insight` about the channel sizes to put a bounded channel with an appropriate size in later.
 
+Barbara happily moves along to some initial performance analysis of her "working" code, eager to see what other things `wish4-async-insight` will reveal during her explorations.
+
 ### Alternate History
 
 *The original status quo story just said that Barbara's problem was resolved (sort of) by switching to an unbounded channel. I, much like Barbara, could not tell *why* this resolved her problem. In particular, I could not tell whether there was an outright deadlock due to a cycle in the task-resource dependency chain that, or if there something more subtle happening. In the story above, I assumed it was the second case: something subtle.*
@@ -90,6 +92,8 @@ The screen also says "hit `D` to generate a graphviz `.dot` file to disk describ
 Barbara hits `D` and stares at the resulting graph.
 
 Barbara suddenly realizes her mistake: She had constructed a single task that was sometimes enqueuing work (by sending messages on the channel), and sometimes dequeuing work, but she had not put any controls into place to ensure that the dequeuing (via `recv`) would get prioritized as the channel filled up.
+
+Barbara reflects on the matter: she knows that she could swap in an unbounded channel to resolve this, but she think that she would be better off thinking a bit more about her system design, to see if she can figure out a way to supply back-pressure so that the send rate will go down as the channel fills up.
 
 
 ## 🤔 Frequently Asked Questions
