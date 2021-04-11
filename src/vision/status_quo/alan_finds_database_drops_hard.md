@@ -64,7 +64,7 @@ async fn do_the_thing() -> Result<(), sqlx::Error> {
 }
 ```
   
-He observes that in the cases where he has the problem the log statement never executes. He asks Barbara for help and she points him to [this gist](https://gist.github.com/Matthias247/ffc0f189742abf6aa41a226fe07398a8) that explains how `await` can be canceled and it will the destructors for things that are in scope. He reads the [source for the SqliteConnection destructor](https://github.com/launchbadge/sqlx/blob/0ed524d65c2a3ee2e2a6706910b85bf2bb72115f/sqlx-core/src/pool/connection.rs#L70-L74) and finds that destructor spawns a task to actually close the connection.
+He observes that in the cases where he has the problem the log statement never executes. He asks Barbara for help and she points him to [this gist](https://gist.github.com/Matthias247/ffc0f189742abf6aa41a226fe07398a8) that explains how `await` can be canceled, and cancellation will invoke the destructors for things that are in scope. He reads the [source for the SqliteConnection destructor](https://github.com/launchbadge/sqlx/blob/0ed524d65c2a3ee2e2a6706910b85bf2bb72115f/sqlx-core/src/pool/connection.rs#L70-L74) and finds that destructor spawns a task to actually close the connection.
 
 He realizes there is a race condition and the task may not have actually closed the connection before `do_the_thing` is called a second time. At this point, he is feeling pretty frustrated!
 
