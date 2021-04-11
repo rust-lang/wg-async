@@ -50,7 +50,7 @@ to cause panics.  This seems like a step back.  It feels dangerous to
 use `RefCell` and to have to manually verify that her cell borrows are
 panic-free.
 
-There are good habits that you can adopt to offset the dangers of
+There are good habits that you can adopt to offset the dangers, of
 course.  If you are very careful to make sure that you call no other
 method or function which might in turn call code which might attempt
 to get another borrow on the same cell, then the `RefCell::borrow_mut`
@@ -66,6 +66,105 @@ production.
 
 So Barbara prefers to avoid all these problems, and use
 statically-checked cell borrowing where possible.
+
+
+### Example 1: Accessing an object shared outside the runtime
+
+In this minimized example of code to interface a stream to code
+outside of the async/await system, the buffer has to be accessible
+from both the stream and the outside code, so it is handled as a
+`Rc<RefCell<StreamBuffer<T>>>`.
+
+```rust
+pub struct StreamPipe<T> {
+    buf: Rc<RefCell<StreamBuffer<T>>>,
+}
+
+impl<T> Stream for StreamPipe<T> {
+    type Item = T;
+
+    fn poll_next(self: Pin<&mut Self>, _: &mut Context<'_>) -> Poll<Option<T>> {
+        let mut buf = self.buf.borrow_mut();
+        if let Some(item) = buf.value.take() {
+            return Poll::Ready(Some(item));
+        }
+        if buf.end {
+            return Poll::Ready(None);
+        }
+        self.req_more();  // Callback to request more data
+        Poll::Pending
+    }
+}
+```
+
+Probably `req_more()` has to schedule some background operation, but
+if it doesn't and attempts to modify the shared `buf` immediately then
+we get a panic, because `buf` is still borrowed.  The real life code
+could be a lot more complicated, and the required combination of
+conditions might be harder to hit in testing.
+
+With statically-checked borrowing, the borrow would be something like
+`let mut buf = self.buf.rw(cx);`, and the `req_more` call would either
+have to take the `cx` as an argument (forcing the previous borrow to
+end) or would not take `cx`, meaning that it would always have to
+defer the access to the buffer to other code, because without the `cx`
+there is no possible way to access the buffer.
+
+
+### Example 2: Shared monitoring data
+
+In this example, the app keeps tallies of various things in a
+`Monitor` structure.  This might be data in/out, number of errors
+detected, maybe a hashmap of current links, etc.  Since it is accessed
+from various components, it is kept behind an `Rc<RefCell<_>>`.
+
+```rust
+// Dependency: futures-lite = "1.11.3"
+use std::cell::RefCell;
+use std::rc::Rc;
+
+fn main() {
+    let monitor0 = Rc::new(RefCell::new(Monitor { count: 0 }));
+    let monitor1 = monitor0.clone();
+
+    let fut0 = async move {
+        let mut borrow = monitor0.borrow_mut();
+        borrow.count += 1;
+    };
+
+    let fut1 = async move {
+        let mut borrow = monitor1.borrow_mut();
+        borrow.count += 1;
+        fut0.await;
+    };
+
+    futures_lite::future::block_on(fut1);
+}
+
+struct Monitor {
+    count: usize,
+}
+```
+
+The problem is that this panics with a borrowing error because the
+borrow is still active when the `fut0.await` executes and attempts
+another borrow.  The solution is to remember to drop the borrow before
+awaiting.
+
+In this example code the bug is obvious, but in real life maybe `fut0`
+only borrows in rare situations, e.g. when an error is detected.  Or
+maybe the future that borrows is several calls away down the
+callstack.
+
+With statically-checked borrowing, there is a slight problem in that
+currently there is no way to access the poll context from `async {}`
+code.  But if there was then the borrow would be something like `let
+mut borrow = monitor1.rw(cx);`, and since the `fut0.await` implicitly
+requires the `cx` in order to poll, the borrow would be forced to end
+at that point.
+
+
+## Further investigation by Barbara
 
 ### The mechanism
 
@@ -293,7 +392,7 @@ verify that her cell borrows are panic-free.
 The author of Stakker is trying to interface it to async/await and
 futures.
 
-### **Why did you choose *NAME* to tell this story?**
+### **Why did you choose Barbara to tell this story?**
 
 Barbara has enough Rust knowledge to understand the benefits that
 GhostCell/qcell-like borrowing might bring.
