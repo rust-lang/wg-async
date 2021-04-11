@@ -50,7 +50,12 @@ async fn rpc_ws_handler(ws_stream: WebSocketConnection) {
 }
 ```
 
-This is necessary because both sides of the stream are stateful iterators, and if they're kept as one, the lock on the receiver can't be released within the loop. He's seen this pattern used in other projects in the Rust community, but is frustrated to find that the `Sink` trait wasn't implemented in the WebSockets middleware library he's using.
+The `split` method splits the `ws_stream` into two separate halves:
+
+ * a producer (`ws_sender`) that implements a `Stream` with the messages arriving on the websocket;
+ * a consumer (`ws_receiver`) that implements `Sink`, which can be used to send responses.
+ 
+ This way, one task can pull items from the `ws_sender` and spawn out subtasks. Those subtasks share access to the `ws_receiver` and send messages there when they're done. Unfortunately, Alan finds that he can't use this pattern here, as the `Sink` trait wasn't implemented in the WebSockets middleware library he's using.
 
 Alan also tries creating a sort of poller worker thread using an intermediary messaging channel, but he has trouble reasoning about the code and wasn't able to get it to compile:
 
