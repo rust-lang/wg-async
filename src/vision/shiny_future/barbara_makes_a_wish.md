@@ -106,7 +106,7 @@ Barbara reflects on the matter: she knows that she could swap in an unbounded ch
 
 Alan is happy to see a tool that gives one a view into the internals of the async executor.
 
-Alan is not so thrilled about using the `consolation` terminal interface; but luckily there are other options, namely a web-browser based client that offers even richer functionality, such as renderings of the task/resource dependency graph.
+Alan is not so thrilled about using the `consolation` terminal interface; but luckily there are other options, namely IDE/editor plugins as well as a web-browser based client, that offer even richer functionality, such as renderings of the task/resource dependency graph.
 
 ### **What is [Grace] most excited about in this future? Is she disappointed by anything?**
 
