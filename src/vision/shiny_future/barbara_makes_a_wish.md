@@ -124,9 +124,9 @@ However, Niklaus is a little nervous about some of the details in the output tha
 
 ### **What is [Barbara] most excited about in this future? Is she disappointed by anything?**
 
-Barbara is thrilled with
+Barbara is thrilled with how this tool has given her insight into the innards of the async executor she is using.
 
-*Think about Barbara's top priority (productivity, maintenance over time) and the expectations she brings (fits well with Rust). How do they fare in this future?*
+She is disappointed to learn that not every async executor supports the `wish4-async-insight` crate. The crate works by monitoring state changes within the executor, instrumented via the `tracing` crate. Not every async-executor is instrumented in a fashion compatible with `wish4-async-insight`.
 
 ### **What [projects] benefit the most from this future?**
 
@@ -144,7 +144,7 @@ The only "hindrance" is that the there is an expectation that the async-executor
 
  * Prototype an insight console atop a concrete async executor (e.g. `tokio`)
 
- * Develop a shared protocol atop `tracing` that all async executors will use to provide the insightful data.
+ * Develop a shared protocol atop `tracing` that compatible async executors will use to provide the insightful data.
 
 ### **Does realizing this future require cooperation between many projects?** (Optional)
 
