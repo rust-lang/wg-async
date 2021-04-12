@@ -89,7 +89,14 @@ Barbara types capital `P`. The terminal switches to "problem view," which shows
 
 The screen also says "hit `D` to generate a graphviz `.dot` file to disk describing the cycle."
 
-Barbara hits `D` and stares at the resulting graph.
+Barbara hits `D` and stares at the resulting graph, which shows a single circle (labelled "task"), and an arc to a box (labelled "prototype_channel"), and an arc from that box back to the circle. The arc from the circle to the box is labelled  `send: waiting on channel capacity`, and the arc from the box to the circle is labelled "sole consumer (mpsc channel)".
+
+```mermaid
+graph TD
+  task -- send: waiting on channel capacity --> prototype_channel
+  prototype_channel -- "sole receiver (mpsc channel)" --> task
+  task((task))
+```
 
 Barbara suddenly realizes her mistake: She had constructed a single task that was sometimes enqueuing work (by sending messages on the channel), and sometimes dequeuing work, but she had not put any controls into place to ensure that the dequeuing (via `recv`) would get prioritized as the channel filled up.
 
