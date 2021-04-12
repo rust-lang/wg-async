@@ -29,7 +29,7 @@ async fn accept_loop(addr: impl ToSocketAddrs) -> Result<()> {
 }
 ```
 
-Barbara rebuilds and runs her program again. She doesn't see anything different in the terminal output for the program itself though, and the behavior is the same as before: hitting an endpoint, nothing happens. She double-checks the readme for the `async-executor-insight` crate, and realizes that she needs to connect other programs to her service to observe the insights being gathered. Barbara decides that she wants to customize the port that `insight` is listening on before she starts her experiments with those programs.
+Barbara rebuilds and runs her program again. She doesn't see anything different in the terminal output for the program itself though, and the behavior is the same as before: hitting an endpoint, nothing happens. She double-checks the readme for the `wish4-async-insight` crate, and realizes that she needs to connect other programs to her service to observe the insights being gathered. Barbara decides that she wants to customize the port that `insight` is listening on before she starts her experiments with those programs.
 
 ```rust,ignore
 async fn accept_loop(addr: impl ToSocketAddrs) -> Result<()> {
