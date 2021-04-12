@@ -91,6 +91,12 @@ would have probably required figuring out how to use `perf` or some similar tool
 
 ## 🤔 Frequently Asked Questions
 
+### **Is this actually the correct solution?**
+* Only in part. It may cause other kinds of contention or blocking on the runtime. The deserialization work probably needs to be wrapped in something like [`block_in_place`](https://docs.rs/tokio/1.5.0/tokio/task/fn.block_in_place.html), so that other tasks are not starved on the runtime, or might want to use [`spawn_blocking`](https://docs.rs/tokio/1.5.0/tokio/task/fn.spawn_blocking.html). There are some important caveats/details that matter:
+  * This is dependent on how the runtime works.
+  * `block_in_place` + `tokio::spawn`/`spawn_blocking` might be better if the caller wants to control concurrency, as spawning is heavyweight when the deserialization work happens to be small.
+  * `spawn_blocking`, at least in some executors, cannot be cancelled, a departure from the prototypical cancellation story in async Rust.
+  * "Dependently blocking work" in the context of async programming is a hard problem to solve generally. https://github.com/async-rs/async-std/pull/631 was an attempt but the details are making runtime's agnostic blocking are extremely complex.
 ### **What are the morals of the story?**
 * Producing concurrent, performant code in Rust async is not always trivial. Debugging performance
   issues can be difficult.
