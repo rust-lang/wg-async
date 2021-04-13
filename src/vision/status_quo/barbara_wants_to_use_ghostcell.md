@@ -78,6 +78,7 @@ from both the stream and the outside code, so it is handled as a
 ```rust
 pub struct StreamPipe<T> {
     buf: Rc<RefCell<StreamBuffer<T>>>,
+    req_more: Rc<dyn Fn()>,
 }
 
 impl<T> Stream for StreamPipe<T> {
@@ -91,7 +92,7 @@ impl<T> Stream for StreamPipe<T> {
         if buf.end {
             return Poll::Ready(None);
         }
-        self.req_more();  // Callback to request more data
+        (self.req_more)();  // Callback to request more data
         Poll::Pending
     }
 }
