@@ -75,7 +75,15 @@ impl Proxy {
 }
 ```
 
-Unfortunately this does not seem to fix the issue - he gets the same error message as before. Confused Alan goes to Barbara for advice. She is also confused, and it takes several minutes of exploration before she comes to a solution that works - wrapping the mutex access in a block and implicitly dropping the mutex:
+This compiles fine and works in testing! After shipping to production, they notice a large increase in throughput. It seems their change made a big difference. Alan is really excited about Rust, and wants to write more!
+
+Alan continues his journey of learning even more about async Rust. After some enlightening talks at the latest RustConf, he decides to revisit the code that he and Barbara wrote together. He asks himself, is using an *async* lock the right thing to do? This lock should only be held for a very short amount of time. Yielding to the runtime is likely more expensive than just synchronously locking. But he remembers vaguely hearing that you should never use blocking code in async code as this will block the entire async executor from being able to make progress, so he doubts his intuition.
+
+After chatting with Barbara, who encourages him to benchmark and measure, he decides to switch back to synchronous locks. 
+
+Unfortunately, switching back to synchronous locks brings back the old compiler error message about his future not being `Send`. Alan is confused as he's dropping the mutex guard before it ever crosses an await point.
+
+Confused Alan goes to Barbara for advice. She is also confused, and it takes several minutes of exploration before she comes to a solution that works: wrapping the mutex access in a block and implicitly dropping the mutex.
 
 ```rust
 impl Proxy {
@@ -89,11 +97,9 @@ impl Proxy {
 }
 ```
 
-This works! Barbara mentions she's unsure why explicitly dropping the mutex guard did not work, but they're both happy that the code compiles. Shipping to production shows a large increase in throughput. Alan is really excited about Rust, and wants to write more!
+Barbara mentions she's unsure why explicitly dropping the mutex guard did not work, but they're both happy that the code compiles. In fact it seems to have improved the performance of the service when its under extreme load. Alan's intuition was right!
 
-Barbara continues her own journey of learning even more about async Rust. After some enlightening talks at the latest RustConf, she decides to revisit the code that she and Alan wrote together. She asks herself, is using an *async* lock the right thing to do? This lock should only be held for a very short amount of time. Yielding to the runtime is likely more expensive than just synchronously locking. She decides to switch back to synchronous locks and is surprised when her initial benchmarking shows improvements in the 99th percentile of requests.
-
-Barbara decides to write a blog post about how blocking in async code isn't always such a bad idea. 
+In the end, Barbara decides to write a blog post about how blocking in async code isn't always such a bad idea. 
 
 ## 🤔 Frequently Asked Questions
 
