@@ -45,6 +45,7 @@
       - [Grace tries new libraries](./vision/status_quo/grace_tries_new_libraries.md)
       - [Grace waits for gdb next](./vision/status_quo/grace_waits_for_gdb_next.md)
       - [Grace wants to integrate a C-API](./vision/status_quo/grace_wants_to_integrate_c_api.md)
+      - [Niklaus builds a hydrodynamics simulator](./vision/status_quo/niklaus_simulates_hydrodynamics.md)
       - [Niklaus wants to share knowledge](./vision/status_quo/niklaus_wants_to_share_knowledge.md)
    - [✨ Shiny future](./vision/shiny_future.md)
       - [Template](./vision/shiny_future/template.md)
