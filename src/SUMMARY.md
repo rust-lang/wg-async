@@ -49,6 +49,7 @@
       - [Niklaus wants to share knowledge](./vision/status_quo/niklaus_wants_to_share_knowledge.md)
    - [✨ Shiny future](./vision/shiny_future.md)
       - [Template](./vision/shiny_future/template.md)
+      - [Barbara makes a wish](./vision/shiny_future/barbara_makes_a_wish.md)
    - [📅 Roadmap for 2021](./vision/roadmap.md)
 - [🔍 Triage meetings](./triage.md)
 - [🔬 Design docs](./design_docs.md)
