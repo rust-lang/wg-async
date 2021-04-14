@@ -99,7 +99,7 @@ This resolves the problem as seen in production, but leads to Niklaus's code rev
 ## 🤔 Frequently Asked Questions
 
 ### **Is this actually the correct solution?**
-* Only in part. It may cause other kinds of contention or blocking on the runtime. As mentioned above, the deserialization work probably needs to be wrapped in something like [`block_in_place`](https://docs.rs/tokio/1.5.0/tokio/task/fn.block_in_place.html), so that other tasks are not starved on the runtime, or might want to use [`spawn_blocking`](https://docs.rs/tokio/1.5.0/tokio/task/fn.spawn_blocking.html). There are some important caveats/details that matter:
+* Only in part. It may cause other kinds of contention or blocking on the runtime. As mentioned above, the deserialization work probably needs to be wrapped in something like [`block_in_place`](https://docs.rs/tokio/1/tokio/task/fn.block_in_place.html), so that other tasks are not starved on the runtime, or might want to use [`spawn_blocking`](https://docs.rs/tokio/1/tokio/task/fn.spawn_blocking.html). There are some important caveats/details that matter:
   * This is dependent on how the runtime works.
   * `block_in_place` + `tokio::spawn` might be better if the caller wants to control concurrency, as spawning is heavyweight when the deserialization work happens to be small.
   * `spawn_blocking`, at least in some executors, cannot be cancelled, a departure from the prototypical cancellation story in async Rust.
