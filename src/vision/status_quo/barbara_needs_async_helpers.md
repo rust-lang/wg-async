@@ -65,9 +65,68 @@ error[E0733]: recursion in an `async fn` requires boxing
   = note: a recursive `async fn` must be rewritten to return a boxed `dyn Future`
 ```
 
-So to make these functions async she starts boxing her futures. She also asks one of her peers for a code review asynchronously, and after awaiting their response, she learns about the [`async-recursion`] crate. Then she adds [`async-recursion`] to the dependencies.
+So to make these functions async she starts boxing her futures the hard way, fighting with the compiler. She knows that `async` keyword is sort of a sugar for `impl Future` so she tries the following at first.
 
-As she is working, she realizes that what she really needs is to write a `Stream` of data. She starts trying to write her `Stream` implementation and spends several hours banging her head against her desk in frustration (her challenges are pretty similar to what [Alan experienced](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_hates_writing_a_stream.html)). Ultimately she's stuck trying to figure out why her `&mut self.foo` call is giving her errors:
+```rust
+fn sum(n: usize) -> Box<dyn Future<Output = usize>> {
+    Box::new(async move {
+        if n == 0 {
+            0
+        } else {
+            n + sum(n - 1).await
+        }
+    })
+}
+```
+
+The compiler gives the following error.
+
+```
+error[E0277]: `dyn Future<Output = usize>` cannot be unpinned
+  --> src/main.rs:11:17
+   |
+11 |             n + sum(n - 1).await
+   |                 ^^^^^^^^^^^^^^^^ the trait `Unpin` is not implemented for `dyn Future<Output = usize>`
+   |
+   = note: required because of the requirements on the impl of `Future` for `Box<dyn Future<Output = usize>>`
+   = note: required by `poll`
+```
+
+She then reads about `Unpin` and `Pin`, and finally comes up with a solution.
+
+```rust
+fn sum(n: usize) -> Pin<Box<dyn Future<Output = usize>>> {
+    Box::pin(async move {
+        if n == 0 {
+            0
+        } else {
+            n + sum(n - 1).await
+        }
+    })
+}
+```
+
+The code works!
+
+She searches online for better methods and finds out the [async-book](https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html). She reads about [recursion](https://rust-lang.github.io/async-book/07_workarounds/04_recursion.html) and finds out a cleaner way using the [`futures`] crate.
+
+```rust
+use futures::future::{BoxFuture, FutureExt};
+
+fn sum(n: usize) -> BoxFuture<'static, usize> {
+    async move {
+        if n == 0 {
+            0
+        } else {
+            n + sum(n - 1).await
+        }
+    }.boxed()
+}
+```
+
+She also asks one of her peers for a code review asynchronously, and after awaiting their response, she learns about the [`async-recursion`] crate. Then she adds [`async-recursion`] to the dependencies.
+
+As she is working, she realizes that what she really needs is to write a `Stream` of data. She starts trying to write her `Stream` implementation and spends several hours banging her head against her desk in frustration (her challenges are pretty similar to what [Alan experienced](./alan_hates_writing_a_stream.md)). Ultimately she's stuck trying to figure out why her `&mut self.foo` call is giving her errors:
 
 ```
 error[E0277]: `R` cannot be unpinned
@@ -110,6 +169,19 @@ But Barbara fights through all of it. In the end, she gets it to work, but she r
 
 ### **What are helper functions/macros?**
 They are functions/macros that helps with certain basic pieces of functionality and features. Like to await on multiple futures concurrently (`join!` in tokio), or else race the futures and take the result of the one that finishes first.
+
+### **Will there be a difference if lifetimes are involved in async recursion functions?**
+Lifetimes would make it a bit more difficult. Although for simple functions it shouldn't be much of a problem.
+```rust
+fn concat<'a>(string: &'a mut String, slice: &'a str) -> Pin<Box<dyn Future<Output = ()> + 'a>> {
+    Box::pin(async move {
+        if !slice.is_empty() {
+            string.push_str(&slice[0..1]);
+            concat(string, &slice[1..]).await;
+        }
+    })
+}
+```
 
 ### **Why did you choose [Barbara] to tell this story?**
 This particular issue impacts all users of Rust even (and sometimes especially) experienced ones.
