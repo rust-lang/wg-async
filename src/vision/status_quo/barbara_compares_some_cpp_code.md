@@ -11,7 +11,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 Barbara is recreating some code that has been written in other languages they have some familiarity with. These include C++, but
 also GC'd languages like Python.
 
-This code collates a large number of requests to network services, with eash response containing a large amount of data.
+This code collates a large number of requests to network services, with each response containing a large amount of data.
 To speed this up, Barbara uses `buffer_unordered`, and writes code like this:
 
 ```
