@@ -14,7 +14,7 @@ also GC'd languages like Python.
 This code collates a large number of requests to network services, with each response containing a large amount of data.
 To speed this up, Barbara uses `buffer_unordered`, and writes code like this:
 
-```
+```rust
 let mut queries = futures::stream::iter(...)
     .map(|query| async move {
         let d: Data = self.client.request(&query).await?;
@@ -31,7 +31,7 @@ Python's [asyncio.wait](https://docs.python.org/3/library/asyncio-task.html#asyn
 as well as some code her coworkers have written using c++20's `coroutines`,
 using [this](https://github.com/facebook/folly/blob/master/folly/experimental/coro/Collect.h#L321):
 
-```
+```C++
 std::vector<folly::coro::Task<Data>> tasks;
  for (const auto& query : queries) {
     tasks.push_back(
@@ -60,7 +60,8 @@ implementation used above, noticing that is works primarily with *tasks*, which 
 equivalent to rust `Future`'s.
 
 Then it strikes her! `request` is implemented something like this:
-```
+
+```rust
 impl Client {
     async fn request(&self) -> Result<Data> {
         let bytes = self.inner.network_request().await?
@@ -77,7 +78,7 @@ This problem hadn't shown up in test cases, where the results from the mocked ne
 
 The solution is to spawn tasks (note this requires `'static` futures):
 
-```
+```rust
 let mut queries = futures::stream::iter(...)
     .map(|query| async move {
         let d: Data = tokio::spawn(
@@ -93,18 +94,29 @@ let results = queries.collect::<Vec<Data>>().await;
 Barbara was able to figure this out by reading enough and trying things out, but had that not worked, it
 would have probably required figuring out how to use `perf` or some similar tool.
 
-Later on, Barbara gets surprised by this code again. It's now being used as part of a system that handles a very high number of requests per second, but sometimes the system stalls under load. She enlists Grace to help debug, and the two of them identify via `perf` that all the CPU cores are busy running `serialization_libary::from_bytes`. Barbara revisits this solution, and discovers `tokio::task::block_in_place` which she uses to wrap the calls to `serialization_libary::from_bytes`.
-This resolves the problem as seen in production, but leads to Niklaus's code review suggesting the use of `tokio::task::spawn_blocking` inside `request`, instead of `spawn` inside `buffer_unordered`. This discussion is challenging, because the tradeoffs between `spawn` on a `Future` including `block_in_place` and `spawn_blocking` and then not spawning the containing `Future` are subtle and tricky to explain.
+Later on, Barbara gets surprised by this code again. It's now being used as part of a system that handles a very high number of requests per second, but sometimes the system stalls under load. She enlists Grace to help debug, and the two of them identify via `perf` that all the CPU cores are busy running `serialization_libary::from_bytes`. Barbara revisits this solution, and discovers `tokio::task::block_in_place` which she uses to wrap the calls to `serialization_libary::from_bytes`:
+```rust
+impl Client {
+    async fn request(&self) -> Result<Data> {
+        let bytes = self.inner.network_request().await?
+        Ok(tokio::task::block_in_place(move || serialization_libary::from_bytes(&bytes))?)
+   }
+}
+```
+
+This resolves the problem as seen in production, but leads to Niklaus's code review suggesting the use of `tokio::task::spawn_blocking` inside `request`, instead of `spawn` inside `buffer_unordered`. This discussion is challenging, because the tradeoffs between `spawn` on a `Future` including `block_in_place` and `spawn_blocking` and then not spawning the containing `Future` are subtle and tricky to explain. Also, either `block_in_place` and `spawn_blocking` are heavyweight and Barbara would prefer to avoid them when the cost of serialization is low, which is usually a runtime-property of the system.
+
 
 ## 🤔 Frequently Asked Questions
 
-### **Is this actually the correct solution?**
+### **Are any of these actually the correct solution?**
 * Only in part. It may cause other kinds of contention or blocking on the runtime. As mentioned above, the deserialization work probably needs to be wrapped in something like [`block_in_place`](https://docs.rs/tokio/1/tokio/task/fn.block_in_place.html), so that other tasks are not starved on the runtime, or might want to use [`spawn_blocking`](https://docs.rs/tokio/1/tokio/task/fn.spawn_blocking.html). There are some important caveats/details that matter:
   * This is dependent on how the runtime works.
-  * `block_in_place` + `tokio::spawn` might be better if the caller wants to control concurrency, as spawning is heavyweight when the deserialization work happens to be small.
+  * `block_in_place` + `tokio::spawn` might be better if the caller wants to control concurrency, as spawning is heavyweight when the deserialization work happens to be small. However, as mentioned above, this can be complex to reason about, and in some cases, may be as heavyweight as `spawn_blocking`
   * `spawn_blocking`, at least in some executors, cannot be cancelled, a departure from the prototypical cancellation story in async Rust.
   * "Dependently blocking work" in the context of async programming is a hard problem to solve generally. https://github.com/async-rs/async-std/pull/631 was an attempt but the details are making runtime's agnostic blocking are extremely complex.
   * The way this problem manifests may be subtle, and it may be specific production load that triggers it.
+  * The outlined solutions have tradeoffs that each only make sense for certain kind of workloads. It may be better to expose the io aspect of the request and the deserialization aspect as separate APIs, but that complicates the library's usage, lays the burden of choosing the tradeoff on the callee (which may not be generally possible).
 ### **What are the morals of the story?**
 * Producing concurrent, performant code in Rust async is not always trivial. Debugging performance
   issues can be difficult.
