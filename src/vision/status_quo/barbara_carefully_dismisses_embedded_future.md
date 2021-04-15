@@ -36,7 +36,7 @@ kernel does not expose a Future-based interface, so Barbara has to implement
 `Future` by hand rather than using async/await syntax. She starts with a
 skeleton:
 
-```rust,ignore
+```rust
 /// Passes `buffer` to the kernel, and prints it to the console. Returns a
 /// future that returns `buffer` when the print is complete. The caller must
 /// call kernel_ready_for_callbacks() when it is ready for the future to return. 
@@ -61,7 +61,7 @@ Note: All error handling is omitted to keep things understandable.
 
 Barbara begins to implement `print_buffer`:
 
-```rust,ignore
+```rust
 fn print_buffer(buffer: &'static mut [u8]) -> PrintFuture {
     kernel_set_print_callback(callback);
     kernel_start_print(buffer);
@@ -76,7 +76,7 @@ extern fn callback() {
 
 So far so good. Barbara then works on `poll`:
 
-```rust,ignore
+```rust
     fn poll(self: Pin<&mut Self>, cx: &mut Context) -> Poll<Self::Output> {
         if kernel_is_print_done() {
             return Poll::Ready(kernel_get_buffer_back());
@@ -92,7 +92,7 @@ somewhere! Barbara puts the `Waker` in a global variable so the callback can
 find it (this is fine because the app is single threaded and callbacks do NOT
 interrupt execution the way Unix signals do):
 
-```rust,ignore
+```rust
 static mut PRINT_WAKER: Option<Waker> = None;
 
 extern fn callback() {
@@ -104,7 +104,7 @@ extern fn callback() {
 
 She then modifies `poll` to set `PRINT_WAKER`:
 
-```rust,ignore
+```rust
     fn poll(self: Pin<&mut Self>, cx: &mut Context) -> Poll<Self::Output> {
         if kernel_is_print_done() {
             return Poll::Ready(kernel_get_buffer_back());
