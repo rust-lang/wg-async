@@ -62,13 +62,13 @@ Alan fixes it by setting the cache before sending the result over the channel. ð
 async fn get_response(&mut self, key: String) {
     // ... cache miss happened here
 
-    // Yield while we wait for the http request to complete
+    // We perform the HTTP request and our code might continue
+    // after this .await once the HTTP request is complete
     let response = self.http_client.make_request(key).await;
 
     // Immediately store the response in the cache
     self.cache.set(key, response);
 
-    // Yield again while we wait for the response to be sent through the channel
     self.channel.send(response).await;
 }
 ```
