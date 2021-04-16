@@ -56,3 +56,4 @@
     - [⏳ Completion-based futures](./design_docs/completion_based_futures.md)
 - [💬 Conversations](./conversations.md)
    - [🐦 2021-02-12 Twitter thread](./conversations/2021-02-12-Twitter-Thread.md)
+- [❤️ Acknowledgments](./acknowledgments.md)
