@@ -73,6 +73,7 @@ async fn get_response(&mut self, key: String) {
 }
 ```
 
+## 🤔 Frequently Asked Questions
 
 ### **What are the morals of the story?**
 
@@ -82,3 +83,13 @@ async fn get_response(&mut self, key: String) {
 * The burden falls on the user of to poll to completion, and there is no way for the lib author to enforce this - they can only document this invariant.
 * Diagnosing and ultimately fixing this issue requires a fairly deep understanding of the semantics of futures.
 * Without a Barbara, it might be hard to even know where to start: No lints are available, Alan is left with a normal debugger and `println!`.
+
+### **What are the sources for this story?**
+The relevant sources of discussion for this story have been gathered [in this github issue](https://github.com/rust-lang/wg-async-foundations/issues/65).
+
+### **Why did you choose Alan to tell this story?**
+Alan has enough experience and understanding of push based async languages to make the assumptions that will trigger the bug.
+
+### **How would this story have played out differently for the other characters?**
+This story would likely have played out the same for almost everyone but Barbara, who has probably been bitten by that already.
+The debugging and fixing time would however probably have varied depending on experience and luck.
