@@ -13,33 +13,38 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Alan writes up some code which does the caching:
 
-```rust,ignore
+```rust
 async fn get_response(&mut self, key: String) {
+    // Try to get the response from cache
     if let Some(cached_response) self.cache.get(key) {
         self.channel.send(cached_response).await;
         return;
     }
 
+    // Get the response from the downstream service
     let response = self.http_client.make_request(key).await;
-    
     self.channel.send(response).await;
     
+    // Store the response in the cache
     self.cache.set(key, response);
 }
 ```
 
-Alan is happy with how things are working, but notices every once in a while the downstream service hangs. To prevent that, Alan implements a timeout. 
-He remembers from the documentation for his favorite runtime that there is the `race` function which can kick off two futures and polls both until one completes:
+Alan is happy with how things are working, but notices every once in a while the downstream service hangs. To prevent that, Alan implements a timeout.
 
-```rust ,ignore
+He remembers from the documentation for his favorite runtime that there is the `race` function which can kick off two futures and polls both until one completes. (similar to tokio's [select](https://docs.rs/tokio/1.5.0/tokio/macro.select.html) and async-std's [race](https://docs.rs/async-std/1.9.0/async_std/future/trait.Future.html#method.race) for example).
+
+
+```rust
 runtime::race(timeout(), get_response(key)).await
 ```
 
 ## The bug
 
-Alan ships to production but after several weeks he notices some users complaining that the receive old data. 
+Alan ships to production but after several weeks he notices some users complaining that they receive old data.
 
-Alan tries debugging. He uses his old friend `println!`. After hours of working through, he notices that sometimes the line that sets the response in the cache never gets called. 
+Alan looks for help. The compiler unfortunately doesn't provide any hints. He turns to his second best friend clippy, who cannot help either.
+Alan tries debugging. He uses his old friend `println!`. After hours of working through, he notices that sometimes the line that sets the response in the cache never gets called.
 
 ## The solution
 
@@ -47,16 +52,33 @@ Alan goes to [Barbara][] and asks why in the world that might be ⁉️
 
 💡 Barbara looks through the code and notices that there is an await point between sending the response over the channel and setting the cache.
 
+Since the `get_response` future can be dropped at each available await point, it may be dropped *after* the http request has been made, but *before* the response has successfully been sent over the channel, thus not executing the remaining instructions in the function.
+
 This means the cache might not be set.
 
 Alan fixes it by setting the cache before sending the result over the channel. 🎉
 
+```rust
+async fn get_response(&mut self, key: String) {
+    // ... cache miss happened here
 
-## Morals 
+    // Yield while we wait for the http request to complete
+    let response = self.http_client.make_request(key).await;
 
-* Futures can be "canceled" at any await point. Authors of futures must be aware that after an await, the code might not run. 
-* This is similar to `panic` safety but way more likely to happen 
-* Futures might be polled to completion causing the code to work. But then many years later, the code is changed and the future might conditionally not be polled to completion which breaks things. 
-* The burden falls on the user of to poll to completion, and there is no way for the lib author to enforce this - they can only document this invariant. 
-* Diagnosing and ultimately fixing this issue requires a fairly deep understanding of the semantics of futures. 
-* Without a Barbara, it might be hard to even know where to start.
+    // Immediately store the response in the cache
+    self.cache.set(key, response);
+
+    // Yield again while we wait for the response to be sent through the channel
+    self.channel.send(response).await;
+}
+```
+
+
+### **What are the morals of the story?**
+
+* Futures can be "canceled" at any await point. Authors of futures must be aware that after an await, the code might not run.
+    * This is similar to `panic` safety but way more likely to happen
+* Futures might be polled to completion causing the code to work. But then many years later, the code is changed and the future might conditionally not be polled to completion which breaks things.
+* The burden falls on the user of to poll to completion, and there is no way for the lib author to enforce this - they can only document this invariant.
+* Diagnosing and ultimately fixing this issue requires a fairly deep understanding of the semantics of futures.
+* Without a Barbara, it might be hard to even know where to start: No lints are available, Alan is left with a normal debugger and `println!`.
