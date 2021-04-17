@@ -105,27 +105,27 @@ A few weeks later, Alan's work at his project at work is merged with his new for
 
 
 ### **What are the morals of the story?**
-    * There are often many sources of opinion in the community regarding futures and async, but these opinions aren't always backed up with examples of how it should be better accomplished. Sometimes we just find a thing that works and would prefer to stick with it, but others argue that some traits make implementations unnecessarily complex, and choose to leave it out. Disagreements like these in the ecosystem can be harmful to the reputation of the project and the participants.
-    * If there's a source of substantial disagreement, the community becomes even further fragmented, and this may cause additional confusion in newcomers.
-    * Alan is used to fragmentation from the communities he comes from, so this isn't too discouraging, but what's difficult is that there's enough functionality overlap in async libraries that it's tempting to get them to interop with each other as-needed, and this can lead to architectural challenges resulting from a difference in design philosophies.
-    * It's also unclear if Futures are core to the Rust asynchronous experience, much as Promises are in JavaScript, or if the situation is actually more complex.
-    * The `Sink` trait is complex but it solves a real problem, and the workarounds required to solve problems without it can be unsatisfactory.
-    * Disagreement about core abstractions like `Sink` can make interoperability between runtimes more difficult; it also makes it harder for people to reproduce patterns they are used to from one runtime to another.
-    * It is all too easy for technical discussions like this to become heated; it's important for all participants to try and provide each other with the "benefit of the doubt".
+* There are often many sources of opinion in the community regarding futures and async, but these opinions aren't always backed up with examples of how it should be better accomplished. Sometimes we just find a thing that works and would prefer to stick with it, but others argue that some traits make implementations unnecessarily complex, and choose to leave it out. Disagreements like these in the ecosystem can be harmful to the reputation of the project and the participants.
+* If there's a source of substantial disagreement, the community becomes even further fragmented, and this may cause additional confusion in newcomers.
+* Alan is used to fragmentation from the communities he comes from, so this isn't too discouraging, but what's difficult is that there's enough functionality overlap in async libraries that it's tempting to get them to interop with each other as-needed, and this can lead to architectural challenges resulting from a difference in design philosophies.
+* It's also unclear if Futures are core to the Rust asynchronous experience, much as Promises are in JavaScript, or if the situation is actually more complex.
+* The `Sink` trait is complex but it solves a real problem, and the workarounds required to solve problems without it can be unsatisfactory.
+* Disagreement about core abstractions like `Sink` can make interoperability between runtimes more difficult; it also makes it harder for people to reproduce patterns they are used to from one runtime to another.
+* It is all too easy for technical discussions like this to become heated; it's important for all participants to try and provide each other with the "benefit of the doubt".
 ### **What are the sources for this story?**
-    * <https://github.com/http-rs/tide-websockets>
-        * <https://github.com/http-rs/tide-websockets/pull/17> - Third pull request
-        * <https://github.com/http-rs/tide-websockets/issues/15#issuecomment-797090892> - Suggestion to use a broadcast channel
-    * <https://github.com/ChainSafe/forest/commit/ff2691bab92823a8595d1d456ed5fa9683641d76#diff-2770a30d9f259666fb470d6f11cf1851ebb2d579a1480a8173d3855572748385> - Where some of the original polling work is replaced
-        * <https://github.com/ChainSafe/forest/blob/b9fccde00e7356a5e336665a7e482d4ef439d714/node/rpc/src/rpc_ws_handler.rs#L121> - File with Sink solution
-    * <https://github.com/cryptoquick/tide-websockets-sink>
-    * <https://twitter.com/cryptoquick/status/1370143022801846275>
-    * <https://twitter.com/cryptoquick/status/1370155726056738817>
-    * <https://blog.yoshuawuyts.com/rust-streams/#why-we-do-not-talk-about-the-sink-trait>
+* <https://github.com/http-rs/tide-websockets>
+    * <https://github.com/http-rs/tide-websockets/pull/17> - Third pull request
+    * <https://github.com/http-rs/tide-websockets/issues/15#issuecomment-797090892> - Suggestion to use a broadcast channel
+* <https://github.com/ChainSafe/forest/commit/ff2691bab92823a8595d1d456ed5fa9683641d76#diff-2770a30d9f259666fb470d6f11cf1851ebb2d579a1480a8173d3855572748385> - Where some of the original polling work is replaced
+    * <https://github.com/ChainSafe/forest/blob/b9fccde00e7356a5e336665a7e482d4ef439d714/node/rpc/src/rpc_ws_handler.rs#L121> - File with Sink solution
+* <https://github.com/cryptoquick/tide-websockets-sink>
+* <https://twitter.com/cryptoquick/status/1370143022801846275>
+* <https://twitter.com/cryptoquick/status/1370155726056738817>
+* <https://blog.yoshuawuyts.com/rust-streams/#why-we-do-not-talk-about-the-sink-trait>
 ### **Why did you choose [Alan](../characters/alan.md) to tell this story?**
-    * Alan is more representative of the original author's background in JS, TypeScript, and NodeJS.
+* Alan is more representative of the original author's background in JS, TypeScript, and NodeJS.
 ### **How would this story have played out differently for the other characters?**
-    * (I'm not sure.)
+* (I'm not sure.)
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
