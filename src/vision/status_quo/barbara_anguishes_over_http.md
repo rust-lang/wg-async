@@ -31,9 +31,10 @@ Alan, having watched Barbara stare off into the distance for what felt like a ha
 ## 🤔 Frequently Asked Questions
 
 ### **What are the morals of the story?**
-    * What is a very mundane and simple decision in many other languages, picking an HTTP library, requires users to contemplate *many* different considerations.
-    * There is no practical way to choose an HTTP library that will serve most of the ecosystem. Sync/Async, competing runtimes, etc. - someone will always be left out.
-    * HTTP is a small implementation detail of this library, but it is a HUGE decision that will ultimately be the biggest factor in who can adopt their library.
+
+* What is a very mundane and simple decision in many other languages, picking an HTTP library, requires users to contemplate *many* different considerations.
+* There is no practical way to choose an HTTP library that will serve most of the ecosystem. Sync/Async, competing runtimes, etc. - someone will always be left out.
+* HTTP is a small implementation detail of this library, but it is a HUGE decision that will ultimately be the biggest factor in who can adopt their library.
 
 ### **What are the sources for this story?**
 Based on the author's personal experience of taking newcomers to Rust through the decision making process of picking an HTTP implementation for a library.

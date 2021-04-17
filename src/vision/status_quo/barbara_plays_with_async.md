@@ -43,7 +43,7 @@ that will wait for a certain duration to elapse before resolving.
 Borrowing again from the "Hello Tokio" tutorial to make sure she has the correct
 spelling for the tokio macros, she writes up the following code:
 
-```rust,ignore
+```rust
 #[tokio::main]
 pub async fn main() {
     let mut rng = thread_rng();
@@ -72,7 +72,7 @@ seconds doing nothing, and giving no hints about what it's actually doing.
 So for the next iteration, Barbara wants to have a message printed out
 when each future is resolved.  She tries this code at first:
 
-```rust,ignore
+```rust
 let mut futures = Vec::new();
 for _ in 0..10 {
     let delay = rng.sample(t);
@@ -105,7 +105,7 @@ which looks interesting.
 Indeed, this struct is a future that will resolve instantly, which is what
 she wants:
 
-```rust,ignore
+```rust
 for _ in 0..10 {
     let delay = rng.sample(t);
     futures.push(tokio::time::sleep(Duration::from_millis(delay)).then(|_| {
@@ -161,7 +161,7 @@ and remembers that there's a 3rd-party crate called "[futures][futures crate]"
 on crates.io that she's seen mentioned in some /r/rust posts.  She checks the
 docs and finds the `join_all` function which looks like what she wants:
 
-```rust,ignore
+```rust
 let mut futures = Vec::new();
 for _ in 0..10 {
     let delay = rng.sample(t);
@@ -182,7 +182,7 @@ rust futures are lazy, and won't make progress unless you await them.
 Happy with this success, Barbara continues to expand her toy program by making
 a few small adjustments:
 
-```rust,ignore
+```rust
 for counter in 0..10 {
     let delay = rng.sample(t);
     let delay_future = tokio::time::sleep(Duration::from_millis(delay));
@@ -220,7 +220,7 @@ entire future.
 
 She first adds explicit type annotations to the Vec:
 
-```rust,ignore
+```rust
 let mut futures: Vec<Box<dyn Future<Output=()>>> = Vec::new();
 ```
 
@@ -245,7 +245,7 @@ intuition about what this API is for.  But she is accustomed to just trying
 things in rust to see if they work.  And indeed, after changing `Box::new` to
 `Box::pin`:
 
-```rust,ignore
+```rust
 futures.push(Box::pin(delay_future.then(|_| {
     println!("Done!");
     std::future::ready(())
@@ -254,7 +254,7 @@ futures.push(Box::pin(delay_future.then(|_| {
 
 and adjusting the type of the Vec:
 
-```rust,ignore
+```rust
 let mut futures: Vec<Pin<Box<dyn Future<Output=()>>>> = Vec::new();
 ```
 
@@ -272,7 +272,7 @@ post about async rust a few weeks ago, and has a vague idea of how it looks.
 
 She tries writing this:
 
-```rust,ignore
+```rust
 futures.push(Box::pin(async || {
     tokio::time::sleep(Duration::from_millis(delay)).await;
     println!("Done after {}ms", delay);
@@ -296,7 +296,7 @@ error[E0658]: async closures are unstable
 Barbara knows that async is stable and using this nightly feature isn't what
 she wants.  So the tries the suggestion made by the compiler and removes the `||` bars:
 
-```rust,ignore
+```rust
 futures.push(Box::pin(async {
     tokio::time::sleep(Duration::from_millis(delay)).await;
     println!("Done after {}ms", delay);
@@ -318,7 +318,7 @@ to an async block), but Barbara's experience with rust tells her that it's a ver
 consistent language.  Maybe the same keyword used in move closures will work here?
 She tries it:
 
-```rust,ignore
+```rust
 futures.push(Box::pin(async move {
     tokio::time::sleep(Duration::from_millis(delay)).await;
     println!("Done after {}ms", delay);

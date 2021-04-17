@@ -21,7 +21,7 @@ His trust in the compiler solidifies further the more he codes in Rust.
 ### The first async project
 Alan now starts with his first async project. He sees that there is no async in the standard library, but after googling for "rust async file open", he finds 'async_std', a crate that provides some async versions of the standard library functions.
 He has some code written that asynchronously interacts with some files:
-```rust,ignore
+```rust
 use async_std::fs::File;
 use async_std::prelude::*;
 
@@ -33,7 +33,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```
 But now the compiler complains that `await` is only allowed in `async` functions. He now notices that all the examples use `#[async_std::main]` 
 as an attribute on the `main` function in order to be able to turn it into an `async main`, so he does the same to get his code compiling:
-```rust,ignore
+```rust
 use async_std::fs::File;
 use async_std::prelude::*;
 
@@ -55,7 +55,7 @@ The project is working like a charm.
 The project Alan is building is starting to grow, and he decides to add a new feature that needs to make some API calls. He starts using `reqwest` in order to help him achieve this task.
 After a lot of refactoring to make the compiler accept the program again, Alan is satisfied that his refactoring is done.
 His program now boils down to:
-```rust,ignore
+```rust
 use async_std::fs::File;
 use async_std::prelude::*;
 

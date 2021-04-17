@@ -67,7 +67,7 @@ Something Grace and her team learn to love immediately about Rust is that writin
 team to write their own execution environment. In fact, the future can be entirely written independently of the
 execution environment. She quickly writes an async method to represent the polling process:
 
-```rust,ignore
+```rust
 /// Gets the next frame from the camera, waiting `retry_after` time until polling again if it fails.
 ///
 /// Returns Some(frame) if a frame is found, or None if the camera is disconnected or goes down before a frame is
@@ -100,7 +100,7 @@ unspecified lengths of time. Grace spends some time searching, and realizes that
 of some kind. `Stream` objects are the asynchronous equivalent of iterators, and her team wants to eventually write
 something akin to:
 
-```rust,ignore
+```rust
 let frame_stream = stream_from_camera(camera, Duration::from_millis(5));
 
 while let Some(frame) = frame_stream.next().await {
@@ -115,7 +115,7 @@ executed many times. The only available option to transform a future into a seri
 which seems to do exactly what Grace is looking for. Grace begins by adding a small intermediate type, and then plugging
 in the remaining holes:
 
-```rust,ignore
+```rust
 struct StreamState {
     camera: Camera,
     retry_after: Duration,
@@ -142,7 +142,7 @@ Grace spends a lot of time trying to figure out how she might find those types! 
 way to get around this in Rust would be. Barbara explains again how closures don't have concrete types, and that the
 only way to do this will be to use the `impl` keyword.
 
-```rust,ignore
+```rust
 fn stream_from_camera(camera: Camera, retry_after: Duration) -> impl Stream<Item = Frame> {
     // same as before
 }

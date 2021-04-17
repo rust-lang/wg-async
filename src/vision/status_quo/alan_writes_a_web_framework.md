@@ -19,7 +19,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 [YouBuy](../projects/YouBuy.md) is written using an async web framework that predates the stabilization of async function syntax. When [Alan] joins the company, it is using async functions for its business logic, but can't use them for request handlers because the framework doesn't support it yet. It requires the handler's return value to be `Box<dyn Future<...>>`. Because the web framework predates async function syntax, it requires you to take ownership of the request context (`State`) and return it alongside your response in the success/error cases. This means that even with async syntax, an http route handler in this web framework looks something like this (from [the Gotham Diesel example](https://github.com/gotham-rs/gotham/blob/9f10935bf28d67339c85f16418736a4b6e1bd36e/examples/diesel/src/main.rs)):
 
-```rust,ignore
+```rust
 // For reference, the framework defines these type aliases.
 pub type HandlerResult = Result<(State, Response<Body>), (State, HandlerError)>;
 pub type HandlerFuture = dyn Future<Output = HandlerResult> + Send;
@@ -43,7 +43,7 @@ fn get_products_handler(state: State) -> Pin<Box<HandlerFuture>> {
 }
 ```
 and then it is registered like this:
-```rust,ignore
+```rust
     router_builder.get("/").to(get_products_handler);
 ```
 
@@ -51,7 +51,7 @@ The handler code is forced to drift to the right a lot, because of the async blo
 
 Rather than switching YouBuy to a different web framework, Alan decides to contribute to the web framework himself. After a bit of a slog and a bit of where-clause-soup, he manages to make the web framework capable of using an `async fn` as an http request handler. He does this by extending the router builder with a closure that boxes up the `impl Future` from the async fn and then passes that closure on to `.to()`.
 
-```rust,ignore
+```rust
     fn to_async<H, Fut>(self, handler: H)
     where
         Self: Sized,
@@ -62,13 +62,13 @@ Rather than switching YouBuy to a different web framework, Alan decides to contr
     }
 ```
 The handler registration then becomes:
-```rust,ignore
+```rust
     router_builder.get("/").to_async(get_products_handler);
 ```
 
 This allows him to strip out the async blocks in his handlers and use `async fn` instead.
 
-```rust,ignore
+```rust
 // Type the library again, in case you've forgotten:
 pub type HandlerResult = Result<(State, Response<Body>), (State, HandlerError)>;
 
@@ -90,7 +90,7 @@ async fn get_products_handler(state: State) -> HandlerResult {
 
 It's still not fantastically ergonomic though. Because the handler takes ownership of State and returns it in tuples in the result, Alan can't use the `?` operator inside his http request handlers. If he tries to use `?` in a handler, like this:
 
-```rust,ignore
+```rust
 async fn get_products_handler(state: State) -> HandlerResult {
     use crate::schema::products::dsl::*;
 
@@ -117,7 +117,7 @@ error[E0277]: `?` couldn't convert the error to `(gotham::state::State, HandlerE
 
 Alan knows that the answer is to make another wrapper function, so that the handler can take an `&mut` reference to `State` for the lifetime of the future, like this:
 
-```rust,ignore
+```rust
 async fn get_products_handler(state: &mut State) -> Result<Response<Body>, HandlerError> {
     use crate::schema::products::dsl::*;
 
@@ -131,7 +131,7 @@ async fn get_products_handler(state: &mut State) -> Result<Response<Body>, Handl
 }
 ```
 and then register it with:
-```rust,ignore
+```rust
     route.get("/").to_async_borrowing(get_products_handler);
 ```
 
@@ -141,7 +141,7 @@ Shortly afterwards, someone raises a bug about `?`, and a few other web framewor
 
 A month later, one of the contributors finds a forum comment by [Barbara] explaining how to express what Alan is after (using higher-order lifetimes and a helper trait). They implement this and merge it. The final `.to_async_borrowing()` implementation ends up looking like this (also from [Gotham](https://github.com/gotham-rs/gotham/blob/89c491fb4322bbc6fbcc8405c3a33e0634f7cbba/gotham/src/router/builder/single.rs)):
 
-```rust,ignore
+```rust
 pub trait AsyncHandlerFn<'a> {
     type Res: IntoResponse + 'static;
     type Fut: std::future::Future<Output = Result<Self::Res, HandlerError>> + Send + 'a;

@@ -22,7 +22,7 @@ Barbara now remembers hearing something about a `wish4-async-insight` crate, whi
 
 She adds the crate as a dependency to her `Cargo.toml`, renaming it to just `insight` to make it easier to reference in her code, and then initializes it in her main async function.
 
-```rust,ignore
+```rust
 async fn accept_loop(addr: impl ToSocketAddrs) -> Result<()> {
     insight::init(); // new code
     ...
@@ -31,7 +31,7 @@ async fn accept_loop(addr: impl ToSocketAddrs) -> Result<()> {
 
 Barbara rebuilds and runs her program again. She doesn't see anything different in the terminal output for the program itself though, and the behavior is the same as before: hitting an endpoint, nothing happens. She double-checks the readme for the `wish4-async-insight` crate, and realizes that she needs to connect other programs to her service to observe the insights being gathered. Barbara decides that she wants to customize the port that `insight` is listening on before she starts her experiments with those programs.
 
-```rust,ignore
+```rust
 async fn accept_loop(addr: impl ToSocketAddrs) -> Result<()> {
     insight::init(listen_port => 8080); // new code, leveraging keyword arguments feature added in 2024
     ...

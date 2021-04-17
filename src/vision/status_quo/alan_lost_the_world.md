@@ -15,7 +15,7 @@ Alan heard about a project to reimplement a deprecated browser plugin using Rust
 3. `await` the `Future` in an `async` function
 4. Do whatever they want with the resulting data
 
-```rust,ignore
+```rust
 use web_sys::{Request, window};
 
 fn make_request(src: &url) -> Request {
@@ -34,7 +34,7 @@ Alan adds calls to `load_image` where appropriate. They realize that nothing is 
 
 At this point, Alan wants to put the downloaded image onto the screen, which in this project means putting it into a `Node` of the current `World`. A `World` is a bundle of global state that's passed around as things are loaded, rendered, and scripts are executed. It looks like this:
 
-```rust,ignore
+```rust
 
 /// All of the player's global state.
 pub struct World<'a> {
@@ -50,7 +50,7 @@ pub struct World<'a> {
 
 In synchronous code, this was perfectly fine. Alan figures it'll be fine in async code, too. So Alan adds the world as a function parameter and everything else needed to parse an image and add it to our list of nodes:
 
-```rust,ignore
+```rust
 async fn load_image(src: String, inside_of: usize, world: &mut World<'_>) {
     let request = make_request(&url);
     let data = window().unwrap().fetch_with_request(&request).await.unwrap().etc.etc.etc;
@@ -73,7 +73,7 @@ error[E0597]: `world` does not live long enough
 
 Hmm, okay, that's kind of odd. We can pass a `World` to a regular function just fine - why do we have a problem here? Alan glances over at `loader.rs`...
 
-```rust,ignore
+```rust
 fn attach_image_from_net(world: &mut World<'_>, args: &[Value]) -> Result<Value, Error> {
     let this = args.get(0).coerce_to_object()?;
     let url = args.get(1).coerce_to_string()?;
@@ -86,7 +86,7 @@ Hmm, the error is in that last line. `spawn_local` is a thing Alan had to put in
 
 Alan has a hunch that this `spawn_local` thing might be causing a problem, so Alan reads the documentation. The function signature seems particularly suspicious:
 
-```rust,ignore
+```rust
 pub fn spawn_local<F>(future: F) 
 where
     F: Future<Output = ()> + 'static
@@ -96,7 +96,7 @@ So, `spawn_local` only works with futures that return nothing - so far, so good 
 
 Barbara explains that when you borrow a value in a closure, the closure doesn't gain the lifetime of that borrow. Instead, the borrow comes with it's own lifetime, separate from the closure's. The only time a closure can have a non-`'static` lifetime is if one or more of its borrows is *not* provided by it's caller, like so:
 
-```rust,ignore
+```rust
 fn benchmark_sort() -> usize {
     let mut num_times_called = 0;
     let test_values = vec![1,3,5,31,2,-13,10,16];
@@ -114,7 +114,7 @@ The closure passed to `sort_by` has to copy or borrow anything not passed into i
 
 Async functions, it turns out, *act like closures that don't take parameters*! They *have to*, because all `Future`s have to implement the same trait method `poll`:
 
-```rust,ignore
+```rust
 pub trait Future {
     type Output;
 
@@ -126,7 +126,7 @@ When you call an async function, all of it's parameters are copied or borrowed i
 
 Barbara suggests changing all of the async function's parameters to be owned types. Alan asks Grace, who architected this project. Grace recommends holding a reference to the `Plugin` that owns the `World`, and then borrowing it whenever you need the `World`. That ultimately looks like the following:
 
-```rust,ignore
+```rust
 async fn load_image(src: String, inside_of: usize, player: Arc<Mutex<Player>>) {
     let request = make_request(&url);
     let data = window().unwrap().fetch_with_request(&request).await.unwrap().etc.etc.etc;
