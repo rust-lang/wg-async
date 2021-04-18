@@ -100,7 +100,7 @@ Frustrated, she starts reading the tokio docs more closely and she realizes that
 
 ```rust
 fn block_on<O>(f: impl Future<Output = O>) -> O {
-    let rt  = tokio::runtime::Runtime::new().unwrap();
+    let rt = tokio::runtime::Runtime::new().unwrap();
     rt.block_on(f)
 }
 
