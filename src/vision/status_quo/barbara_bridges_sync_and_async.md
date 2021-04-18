@@ -155,7 +155,7 @@ error[E0277]: a value of type `Vec<Data>` cannot be built from an iterator over 
    = help: the trait `FromIterator<tokio::task::JoinHandle<impl futures::Future>>` is not implemented for `Vec<Data>`
 ```
 
-Of course! `spawn_blocking`, like `map`, just takes a regular closure, not an async closure. She's getting a bit frustrated now. "Well," she thinks, "I can use `spawn` to get into an async context!" So she adds a call to `spawn` inside the `spawn_blocking` closure:
+Of course! `spawn_blocking`, like `map`, just takes a regular closure, not an async closure; it's purpose is to embed some sync code within an async task, so a sync closure makes sense -- and moreover async closures aren't stable -- but it's all rather frustrating nonetheless. "Well," she thinks, "I can use `spawn` to get back into an async context!" So she adds a call to `spawn` inside the `spawn_blocking` closure:
 
 ```rust
 fn aggregate(urls: &[Url]) -> Vec<Data> {
