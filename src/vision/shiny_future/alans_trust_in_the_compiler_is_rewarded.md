@@ -29,7 +29,7 @@ His trust in the compiler solidifies further the more he codes in Rust.
 
 Alan now starts with his first async project. He opens up the Rust book to the "Async I/O" chapter and it guides him to writing his first program. He starts by writing some synchronous code to write to the file system:
 
-```rust,ignore
+```rust
 use std::fs::File;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -41,7 +41,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 Next, he adapts that to run in an async fashion. He starts by converting `main` into `async fn main`:
 
-```rust,ignore
+```rust
 use std::fs::File;
 
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
