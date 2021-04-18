@@ -92,7 +92,7 @@ async fn main() {
 }
 ```
 
-Everything seems to work ok on her laptop, but when she pushes the code to production, it deadlocks immediately. "What's this?" she says. Confused, she runs the code on her laptop a few more times, but it seems to work fine.
+Everything seems to work ok on her laptop, but when she pushes the code to production, it deadlocks immediately. "What's this?" she says. Confused, she runs the code on her laptop a few more times, but it seems to work fine. (There's a faq explaining what's going on. -ed.)
 
 She decides to try debugging. She fires up a debugger but finds it is isn't really giving her useful information about what is stuck (she has [basically the same problems that Alan has](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_tries_to_debug_a_hang.html)). [She wishes she could get insight into tokio's state.](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_wants_async_insights.html)
 
@@ -242,6 +242,18 @@ Later on, she wants to call `aggregate` from another binary. This one doesn't ha
 ### How would this story have played out differently for the other characters?
 
 I would expect it would work out fairly similarly, except that the type errors and things might well have been more challenging for people to figure out, assuming they aren't already familiar with Rust.
+
+### Why did Barbara only get deadlocks in production, and not on her laptop?
+
+This is because the production instance she was using had only a single core, but her laptop is a multicore machine. The actual cause of the deadlocks is that `block_on` basically "takes over" the tokio worker thread, and hence the tokio scheduler cannot run. If that `block_on` is blocked on another future that will have to execute, then some other thread must take over of completing that future. On Barbara's multicore machine, there were more threads available, so the system did not deadlock. But on the production instance, there was only a single thread. Barbara could have encountered deadlocks on her local machine as well if she had enough instances of `block_on` running at once. 
+
+### Could the runtime have prevented the deadlock?
+
+One way to resolve this problem would be to have a runtime that creates more threads as needed. This is what was proposed [in this blog post](https://async.rs/blog/stop-worrying-about-blocking-the-new-async-std-runtime/), for example.
+
+Adapting the number of worker threads has downsides. It requires knowing the right threshold for creating new threads (which is fundamentally unknowable). The result is that the runtime will sometimes observe that some thread seems to be taking a long time and create new threads *just before* that thread was about to finish. These new threads generate overhead and lower the overall performance. It also requires work stealing and other techniques that can lead to work running on mulitple cores and having less locality. Systems tuned for maximal performance tend to prefer a single thread per core for this reason.
+
+If some runtimes are adaptive, that may also lead to people writing libraries which block without caring. These libraries would then be a performance or deadlock hazard when used on a runtime that is not adaptive.
 
 ### Why didn't Barbara just use the sync API for reqwest?
 
