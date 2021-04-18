@@ -10,12 +10,12 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 As a first Rust Project, Alan decides to program his own IRC Client.
 
-Since it is Alans first Project in Rust, it is going to be a private one. He is going to use it on is Mac, so he decides to go with the cocoa crate to not have to learn any Framework specific quirks. This way Alan can get a feel of Rust itself.
+Since it is Alan's first Project in Rust, it is going to be a private one. He is going to use it on is Mac, so he decides to go with the cocoa crate to not have to learn any Framework specific quirks. This way Alan can get a feel of Rust itself.
 
 ### Alans hopes and dreams
 Despite a learning curve, he managed to creating a first window and have some buttons and menus works. After the initialisation is done, the App hand over control to [CFRunLoop::Run](https://developer.apple.com/documentation/corefoundation/1542011-cfrunlooprun?language=occ).
 
-Once Alan is happy whit his Mock UI, he wants to hook it up with some actual features. He is happy to learn that Rust has Features he already knows.
+Once Alan is happy with his Mock UI, he wants to make it actually do something. Reading about async Rust, he sees that several of the concepts there map pretty well to some core Cocoa concepts:
 * Promises => Futures
 * Observables => Streams.
 
@@ -23,7 +23,7 @@ Alan smiles, thinking he knows what and more importantly how to do this.
 
 ### First time dealing with runtimes
 
-Unfortunately, coming from frameworks like Angular or Node.js, Alan is not used that he himself is responsible for driving the progress of Async/Streams. 
+Unfortunately, coming from frameworks like Angular or Node.js, Alan is not used to being responsible for driving the processing of Futures/Streams. 
 
 After reading up about Runtimes, his mental image of a runtime is something like: 
 
@@ -66,7 +66,7 @@ impl Runtime {
 }
 ```
 
-It could be soo easy. Unfortunately he does not find any such solution. Having already looked through quite a bit of low level documentation and runtime code, Alan thinks about implementing his own runtime...
+It could be so easy. Unfortunately he does not find any such solution. Having already looked through quite a bit of low level documentation and runtime code, Alan thinks about implementing his own runtime...
 
 ...but only for a very short time. Soon after looking into it, he finds out that he has to deal with ```RawWakerVTable```, ```RawWaker```, ```Pointers```. Worst of all, he has to do that without the safety net of the rust compiler, because this stuff is ```unsafe```.
 
