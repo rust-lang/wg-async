@@ -134,12 +134,11 @@ But it seems to give her the same panic.
 Reading more into this problem, she realizes she is supposed to be using `spawn_blocking`. She tries replacing `block_on` with `tokio::task::spawn_blocking`:
 
 ```rust=
-fn aggregate(urls: &[Url]) {
-    let data: Vec<Data> = 
-        urls
-            .iter()
-            .map(|url| tokio::task::spawn_blocking(move || do_web_request(url)))
-            .collect();
+fn aggregate(urls: &[Url]) -> Vec<Data> {
+    urls
+        .iter()
+        .map(|url| tokio::task::spawn_blocking(move || do_web_request(url)))
+        .collect()
 }
 ```
 
@@ -159,16 +158,15 @@ error[E0277]: a value of type `Vec<Data>` cannot be built from an iterator over 
 Of course! `spawn_blocking`, like `map`, just takes a regular closure, not an async closure. She's getting a bit frustrated now. "Well," she thinks, "I can use `spawn` to get into an async context!" So she adds a call to `spawn` inside the `spawn_blocking` closure:
 
 ```rust
-fn aggregate(urls: &[Url]) {
-    let data: Vec<Data> =
-        urls
-            .iter()
-            .map(|url| tokio::task::spawn_blocking(move || {
-                tokio::task::spawn(async move {
-                    do_web_request(url).await
-                })
-            }))
-            .collect();
+fn aggregate(urls: &[Url]) -> Vec<Data> {
+    urls
+        .iter()
+        .map(|url| tokio::task::spawn_blocking(move || {
+            tokio::task::spawn(async move {
+                do_web_request(url).await
+            })
+        }))
+        .collect()
 }
 ```
 
@@ -179,12 +177,12 @@ But this isn't really helping, as `spawn` still yields a future. She's getting t
 She remembers now that this whole drama started because she was converting her `main` function to be `async`. Maybe she doesn't have to bridge between sync and async? She starts digging around in the docs and finds `futures::join_all`. Using that, she can change `aggregate` to be an async function too:
 
 ```rust
-async fn aggregate(urls: &[Url]) {
-    let data: Vec<Data> = futures::join_all(
+async fn aggregate(urls: &[Url]) -> Vec<Data> {
+    futures::join_all(
         urls
             .iter()
             .map(|url| do_web_request(url))
-    ).await;
+    ).await
 }
 ```
 
