@@ -172,7 +172,7 @@ fn aggregate(urls: &[Url]) -> Vec<Data> {
 
 But this isn't really helping, as `spawn` still yields a future. She's getting the same errors.
 
-### Async all the way
+### Trying out `join_all`
 
 She remembers now that this whole drama started because she was converting her `main` function to be `async`. Maybe she doesn't have to bridge between sync and async? She starts digging around in the docs and finds `futures::join_all`. Using that, she can change `aggregate` to be an async function too:
 
@@ -286,6 +286,12 @@ reqwest does offer a synchronous API, but it's not enabled by default, you have 
 Regardless, the synchronous reqwest API is actually itself implemented using `block_on`: so Barbara would have ultimately hit the same issues. Further, not all crates offer synchronous APIs -- some offer only async APIs. In fact, these same issues are probably the sources of those panics that Barbara encountered in the past.
 
 In general, though, embedded sync within async or vice versa works "ok", once you know the right tricks. Where things become challenging is when you have a "sandwich", with async-sync-async. 
+
+### Do people mix `spawn_blocking` and `spawn` successfully in real code?
+
+Yes! Here is [some code from perf.rust-lang.org][egsb] doing exactly that. The catch is that it winds up giving you a future in the end, which didn't work for Barbara because her code is embedded within an iterator (and hence she can't make things async "all the way down").
+
+[egsb]: https://github.com/rust-lang/rustc-perf/blob/3651aa744ab2a22e1adf96a698851165086ad835/site/src/main.rs#L35-L36
 
 ### What are other ways people could experience similar problems mixing sync and async?
 
