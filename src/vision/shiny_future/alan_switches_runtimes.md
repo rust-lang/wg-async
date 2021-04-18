@@ -28,7 +28,7 @@ He asks Barbara, one of his coworkers, "What is this `async_runtime` annotation?
 
 Alan asks, "What happens with the various std APIs? For example, I see we are calling `std::async_thread::spawn` -- when I used that before, it spawned tasks into the default runtime. What happens now?"
 
-Barbara explains that the "async" APIs in std generally execute relative to the current runtime that is in use. "When you call `std::async_thread::spawn`, it will spawn a task onto the current runtime. It's the same with the routines in `std::async_io` and and so forth. The `async_runtime` annotation just affects which runtime runs the `main` function, everything else follows from there."
+Barbara explains that the "async" APIs in std generally execute relative to the current runtime that is in use. "When you call `std::async_thread::spawn`, it will spawn a task onto the current runtime. It's the same with the routines in `std::async_io` and so forth. The `async_runtime` annotation just affects which runtime runs the `main` function, everything else follows from there."
 
 ## Learning more about Humboldt
 
@@ -38,7 +38,7 @@ Alan sees that some of the networking code that is being used in their applicati
 use humboldt::network;
 ```
 
-He asks Barbara, "Why don't we use the `std::async_io` APIs for that?" She explains that Humbolt makes use of some custom kernel extensions that, naturally enough, aren't part of the std library. "TCP is for rubes," she says, "we are using TTCP -- Turbo TCP." Her mind wanders briefly to [Turbo Pascal] and she has a brief moment of yearning for the days when computers had a "Turbo" button that changed them from 8 MHz to 12 MHz. She snaps back into the present day. "Anyway, the `std::async_io` APIs just call into humboldt's APIs via various traits. But we can code directly against `humboldt` when we want to access the extra capabilities it offers."
+He asks Barbara, "Why don't we use the `std::async_io` APIs for that?" She explains that Humboldt makes use of some custom kernel extensions that, naturally enough, aren't part of the std library. "TCP is for rubes," she says, "we are using TTCP -- Turbo TCP." Her mind wanders briefly to [Turbo Pascal] and she has a brief moment of yearning for the days when computers had a "Turbo" button that changed them from 8 MHz to 12 MHz. She snaps back into the present day. "Anyway, the `std::async_io` APIs just call into humboldt's APIs via various traits. But we can code directly against `humboldt` when we want to access the extra capabilities it offers."
 
 [Turbo Pascal]: https://en.wikipedia.org/wiki/Turbo_Pascal
 
@@ -76,7 +76,7 @@ Good question! I'm not entirely sure! I have to go looking and think about it. M
 
 ### What are the key points you were trying to convey with this status quo story?
 
-* There is some way to seamlessly change to a different default runtime to use for `async main`.
+* There is some way to seamlessly change to a different default runtime to use for `async fn main`.
 * There is no global runtime, just the current runtime.
 * When you are using this different runtime, you can write code that is hard-coded to it and which exposes additional capabilities.
 * You can integrate multiple runtimes relatively easily, and the std APIs work with whechever is the current runtime.
