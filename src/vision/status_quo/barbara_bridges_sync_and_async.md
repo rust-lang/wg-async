@@ -17,7 +17,9 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 ### Introducing `block_on`
 
-Barbara is working on the code for [perf.rust-lang.org](https://perf.rust-lang.org/) and she wants to do a web request to load various intermediate results. She has heard that the `reqwest` crate is quite nice, so she decides to give it a try. She writes up an async function that does her web request:
+Barbara is working on the code for [perf.rust-lang.org] and she wants to do a web request to load various intermediate results. She has heard that the `reqwest` crate is quite nice, so she decides to give it a try. She writes up an async function that does her web request:
+
+[perf.rust-lang.org]: https://perf.rust-lang.org/
 
 ```rust
 async fn do_web_request(url: &Url) -> Data {
@@ -79,7 +81,7 @@ The code compiles, and it seems to work.
 
 ### Introducing `block_on`
 
-As Barbara works on play, she realizes that she needs to do more and more async operations. She decides to convert her synchronous `main` function into an `async main`. She's using tokio, so she is able to do this very conveniently with the `#[tokio::main]` decorator:
+As Barbara works on [perf.rust-lang.org], she realizes that she needs to do more and more async operations. She decides to convert her synchronous `main` function into an `async main`. She's using tokio, so she is able to do this very conveniently with the `#[tokio::main]` decorator:
 
 ```rust
 #[tokio::main]
