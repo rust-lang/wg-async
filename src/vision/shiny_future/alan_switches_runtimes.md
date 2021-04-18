@@ -44,13 +44,15 @@ He asks Barbara, "Why don't we use the `std::async_io` APIs for that?" She expla
 
 ## Integrating into other event loops
 
-Later on, Alan is working on a visualizer front-end that integrates with [DistriData] to give more details about their workloads. To do it, he needs to integrate with Cocoa APIs and he wants to run certain tasks on Grand Central Dispatch. He approaches Barbara and asks, "If everything is running on `humboldt`, is there a way for me to run some things on another event loop? How does that work?"
+Later on, Alan is working on a visualizer front-end that integrates with [DistriData] to give more details about their workloads. To do it, he needs to integrate with Cocoa APIs and he wants to run certain tasks on [Grand Central Dispatch]. He approaches Barbara and asks, "If everything is running on `humboldt`, is there a way for me to run some things on another event loop? How does that work?"
 
-Barbara explains, "That's easy. You just have to use the `gcd` wrapper crate -- you can find it on `crates.io`. It implements the runtime traits for `gcd` and it has a `spawn` method. Once you spawn your task onto `gcd`, everything you run within gdb will be running in that context."
+[Grand Central Dispatch]: https://en.wikipedia.org/wiki/Grand_Central_Dispatch
+
+Barbara explains, "That's easy. You just have to use the `gcd` wrapper crate -- you can find it on `crates.io`. It implements the runtime traits for `gcd` and it has a `spawn` method. Once you spawn your task onto `gcd`, everything you run within `gcd` will be running in that context."
 
 Alan says, "And so, if I want to get things running on `humboldt` again, I spawn a task back on `humboldt`?"
 
-"Exactly," says Barbara. "Humboldt has a global event loop, so you can do that by just doing `humboldt::spawn`. You can also just use the `humboldt::io` APIs directly and so forth if you want to do I/O with humboldt."
+"Exactly," says Barbara. "Humboldt has a global event loop, so you can do that by just doing `humboldt::spawn`. You can also just use the `humboldt::io` APIs directly. They will always use the Humboldt I/O threads, rather than using the current runtime."
 
 Alan winds up with some code that looks like this:
 
