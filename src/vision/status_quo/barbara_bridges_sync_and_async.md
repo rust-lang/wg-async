@@ -227,12 +227,12 @@ Later on, she wants to call `aggregate` from another binary. This one doesn't ha
 
 ### What are the morals of the story?
 
-* Some projects don't care about max performance and just want things to work.
+* Some projects don't care about max performance and just want things to work once the program compiles.
     * They would probably be happy with sync but as the most popular libraries for web requests, databases, etc, offer async interfaces, they may still be using async code.
 * There are contexts where you can't easily add an `await`.
     * For example, inside of an iterator chain.
     * Big block of existing code.
-* Mixing sync and async code (`block_on`) can cause deadlocks that are really painful to diagnose.
+* Mixing sync and async code can cause deadlocks that are really painful to diagnose, particularly when you have an async-sync-async sandwich.
 
 ### Why did you choose Barbara to tell this story?
 
@@ -291,7 +291,7 @@ In general, though, embedded sync within async or vice versa works "ok", once yo
 
 * Using `std::Mutex` in async code.
 * Calling the blocking version of an asynchronous API.
-    * For example, `reqwest::blocking`, the synchronous `[zbus`](https://gitlab.freedesktop.org/dbus/zbus/-/blob/main/zbus/src/proxy.rs#L121) and [`rumqtt`](https://github.com/bytebeamio/rumqtt/blob/8de24cbc0484f459246251873aa6c80be8b6e85f/rumqttc/src/client.rs#L224) APIs.
+    * For example, `reqwest::blocking`, the synchronous [`zbus`](https://gitlab.freedesktop.org/dbus/zbus/-/blob/main/zbus/src/proxy.rs#L121) and [`rumqtt`](https://github.com/bytebeamio/rumqtt/blob/8de24cbc0484f459246251873aa6c80be8b6e85f/rumqttc/src/client.rs#L224) APIs.
     * These are commonly implemented by using some variant of `block_on` internally.
     * Therefore they can lead to panics or deadlocks depending on what async runtime they are built from and used with.
 
