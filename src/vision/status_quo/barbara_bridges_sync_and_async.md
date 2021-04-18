@@ -116,7 +116,7 @@ The good news is that the deadlock is gone. The bad news is that now she is gett
 
 > thread 'main' panicked at 'Cannot start a runtime from within a runtime. This happens because a function (like `block_on`) attempted to block the current thread while the thread is being used to drive asynchronous tasks.'
 
-"Well," she thinks, "I could use that `Handle` API to get the current runtime, maybe that will work?"
+"Well," she thinks, "I could use the `Handle` API to get the current runtime, maybe that will work?"
 
 ```rust
 fn aggregate(urls: &[&str]) -> Vec<String> {
