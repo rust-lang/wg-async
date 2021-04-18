@@ -1,4 +1,4 @@
-# ✨ Shiny future stories: template
+# ✨ Shiny future stories: Alan switches runtimes
 
 [How To Vision: Shiny Future]: ../how_to_vision/shiny_future.md
 [the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/shiny_future/template.md
