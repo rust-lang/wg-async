@@ -79,7 +79,7 @@ fn main() {
 
 The code compiles, and it seems to work.
 
-### Introducing `block_on`
+### Switching to async main
 
 As Barbara works on [perf.rust-lang.org], she realizes that she needs to do more and more async operations. She decides to convert her synchronous `main` function into an `async main`. She's using tokio, so she is able to do this very conveniently with the `#[tokio::main]` decorator:
 
