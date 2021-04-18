@@ -16,7 +16,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 Since his [early adventures](./alans_trust_in_the_compiler_is_rewarded.md) with Async I/O went so well, Alan has been looking for a way to learn more. He finds a job working in Rust. One of the projects he works on is [DistriData]. Looking at their code, he sees an annotation he has never seen before:
 
 ```rust
-#[async_runtime(humboldt)]
+#[humboldt::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let result = std::async_thread::spawn(async move {
         do_something()
@@ -24,11 +24,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-He asks Barbara, one of his coworkers, "What is this `async_runtime` annotation? And what's `humboldt`?" She answers by explaining to him that Rust's support for async I/O is actually based around an underlying runtime. "Rust gives you a pretty decent runtime by default," she says, "but it's not tuned for our workloads. We wrote our own runtime, which we call `humboldt`."
+He asks Barbara, one of his coworkers, "What is this `humboldt::main` annotation? What's `humboldt`?" She answers by explaining to him that Rust's support for async I/O is actually based around an underlying runtime. "Rust gives you a pretty decent runtime by default," she says, "but it's not tuned for our workloads. We wrote our own runtime, which we call `humboldt`."
 
 Alan asks, "What happens with the various std APIs? For example, I see we are calling `std::async_thread::spawn` -- when I used that before, it spawned tasks into the default runtime. What happens now?"
 
-Barbara explains that the "async" APIs in std generally execute relative to the current runtime that is in use. "When you call `std::async_thread::spawn`, it will spawn a task onto the current runtime. It's the same with the routines in `std::async_io` and so forth. The `async_runtime` annotation just affects which runtime runs the `main` function, everything else follows from there."
+Barbara explains that the "async" APIs in std generally execute relative to the current runtime that is in use. "When you call `std::async_thread::spawn`, it will spawn a task onto the current runtime. It's the same with the routines in `std::async_io` and so forth. The `humboldt::main` annotation actually just creates a synchronous `main` function that initializes the `humboldt` runtime and launches the first future. When you just write an `async fn main` without any annotation, the compiler synthesizes the same `main` function with the default runtime."
+
+
 
 ## Learning more about Humboldt
 
