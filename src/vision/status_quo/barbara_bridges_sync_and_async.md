@@ -243,6 +243,14 @@ Later on, she wants to call `aggregate` from another binary. This one doesn't ha
 
 I would expect it would work out fairly similarly, except that the type errors and things might well have been more challenging for people to figure out, assuming they aren't already familiar with Rust.
 
+### Why didn't Barbara just use the sync API for reqwest?
+
+reqwest does offer a synchronous API, but it's not enabled by default, you have to use an optional feature. Further, not all crates offer synchronous APIs. Finally, Barbara has had some vague poor experience when using synchronous APIs, such as panics, and so she's learned the heuristic of "use the async API unless you're doing something really, really simple".
+
+Regardless, the synchronous reqwest API is actually itself implemented using `block_on`: so Barbara would have ultimately hit the same issues. Further, not all crates offer synchronous APIs -- some offer only async APIs. In fact, these same issues are probably the sources of those panics that Barbara encountered in the past.
+
+In general, though, embedded sync within async or vice versa works "ok", once you know the right tricks. Where things become challenging is when you have a "sandwich", with async-sync-async. 
+
 ### What are other ways people could experience similar problems mixing sync and async?
 
 * Using `std::Mutex` in async code.
@@ -250,6 +258,17 @@ I would expect it would work out fairly similarly, except that the type errors a
     * For example, `reqwest::blocking`, the synchronous `[zbus`](https://gitlab.freedesktop.org/dbus/zbus/-/blob/main/zbus/src/proxy.rs#L121) and [`rumqtt`](https://github.com/bytebeamio/rumqtt/blob/8de24cbc0484f459246251873aa6c80be8b6e85f/rumqttc/src/client.rs#L224) APIs.
     * These are commonly implemented by using some variant of `block_on` internally.
     * Therefore they can lead to panics or deadlocks depending on what async runtime they are built from and used with.
+
+### Why wouldn't Barbara just make everything async from the start?
+
+There are times when converting synchronous code to async is difficult or even impossible. Here are some of the reasons:
+
+* [Asynchronous functions cannot appear in trait impls][trait].
+* Asynchronous functions cannot be called from APIs that take closures for callbacks, like `Iterator::map` in this example.
+* Sometimes the synchronous functions come from other crates and are not fully under their control.
+* It's just a lot of work!
+
+[trait]: ./alan_needs_async_in_traits.md
 
 ### How many variants of `block_on` are there?
 
