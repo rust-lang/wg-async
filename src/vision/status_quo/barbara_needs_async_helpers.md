@@ -124,7 +124,18 @@ fn sum(n: usize) -> BoxFuture<'static, usize> {
 }
 ```
 
-She also asks one of her peers for a code review asynchronously, and after awaiting their response, she learns about the [`async-recursion`] crate. Then she adds [`async-recursion`] to the dependencies.
+She also asks one of her peers for a code review asynchronously, and after awaiting their response, she learns about the [`async-recursion`] crate. Then she adds [`async-recursion`] to the dependencies. Now she can write the follwing, which seems reasonably clean:
+
+```rust
+#[async_recursion]
+async fn sum(n: usize) -> usize {
+        if n == 0 {
+            0
+        } else {
+            n + sum(n - 1).await
+        }
+}
+```
 
 As she is working, she realizes that what she really needs is to write a `Stream` of data. She starts trying to write her `Stream` implementation and spends several hours banging her head against her desk in frustration (her challenges are pretty similar to what [Alan experienced](./alan_hates_writing_a_stream.md)). Ultimately she's stuck trying to figure out why her `&mut self.foo` call is giving her errors:
 
