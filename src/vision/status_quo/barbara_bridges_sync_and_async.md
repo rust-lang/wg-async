@@ -96,7 +96,7 @@ Everything seems to work ok on her laptop, but when she pushes the code to produ
 
 She decides to try debugging. She fires up a debugger but finds it is isn't really giving her useful information about what is stuck (she has [basically the same problems that Alan has](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_tries_to_debug_a_hang.html)). [She wishes she could get insight into tokio's state.](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_wants_async_insights.html)
 
-Frustrated, she starts reading the tokio docs more closely and she realizes that `tokio` runtimes offer their own `block_on` method. "What the hey," she thinks, "let's see if that works any better." She changes the `aggregate` function to use tokio's `block_on`:
+Frustrated, she starts reading the tokio docs more closely and she realizes that `tokio` runtimes offer their own `block_on` method. "Maybe using tokio's `block_on` will help?" she thinks, "Worth a try, anyway." She changes the `aggregate` function to use tokio's `block_on`:
 
 ```rust=
 fn block_on<O>(f: impl Future<Output = O>) -> O {
