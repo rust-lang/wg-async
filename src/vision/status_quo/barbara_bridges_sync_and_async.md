@@ -190,7 +190,34 @@ Things are working again now, so she is happy, although she notes that `join_all
 
 ### Filtering
 
-Later on, she would like to apply a filter to the aggregation operation. She realizes that if she wants to use the fetched data when doing the filtering, she has to filter the vector after the join has completed; `join_all` doesn't have a way to put a filter into the iterator chain like she wants. She is annoyed, but performance isn't critical, so it's ok.
+Later on, she would like to apply a filter to the aggregation operation. She realizes that if she wants to use the fetched data when doing the filtering, she has to filter the vector after the join has completed. She wants to write something like
+
+```rust
+async fn aggregate(urls: &[Url]) -> Vec<Data> {
+    futures::join_all(
+        urls
+            .iter()
+            .map(|url| do_web_request(url))
+            .filter(|data| test(data))
+    ).await
+}
+```
+
+but she can't, because `data` is a future and not the `Data` itself. Instead she has to build the vector first and then post-process it:
+
+```rust
+async fn aggregate(urls: &[Url]) -> Vec<Data> {
+    let mut data: Vec<Data> = futures::join_all(
+        urls
+            .iter()
+            .map(|url| do_web_request(url))
+    ).await;
+    data.retain(test);
+    data
+}
+```
+
+This is annoying, but performance isn't critical, so it's ok. 
 
 ### And the cycle begins again
 
@@ -206,7 +233,6 @@ Later on, she wants to call `aggregate` from another binary. This one doesn't ha
     * For example, inside of an iterator chain.
     * Big block of existing code.
 * Mixing sync and async code (`block_on`) can cause deadlocks that are really painful to diagnose.
-
 
 ### Why did you choose Barbara to tell this story?
 
