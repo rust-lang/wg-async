@@ -98,7 +98,7 @@ She decides to try debugging. She fires up a debugger but finds it is isn't real
 
 Frustrated, she starts reading the tokio docs more closely and she realizes that `tokio` runtimes offer their own `block_on` method. "Maybe using tokio's `block_on` will help?" she thinks, "Worth a try, anyway." She changes the `aggregate` function to use tokio's `block_on`:
 
-```rust=
+```rust
 fn block_on<O>(f: impl Future<Output = O>) -> O {
     let rt  = tokio::runtime::Runtime::new().unwrap();
     rt.block_on(f)
@@ -120,20 +120,20 @@ The good news is that the deadlock is gone. The bad news is that now she is gett
 
 ```rust
 fn aggregate(urls: &[&str]) -> Vec<String> {
-    let handle = Handle::current();
+    let handle = tokio::runtime::Handle::current();
     urls.iter()
         .map(|url| handle.block_on(do_web_request(url)))
         .collect()
 }
 ```
 
-But it seems to give her the same panic. 
+But this also seems to panic in the same way.
 
 ### Trying out `spawn_blocking`
 
 Reading more into this problem, she realizes she is supposed to be using `spawn_blocking`. She tries replacing `block_on` with `tokio::task::spawn_blocking`:
 
-```rust=
+```rust
 fn aggregate(urls: &[Url]) -> Vec<Data> {
     urls
         .iter()
@@ -254,6 +254,30 @@ One way to resolve this problem would be to have a runtime that creates more thr
 Adapting the number of worker threads has downsides. It requires knowing the right threshold for creating new threads (which is fundamentally unknowable). The result is that the runtime will sometimes observe that some thread seems to be taking a long time and create new threads *just before* that thread was about to finish. These new threads generate overhead and lower the overall performance. It also requires work stealing and other techniques that can lead to work running on mulitple cores and having less locality. Systems tuned for maximal performance tend to prefer a single thread per core for this reason.
 
 If some runtimes are adaptive, that may also lead to people writing libraries which block without caring. These libraries would then be a performance or deadlock hazard when used on a runtime that is not adaptive.
+
+### Is there any way to have kept `aggregate` as a synchronous function?
+
+Yes, Barbara could have written something like this:
+
+```rust
+fn aggregate(urls: &[Url]) -> Vec<Data> {
+    let handle = Handle::current();
+
+    urls.iter()
+        .map(|url| handle.block_on(do_web_request(url)))
+        .collect()
+}
+
+#[tokio::main]
+async fn main() {
+    let data = task::spawn_blocking(move || aggregate(&[Url, Url]))
+        .await
+        .unwrap();
+    println!("done");
+}
+```
+
+This `aggregate` function can only safely be invoked from inside a tokio `spawn_blocking` call, however, since `Handle::current` will only work in that context. She could also have used the original futures variant of `block_on`, in that case, and things would also work.
 
 ### Why didn't Barbara just use the sync API for reqwest?
 
