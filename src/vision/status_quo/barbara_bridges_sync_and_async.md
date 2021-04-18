@@ -186,7 +186,7 @@ async fn aggregate(urls: &[Url]) -> Vec<Data> {
 }
 ```
 
-Things are working again now, so she is happy.
+Things are working again now, so she is happy, although she notes that `join_all` has quadratic time complexity. That's not great.
 
 ### Filtering
 
