@@ -26,8 +26,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 He asks Barbara, one of his coworkers, "What is this `async_runtime` annotation? And what's `humboldt`?" She answers by explaining to him that Rust's support for async I/O is actually based around an underlying runtime. "Rust gives you a pretty decent runtime by default," she says, "but it's not tuned for our workloads. We wrote our own runtime, which we call `humboldt`."
 
-[DistriData]: ../projects/DistriData.md
-
 Alan asks, "What happens with the various std APIs? For example, I see we are calling `std::async_thread::spawn` -- when I used that before, it spawned tasks into the default runtime. What happens now?"
 
 Barbara explains that the "async" APIs in std generally execute relative to the current runtime that is in use. "When you call `std::async_thread::spawn`, it will spawn a task onto the current runtime. It's the same with the routines in `std::async_io` and and so forth. The `async_runtime` annotation just affects which runtime runs the `main` function, everything else follows from there."
@@ -117,7 +115,6 @@ Projects like [DistriData] really benefit from being able to customize their run
 
 We have to pay careful attention to embedded projects like [MonsterMesh]. Some of the most obvious ways to implement this future would lean on `dyn` types and perhaps boxing, and that would rule out embedded projects. Embedded runtimes like [embassy] are also the most different in their overall design and they would have the hardest time fitting into the std APIs (of course, many embedded projects are already no-std, but many of them make use of some subset of the std capabilities through the facade).
 
-[MonsterMesh]: ../projects/MonsterMesh.md
 [embassy]: https://github.com/akiles/embassy
 
 ### **What are the incremental steps towards realizing this shiny future?**
@@ -134,7 +131,6 @@ There are a few steps required to realize this future:
 
 Yes. We will need to collaborate to define traits that std can use to interface with each runtime, and the runtimes will need to implement those traits. This is going to be non-trivial, because we want to preserve the ability for independent runtimes to experiment, while also preserving the ability to "max and match" and re-use components. For example, it'd probably be useful to have a bunch of shared I/O infrastructure, or to have utility crates for locks, for running threadpools, and the like. On the other hand, tokio takes advantage of the fact that it owns the I/O types *and* the locks *and* the scheduler to do some [nifty tricks](https://tokio.rs/blog/2020-04-preemption) and we would want to ensure that remains an option.
 
-### Is this story 
 
 [character]: ../characters.md
 [comment]: ./comment.md
@@ -146,3 +142,5 @@ Yes. We will need to collaborate to define traits that std can use to interface 
 [projects]: ../projects.md
 [htvsq]: ../how_to_vision/shiny_future.md
 [cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[DistriData]: ../projects/DistriData.md
+[MonsterMesh]: ../projects/MonsterMesh.md
