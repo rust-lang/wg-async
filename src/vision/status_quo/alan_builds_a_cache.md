@@ -11,12 +11,14 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 [Alan][] is working on an HTTP server. The server makes calls to some other service. The performance of the downstream service is somewhat poor, so Alan would like to implement some basic caching.
 
+[Alan]: ../characters/alan.html
+
 Alan writes up some code which does the caching:
 
 ```rust
 async fn get_response(&mut self, key: String) {
     // Try to get the response from cache
-    if let Some(cached_response) self.cache.get(key) {
+    if let Some(cached_response) = self.cache.get(key) {
         self.channel.send(cached_response).await;
         return;
     }
@@ -32,7 +34,7 @@ async fn get_response(&mut self, key: String) {
 
 Alan is happy with how things are working, but notices every once in a while the downstream service hangs. To prevent that, Alan implements a timeout.
 
-He remembers from the documentation for his favorite runtime that there is the `race` function which can kick off two futures and polls both until one completes. (similar to tokio's [select](https://docs.rs/tokio/1.5.0/tokio/macro.select.html) and async-std's [race](https://docs.rs/async-std/1.9.0/async_std/future/trait.Future.html#method.race) for example).
+He remembers from the documentation for his favorite runtime that there is the `race` function which can kick off two futures and polls both until one completes (similar to tokio's [select](https://docs.rs/tokio/1.5.0/tokio/macro.select.html) and async-std's [race](https://docs.rs/async-std/1.9.0/async_std/future/trait.Future.html#method.race) for example).
 
 
 ```rust
@@ -80,7 +82,7 @@ async fn get_response(&mut self, key: String) {
 * Futures can be "canceled" at any await point. Authors of futures must be aware that after an await, the code might not run.
     * This is similar to `panic` safety but way more likely to happen
 * Futures might be polled to completion causing the code to work. But then many years later, the code is changed and the future might conditionally not be polled to completion which breaks things.
-* The burden falls on the user of to poll to completion, and there is no way for the lib author to enforce this - they can only document this invariant.
+* The burden falls on the user of the future to poll to completion, and there is no way for the lib author to enforce this - they can only document this invariant.
 * Diagnosing and ultimately fixing this issue requires a fairly deep understanding of the semantics of futures.
 * Without a Barbara, it might be hard to even know where to start: No lints are available, Alan is left with a normal debugger and `println!`.
 
