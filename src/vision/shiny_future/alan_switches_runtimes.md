@@ -40,7 +40,7 @@ Alan sees that some of the networking code that is being used in their applicati
 use humboldt::network;
 ```
 
-He asks Barbara, "Why don't we use the `std::async_io` APIs for that?" She explains that Humboldt makes use of some custom kernel extensions that, naturally enough, aren't part of the std library. "TCP is for rubes," she says, "we are using TTCP -- Turbo TCP." Her mind wanders briefly to [Turbo Pascal] and she has a brief moment of yearning for the days when computers had a "Turbo" button that changed them from 8 MHz to 12 MHz. She snaps back into the present day. "Anyway, the `std::async_io` APIs just call into humboldt's APIs via various traits. But we can code directly against `humboldt` when we want to access the extra capabilities it offers."
+He asks Barbara, "Why don't we use the `std::async_io` APIs for that?" She explains that Humboldt makes use of some custom kernel extensions that, naturally enough, aren't part of the std library. "TCP is for rubes," she says, "we are using TTCP -- Turbo TCP." Her mind wanders briefly to [Turbo Pascal] and she has a brief moment of yearning for the days when computers had a "Turbo" button that changed them from 8 MHz to 12 MHz. She snaps back into the present day. "Anyway, the `std::async_io` APIs just call into humboldt's APIs via various traits. But we can code directly against `humboldt` when we want to access the extra capabilities it offers. That *does* make it harder to change to another runtime later, though."
 
 [Turbo Pascal]: https://en.wikipedia.org/wiki/Turbo_Pascal
 
@@ -117,7 +117,7 @@ Projects like [DistriData] really benefit from being able to customize their run
 
 ### **Are there any [projects] that are hindered by this future?**
 
-We have to pay careful attention to embedded projects like [MonsterMesh]. Some of the most obvious ways to implement this future would lean on `dyn` types and perhaps boxing, and that would rule out embedded projects. Embedded runtimes like [embassy] are also the most different in their overall design and they would have the hardest time fitting into the std APIs (of course, many embedded projects are already no-std, but many of them make use of some subset of the std capabilities through the facade).
+We have to pay careful attention to embedded projects like [MonsterMesh]. Some of the most obvious ways to implement this future would lean on `dyn` types and perhaps boxing, and that would rule out some embedded projects. Embedded runtimes like [embassy] are also the most different in their overall design and they would have the hardest time fitting into the std APIs (of course, many embedded projects are already no-std, but many of them make use of some subset of the std capabilities through the facade). In general, traits and generic functions in std could lead to larger code size, as well.
 
 [embassy]: https://github.com/akiles/embassy
 
