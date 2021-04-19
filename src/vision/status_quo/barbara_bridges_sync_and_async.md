@@ -15,7 +15,6 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 ## The story
 
-### Introducing `block_on`
 
 Barbara is working on the code for [perf.rust-lang.org] and she wants to do a web request to load various intermediate results. She has heard that the `reqwest` crate is quite nice, so she decides to give it a try. She writes up an async function that does her web request:
 
@@ -58,7 +57,11 @@ error[E0277]: a value of type `Vec<Data>` cannot be built from an iterator over 
    = help: the trait `FromIterator<impl Future>` is not implemented for `Vec<Data>`
 ```
 
-"Of course," she thinks, "I can't call an async function from a closure." She decides that since she is not overly concerned about performance, so she decides she'll just use a call to [`block_on` from the `futures` crate](https://docs.rs/futures/0.3.14/futures/executor/fn.block_on.html) and execute the function synchronously:
+"Of course," she thinks, "I can't call an async function from a closure." 
+
+### Introducing `block_on`
+
+She decides that since she is not overly concerned about performance, so she decides she'll just use a call to [`block_on` from the `futures` crate](https://docs.rs/futures/0.3.14/futures/executor/fn.block_on.html) and execute the function synchronously:
 
 ```rust
 async fn do_web_request(url: &Url) -> Data {...}
