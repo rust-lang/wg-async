@@ -83,7 +83,7 @@ Good question! I'm not entirely sure! I have to go looking and think about it. M
 * There is some way to seamlessly change to a different default runtime to use for `async fn main`.
 * There is no global runtime, just the current runtime.
 * When you are using this different runtime, you can write code that is hard-coded to it and which exposes additional capabilities.
-* You can integrate multiple runtimes relatively easily, and the std APIs work with whechever is the current runtime.
+* You can integrate multiple runtimes relatively easily, and the std APIs work with whichever is the current runtime.
 
 ### How do you imagine the std APIs and so forth know the current runtime?
 
