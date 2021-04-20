@@ -34,9 +34,13 @@ function check_bin() {
 check_bin curl
 check_bin jq
 
+function get_issue_numbers() {
+  curl -s -u $user:$token -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/rust-lang/wg-async-foundations/issues?state=all&labels=$1" | jq '.[].number'
+}
+
 # Get a list of users that participated in issues.
 function issue_contributors() {
-  local numbers=$(curl -s -u $user:$token -H "Accept: application/vnd.github.v3+json" 'https://api.github.com/repos/rust-lang/wg-async-foundations/issues?state=all&labels=status-quo-story-ideas' | jq '.[].number')
+  local numbers="$(get_issue_numbers status-quo-story-ideas) $(get_issue_numbers shiny-future)"
 
   for num in $numbers; do
     curl -s -u $user:$token -H "Accept: application/vnd.github.v3+json" \
