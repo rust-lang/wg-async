@@ -133,6 +133,7 @@ This feels pretty easy!
 ### What status quo story or stories are you retelling?
 
 * [Alan started trusting the Rust compiler, but then async](../status_quo/alan_started_trusting_the_rust_compiler_but_then_async.md)
+* [Barbara makes their first foray into async](../status_quo/barbara_makes_their_first_steps_into_async.md)
 
 ### What are the key points you were trying to convey with this status quo story?
 
