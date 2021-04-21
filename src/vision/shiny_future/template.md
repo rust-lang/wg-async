@@ -43,6 +43,10 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 *Thing about Rust's core "value propositions": performance, safety and correctness, productivity. Are any of them negatively impacted? Are there specific application areas that are impacted negatively? You might find the sample [projects] helpful in this regard, or perhaps looking at the goals of each [character].*
 
+### Did anything surprise you when writing this story? Did the story go any place unexpected?
+
+*The act of writing shiny future stories can uncover things we didn't expect to find. Did you have any new and exciting ideas as you were writing? Realize some complications that you didn't foresee?*
+
 ### What are some variations of this story that you considered, or that you think might be fun to write? Have any variations of this story already been written?
 
 *Often when writing stories, we think about various possibilities. Sketch out some of the turning points here -- maybe someone will want to turn them into a full story! Alternatively, if this is a variation on an existing story, link back to it here.*
@@ -50,6 +54,8 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 ### What are some of the things we'll have to figure out to realize this future? What projects besides Rust itself are involved, if any? (Optional)
 
 *Often the 'shiny future' stories involve technical problems that we don't really know how to solve yet. If you see such problems, list them here!*
+
+
 
 [character]: ../characters.md
 [comment]: ./comment.md
