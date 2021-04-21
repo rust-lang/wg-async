@@ -52,10 +52,12 @@ As the message suggests, users can explicit request a box, but for Grace's proje
 ## 🤔 Frequently Asked Questions
 
 ### **What status quo story or stories are you retelling?**
-*Link to the status quo stories here. If there isn't a story that you're retelling, [write it](../how_to_vision/status_quo.md)!*
+
+* [Barbara needs async helpers](../status_quo/barbara_needs_async_helpers.md)
 
 ### **What is [Alan] most excited about in this future? Is he disappointed by anything?**
-*Think about Alan's top priority (performance) and the expectations he brings (ease of use, tooling, etc). How do they fare in this future?*
+
+* Alan is not excited, but he's able to just write the code he expects to write without bother.
 
 ### **What is [Grace] most excited about in this future? Is she disappointed by anything?**
 *Think about Grace's top priority (memory safety) and the expectations she brings (still able to use all the tricks she knows and loves). How do they fare in this future?*
