@@ -38,6 +38,8 @@
       - [Alan tries to debug a hang](./vision/status_quo/alan_tries_to_debug_a_hang.md)
       - [Alan writes a web framework](./vision/status_quo/alan_writes_a_web_framework.md)
       - [Barbara anguishes over HTTP](./vision/status_quo/barbara_anguishes_over_http.md)
+      - [Barbara Barbara bridges sync and async in `perf.rust-lang.org`](./vision/status_quo/barbara_bridges_sync_and_async.md)
+      - [Barbara builds an async executor](./vision/status_quo/barbara_builds_an_async_executor.md)
       - [Barbara carefully dismisses embedded `Future`](./vision/status_quo/barbara_carefully_dismisses_embedded_future.md)
       - [Barbara compares some C++ code](./vision/status_quo/barbara_compares_some_cpp_code.md)
       - [Barbara makes their first foray into async](./vision/status_quo/barbara_makes_their_first_steps_into_async.md)
