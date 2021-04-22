@@ -10,7 +10,10 @@ We are still in the process of drafting the vision document. The stories you see
 
 The "shiny future" is here to tell you what we are trying to build over the next 2 to 3 years. That is, it presents our "best guess" as to what will look like a few years from now. When describing specific features, it also embeds links to [design notes] that describe the constraints and general plans around that feature.
 
+🧐 You may also enjoy reading the [blog post] announcing the brainstorming effort.
+
 [design notes]: ../design_notes.md
+[blog post]: https://blog.rust-lang.org/2021/04/14/async-vision-doc-shiny-future.html
 
 ### Think big -- too big, if you have to
 
