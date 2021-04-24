@@ -38,7 +38,8 @@ async fn do_work(database: &Database) {
             .into_iter()
             .map(|item| do_select(database, work_from_item(item)).await)
             .buffered(5)
-            .for_each(|work_item| process_work_item(database, work_item)).await;
+            .for_each(|work_item| process_work_item(database, work_item))
+    ).await;
 }
 
 async fn process_work_item(...) { }
@@ -88,7 +89,8 @@ async fn do_work(database: &Database) {
             .buffered(5)
             .for_each(|work_item| task::spawn(async move {
                 process_work_item(database, work_item).await
-            })).await;
+            })
+    ).await;
 }
 ```
 
@@ -122,7 +124,8 @@ async fn do_work(database: &Database) {
             .for_each(|work_item| {
                 results.push(process_work_item(database, work_item));
                 futures::future::ready(())
-            })).await;
+            })
+    ).await;
 
     while let Some(_) = results.next().await { }
 }
