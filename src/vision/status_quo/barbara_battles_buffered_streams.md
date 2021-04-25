@@ -33,7 +33,7 @@ She looks at the caller of `do_select`, which is a function `do_work`:
 ```rust
 async fn do_work(database: &Database) {
     let work = do_select(database, FIND_WORK_QUERY)?;
-    stream::iter(work.into_iter())
+    stream::iter(work)
         .map(|item| do_select(database, work_from_item(item)))
         .buffered(5)
         .for_each(|work_item| process_work_item(database, work_item))
