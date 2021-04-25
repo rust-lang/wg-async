@@ -1,4 +1,4 @@
-# 😱 Status quo stories: Barbara battles buffered items
+# 😱 Status quo stories: Barbara battles buffered streams
 
 [How To Vision: Status Quo]: ../how_to_vision/status_quo.md
 [the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
@@ -33,13 +33,11 @@ She looks at the caller of `do_select`, which is a function `do_work`:
 ```rust
 async fn do_work(database: &Database) {
     let work = do_select(database, FIND_WORK_QUERY)?;
-    stream::iter(
-        work
-            .into_iter()
-            .map(|item| do_select(database, work_from_item(item)).await)
-            .buffered(5)
-            .for_each(|work_item| process_work_item(database, work_item))
-    ).await;
+    stream::iter(work.into_iter())
+        .map(|item| do_select(database, work_from_item(item)))
+        .buffered(5)
+        .for_each(|work_item| process_work_item(database, work_item))
+        .await;
 }
 
 async fn process_work_item(...) { }
@@ -82,15 +80,13 @@ Once Barbara understands the problem, she considers the fix. The most obvious fi
 ```rust
 async fn do_work(database: &Database) {
     let work = do_select(database, FIND_WORK_QUERY)?;
-    stream::iter(
-        work
-            .into_iter()
-            .map(|item| do_select(database, work_from_item(item)).await)
-            .buffered(5)
-            .for_each(|work_item| task::spawn(async move {
-                process_work_item(database, work_item).await
-            })
-    ).await;
+    stream::iter(work.into_iter())
+        .map(|item| do_select(database, work_from_item(item)))
+        .buffered(5)
+        .for_each(|work_item| task::spawn(async move {
+            process_work_item(database, work_item).await
+        })
+        .await;
 }
 ```
 
@@ -116,16 +112,14 @@ error[E0759]: `database` has an anonymous lifetime `'_` but it needs to satisfy 
 async fn do_work(database: &Database) {
     let work = do_select(database, FIND_WORK_QUERY)?;
     let mut results = FuturesUnordered::new();
-    stream::iter(
-        work
-            .into_iter()
-            .map(|item| do_select(database, work_from_item(item)).await)
-            .buffered(5)
-            .for_each(|work_item| {
-                results.push(process_work_item(database, work_item));
-                futures::future::ready(())
-            })
-    ).await;
+    stream::iter(work.into_iter())
+        .map(|item| do_select(database, work_from_item(item)))
+        .buffered(5)
+        .for_each(|work_item| {
+            results.push(process_work_item(database, work_item));
+            futures::future::ready(())
+        })
+        .await;
 
     while let Some(_) = results.next().await { }
 }
@@ -158,6 +152,57 @@ Woe be unto them! Identifying and fixing this bug required a lot of fluency with
 The original bug report mentioned the possibility of deadlock:
 
 > When using an async friendly semaphore (like Tokio provides), you can deadlock yourself by having the tasks that are waiting in the `FuturesUnordered` owning all the semaphores, while having an item in a `.for_each()` block after `buffer_unordered()` requiring a semaphore.
+
+### Is there any way for Barbara to both produce and process work items simultaneously?
+
+Yes, in this case, she could've. For example, she might have written
+
+```rust
+async fn do_work(database: &Database) {
+    let work = do_select(database, FIND_WORK_QUERY).await?;
+
+    stream::iter(work)
+        .map(|item| async move {
+            let work_item = do_select(database, work_from_item(item)).await;
+            process_work_item(database, work_item).await;
+        })
+        .buffered(5)
+        .for_each(|()| std::future::ready(()))
+        .await;
+}
+```
+
+This would mean however that limit the number of work items being processed to 5. This may be what she wanted, but perhaps not. It may also be that similar problems come up in scenarios where Barbara can't so easily alter the call to `do_select` to "append" a call to `process_work_item` (for example, maybe she is in some function that takes a [`FuturesUnordered`] or `Stream` as argument).
+
+### Is there any way for Barbara to both produce and process work items simultaneously, without the buffering and so forth?
+
+Yes, she might use a loop with a `select!`. This would ensure that she is processing *both* the stream that produces work items and the [`FuturesUnordered`] that consumes them:
+
+```rust
+async fn do_work(database: &Database) {
+    let work = do_select(database, FIND_WORK_QUERY).await?;
+
+    let selects = stream::iter(work)
+        .map(|item| do_select(database, work_from_item(item)))
+        .buffered(5)
+        .fuse();
+    tokio::pin!(selects);
+
+    let mut results = FuturesUnordered::new();
+
+    loop {
+        tokio::select! {
+            Some(work_item) = selects.next() => {
+                results.push(process_work_item(database, work_item));
+            },
+            Some(()) = results.next() => { /* do nothing */ },
+            else => break,
+        }
+    }
+}
+```
+
+Note that doing so is producing code that looks quite a bit different than where she started, though. :(
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
