@@ -80,7 +80,7 @@ Once Barbara understands the problem, she considers the fix. The most obvious fi
 ```rust
 async fn do_work(database: &Database) {
     let work = do_select(database, FIND_WORK_QUERY)?;
-    stream::iter(work.into_iter())
+    stream::iter(work)
         .map(|item| do_select(database, work_from_item(item)))
         .buffered(5)
         .for_each(|work_item| task::spawn(async move {
@@ -112,7 +112,7 @@ error[E0759]: `database` has an anonymous lifetime `'_` but it needs to satisfy 
 async fn do_work(database: &Database) {
     let work = do_select(database, FIND_WORK_QUERY)?;
     let mut results = FuturesUnordered::new();
-    stream::iter(work.into_iter())
+    stream::iter(work)
         .map(|item| do_select(database, work_from_item(item)))
         .buffered(5)
         .for_each(|work_item| {
