@@ -51,7 +51,7 @@ Following a hunch, she adds more logging in and around the `process_work_item` f
 
 ### Barbara thought she understood how async worked
 
-Barbara thought she understood futures fairly well. She thought of `async fn` as basically "like a synchronous function with more advanced control flow". She knew that Rust's futures were lazy -- that they didn't start executing until they were awaited -- and she knew that could compose them using utilities like [`join`](https://docs.rs/futures/0.3.14/futures/future/fn.join.html), [`FuturesUnordered`], or the [`buffered`](https://docs.rs/futures/0.3.14/futures/stream/trait.StreamExt.html#method.buffered) method (as in this example). 
+Barbara thought she understood futures fairly well. She thought of `async fn` as basically "like a synchronous function with more advanced control flow". She knew that Rust's futures were lazy -- that they didn't start executing until they were awaited -- and she knew that could compose them using utilities like [`join`](https://docs.rs/futures/0.3/futures/future/fn.join.html), [`FuturesUnordered`], or the [`buffered`](https://docs.rs/futures/0.3/futures/stream/trait.StreamExt.html#method.buffered) method (as in this example). 
 
 [`FuturesUnordered`]: https://docs.rs/futures/0.3.14/futures/stream/struct.FuturesUnordered.html
 
