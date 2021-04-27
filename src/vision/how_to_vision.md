@@ -4,10 +4,10 @@
 
 | When | What |
 | --- | --- |
-| ✅ **Now** till 2021-04-30 | Improve the [sample projects][hvp] |
-| ✅ **Now** till 2021-04-30 | Propose new ["status quo" stories][hvsq] or [comment] on existing PRs |
-| ✅ **Now** till 2021-04-30 | Propose new ["shiny future" stories][hvsf] or [comment] on existing PRs |
-| 🛑 Starting 2021-04-30 | Vote for the [awards] on the status quo and shiny future stories! |
+| ✅ **Now** till 2021-05-14 | Improve the [sample projects][hvp] |
+| ✅ **Now** till 2021-05-14 | Propose new ["status quo" stories][hvsq] or [comment] on existing PRs |
+| ✅ **Now** till 2021-05-14 | Propose new ["shiny future" stories][hvsf] or [comment] on existing PRs |
+| 🛑 Starting 2021-05-14 | Vote for the [awards] on the status quo and shiny future stories! |
 
 ## The big picture
 
@@ -19,7 +19,7 @@ Once the brainstorming period is complete, the working group leads will begin wo
 
 ### Brainstorming
 
-The brainstorming period runs until 2021-04-30:
+The brainstorming period runs until 2021-05-14:
 
 * Folks open "status quo" and "shiny future" story PRs against the [wg-async-foundations repo][repo].
     * [Templates and instructions for status quo stories can be found here.][hvsq] 
