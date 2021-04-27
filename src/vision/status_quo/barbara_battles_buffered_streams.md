@@ -25,7 +25,7 @@ async fn do_select<T>(database: &Database, query: Query) -> Result<Vec<T>> {
     conn.select_query(query).await
 }
 ```
-
+This is surprising, because `do_select` doesn't do much - it does a database query to claim a work item from a queue, but isn't expected to handle a lot of data or hit extreme slowdown on the database side.
 Some of the time, there is some kind of massive delay in between the `get_conn` method opening a connection and the call to `select_query`. But why? She has metrics that show that the CPU is largely idle, so it's not like the cores are all occupied.
 
 She looks at the caller of `do_select`, which is a function `do_work`:
@@ -43,9 +43,11 @@ async fn do_work(database: &Database) {
 async fn process_work_item(...) { }
 ```
 
-The `do_work` function is invoking `do_select` as part of a stream; it is buferring up a certain number of `do_select` instances and, for each one, invoking `process_work_item`. Everything seems to be in order, and she can see that calls to `process_work_item` are completing in the logs.
+The `do_work` function is invoking `do_select` as part of a stream; it is buffering up a certain number of `do_select` instances and, for each one, invoking `process_work_item`. Everything seems to be in order, and she can see that calls to `process_work_item` are completing in the logs.
 
 Following a hunch, she adds more logging in and around the `process_work_item` function and waits a few days to accumulate new logs. She notices that shortly after each time out, there is always a log of a `process_work_item` call that takes at least 20 seconds. These calls are not related to the connections that time out, they are for other connections, but they always appear afterwards in time.
+
+`process_work_item` is expected to be slow sometimes because it can end up handling large items, so this is not immediately surprising to Barbara. She is, however, surprised by the correlation - surely the executor ensures that `process_work_item` can't stop `do_select` from doing its job?
 
 ### Barbara thought she understood how async worked
 
@@ -57,7 +59,7 @@ Barbara also knows that every future winds up associated with a task, and that i
 
 ### Barbara goes deep into how poll works
 
-She goes to read the Rust async book and tries to think about the model, but she can't quite see the problem. Then she asks on the rust-lang Discord and someone explains to her what is going on. Finally, after reading over what they wrote a few times, and reading some chapters in the async book, she sees the problem.
+She goes to read the Rust async book and tries to think about the model, but she can't quite see the problem. Then she asks on the rust-lang Discord and someone explains to her what is going on, with the catchphrase "remember, `async` is about waiting in parallel, not working in parallel". Finally, after reading over what they wrote a few times, and reading some chapters in the async book, she sees the problem.
 
 It turns out that, to Rust, a task is kind of a black box with a "poll" function. When the executor thinks a task can make progress, it calls poll. The task itself then delegates this call to poll down to all the other futures that are composed together. In the case of her buffered stream of connections, the stream gets woken up and it would then delegate down the various buffered items in its list.
 
@@ -100,11 +102,10 @@ error[E0759]: `database` has an anonymous lifetime `'_` but it needs to satisfy 
    |                  ^^^^^^^^  --------- this data with an anonymous lifetime `'_`...
    |                  |
    |                  ...is captured here...
-   |        .for_each(|work_item| task::spawn(async move {
-   |                              ----------- ...and is required to live as long as `'static` here
-```
+   |        .map(|item| task::spawn(do_select(database, work_from_item(item))))
+   |                    ----------- ...and is required to live as long as `'static` here
 
-"Ah, right," she says, "spawned tasks can't use borrowed data. I wish I had [rayon] or the scoped threads from [crossbeam]." (What Barbara doesn't realize is that spawning wouldn't actually have fixed her problem anyway: the `for_each` combinator would have awaited the resulting `JoinHandle` and hence it would have blocked... but she could have tweaked her program to fix that if she had gotten that far.)
+"Ah, right," she says, "spawned tasks can't use borrowed data. I wish I had [rayon] or the scoped threads from [crossbeam]."
 
 "Let me see," Barbara thinks. "What else could I do?" She has the idea that she doesn't have to process the work items immediately. She could buffer up the work into a [`FuturesUnordered`] and process it after everything is ready:
 
@@ -125,7 +126,7 @@ async fn do_work(database: &Database) {
 }
 ```
 
-This isn't maximally efficient -- it's introducing an arbitrary phasing into her work -- but at least it doesn't cause timeouts. Going forward, she tries to remember never to do a m"nested `await`" like this. Buffering up work into a `FuturesUnordered` becomes a pattern she finds herself using throughout the codebase.
+This isn't maximally efficient -- it's introducing an arbitrary phasing into her work -- but at least it doesn't cause timeouts. Going forward, she tries to remember never to do a "nested `await`" like this. Buffering up work into a `FuturesUnordered` becomes a pattern she finds herself using throughout the codebase.
 
 ## 🤔 Frequently Asked Questions
 
