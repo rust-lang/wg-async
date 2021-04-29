@@ -51,11 +51,11 @@ The problems begin from the very first moment a user starts to try out async Rus
     * 🚧 Need a story about multiple runtimes working together
 * There is a lack of common, standardized abstractions, which means that often there are multiple attempts to establish common traits and different libraries will employ a distinct subset.
     * [`Sink` is not implemented by async-std websockets](status_quo/alan_tries_a_socket_sink.md) 
-    * 🚧 No standardized lower-level traits for read, write, iterators in an async setting
-    * 🚧 Lack of widely used higher-level abstractions (like those tower aims to provide)
-    * 🚧 Tokio doesn't support the futures `Stream` trait because of stability concerns
+    * 🚧 [No standardized lower-level traits for read, write, iterators in an async setting](https://github.com/rust-lang/wg-async-foundations/issues/177)
+    * 🚧 [Lack of widely used higher-level abstractions (like those tower aims to provide)](https://github.com/rust-lang/wg-async-foundations/issues/178)
+    * 🚧 [Tokio doesn't support the futures `Stream` trait because of stability concerns](https://github.com/rust-lang/wg-async-foundations/issues/179)
 * Some of the problems are due to the design of Rust itself. The coherence rules in particular.
-    * 🚧 Write about how coherence makes it impossible to establish 
+    * 🚧 [Write about how coherence makes it nearly impossible to establish standard traits outside of libstd.](https://github.com/rust-lang/wg-async-foundations/issues/180)
 
 </details>
 
@@ -68,6 +68,7 @@ Writing async programs turns out to have all kinds of subtle tradeoffs. Rust aim
 * Mixing sync and async code is tricky and it's not always obvious how to do it -- something it's not even clear what is "sync" (how long does a loop have to run before you can consider it blocking?)
     * [Barbara bridges sync and async](status_quo/barbara_bridges_sync_and_async.md)
     * [Barbara compares some C++ code](status_quo/barbara_compares_some_cpp_code.md)
+    * [Alan thinks he needs async locks](status_quo/alan_thinks_he_needs_async_locks.md) -- "locks are ok if they don't take too long"
 * There are often many options for doing things like writing futures or other core concepts; which libraries or patterns are best?
     * [Barbara needs async helpers](status_quo/barbara_needs_async_helpers.md)
     * [Grace wants to integrate c api](status_quo/grace_wants_to_integrate_c_api.html#the-second-problem-doing-this-many-times)
@@ -81,6 +82,7 @@ Writing async programs turns out to have all kinds of subtle tradeoffs. Rust aim
     * [Barbara bridges sync and async](status_quo/barbara_bridges_sync_and_async.md)
 * Sometimes async may not even be the right solution
     * [Niklaus builds a hydrodynamic simulator](status_quo/niklaus_simulates_hydrodynamics.md)
+    * 🚧 [Avoiding async entirely](https://github.com/rust-lang/wg-async-foundations/issues/58)
 
 </details>
 
@@ -103,7 +105,7 @@ Writing async programs turns out to have all kinds of subtle tradeoffs. Rust aim
     * [Grace wants to integrate a C API](status_quo/grace_wants_to_integrate_c_api.html#the-second-problem-doing-this-many-times)
 * When you stray from the happy path, the complexity cliff is very steep
     * Working with Pin is really hard, but necessary in various scenarios
-        * 🚧 Need a story about implementing async-read, async-write
+        * 🚧 [Need a story about implementing async-read, async-write](https://github.com/rust-lang/wg-async-foundations/issues/181)
         * [Alan hates writing a stream](status_quo/alan_hates_writing_a_stream.md)
     * It's easy to forget to invoke a waker
         * [Alan hates writing a stream](status_quo/alan_hates_writing_a_stream.html#-frequently-asked-questions)
@@ -160,8 +162,8 @@ Writing async programs turns out to have all kinds of subtle tradeoffs. Rust aim
 * Embedded environments can have pretty stringent requirements; Future was designed to be minimal, but perhaps not minimal enough
     * [Barbara carefully discusses embedded future](status_quo/barbara_carefully_dismisses_embedded_future.md)
 * Evolving specs for C and C++ require careful thought to integrate with async Rust's polling model 
-    * 🚧 Convert [these notes on C++](https://hackmd.io/DnArulWbTKSx1_8mijsRuQ) into a status quo story 
-    * 🚧 Write about the challenges of io-uring integration
+    * 🚧 [Wrapping C++ APIs in Rust Futures](https://github.com/rust-lang/wg-async-foundations/issues/67)
+    * 🚧 [Write about the challenges of io-uring integration](https://github.com/rust-lang/wg-async-foundations/issues/182)
 * Advanced new techniques like [Ghostcell](status_quo/barbara_wants_to_use_ghostcell.md) may not fit into the traits as designed
 
 </details>
