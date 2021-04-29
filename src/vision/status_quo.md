@@ -45,15 +45,17 @@ The problems begin from the very first moment a user starts to try out async Rus
     * [Barbara anguishes over http](status_quo/barbara_anguishes_over_http.md)
 * basic helpers and utility crates are hard to find, and there are many choices, often with subtle differences between them
     * [Barbara needs async helpers](status_quo/barbara_needs_async_helpers.md)
-* Furthermore, the async ecosystem is fractured. Choosing one library may entail choosing a specific runtime. Sometimes you may wind up with multiple runtimes running at once.
+* Furthermore, the async ecosystem is fractured. Choosing one library may entail choosing a specific runtime. Sometimes you may wind up with multiple runtimes running at once. But sometimes you want that!
     * [Alan started trusting the rust compiler but then async](status_quo/alan_started_trusting_the_rust_compiler_but_then_async.md)
     * [Barbara needs async helpers](status_quo/barbara_needs_async_helpers.md)
-    * 🚧 Need a story about multiple runtimes working together
+* Of course, sometimes you *want* multiple runtimes running together
+    * [Alan has an external event loop and wants to use futures/streams](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_has_an_event_loop.html)
+    * 🚧 [Need more stories about multiple runtimes working together](https://github.com/rust-lang/wg-async-foundations/issues/183)
 * There is a lack of common, standardized abstractions, which means that often there are multiple attempts to establish common traits and different libraries will employ a distinct subset.
     * [`Sink` is not implemented by async-std websockets](status_quo/alan_tries_a_socket_sink.md) 
     * 🚧 [No standardized lower-level traits for read, write, iterators in an async setting](https://github.com/rust-lang/wg-async-foundations/issues/177)
     * 🚧 [Lack of widely used higher-level abstractions (like those tower aims to provide)](https://github.com/rust-lang/wg-async-foundations/issues/178)
-    * 🚧 [Tokio doesn't support the futures `Stream` trait because of stability concerns](https://github.com/rust-lang/wg-async-foundations/issues/179)
+    * 🚧 [Tokio has `Stream` support in tokio-stream for stability concerns](https://github.com/rust-lang/wg-async-foundations/issues/179)
 * Some of the problems are due to the design of Rust itself. The coherence rules in particular.
     * 🚧 [Write about how coherence makes it nearly impossible to establish standard traits outside of libstd.](https://github.com/rust-lang/wg-async-foundations/issues/180)
 
