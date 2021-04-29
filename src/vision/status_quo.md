@@ -134,7 +134,7 @@ Writing async programs turns out to have all kinds of subtle tradeoffs. Rust aim
 * Dropping is synchronous but sometimes wants to do asynchronous things and block for them to complete
     * [Alan finds dropping database handles is hard](status_quo/alan_finds_database_drops_hard.md)
 * Nested awaits mean that outer awaits cannot make progress
-    * [Footgun with futures unordered](https://github.com/rust-lang/wg-async-foundations/issues/131)
+    * [Barbara battles buffered streams](status_quo/barbara_battles_buffered_streams.md)
 * Async functions let you build up large futures that execute without allocation, which is great, but can be its own cost
     * [Alan iteratively regresses](status_quo/alan_iteratively_regresses.md)
     * [Alan runs into stack allocation trouble](status_quo/alan_runs_into_stack_trouble.md)
