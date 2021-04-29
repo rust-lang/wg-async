@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alan thinks he needs async locks - wg-async-foundations</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../../welcome.html"><strong aria-hidden="true">1.</strong> 👋🏽 Welcome</a></li><li class="chapter-item expanded "><a href="../../vision.html"><strong aria-hidden="true">2.</strong> 🔮 The vision</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../vision/how_to_vision.html"><strong aria-hidden="true">2.1.</strong> ❓How to vision</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../vision/how_to_vision/projects.html"><strong aria-hidden="true">2.1.1.</strong> Projects</a></li><li class="chapter-item "><a href="../../vision/how_to_vision/status_quo.html"><strong aria-hidden="true">2.1.2.</strong> &quot;Status quo&quot; stories</a></li><li class="chapter-item "><a href="../../vision/how_to_vision/shiny_future.html"><strong aria-hidden="true">2.1.3.</strong> &quot;Shiny future&quot; stories</a></li><li class="chapter-item "><a href="../../vision/how_to_vision/comment.html"><strong aria-hidden="true">2.1.4.</strong> Commenting</a></li><li class="chapter-item "><a href="../../vision/how_to_vision/awards.html"><strong aria-hidden="true">2.1.5.</strong> Awards</a></li></ol></li><li class="chapter-item "><a href="../../vision/tenets.html"><strong aria-hidden="true">2.2.</strong> ✏️ Design tenets for async</a></li><li class="chapter-item "><a href="../../vision/characters.html"><strong aria-hidden="true">2.3.</strong> 🙋‍♀️ Cast of characters</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../vision/characters/alan.html"><strong aria-hidden="true">2.3.1.</strong> Alan</a></li><li class="chapter-item "><a href="../../vision/characters/grace.html"><strong aria-hidden="true">2.3.2.</strong> Grace</a></li><li class="chapter-item "><a href="../../vision/characters/niklaus.html"><strong aria-hidden="true">2.3.3.</strong> Niklaus</a></li><li class="chapter-item "><a href="../../vision/characters/barbara.html"><strong aria-hidden="true">2.3.4.</strong> Barbara</a></li></ol></li><li class="chapter-item "><a href="../../vision/projects.html"><strong aria-hidden="true">2.4.</strong> ⚡ Projects</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../vision/projects/template.html"><strong aria-hidden="true">2.4.1.</strong> Template</a></li><li class="chapter-item "><a href="../../vision/projects/MonsterMesh.html"><strong aria-hidden="true">2.4.2.</strong> MonsterMesh (embedded sensors)</a></li><li class="chapter-item "><a href="../../vision/projects/DistriData.html"><strong aria-hidden="true">2.4.3.</strong> DistriData (Generic Infrastructure)</a></li><li class="chapter-item "><a href="../../vision/projects/TrafficMonitor.html"><strong aria-hidden="true">2.4.4.</strong> TrafficMonitor (Custom Infrastructure)</a></li><li class="chapter-item "><a href="../../vision/projects/YouBuy.html"><strong aria-hidden="true">2.4.5.</strong> YouBuy (Traditional Server Application)</a></li><li class="chapter-item "><a href="../../vision/projects/SLOW.html"><strong aria-hidden="true">2.4.6.</strong> SLOW (Protocol implementation)</a></li></ol></li><li class="chapter-item expanded "><a href="../../vision/status_quo.html"><strong aria-hidden="true">2.5.</strong> 😱 Status quo</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../vision/status_quo/template.html"><strong aria-hidden="true">2.5.1.</strong> Template</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_builds_a_cache.html"><strong aria-hidden="true">2.5.2.</strong> Alan tries to cache requests, which doesn't always happen</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_finds_database_drops_hard.html"><strong aria-hidden="true">2.5.3.</strong> Alan finds dropping database handles is hard</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_has_an_event_loop.html"><strong aria-hidden="true">2.5.4.</strong> Alan has an external event loop</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_hates_writing_a_stream.html"><strong aria-hidden="true">2.5.5.</strong> Alan hates writing a Stream</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_iteratively_regresses.html"><strong aria-hidden="true">2.5.6.</strong> Alan iteratively regresses performance</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_lost_the_world.html"><strong aria-hidden="true">2.5.7.</strong> Alan lost the world</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_needs_async_in_traits.html"><strong aria-hidden="true">2.5.8.</strong> Alan needs async in traits</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_picks_web_server.html"><strong aria-hidden="true">2.5.9.</strong> Alan wants to migrate a web server to Rust</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_runs_into_stack_trouble.html"><strong aria-hidden="true">2.5.10.</strong> Alan runs into stack trouble</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_started_trusting_the_rust_compiler_but_then_async.html"><strong aria-hidden="true">2.5.11.</strong> Alan started trusting the Rust compiler, but then... async</a></li><li class="chapter-item expanded "><a href="../../vision/status_quo/alan_thinks_he_needs_async_locks.html" class="active"><strong aria-hidden="true">2.5.12.</strong> Alan thinks he needs async locks</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_tries_a_socket_sink.html"><strong aria-hidden="true">2.5.13.</strong> Alan tries using a socket Sink</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_tries_to_debug_a_hang.html"><strong aria-hidden="true">2.5.14.</strong> Alan tries to debug a hang</a></li><li class="chapter-item "><a href="../../vision/status_quo/alan_writes_a_web_framework.html"><strong aria-hidden="true">2.5.15.</strong> Alan writes a web framework</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_anguishes_over_http.html"><strong aria-hidden="true">2.5.16.</strong> Barbara anguishes over HTTP</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_bridges_sync_and_async.html"><strong aria-hidden="true">2.5.17.</strong> Barbara Barbara bridges sync and async in perf.rust-lang.org</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_builds_an_async_executor.html"><strong aria-hidden="true">2.5.18.</strong> Barbara builds an async executor</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_carefully_dismisses_embedded_future.html"><strong aria-hidden="true">2.5.19.</strong> Barbara carefully dismisses embedded Future</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_compares_some_cpp_code.html"><strong aria-hidden="true">2.5.20.</strong> Barbara compares some C++ code</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_makes_their_first_steps_into_async.html"><strong aria-hidden="true">2.5.21.</strong> Barbara makes their first foray into async</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_needs_async_helpers.html"><strong aria-hidden="true">2.5.22.</strong> Barbara needs Async Helpers</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_plays_with_async.html"><strong aria-hidden="true">2.5.23.</strong> Barbara plays with async</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_tries_async_streams.html"><strong aria-hidden="true">2.5.24.</strong> Barbara tries async streams</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_trims_a_stacktrace.html"><strong aria-hidden="true">2.5.25.</strong> Barbara trims a stacktrace</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_wants_async_insights.html"><strong aria-hidden="true">2.5.26.</strong> Barbara wants async insights</a></li><li class="chapter-item "><a href="../../vision/status_quo/barbara_wants_to_use_ghostcell.html"><strong aria-hidden="true">2.5.27.</strong> Barbara wants to use GhostCell-like cell borrowing</a></li><li class="chapter-item "><a href="../../vision/status_quo/grace_deploys_her_service.html"><strong aria-hidden="true">2.5.28.</strong> Grace deploys her service and hits obstacles</a></li><li class="chapter-item "><a href="../../vision/status_quo/grace_tries_new_libraries.html"><strong aria-hidden="true">2.5.29.</strong> Grace tries new libraries</a></li><li class="chapter-item "><a href="../../vision/status_quo/grace_waits_for_gdb_next.html"><strong aria-hidden="true">2.5.30.</strong> Grace waits for gdb next</a></li><li class="chapter-item "><a href="../../vision/status_quo/grace_wants_to_integrate_c_api.html"><strong aria-hidden="true">2.5.31.</strong> Grace wants to integrate a C-API</a></li><li class="chapter-item "><a href="../../vision/status_quo/niklaus_simulates_hydrodynamics.html"><strong aria-hidden="true">2.5.32.</strong> Niklaus builds a hydrodynamics simulator</a></li><li class="chapter-item "><a href="../../vision/status_quo/niklaus_wants_to_share_knowledge.html"><strong aria-hidden="true">2.5.33.</strong> Niklaus wants to share knowledge</a></li></ol></li><li class="chapter-item "><a href="../../vision/shiny_future.html"><strong aria-hidden="true">2.6.</strong> ✨ Shiny future</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../vision/shiny_future/template.html"><strong aria-hidden="true">2.6.1.</strong> Template</a></li><li class="chapter-item "><a href="../../vision/shiny_future/alan_switches_runtimes.html"><strong aria-hidden="true">2.6.2.</strong> Alan switches runtimes</a></li><li class="chapter-item "><a href="../../vision/shiny_future/alans_trust_in_the_compiler_is_rewarded.html"><strong aria-hidden="true">2.6.3.</strong> Alan's trust in the compiler is rewarded</a></li><li class="chapter-item "><a href="../../vision/shiny_future/barbara_makes_a_wish.html"><strong aria-hidden="true">2.6.4.</strong> Barbara makes a wish</a></li></ol></li><li class="chapter-item "><a href="../../vision/roadmap.html"><strong aria-hidden="true">2.7.</strong> 📅 Roadmap for 2021</a></li></ol></li><li class="chapter-item "><a href="../../triage.html"><strong aria-hidden="true">3.</strong> 🔍 Triage meetings</a></li><li class="chapter-item "><a href="../../design_docs.html"><strong aria-hidden="true">4.</strong> 🔬 Design docs</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../design_docs/yield_safe.html"><strong aria-hidden="true">4.1.</strong> ⚠️ Yield-safe lint</a></li><li class="chapter-item "><a href="../../design_docs/stream.html"><strong aria-hidden="true">4.2.</strong> ☔ Stream trait</a></li><li class="chapter-item "><a href="../../design_docs/generator_syntax.html"><strong aria-hidden="true">4.3.</strong> ⚡ Generator syntax</a></li><li class="chapter-item "><a href="../../design_docs/async_read_write.html"><strong aria-hidden="true">4.4.</strong> 📝 AsyncRead, AsyncWrite traits</a></li><li class="chapter-item "><a href="../../design_docs/async_fn_in_traits.html"><strong aria-hidden="true">4.5.</strong> 🧬 Async fn in traits</a></li><li class="chapter-item "><a href="../../design_docs/mutex.html"><strong aria-hidden="true">4.6.</strong> 🔒 Mutex (future-aware)</a></li><li class="chapter-item "><a href="../../design_docs/channels.html"><strong aria-hidden="true">4.7.</strong> 📺 Async aware channels</a></li><li class="chapter-item "><a href="../../design_docs/async_closures.html"><strong aria-hidden="true">4.8.</strong> 📦 Async closures</a></li><li class="chapter-item "><a href="../../design_docs/join.html"><strong aria-hidden="true">4.9.</strong> 🤝 Join combinator</a></li><li class="chapter-item "><a href="../../design_docs/select.html"><strong aria-hidden="true">4.10.</strong> 🤷‍♀️ Select combinator</a></li><li class="chapter-item "><a href="../../design_docs/sink_trait.html"><strong aria-hidden="true">4.11.</strong> 🚰 Sink trait</a></li><li class="chapter-item "><a href="../../design_docs/async_main.html"><strong aria-hidden="true">4.12.</strong> 🎇 Async main</a></li><li class="chapter-item "><a href="../../design_docs/async_drop.html"><strong aria-hidden="true">4.13.</strong> 🗑️ Async drop</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../design_docs/async_lifecycle.html"><strong aria-hidden="true">4.13.1.</strong> ♻️ Async lifecycle</a></li></ol></li><li class="chapter-item "><a href="../../design_docs/completion_based_futures.html"><strong aria-hidden="true">4.14.</strong> ⏳ Completion-based futures</a></li></ol></li><li class="chapter-item "><a href="../../conversations.html"><strong aria-hidden="true">5.</strong> 💬 Conversations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../conversations/2021-02-12-Twitter-Thread.html"><strong aria-hidden="true">5.1.</strong> 🐦 2021-02-12 Twitter thread</a></li></ol></li><li class="chapter-item "><a href="../../acknowledgments.html"><strong aria-hidden="true">6.</strong> ❤️ Acknowledgments</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">wg-async-foundations</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang/wg-async-foundations" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-alan-thinks-he-needs-async-locks"><a class="header" href="#-status-quo-stories-alan-thinks-he-needs-async-locks">😱 Status quo stories: Alan thinks he needs async locks</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft &quot;status quo&quot; story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../how_to_vision/status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>One of Alan's first Rust related tasks in his job at YouBuy is writing an HTTP based service. This service is a simple internal proxy router that inspects an incoming HTTP request and picks the downstream service to call based on certain aspects of the HTTP request.</p>
+<p>Alan decides that he'll simply use some shared state that request handlers can read from in order to decide how to proxy the request.</p>
+<p>Alan, having read the Rust book and successfully completed the challenge in the <a href="https://doc.rust-lang.org/book/ch20-02-multithreaded.html">last chapters</a>, knows that shared state can be achieved in Rust with reference counting (using <code>std::sync::Arc</code>) and locks (using <code>std::sync::Mutex</code>). Alan starts by throwing his shared state (a <code>std::collections::HashMap&lt;String, url::Url&gt;</code>) into an <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>.</p>
+<p>Alan, smitten with how quickly he can write Rust code, ends up with some code that compiles that looks roughly like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Clone)]
+struct Proxy {
+   routes: Arc&lt;Mutex&lt;HashMap&lt;String, String&gt;&gt;,
+}
+
+impl Proxy {
+  async fn handle(&amp;self, key: String, request: Request) -&gt; crate::Result&lt;Response&gt; {
+      let routes = self.state.lock().unwrap();
+      let route = routes.get(key).unwrap_or_else(crate::error::MissingRoute)?;
+      Ok(self.client.perform_request(route, request).await?)
+  }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Alan is happy that his code seems to be compiling! The short but hard learning curve has been worth it. He's having fun now!</p>
+<p>Unfortunately, Alan's happiness soon comes to end as he starts integrating his request handler into calls to <code>tokio::spawn</code> which he knows will allow him to manage multiple requests at a time. The error message is somewhat cryptic, but Alan is confident he'll be able to figure it out:</p>
+<pre><code>189 |     tokio::spawn(async {
+    |     ^^^^^^^^^^^^ future created by async block is not `Send`
+::: /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.5.0/src/task/spawn.rs:129:21
+    |
+129 |         T: Future + Send + 'static,
+    |                     ---- required by this bound in `tokio::spawn`
+
+note: future is not `Send` as this value is used across an await
+   --&gt; src/handler.rs:787:9
+      |
+786   |         let routes = self.state.lock().unwrap();
+      |             - has type `std::sync::MutexGuard&lt;'_, HashMap&lt;String, Url&gt;&gt;` which is not `Send`
+787   |         Ok(self.client.perform_request(route, request).await?)
+      |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ await occurs here, with `routes` maybe used later
+788   |     })
+      |     - `routes` is later dropped here
+</code></pre>
+<p>Alan stops and takes a deep breath. He tries his best to make sense of the error message. He sort of understands the issue the compiler is telling him. Apparently <code>routes</code> is not marked as <code>Send</code>, and because it is still alive over a call to <code>await</code>, it is making the future his handler returns not <code>Send</code>. And tokio's <code>spawn</code> function seems to require that the future it received be <code>Send</code>. </p>
+<p>Alan reaches the boundaries of his knowledge of Rust, so he reaches out over chat to ask his co-worker Barbara for help. Not wanting to bother her, Alan provides the context he's already figured out for himself.</p>
+<p>Barbara knows that mutex guards are not <code>Send</code> because sending mutex guards to different threads is not a good idea. She suggests looking into async locks which can be held across await points because they are <code>Send</code>. Alan looks into the tokio documentation for more info and is easily able to move the use of the standard library's mutex to tokio's mutex. It compiles!</p>
+<p>Alan ships his code and it gets a lot of usage. After a while, Alan notices some potential performance issues. It seems his proxy handler does not have the throughput he would expect. Barbara, having newly joined his team, sits down with him to take a look at potential issues. Barbara is immediately worried by the fact that the lock is being held much longer than it needs to be. The lock only needs to be held while accessing the route and not during the entire duration of the downstream request.</p>
+<p>She suggests to Alan to switch to not holding the lock across the I/O operations. Alan first tries to do this by explicitly cloning the url and dropping the lock before the proxy request is made:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Proxy {
+  async fn handle(&amp;self, key: String, request: Request) -&gt; crate::Result&lt;Response&gt; {
+      let routes = self.state.lock().unwrap();
+      let route = routes.get(key).unwrap_or_else(crate::error::MissingRoute)?.clone();
+      drop(routes);
+      Ok(self.client.perform_request(route, request).await?)
+  }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>This compiles fine and works in testing! After shipping to production, they notice a large increase in throughput. It seems their change made a big difference. Alan is really excited about Rust, and wants to write more!</p>
+<p>Alan continues his journey of learning even more about async Rust. After some enlightening talks at the latest RustConf, he decides to revisit the code that he and Barbara wrote together. He asks himself, is using an <em>async</em> lock the right thing to do? This lock should only be held for a very short amount of time. Yielding to the runtime is likely more expensive than just synchronously locking. But he remembers vaguely hearing that you should never use blocking code in async code as this will block the entire async executor from being able to make progress, so he doubts his intuition.</p>
+<p>After chatting with Barbara, who encourages him to benchmark and measure, he decides to switch back to synchronous locks. </p>
+<p>Unfortunately, switching back to synchronous locks brings back the old compiler error message about his future not being <code>Send</code>. Alan is confused as he's dropping the mutex guard before it ever crosses an await point.</p>
+<p>Confused Alan goes to Barbara for advice. She is also confused, and it takes several minutes of exploration before she comes to a solution that works: wrapping the mutex access in a block and implicitly dropping the mutex.</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Proxy {
+  async fn handle(&amp;self, key: String, request: Request) -&gt; crate::Result&lt;Response&gt; {
+      let route = {
+        let routes = self.state.lock().unwrap();
+        routes.get(key).unwrap_or_else(crate::error::MissingRoute)?.clone()
+      };
+      Ok(self.client.perform_request(route, request).await?)
+  }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Barbara mentions she's unsure why explicitly dropping the mutex guard did not work, but they're both happy that the code compiles. In fact it seems to have improved the performance of the service when its under extreme load. Alan's intuition was right!</p>
+<p>In the end, Barbara decides to write a blog post about how blocking in async code isn't always such a bad idea. </p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<pre><code>* Locks can be quite common in async code as many tasks might need to mutate some shared state.
+* Error messages can be fairly good, but they still require a decent understanding of Rust (e.g., `Send`, `MutexGuard`, drop semantics) to fully understand what's going on.
+* This can lead to needing to use certain patterns (like dropping mutex guards early) in order to get code working.
+* The advice to never block in async code is not always true: if blocking is short enough, is it even blocking at all?
+</code></pre>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<pre><code>* Chats with [Alice](https://github.com/Darksonn) and [Lucio](https://github.com/LucioFranco).
+* Alice's [blog post](https://ryhl.io/blog/async-what-is-blocking/) on the subject has some good insights.
+* The issue of conservative analysis of whether values are used across await points causing futures to be `!Send` is [known](https://rust-lang.github.io/async-book/07_workarounds/03_send_approximation.html), but it takes some digging to find out about this issue. A tracking issue for this can be [found here](https://github.com/rust-lang/rust/issues/57478).
+</code></pre>
+<h3 id="why-did-you-choose-a-hrefcharactersalanhtmlalana-to-tell-this-story"><a class="header" href="#why-did-you-choose-a-hrefcharactersalanhtmlalana-to-tell-this-story"><strong>Why did you choose <a href="../characters/alan.html">Alan</a> to tell this story?</strong></a></h3>
+<pre><code>* While Barbara might be tripped up on some of the subtlties, an experienced Rust developer can usually tell how to avoid some of the issues of using locks in async code. Alan on the other hand, might be surprised when his code does not compile as the issue the `Send` error is protecting against (i.e., a mutex guard being moved to another thread) is not protected against in other languages.
+</code></pre>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<pre><code>* Grace would have likely had a similar time to Alan. These problems are not necessarily issues you would run into in other languages in the same way.
+* Niklaus may have been completely lost. This stuff requires a decent understanding of Rust and of async computational systems.
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../vision/status_quo/alan_started_trusting_the_rust_compiler_but_then_async.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../vision/status_quo/alan_tries_a_socket_sink.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../vision/status_quo/alan_started_trusting_the_rust_compiler_but_then_async.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../vision/status_quo/alan_tries_a_socket_sink.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>
