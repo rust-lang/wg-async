@@ -77,22 +77,20 @@ But once a work item is produced, the task will block on the *second* `await` --
 
 ### The fix
 
-Once Barbara understands the problem, she considers the fix. The most obvious fix is to spawn out tasks that will process each work item, like so:
+Once Barbara understands the problem, she considers the fix. The most obvious fix is to spawn out tasks for the `do_select` calls, like so:
 
 ```rust
 async fn do_work(database: &Database) {
     let work = do_select(database, FIND_WORK_QUERY)?;
     stream::iter(work)
-        .map(|item| do_select(database, work_from_item(item)))
+        .map(|item| task::spawn(do_select(database, work_from_item(item))))
         .buffered(5)
-        .for_each(|work_item| task::spawn(async move {
-            process_work_item(database, work_item).await
-        })
+        .for_each(|work_item| process_work_item(database, work_item))
         .await;
 }
 ```
 
-Spawning a task completes immediately, so the task will quickly move back to blocking on the stream and allowing other connections to make progress. Unfortunately, this change results in a compilation error:
+Spawning a task will allow the runtime to keep moving those tasks along independently of the `do_work` task. Unfortunately, this change results in a compilation error:
 
 ```
 error[E0759]: `database` has an anonymous lifetime `'_` but it needs to satisfy a `'static` lifetime requirement
@@ -104,6 +102,7 @@ error[E0759]: `database` has an anonymous lifetime `'_` but it needs to satisfy 
    |                  ...is captured here...
    |        .map(|item| task::spawn(do_select(database, work_from_item(item))))
    |                    ----------- ...and is required to live as long as `'static` here
+```
 
 "Ah, right," she says, "spawned tasks can't use borrowed data. I wish I had [rayon] or the scoped threads from [crossbeam]."
 
@@ -126,7 +125,7 @@ async fn do_work(database: &Database) {
 }
 ```
 
-This isn't maximally efficient -- it's introducing an arbitrary phasing into her work -- but at least it doesn't cause timeouts. Going forward, she tries to remember never to do a "nested `await`" like this. Buffering up work into a `FuturesUnordered` becomes a pattern she finds herself using throughout the codebase.
+This changes the behavior of her program quite a bit though. The original goal was to have at most 5 `do_select` calls occuring concurrently with exactly one `process_work_item`, but now she has all of the `process_work_item` calls executing at once. Nonetheless, the hack solves her immediate problem. Buffering up work into a `FuturesUnordered` becomes a kind of "fallback" for those cases where can't readily insert a `task::spawn`.
 
 ## 🤔 Frequently Asked Questions
 
