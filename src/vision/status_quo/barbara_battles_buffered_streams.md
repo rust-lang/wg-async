@@ -172,7 +172,7 @@ async fn do_work(database: &Database) {
 }
 ```
 
-This would mean however that limit the number of work items being processed to 5. This may be what she wanted, but perhaps not. It may also be that similar problems come up in scenarios where Barbara can't so easily alter the call to `do_select` to "append" a call to `process_work_item` (for example, maybe she is in some function that takes a [`FuturesUnordered`] or `Stream` as argument).
+This would however mean that she would have 5 calls to `process_work_item` executing at once. In the actual case that inspired this story, `process_work_item` can take as much as 10 GB of RAM, so having multiple concurrent calls is a problem.
 
 ### Is there any way for Barbara to both produce and process work items simultaneously, without the buffering and so forth?
 
@@ -202,7 +202,7 @@ async fn do_work(database: &Database) {
 }
 ```
 
-Note that doing so is producing code that looks quite a bit different than where she started, though. :(
+Note that doing so is producing code that looks quite a bit different than where she started, though. :( This also behaves very differently. There can be a queue of tens of thousands of items that `do_select` grabs from, and this code will potentially pull far too many items out of the queue, which then would have to be requeued on shutdown. The intent of the `buffered(5)` call was to grab 5 work items from the queue at most, so that other hosts could pull out work items and share the load when there's a spike.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md
@@ -214,3 +214,5 @@ Note that doing so is producing code that looks quite a bit different than where
 [cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
 [YouBuy]: ../projects/YouBuy.md
 [farnz]: https://github.com/farnz
+
+
