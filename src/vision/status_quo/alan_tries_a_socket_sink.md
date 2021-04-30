@@ -122,6 +122,7 @@ A few weeks later, Alan's work at his project at work is merged with his new for
 * <https://twitter.com/cryptoquick/status/1370143022801846275>
 * <https://twitter.com/cryptoquick/status/1370155726056738817>
 * <https://blog.yoshuawuyts.com/rust-streams/#why-we-do-not-talk-about-the-sink-trait>
+* [[C++] Throwing Out The Kitchen Sink](https://thephd.github.io/output-ranges)
 ### **Why did you choose [Alan](../characters/alan.md) to tell this story?**
 * Alan is more representative of the original author's background in JS, TypeScript, and NodeJS.
 ### **How would this story have played out differently for the other characters?**
