@@ -15,12 +15,26 @@ set -euo pipefail
 # Check if there are `username` and `token` arguments
 if [ $# -eq 0 ]
 then
+  user="$(git config github.user)"
+  token="$(git config github.oauth-token)"
+elif [ $# -eq 2 ]
+then
+  user="$1"
+  token="$2"
+else
+  user=""
+  token=""
+fi
+
+if [ "$user" == "" -o "$token" == "" ]
+then
+  echo "github token required. The token is normally loaded from"
+  echo "git config (github.user, github.oauth-token), but you can"
+  echo "also use as follows:"
+  echo ""
   echo "Usage: $0 <username> <token>"
   exit 1
 fi
-
-user="$1"
-token="$2"
 
 # Check if a command is available, otherwise exit.
 function check_bin() {
