@@ -47,7 +47,7 @@ Grace is happy because the performance tools give her all the low level insights
 
 ### **What is [Niklaus] most excited about in this future? Is he disappointed by anything?**
 
-Niklaus is content. The tooling tells him what he needs to know, and allows him to add interesting information to places where he'd otherwise be stuck trying to extract it via `println!()`. He's not entirely sure how to use some of the detailed information, but he can ignore it easily.
+Niklaus is content. The tooling tells him what he needs to know, and allows him to add interesting information to places where he'd otherwise be stuck trying to extract it via `println!()`. He's not entirely sure how to use some of the detailed information, but he can ignore it easily because the tools let him filter down to just the information he added to the traces - getting timestamps and task identifiers "for free" is just gravy to Niklaus.
 
 ### **What is [Barbara] most excited about in this future? Is she disappointed by anything?**
 
