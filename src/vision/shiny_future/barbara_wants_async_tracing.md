@@ -16,13 +16,21 @@ This is something an experienced Rust developer will deal with.  They know enoug
 I believe this would be Barbara: the experienced Rust developer
 
 Story:
-Barbara has written a multistage async workflow to solve problem X
+Barbara has written a multistage async workflow to solve X
+
+TODO: Come up with a problem to solve.
 
 A bug is found where for specific inputs the output is wrong. Barbara wants to confirm exactly what sequence of steps events follow so that she can quickly prove that all the correct async steps are being take and in the right order.
 
+TODO: Invent a bug and show some example code.
+
 So she writes a wrapper that includes a tracing ID so at each async step she can output a log message with the trace ID and then use the log file to see what the sequence of events is.
 
+TODO: Show what such a wrapper might look like (Reach out to Alice Rhyl?)
+
 What Barbara would like is to have this feature be built in, perhaps with a compile time flag. That would create the trace wrapper and record trace data for her to view and analyze.
+
+TODO: Show the possible compile time flag and possible output.
 
 ## 🤔 Frequently Asked Questions
 
