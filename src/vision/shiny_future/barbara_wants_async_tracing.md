@@ -34,14 +34,16 @@ What Barbara would like is to have this feature be built in, perhaps with a comp
 
 ### What are the key attributes of this shiny future?
 
-- Provide a protocol for linking events across async expressions
-- Provide an output that allows a user to construct a graph showing the path of execution of an async expression
+- Provide a protocol for linking events across async expressions.
+- Provide an output that allows a user to understand the path of execution of a program through a network of async expressions.
 
 ### What is the "most shiny" about this future? 
 
 *Thing about Rust's core "value propositions": performance, safety and correctness, productivity. Which benefit the most relative to today?*
 
-- Providing a whole new way of debugging Rust programs and giving a way to view the actual execution of code in a human readable form
+- This will benefit the productivity of a developer. Providing a whole new way of debugging Rust programs and giving a way to view the actual execution of code in a human readable form can make it significantly faster to debug programs.  This also saves time for a developer from having to write a tracer themselves.
+- This can also help with correctness. When working with asynchronous code it can be difficult; having a built-in means to trace a flow of execution makes it much easier to verify that specific inputs are following the correct paths in the correct order.
+
 ### What are some of the potential pitfalls about this future?
 
 *Thing about Rust's core "value propositions": performance, safety and correctness, productivity. Are any of them negatively impacted? Are there specific application areas that are impacted negatively? You might find the sample [projects] helpful in this regard, or perhaps looking at the goals of each [character].*
@@ -49,6 +51,7 @@ What Barbara would like is to have this feature be built in, perhaps with a comp
 - Figuring out how to propagate a trace ID in a way that’s compatible with any use of async could be difficult
 - It could have some performance impact
 - We could output too much data for a person to be able to use it
+
 ### Did anything surprise you when writing this story? Did the story go any place unexpected?
 
 *The act of writing shiny future stories can uncover things we didn't expect to find. Did you have any new and exciting ideas as you were writing? Realize some complications that you didn't foresee?*
