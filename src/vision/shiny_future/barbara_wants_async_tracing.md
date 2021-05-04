@@ -10,10 +10,10 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 The problem:
 When you have a complex network of async tasks it can be difficult to debug issues or investigate behavior because it’s hard to reason through the path of execution just by reading the code.  Adding async tracing helps solve this by letting you trace an event through the network and see which async tasks the event executed and when and in what order.
 
-Character:
+Character is Barbara:
 This is something an experienced Rust developer will deal with.  They know enough to be working with async and be building complex async networks. And they now need tools to help them debug issues that arise in those systems. They probably already build things like this, but providing tracing out of the box would save them time and effort.
 
-I believe this would be Barbara: the experienced Rust developer
+This is Barbara: the experienced Rust developer.
 
 Story:
 Barbara has written a multistage async workflow to solve X
