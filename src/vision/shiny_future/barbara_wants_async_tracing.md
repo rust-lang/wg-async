@@ -33,6 +33,9 @@ Barbara is grateful to have found the issue but wishes this tooling and been pro
 ### What status quo stories are you retelling?
 
 *Link to status quo stories if they exist. If not, that's ok, we'll help find them.*
+[Alan Builds A Cache](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_builds_a_cache.html)
+[Alan Iteratively Regresses Performance](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_iteratively_regresses.html)
+[Alan Traies To Debug A Hang](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_tries_to_debug_a_hang.html)
 
 ### What are the key attributes of this shiny future?
 
@@ -51,8 +54,8 @@ Barbara is grateful to have found the issue but wishes this tooling and been pro
 *Thing about Rust's core "value propositions": performance, safety and correctness, productivity. Are any of them negatively impacted? Are there specific application areas that are impacted negatively? You might find the sample [projects] helpful in this regard, or perhaps looking at the goals of each [character].*
 
 - Figuring out how to propagate a trace ID in a way that’s compatible with any use of async could be difficult
-- It could have some performance impact
-- We could output too much data for a person to be able to use it
+- Recording trace data will have some impact on performance.
+- We could output too much data for a person to be able to use it.
 
 ### Did anything surprise you when writing this story? Did the story go any place unexpected?
 
@@ -62,17 +65,18 @@ No.
 
 ### What are some variations of this story that you considered, or that you think might be fun to write? Have any variations of this story already been written?
 
-*Often when writing stories, we think about various possibilities. Sketch out some of the turning points here -- maybe someone will want to turn them into a full story! Alternatively, if this is a variation on an existing story, link back to it here.*
+Another variation of this story is tracking down functional bugs: where the program is not always executing the expected code paths.  An example of this is from the status quo story [Alan Builds A Cache](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_builds_a_cache.html).  In this type of story, a developer uses tracing to see execution flow of an event as it is fully processed by the application. This can the be used to make sure that every expected or required action is completed and done in the correct order; and if actions were missed, be able to determine why.
 
 ### What are some of the things we'll have to figure out to realize this future? What projects besides Rust itself are involved, if any? (Optional)
 
 *Often the 'shiny future' stories involve technical problems that we don't really know how to solve yet. If you see such problems, list them here!*
 
-- Weave a trace ID through the execution of async workflows.
+- There will need to be some form of protocol for how to trace data as they move through a graph of async expressions. Perhaps by weaving a trace ID through the execution of async workflows. We will also have to provide a way "inject" or "wrap" this protocol around the users data in a way that can be automatically done as a compile time option (or is always done behind the scenes).
+- A protocol or standard for recording this information and decorating logs or metrics with this data would need to be provided.
 - Collecting entry and exit events for async expressions and linking them together in a graph
 - How to store the traces
-- How to identify each async expression so that a user knows what step in the trace refers to
-- How to show this information to the user
+- How to identify each async expression so that a user knows what step in the trace refers to.
+- How to show this information to the user.
 
 
 [character]: ../characters.md
