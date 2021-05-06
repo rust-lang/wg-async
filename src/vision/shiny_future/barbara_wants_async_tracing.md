@@ -18,19 +18,13 @@ This is Barbara: the experienced Rust developer.
 Story:
 Barbara has written a multistage async workflow to solve X
 
-TODO: Come up with a problem to solve.
+Barbara is seeing slow performance in one of her services.  This service happens to make extensive use of asynchronous workflows and builds a rather complex graph of possible execution paths. Unfortunately, this means that it's hard to intuit what could be causing the slowdown.  Perhaps a slow API call or some performance issue in the runtime.  What Barbara wants is to be able to see the full path of execution the slow events are taking through her service and be able to see the timing through events.  She can add log statements to each task, but how will she be able to link all the log statements to the events which they are associated with?
 
-A bug is found where for specific inputs the output is wrong. Barbara wants to confirm exactly what sequence of steps events follow so that she can quickly prove that all the correct async steps are being take and in the right order.
+To solve this problem, Barbara needs to be able to trace events through her service and link log entries to specific events. So, Barbara sets about creating a simple tracing wrapper around the events.  This tracing wrapper is designed to provide a way to associate every event in the system with events that they cause and to associate events with the logs she writes. To this end, she tracks a `message id` UUID that gets attached to the start of every asynchronous workflow and which is propagated consistently to any child events that get triggered. She then updates her code to capture the `message id` and insert into her logs.
 
-TODO: Invent a bug and show some example code.
+Now Barbara is able to run some tests and find a message which demonstrated the performance issue she was investigating and isolate the logs for that message. With this she is able to get the time spent in each subsection of code and compare this to the trace of a message with expected behavior. Now it's obvious that there's one step in the workflow which periodically runs slower than normal and it is the only part of execution path with this issue. Looking at additional traces, Barbara realizes that the issue effects several events all around the same time and is able to deduce that the issue is most likely due to a shared resource performing poorly.
 
-So she writes a wrapper that includes a tracing ID so at each async step she can output a log message with the trace ID and then use the log file to see what the sequence of events is.
-
-TODO: Show what such a wrapper might look like (Reach out to Alice Rhyl?)
-
-What Barbara would like is to have this feature be built in, perhaps with a compile time flag. That would create the trace wrapper and record trace data for her to view and analyze.
-
-TODO: Show the possible compile time flag and possible output.
+Barbara is grateful to have found the issue but wishes this tooling and been provided out of the box.  Understanding the behavior of a complex async service is difficult: both investigating performance and business logic require a lot of tedious work to reason through the paths an event may travel. Making tracing an essential tool that provides that information immediately. Her dream would be to have a compile time flag, e.g. `cargo build --tracing`, which would instrument her async code with the tracing wrapper and allow her to record tracing data when she runs her application. Even better if there are a set of supplied tools for viewing and analyzing the output data.
 
 ## 🤔 Frequently Asked Questions
 
