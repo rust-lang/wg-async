@@ -5,7 +5,7 @@ Alan has been working at AWS for the last six years. He's accustomed to a fairly
 * Write a description of the service APIs using a modeling language like [Smithy](https://awslabs.github.io/smithy/).
 * Submit the description to a webpage, which gives a standard service implementation based on [netty](https://netty.io/). Each of the API calls in the modeling language has a function with a `/* TODO */` comment to fill in.
 * As Alan works with his team to fill in each  of those items, he makes use of a number of standard conventions:
-    * Mocking with projects like [mockito] to allow for unit testing of specific components.
+    * Mocking with projects like [mockito](https://site.mockito.org/) to allow for unit testing of specific components.
 * Alan uses a variety of nice tools:
     * Advanced IDEs like IntelliJ, which offer him suggestions as he works.
     * Full-featured, if standard, debuggers; he can run arbitrary code, mutate state, step into and out of functions with ease. 

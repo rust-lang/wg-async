@@ -1,6 +1,6 @@
 # Status quo of an AWS engineer: Testing the service
 
-At first, Alan is content to test by hand. But once the server is starting to really work, he realizes he needs to do unit testing. He wants to do something like [Mockito] in Rust, so he starts searching the internet to find out what the options are. To his surprise, he learns that there doesn't seem to be any comparable framework in Rust. 
+At first, Alan is content to test by hand. But once the server is starting to really work, he realizes he needs to do unit testing. He wants to do something like [Mockito](https://site.mockito.org/) in Rust, so he starts searching the internet to find out what the options are. To his surprise, he learns that there doesn't seem to be any comparable framework in Rust. 
 
 One option he considers is making all of his functions generic. For example, he could create a trait to model, for example, the network, so that he can insert artificial pauses and other problems during testing:
 
