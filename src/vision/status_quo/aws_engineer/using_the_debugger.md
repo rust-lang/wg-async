@@ -1,0 +1,7 @@
+# Status quo of an AWS engineer: Using the debugger
+
+Even though the code is starting to work, they soon uncover a test that is not behaving as it ought to. Alan decides to try loading the Rust code into the debugger. He quickly realizes that the debugger is showing him the raw threads that are used to implement his service, and not the tasks and things that the service uses at a logical level, but that's not a problem for what he's doing right now. He sets a breakpoint on a particular line of code that corresponds to the place where things seem to be going wrong.
+
+At first, the debugger seems to be working great, but Alan soon realizes that the experiences is a far cry from what he is used to with Intellij and Java code. Stepping through the code is unpredictable; it's not always obvious what function the will be stepping into. More than once Alan is confronted with a screen full of assembly. "No thank you," he thinks, and just avoids stepping into that function in the future. He finds that he often cannot print the values of variables ('variable optimized out', says the debugger) or execute code dynamically. Sometimes he is able to print them but instead of seeing something useful, he gets a bunch of random pointer values.
+
+Alan gives up on the debugger. He starts to thread printfs and logging statements throughout his code. The [`tracing`] crate is pretty useful. Eventually, he is able to find and fix the problem and get his test case passing.
