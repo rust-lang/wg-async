@@ -10,7 +10,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Character: Barbara.
 
-Barbara is creating a `sans-io` network protocol library.  To make her library as useable as possible, she wants her design to be runtime agnostic [Link to this story]: so, she decides that her library will run on generic `AsyncRead`/`AsyncWrite` types. Everything goes as planned and before long she's shipped the first version of her library.
+Barbara is creating a `sans-io` network protocol library.  To make her library as useable as possible, she wants her design to be runtime agnostic: so, she decides that her library will run on generic `AsyncRead`/`AsyncWrite` types. Everything goes as planned and before long she's shipped the first version of her library.
 
 As she monitors the performance of her library she becomes less and less satisified. She firmly believes that the library is under-performing and she can make it signficantly better. Being a tried and tested Linux developer, Barbara goes right to `strace` to gain information about how her library interacts with the OS. And immediately her suspicions are confirmed: there are a *lot* of read/write syscalls being made.
 
@@ -18,7 +18,7 @@ She discusses what she found with her friend Grace and decides that the next ste
 
 Unfortunately, Barbara finds that there is no generic buffered equivalents to the `AsyncRead` and `AsyncWrite` her first version was based on. For a buffered `AsyncRead`, she finds an inconsistent ecosystem: there's a `AsyncBufRead` defined in the `futures` crate but only some runtimes implement it, and `tokio` has a completely different `AsyncBufRead` trait. Barbara decides to use the `AsyncBufRead` from `futures` and provide compatibility mechanisms for users of `tokio` which will allow them to the completely different buffered read primitive in `tokio` to her library.
 
-But, it's even worse for a buffered `AsyncWrite`: with buffered read done, Barbara moves to buffered write and finds out, to her chagrin, that there is no single buffered async writer.  Every runtime provides there own, inconsistent, types. And there are no traits for abstraction. Barbara is exhausted; with no provided abstractions for this primitive Barbara will have to write her own abstractions that can unify across all the runtimes. There are so many hurdles to overcome in order to do this, such as the orphan rule, that Barbara feels there is no reasonable path forward [Link Agnostic Runtime story again].
+But, it's even worse for a buffered `AsyncWrite`: with buffered read done, Barbara moves to buffered write and finds out, to her chagrin, that there is no single buffered async writer.  Every runtime provides there own, inconsistent, types. And there are no traits for abstraction. Barbara is exhausted; with no provided abstractions for this primitive Barbara will have to write her own abstractions that can unify across all the runtimes. There are so many hurdles to overcome in order to do this, such as the orphan rule, that Barbara feels there is no reasonable path forward.
 
 ## 🤔 Frequently Asked Questions
 
