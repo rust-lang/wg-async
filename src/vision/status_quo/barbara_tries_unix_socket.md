@@ -1,4 +1,4 @@
-# 😱 Status quo stories: Template
+# 😱 Status quo stories: Barbara tries Unix socket
 
 *This is a template for adding new "status quo" stories. To propose a new status quo PR, do the following:*
 
