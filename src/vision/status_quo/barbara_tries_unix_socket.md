@@ -1,22 +1,5 @@
 # 😱 Status quo stories: Barbara tries Unix socket
 
-*This is a template for adding new "status quo" stories. To propose a new status quo PR, do the following:*
-
-* *Create a new file in the [`status_quo`] directory named something like `Alan_tries_to_foo.md` or `Grace_does_bar.md`, and start from [the raw source from this template]. You can replace all the italicized stuff. :)*
-* *Do not add a link to your story to the [`SUMMARY.md`] file; we'll do it after merging, otherwise there will be too many conflicts.*
-
-*For more detailed instructions, see the [How To Vision: Status Quo] page!*
-
-*If you're looking for ideas of what to write about, take a look at the [open issues]. You can also [open an issue of your own] to throw out an idea for others.*
-
-[How To Vision: Status Quo]: ../how_to_vision/status_quo.md
-[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
-[`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
-[open issues]: https://github.com/rust-lang/wg-async-foundations/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
-[open an issue of your own]: https://github.com/rust-lang/wg-async-foundations/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
-
-
 ## 🚧 Warning: Draft status 🚧
 
 This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
@@ -27,6 +10,9 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Content of `Cargo.toml` for reproducibility:
 
+<details>
+  <summary><code>Cargo.toml</code></summary>
+
 ```toml
 futures = "0.3.14"
 hyper = { version = "0.14.7", features = ["full"] }
@@ -34,8 +20,12 @@ pretty_env_logger = "0.4.0"
 reqwest = "0.11.3"
 tokio = { version = "1.5.0", features = ["macros", "rt-multi-thread"] }
 ```
+</details>
 
 There is a HTTP server in hyper which Barbara have to query.
+
+<details>
+  <summary>Server code</summary>
 
 ```rust
 use hyper::server::conn::Http;
@@ -66,8 +56,8 @@ async fn serve(_req: Request<Body>) -> Result<Response<Body>, Infallible> {
         .unwrap();
     Ok(res)
 }
-
 ```
+</details>
 
 ## Nice simple query with high-level reqwest
 
@@ -92,6 +82,29 @@ Barbara search through reqwest doc and github issues to see how to use unix sock
 
 ## The screen stares at Barbara
 
+```rust
+use hyper::{body::HttpBody, client::conn, Body, Request};
+use tokio::net::UnixStream;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    pretty_env_logger::init();
+    let stream = UnixStream::connect("/tmp/socket").await?;
+
+    let (mut request_sender, connection) = conn::handshake(stream).await?;
+ 
+    let request = Request::get("/").body(Body::empty())?;
+    let mut response = request_sender.send_request(request).await?;
+    println!("{:?}", response.body_mut().data().await);
+ 
+    let request = Request::get("/").body(Body::empty())?;
+    let mut response = request_sender.send_request(request).await?;
+    println!("{:?}", response.body_mut().data().await);
+ 
+    Ok(())
+}
+```
+
 Barbara wrote some code according to the comments Barbara saw and read some docs like what is `handshake` to roughly know what it does. Barbara compile and it shows a warning, the `connection` variable is not used:
 ```
 warning: unused variable: `connection`
@@ -113,6 +126,8 @@ Barbara try adding `println!` all over the code but it was still stuck, so Barba
 Barbara added the missing piece to `.await` for the `connection`, all the while Barbara thought it will work if it was `.await`-ed but in this case having required to await something else to work is a surprise.
 
 ```rust
+    let (mut request_sender, connection) = conn::handshake(stream).await?;
+
     tokio::spawn(async move {
         if let Err(e) = connection.await {
             eprintln!("error: {}", e);
