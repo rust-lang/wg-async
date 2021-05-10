@@ -51,6 +51,7 @@
       - [Barbara trims a stacktrace](./vision/status_quo/barbara_trims_a_stacktrace.md)
       - [Barbara wants async insights](./vision/status_quo/barbara_wants_async_insights.md)
       - [Barbara wants to use GhostCell-like cell borrowing](./vision/status_quo/barbara_wants_to_use_ghostcell.md)
+      - [Barbara writes a runtime-agnostic library](./vision/status_quo/barbara_writes_a_runtime_agnostic_lib.md)
       - [Grace deploys her service and hits obstacles](./vision/status_quo/grace_deploys_her_service.md)
       - [Grace tries new libraries](./vision/status_quo/grace_tries_new_libraries.md)
       - [Grace waits for gdb next](./vision/status_quo/grace_waits_for_gdb_next.md)
