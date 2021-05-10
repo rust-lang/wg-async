@@ -116,14 +116,14 @@ warning: unused variable: `connection`
   = note: `#[warn(unused_variables)]` on by default
 ```
 
-Barbara then runs the program. Barbara was stares at the screen and the screen stares at her. Barbara waited and ... it was stuck. So Barbara decides to look at the logs and run it again with `env RUST_LOG=trace cargo r`, and it was indeed stuck, but not sure where.
+Barbara then runs the program. Barbara stares at the screen and the screen stares at her. Barbara waited and ... it was stuck. So Barbara decides to look at the logs and run it again with `env RUST_LOG=trace cargo r`, and it was indeed stuck, but not sure where.
 ```
  TRACE mio::poll > registering event source with poller: token=Token(0), interests=READABLE | WRITABLE
 ```
 
 Barbara try adding `println!` all over the code but it was still stuck, so Barbara try asking for help. Thanks to the welcoming Rust community, Barbara got help quickly in this case. It seemed like Barbara missed the `connection` which is a culprit and it was in the parent module of the docs Barbara read.
 
-Barbara added the missing piece to `.await` for the `connection`, all the while Barbara thought it will work if it was `.await`-ed but in this case having required to await something else to work is a surprise.
+Barbara added the missing piece to `.await` for the `connection`, all the while Barbara thought it will work if it was `.await`-ed but in this case having required to await something else to work is a surprise. Someone suggests to Barbara that she follow the example in the docs to insert a `tokio::spawn`, so she winds up with:
 
 ```rust
     let (mut request_sender, connection) = conn::handshake(stream).await?;
@@ -301,11 +301,13 @@ Barbara still have no idea why it needs to be done this way. But at least it wor
 
 ## 🤔 Frequently Asked Questions
 
-*Here are some standard FAQ to get you started. Feel free to add more!*
-
 ### **What are the morals of the story?**
 
 Barbara is not able to see the problem right away. Usually missing an `await` is an issue but in this case, not awaiting on another variable or not polling for ready when using a low-level library may the program incorrect, it is also hard to debug and figure out what is the correct solution.
+
+In a way, some of the fixes "feels like magic". Sometimes polling is required to be done but where? It may make people afraid of using `async/.await` and end up writing safety net code (for example, writing code to do type checking in weakly typed languages in every lines of code to be safe).
+
+Having these pitfalls in mind, one can easily relate it back to unsafe. If there are unsafe blocks, the user needs to manually audit every specific code block for undefined behaviors. But in the case of async, the situation is someone similar such that the user need to audit the whole async code blocks (which is a lot compared to unsafe) for "undefined behaviors", rather than having when it compiles it works sort of behavior.
 
 ### **What are the sources for this story?**
 
