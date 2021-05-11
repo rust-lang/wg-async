@@ -12,6 +12,17 @@ Alan is new to Rust. He wants to build a program that recurses over all the file
 
 Since so much blocking I/O is involved, he chooses async in order to process many files concurrently.
 
+### Async
+Alan does some research into `async` Rust. New to the language, he's heard that `async` support has recently landed, so he starts by reading [the release notes](https://blog.rust-lang.org/2019/11/07/Rust-1.39.0.html) and much of the [Async Book](https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html), bookmarking the dense parts about Pinning as something he'll come back to when it makes more sense. Notably, he skips over the [Recursion Workaround](https://rust-lang.github.io/async-book/07_workarounds/04_recursion.html) and other workaround bits.
+
+As someone who hasn't followed the evolution of `async` Rust closely, the [Ecosystem](https://rust-lang.github.io/async-book/08_ecosystem/00_chapter.html) page of the Async Book provides a critical bit of context that he wishes he'd found first. Coming from Python and Go, where `asyncio` and goroutines are fully supported by the core language, Alan had been unclear exactly what _was_ and what _wasn't_ included in the language. This page puts everything into place.
+
+The [Popular Runtimes](https://rust-lang.github.io/async-book/08_ecosystem/00_chapter.html#popular-async-runtimes) section makes it clear that he'll need to choose a third party ecosystem. He chooses Tokio because:
+- It's the only ecosystem of those listed that he's already heard about.
+- It seems to be widely used based on some web searches.
+- It has bite-sized, approachable [tutorial pages](https://tokio.rs/tokio/tutorial) that provide higher-level introduction than the average `rustdoc`.
+- It provides rich RPC libraries, like Tonic, which he plans to fiddle with in a future project.
+
 ### Recursion
 Alan starts by writing a recursive function that can call some operation on each regular file in a directory and recurse on each subdirectory.
 ```rust
