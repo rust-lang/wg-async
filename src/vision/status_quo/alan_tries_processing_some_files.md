@@ -269,7 +269,7 @@ error[E0308]: `match` arms have incompatible types
 ### **What are the sources for this story?**
 I describe my own experience while working on my first Rust project.
 
-### **Why did you choose *NAME* to tell this story?**
+### **Why did you choose Alan to tell this story?**
 I chose Alan to tell this story because I envision him comping from Python. I mostly work in `asyncio` Python by day, which means my exposure to async is shaped by what I'd expect from a language without traits, and one where heap wrangling and memory addressing is abstracted away.
 
 ### **How would this story have played out differently for the other characters?**
