@@ -10,15 +10,26 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Character: Barbara.
 
-Barbara is creating a `sans-io` network protocol library.  To make her library as useable as possible, she wants her design to be runtime agnostic: so, she decides that her library will run on generic `AsyncRead`/`AsyncWrite` types. Everything goes as planned and before long she's shipped the first version of her library.
+Barbara is the creator of a `sans-io` library for Rust. She designed her library to 
+integrate with `async` and her goal was to make it runtime agnostic; so that it could
+be as broadly used as possible.  Unfortunately, when she first wrote the library `async`
+did not have a standard abstraction for Buffered IO. So her first implementation did
+not use buffered IO.  When she tried to update her library to use buffered IO so as to
+improve performance she was confronted with the problem that each runtime had its own
+implemenation and abstractions. The result was several unavoidable compromises on her
+runtime-agnostic design goals.  She was able to achieve her performance improvements
+but only with runtime specific implementations; leaving her with a larger more complex
+code base.
 
-As she monitors the performance of her library she becomes less and less satisified. She firmly believes that the library is under-performing and she can make it signficantly better. Being a tried and tested Linux developer, Barbara goes right to `strace` to gain information about how her library interacts with the OS. And immediately her suspicions are confirmed: there are a *lot* of read/write syscalls being made.
-
-She discusses what she found with her friend Grace and decides that the next step is to use buffered IO in order to reduce the total number of syscalls being made.  And she is confident that this will greatly improve the performance of her library.
-
-Unfortunately, Barbara finds that there is no generic buffered equivalents to the `AsyncRead` and `AsyncWrite` her first version was based on. For a buffered `AsyncRead`, she finds an inconsistent ecosystem: there's a `AsyncBufRead` defined in the `futures` crate but only some runtimes implement it, and `tokio` has a completely different `AsyncBufRead` trait. Barbara decides to use the `AsyncBufRead` from `futures` and provide compatibility mechanisms for users of `tokio` which will allow them to the completely different buffered read primitive in `tokio` to her library.
-
-But, it's even worse for a buffered `AsyncWrite`: with buffered read done, Barbara moves to buffered write and finds out, to her chagrin, that there is no single buffered async writer.  Every runtime provides there own, inconsistent, types. And there are no traits for abstraction. Barbara is exhausted; with no provided abstractions for this primitive Barbara will have to write her own abstractions that can unify across all the runtimes. There are so many hurdles to overcome in order to do this, such as the orphan rule, that Barbara feels there is no reasonable path forward.
+But today is a fantastic day for Barbara.  The Rust async team has recently released
+the latest version of `async` and part of that release was a standard Buffered Async
+Read/Write abstraction.  Since then, several runtimes have been updated to implement
+the new abstraction and Barbara refactored the buffered IO module to use this new
+abstraction and she deprecated the runtime specific solutions. Today is the day that
+Barbara gets to release her new version of `sans-io` which takes full advantage of the
+buffered Async Read/Write abstractions now defined in `async`.  The result is a library
+that maintains the same performance gains that it had with the runtime specific modules
+while greatly reducing the amount of code.
 
 ## 🤔 Frequently Asked Questions
 
