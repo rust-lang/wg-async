@@ -147,6 +147,7 @@ Writing async programs turns out to have all kinds of subtle tradeoffs. Rust aim
 
 * The state of the executor can be very opaque: what tasks exist? why are they blocked?
     * [Alan tries to debug a hang](status_quo/alan_tries_to_debug_a_hang.md)
+    * [Barbara tries unix socket](status_quo/barbara_tries_unix_socket.md)
     * [Barbara wants async insights](status_quo/barbara_wants_async_insights.md)
     * [Grace deploys her service](status_quo/grace_deploys_her_service.md)
 * Stacktraces are full of gobbly gook and hard to read.
