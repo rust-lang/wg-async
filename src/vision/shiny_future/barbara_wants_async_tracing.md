@@ -31,7 +31,7 @@ instrumented and will start logging trace data to a file for later analysis.
 Barbara runs the instrumented code in QA and recreates the laggy event several times.  Then she takes the 
 generated trace file and looks through the data.  She immediately sees where each of the slow requests
 actually lagged.  Each request experienced a slow down in different async expressions, but each expression
-had one thing in common they each queried the same database table. She also noticed that there was a relation
+had one thing in common: they each queried the same database table. She also noticed that there was a relation
 in when the latency occurred: all the laggy requests tended to occur in clusters. From this she was able to identify
 that the root cause was some updates made to the database which led to some queries, if they arrived together,
 to run relatively slowly. With tracing, Barbara was saved the effort of having to meticulous work through the code
