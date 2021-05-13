@@ -11,20 +11,35 @@ The problem:
 When you have a complex network of async tasks it can be difficult to debug issues or investigate behavior because it’s hard to reason through the path of execution just by reading the code.  Adding async tracing helps solve this by letting you trace an event through the network and see which async tasks the event executed and when and in what order.
 
 Character is Barbara:
-This is something an experienced Rust developer will deal with.  They know enough to be working with async and be building complex async networks. And they now need tools to help them debug issues that arise in those systems. They probably already build things like this, but providing tracing out of the box would save them time and effort.
+Barbara’s team works on a set of services that power the API that powers her company’s website and all the
+features their customer’s use. They’ve built the backend for these services in Rust and make heavy use of
+`async` to manage IO bound operations and help make concurrency easier to leverage. However, the services
+have grown quite a bit and there are a large number of features and data requirements and different internal
+systems which they must interact with. The result is a very complex network of `async` expressions that do the
+job well and perform great, but, are too complex to easily reason about anymore and can be extraordinarily 
+intimidating when trying to fix transient small issues. Issues such as infrequent slow requests or a very small number
+of requests executing certain actions out of order are very hard to resolve when the network of `async` expressions
+is complex.
 
-This is Barbara: the experienced Rust developer.
+Recently, Barbara and her team have been notified about some customers experiencing slow responses on
+some features.  The lag events are rare but Barbara and her team are determined to fix them.  With some work
+Barbara is able to recreate the lag reliably in the QA environment; but now she must figure out where in the
+complex code base this lag could be coming from and why it’s happening.  Fortunately, Rust’s `async` framework
+now provides a built in Tracing tool.  By building her service with the `tracing` flag on, her code is automatically
+instrumented and will start logging trace data to a file for later analysis.
 
-Story:
-Barbara has written a multistage async workflow to solve X
+Barbara runs the instrumented code in QA and recreates the laggy event several times.  Then she takes the 
+generated trace file and looks through the data.  She immediately sees where each of the slow requests
+actually lagged.  Each request experienced a slow down in different async expressions, but each expression
+had one thing in common they each queried the same database table. She also noticed that there was a relation
+in when the latency occurred: all the laggy requests tended to occur in clusters. From this she was able to identify
+that the root cause was some updates made to the database which led to some queries, if they arrived together,
+to run relatively slowly. With tracing, Barbara was saved the effort of having to meticulous work through the code
+and try to deduce what the cause was and she didn’t have to add in a large amount of logging or other
+instrumentation.  All the instrumentation and analysis was provided out of the box and required no development
+work for Barbara to isolate the cause. 
 
-Barbara is seeing slow performance in one of her services.  This service happens to make extensive use of asynchronous workflows and builds a rather complex graph of possible execution paths. Unfortunately, this means that it's hard to intuit what could be causing the slowdown.  Perhaps a slow API call or some performance issue in the runtime.  What Barbara wants is to be able to see the full path of execution the slow events are taking through her service and be able to see the timing through events.  She can add log statements to each task, but how will she be able to link all the log statements to the events which they are associated with?
-
-To solve this problem, Barbara wants to see what path the slow events are travelling through her service and how much time they spend in each async expression. She decides that the best way to get this information is by having a way to track an event as it moves through her service: from when it first arrives and through every async expression it executes. So, Barbara sets about creating a simple tracing wrapper around the events.  This tracing wrapper tags an event with an ID when it first arrives in the service and propagates this ID through every step of execution and through any child events that are created. For this, she tracks a `message id` UUID that gets attached to the start of every asynchronous workflow and which is propagated consistently to any child events that get triggered. With all of her messages now tagged with an ID, she decorates her log events with `message id` of the current event so can now correlate log entries with specific messages.
-
-Now Barbara is able to run some tests and find a message which demonstrated the performance issue she was investigating and isolate the logs for that message. With this she is able to get the time spent in each subsection of code and compare this to the trace of a message with expected behavior. Now it's obvious that there's one step in the workflow which periodically runs slower than normal and it is the only part of execution path with this issue. Looking at additional traces, Barbara realizes that the issue effects several events all around the same time and is able to deduce that the issue is most likely due to a shared resource performing poorly.
-
-Barbara is grateful to have found the issue but wishes this tooling and been provided out of the box.  Understanding the behavior of a complex async service is difficult: both investigating performance and business logic require a lot of tedious work to reason through the paths an event may travel. Making tracing an essential tool that provides that information immediately. Her dream would be to have a compile time flag, e.g. `cargo build --tracing`, which would instrument her async code with the tracing wrapper and allow her to record tracing data when she runs her application. Even better if there are a set of supplied tools for viewing and analyzing the output data.
+Barbara can’t believe how much time she saved having this debugging tool provided out of the box.
 
 ## 🤔 Frequently Asked Questions
 
