@@ -1,0 +1,7 @@
+# Status quo of an AWS engineer: Getting ready to deploy the service
+
+The next morning, Alan is talking to his team. The service is more-or-less working, although there is room to improve performance. It's time to talk about the Operational Readiness Review (ORR). Before any service can be put into production at AWS, it needs to pass an ORR. This is a stringent process where experienced senior engineers grill the team about all kinds of things that could go wrong and how they would handle them. These plans are gathered into a document that can be consulted should the need arise.
+
+Alan has been through a few ORRs in his time at AWS. They're always stressful, but they're usually not that big a deal. A lot of the worst cases are handled automatically by the Java frameworks that Alan is accustomed to working with: for example, they have connection timeouts, or facilities for logging particular kinds of events. For the stuff that is not automatic, there are known "best practices" that can help.
+
+For Rust, there are a lot of unknowns. The standard servers don't exist, and Alan's team has had to roll their own. There aren't nearly as many tools for performance monitoring or other sorts of improvements. Alan's team is treading new ground by deploying a Rust-based service, and they know they have to budget extra time to manage that.
