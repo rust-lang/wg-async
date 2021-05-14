@@ -49,17 +49,26 @@ check_bin curl
 check_bin jq
 
 function get_issue_numbers() {
-  curl -s -u $user:$token -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/rust-lang/wg-async-foundations/issues?state=all&labels=$1" | jq '.[].number'
+  local result="$(curl -s -u $user:$token -H "Accept: application/vnd.github.v3+json" \
+    "https://api.github.com/repos/rust-lang/wg-async-foundations/issues?state=all&labels=$1&per_page=100" \
+    | jq '.[].number')"
+
+  if [ "$(echo $result | wc -w)" -ge 100 ];
+  then
+    echo "Found 100 results for $1. Due to GitHub's paging limits, there might be some issues that are missing"
+  fi
+  echo $result
 }
 
 # Get a list of users that participated in issues.
 function issue_contributors() {
   local numbers="$(get_issue_numbers status-quo-story-ideas) $(get_issue_numbers shiny-future)"
+  local numbers="$(echo $numbers | sort | uniq)"
 
   for num in $numbers; do
     curl -s -u $user:$token -H "Accept: application/vnd.github.v3+json" \
       https://api.github.com/repos/rust-lang/wg-async-foundations/issues/$num/comments | jq -r \
-      '.[].user | "[" + .login + "](" + .html_url + ")"'
+      '.[] | "[" + .user.login + "](" + .user.html_url + ")"'
   done | sort | uniq
 }
 
