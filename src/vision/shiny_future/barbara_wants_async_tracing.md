@@ -29,7 +29,12 @@ now provides a built in Tracing tool.  By building her service with the `tracing
 instrumented and will start logging trace data to a file for later analysis.
 
 Barbara runs the instrumented code in QA and recreates the laggy event several times.  Then she takes the 
-generated trace file and looks through the data.  She immediately sees where each of the slow requests
+generated trace file and looks through the data.  When she views the trace data with the analysis tools she is given a list
+of all the requests from her test, along with a timestamp and duration. She very quickly identifies the slow
+requests and chooses to view more detail on one of them.  Here she can view a graph of the request's execution:
+each async expression is a vertex and edges connect parents to children. Each vertex shows the duration of the
+expression and the vertices are arranged vertically by when they started according to the system time.
+She immediately sees where each of the slow requests
 actually lagged.  Each request experienced a slow down in different async expressions, but each expression
 had one thing in common: they each queried the same database table. She also noticed that there was a relation
 in when the latency occurred: all the laggy requests tended to occur in clusters. From this she was able to identify
