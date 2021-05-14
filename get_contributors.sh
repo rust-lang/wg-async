@@ -75,7 +75,7 @@ function issue_contributors() {
 # Get a list of direct code contributors
 function code_contributors() {
   curl -s -u $user:$token -H "Accept: application/vnd.github.v3+json" \
-    https://api.github.com/repos/rust-lang/wg-async-foundations/contributors | jq -r \
+    "https://api.github.com/repos/rust-lang/wg-async-foundations/contributors?per_page=100" | jq -r \
     '.[] | "[" + .login + "](" + .html_url + ")"' | sort | uniq
 }
 
