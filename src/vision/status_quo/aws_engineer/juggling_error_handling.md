@@ -1,5 +1,7 @@
 # Status quo of an AWS engineer: Juggling error handling
 
+[DistriData]: ../../projects/DistriData.html
+
 For example, one day Alan is writing a loop. In this particular part of [DistriData], the data is broken into "shards" and each shard has a number of "chunks". He is connected to various backend storage hosts via HTTP, and he needs to send each chunk out to all of them. He starts by writing some code that uses [`hyper::body::channel`](https://docs.rs/hyper/0.14.7/hyper/body/struct.Body.html#method.channel) to generate a pair of a channel where data can be sent and a resulting HTTP body. He then creates a future for each of those HTTP bodies that will send it to the appropriate host once it is complete. He wants those sends to be executing in the background as the data arrives on the channel, so he creates a [`FuturesUnordered`](https://docs.rs/futures/0.3.14/futures/stream/struct.FuturesOrdered.html) to host them:
 
 ```rust
