@@ -125,7 +125,7 @@ async fn do_work(database: &Database) {
 }
 ```
 
-This changes the behavior of her program quite a bit though. The original goal was to have at most 5 `do_select` calls occuring concurrently with exactly one `process_work_item`, but now she has all of the `process_work_item` calls executing at once. Nonetheless, the hack solves her immediate problem. Buffering up work into a `FuturesUnordered` becomes a kind of "fallback" for those cases where can't readily insert a `task::spawn`.
+This changes the behavior of her program quite a bit though. The original goal was to have at most 5 `do_select` calls occurring concurrently with exactly one `process_work_item`, but now she has all of the `process_work_item` calls executing at once. Nonetheless, the hack solves her immediate problem. Buffering up work into a `FuturesUnordered` becomes a kind of "fallback" for those cases where can't readily insert a `task::spawn`.
 
 ## 🤔 Frequently Asked Questions
 

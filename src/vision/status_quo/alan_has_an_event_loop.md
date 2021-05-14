@@ -76,7 +76,7 @@ Reimplementing the OS Event Loop is also not an option he wants to take. See [he
 
 ### The cheap way out
 
-Alan gives up and uses a runtime in a seperate thread from the UI. This means he has to deal with the additional burden of syncing and he has to give up the frictionless use of some of the patterns he is accustomed to by treating UI events as ```Stream<Item = UIEvent>```.
+Alan gives up and uses a runtime in a separate thread from the UI. This means he has to deal with the additional burden of syncing and he has to give up the frictionless use of some of the patterns he is accustomed to by treating UI events as ```Stream<Item = UIEvent>```.
 
 ## 🤔 Frequently Asked Questions
 

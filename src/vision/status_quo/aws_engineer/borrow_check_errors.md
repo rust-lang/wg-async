@@ -57,6 +57,6 @@ error[E0502]: cannot borrow `*self` as mutable because it is also borrowed as im
    |                                  - returning this value requires that `self.buffer` is borrowed for `'1`
 ```
 
-This is confusing. He can see that there is a mutable borrow occuring, and an immutable one, but it seems like they occur at disjoint periods of time. Why is the compiler complaining?
+This is confusing. He can see that there is a mutable borrow occurring, and an immutable one, but it seems like they occur at disjoint periods of time. Why is the compiler complaining?
 
 After asking on `#rust` in the AWS Slack, he learns that this is a pattern that Rust's borrow checker just can't support. It gets confused when you return data from functions and winds up producing errors that aren't necessary. Apparently there's some [research project named after a Hamlet play](https://github.com/rust-lang/polonius/) that might help, but that isn't going to help him now. The slack channel points him at the [ouroboros](https://github.com/joshua-maros/ouroboros) project and he eventually uses it to work around the problem ([playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=59b2cb72529e58c13ab00eee1e9c0435)).

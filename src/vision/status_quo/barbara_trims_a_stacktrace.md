@@ -116,7 +116,7 @@ She knows about the desugarings that give rise to symbols like `::{closure}`, bu
 * Other languages have developed special tools to connect async functions to their callers, however, which gives them a nice experience. For example, Chrome has a [UI for enabling stacktraces that cross await points](https://www.html5rocks.com/en/tutorials/developertools/async-call-stack/#toc-enable).
 
 ### **Why doesn't Barbara view this in a debugger?**
-* Because it came in an issue report (or, freqently, as a crash report or email).
+* Because it came in an issue report (or, frequently, as a crash report or email).
 * But also, that isn't necessarily an improvement! Expand below if you would like to see what we mean.
 
 <details>

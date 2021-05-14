@@ -108,7 +108,7 @@ Alan, Grace, and Niklaus would be overwhelmed and will likely want to give up.
 ### What are the downside of using runtime agnostic crates?
 
 Some things can be implemented very efficiently in a runtime-agnostic way but even then you can't
-integrate deeply into the runtime. For example, see tokio’s pre-emption strategy, which relies on
+integrate deeply into the runtime. For example, see tokio’s preemption strategy, which relies on
 deep integration with the runtime.
 
 ### What other runtime utilities are generally needed?

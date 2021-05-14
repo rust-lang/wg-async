@@ -80,7 +80,7 @@ Alan seems to have something working, but when he goes to update the examples of
 
   which wouldn't work for `no_std`.
 
-* implement `Future` trait manually, which isn't particulary easy/straight-forward for non-trivial cases, especially if it involves making other async calls (likely).
+* implement `Future` trait manually, which isn't particularly easy/straight-forward for non-trivial cases, especially if it involves making other async calls (likely).
 
 After a lot of thinking and discussion, Alan and Barbara accept that they won't be able to support `no_std` users of their library and add mention of this in crate documentation.
 
