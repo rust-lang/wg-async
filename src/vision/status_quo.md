@@ -2,7 +2,7 @@
 
 ## 🚧 Under construction! Help needed! 🚧
 
-We are still in the process of drafting the vision document. The stories you see on this page are examples meant to give a feeling for how a status quo story looks; you can expect them to change. We encourage you to propose your own by opening a PR -- see the ["How to vision"][htv] page for instructions and details.
+We are still in the process of drafting the vision document. The stories you see on this page are examples meant to give a feeling for how a status quo story looks; you can expect them to change. See the ["How to vision"][htv] page for instructions and details.
 
 [htv]: ./how_to_vision.md
 
