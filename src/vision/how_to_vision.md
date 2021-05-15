@@ -13,7 +13,7 @@
 
 The process we are using to write the vision doc encourages active collaboration and "positive sum" thinking. We started with a brainstorming period, during which we collected as many "status quo" and "shiny future" stories as we can. We are currently wrapping up that phase. We will still accept new PRs if people produce them, but we are no longer soliciting new stories. We would like to offer a [hearty thanks](../acknowledgements.md) to the many people who participated in this effort!
 
-We are now entering the "harmoniing period", and the working group ar assembling the various stories and shiny futures into a coherent draft. This draft will be reviewed by the community and the Rust teams and adjusted based on feedback.
+We are now entering the "harmonizing period", and the working group is assembling the various stories and shiny futures into a coherent draft. This draft will be reviewed by the community and the Rust teams and adjusted based on feedback.
 
 ### Submitting status quo and shiny future story PRs
 
@@ -40,4 +40,3 @@ This meant to be a **living document**. We plan to revisit it regularly to track
 [hvp]: ./how_to_vision/projects.md
 [repo]: https://github.com/rust-lang/wg-async-foundations
 [open "status quo" issues]: https://github.com/rust-lang/wg-async-foundations/labels/status-quo-story-ideas
-
