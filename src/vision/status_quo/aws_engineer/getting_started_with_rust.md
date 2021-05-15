@@ -12,7 +12,7 @@ Getting started with Rust is a bit different than what he is used to. There's no
 
 Of course, the very first thing Alan does it to tweak his IDE setup. He's happy to learn that IntelliJ has support for Rust, since he is accustomed to the keybindings and it has great integration with Brazil, AWS's internal build system.
 
-Still, as he plays around with Rust code, he realizes that the support is not nearly at the level of Java. Autocomplete often gets confused. For example, when there are two traits with the same name but coming from different crates, Intellij often picks the wrong one. It also has trouble with macros, which are very common in async code. Some of Alan's colleagues switch to VSCode, which is sometimes better but has many of the same problems; Alan decides to stick with IntelliJ.
+Still, as he plays around with Rust code, he realizes that the support is not nearly at the level of Java. Autocomplete often gets confused. For example, when there are two traits with the same name but coming from different crates, IntelliJ often picks the wrong one. It also has trouble with macros, which are very common in async code. Some of Alan's colleagues switch to VSCode, which is sometimes better but has many of the same problems; Alan decides to stick with IntelliJ.
 
 ## Building the first server
 

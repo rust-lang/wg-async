@@ -124,7 +124,7 @@ fn sum(n: usize) -> BoxFuture<'static, usize> {
 }
 ```
 
-She also asks one of her peers for a code review asynchronously, and after awaiting their response, she learns about the [`async-recursion`] crate. Then she adds [`async-recursion`] to the dependencies. Now she can write the follwing, which seems reasonably clean:
+She also asks one of her peers for a code review asynchronously, and after awaiting their response, she learns about the [`async-recursion`] crate. Then she adds [`async-recursion`] to the dependencies. Now she can write the following, which seems reasonably clean:
 
 ```rust
 #[async_recursion]

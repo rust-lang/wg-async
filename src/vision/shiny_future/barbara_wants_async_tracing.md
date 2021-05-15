@@ -56,7 +56,7 @@ Barbara can’t believe how much time she saved having this debugging tool provi
 *Link to status quo stories if they exist. If not, that's ok, we'll help find them.*
 [Alan Builds A Cache](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_builds_a_cache.html)
 [Alan Iteratively Regresses Performance](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_iteratively_regresses.html)
-[Alan Traies To Debug A Hang](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_tries_to_debug_a_hang.html)
+[Alan Tries To Debug A Hang](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_tries_to_debug_a_hang.html)
 
 ### What are the key attributes of this shiny future?
 

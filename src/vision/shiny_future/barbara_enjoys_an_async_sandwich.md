@@ -143,7 +143,7 @@ A variation would be an even more optimistic future, where we are able to come u
     - Maybe a warning regardless is a good idea.
     - Or a lint, that a user can `#[allow(nested_block_on)]`, at their own peril.
 - This story uses a generic `task::block_on`, to not name any specific runtime. It doesn't specifically assume that this could work cross-runtimes, but maybe a shinier future would assume it could?
-- This story referes to a lint in a proposed different shiny future, which is not yet written.
+- This story refers to a lint in a proposed different shiny future, which is not yet written.
 
 
 

@@ -16,7 +16,7 @@ be as broadly used as possible.  Unfortunately, when she first wrote the library
 did not have a standard abstraction for Buffered IO. So her first implementation did
 not use buffered IO.  When she tried to update her library to use buffered IO so as to
 improve performance she was confronted with the problem that each runtime had its own
-implemenation and abstractions. The result was several unavoidable compromises on her
+implementation and abstractions. The result was several unavoidable compromises on her
 runtime-agnostic design goals.  She was able to achieve her performance improvements
 but only with runtime specific implementations; leaving her with a larger more complex
 code base.

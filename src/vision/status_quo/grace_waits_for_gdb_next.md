@@ -92,7 +92,7 @@ I needed someone who, like me, would actually be tempted to use `gdb` even when 
 
 ### **How would this story have played out differently for the other characters?**
     * Alan might have used whatever debugger is offered by his IDE, which might have the same problem (via a toolbar button that has the same semantics as `next`); but many people using IDE's to debugger just naturally set breakpoints by hand on the lines in their IDE editor, and thus will not run into this.
-    * Most characters would probably have abandoned using gdb much sooner. E.g. Grace may have started out by adding `println` or `tracing` instrumention to the code, rather than trying to open it up in a debugger.
+    * Most characters would probably have abandoned using gdb much sooner. E.g. Grace may have started out by adding `println` or `tracing` instrumentation to the code, rather than trying to open it up in a debugger.
 
 
 [character]: ../characters.md
