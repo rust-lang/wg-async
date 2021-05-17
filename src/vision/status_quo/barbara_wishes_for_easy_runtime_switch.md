@@ -25,7 +25,7 @@ base:
 
 * tokio provides variants of helpers macros and types, like `tokio::select!` and `tokio::Mutex`.
   These helpers can be used without the rest of tokio, and there are also alternatives from the
-  `futures crate and elsewhere (albeit with subtle differences).
+  `futures` crate and elsewhere (albeit with subtle differences).
 * tokio uses a custom version of `AsyncRead` and `AsyncWrite` traits which differ from the ones used
   by other parts of the ecosystem.
 * The tokio API is needed to create core runtime operations like timers (`tokio::time::sleep`) and
