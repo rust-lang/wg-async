@@ -7,7 +7,11 @@ This is a draft "status quo" story submitted as part of the brainstorming period
 
 ## The story
 
-Barbara wants to set priorities to the tasks spawned to the executor. However, she finds no existing async executor provides such a feature so she decided to build her own async executor.
+Barbara wants to set priorities to the tasks spawned to the executor. However, she finds no existing async executor provides such a feature
+She would be more than happy to enhance an existing executor and even intends to do so at some point. At the same time, Barbara understand that the process of getting
+changes merged officially into an executor can be long, and for good reason.
+
+Due to pressure and deadlines at work she needs a first version to be working as soon as possible. She then decides to build her own async executor.
 
 First, Barbara found [crossbeam-deque](https://crates.io/crates/crossbeam-deque) provides work-stealing deques of good quality. She decides to use it to build task schedulers. She plans for each working thread to have a loop which repeatedly gets a task from the deque and polls it.
 
