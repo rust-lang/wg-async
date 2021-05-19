@@ -13,12 +13,9 @@ quite large (in the millions of lines of code). They've been relying on tokio as
 and the codebase makes heavy use of its rich API. It has served them well over the years and they're
 very happy with it.
 
-Meanwhile, another team in Barbara's company have developed another large project, where they chosen
-async-std as their runtime of choice. This team presents their project in a company meeting and it
-gets Barbara excited. She starts wondering about possible collaboration and code-reuse between the
-two projects. She soon realizes that such collaboration would be a lot easier if both projects used
-the same runtime. She decides to look into the possibility of porting her projects from tokio to
-async-std.
+Barbara knows about async-std but has never used it. She has wondered for a while how her
+application would work and perform if she had used async-std instead. She decides to test it out by
+porting her projects from tokio to async-std.
 
 To their disappointment, they discover many areas, where their choice of runtime permeates the code
 base:
