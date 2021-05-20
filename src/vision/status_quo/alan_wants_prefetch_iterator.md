@@ -14,7 +14,51 @@ The original service consumes messages from a source stream (e.g. Kafka), proces
 
 Since messages might arrive with some delays between them, or can end at some point for a while, their number is unknown, there's an async iterator which reads the input stream and waits some time before producing a batch if the next message isn't immediately ready.
 
-While this kind of iterator returns control to the caller, and the caller continues execution, there can be a running future preparing the next batch to be taken synchronously with a very high probability.
+Alan explored `FeatureExt` from `async-std` and found no evidence that it's possible to wait for multiple features returning different results (it's not possible for `ValueTask`s in .NET, but it worked well with `Task`s which can be awaited multiple times). Later he was suggested to use an `enum` and the `race` method to achive his goal:
+
+```rust
+enum Choices<A, B, C> {
+    A(A),
+    B(B),
+    C(C),
+}
+
+// convert each future into the type `Choices<...>`:
+let future_a = async move { A(future_a.await) };
+let future_b = async move { B(future_b.await) };
+let future_c = async move { C(future_c.await) };
+
+// await the race:
+match future_a.race(future_b).race(future_c).await {
+    A(a) => ...,
+    B(b) => ....,
+    C(c) => ...,
+}
+```
+
+While that helped Alan, it was completely unobvius to him. He expected to see a macro accepting futures and producing a new future to be awaited:
+
+```rust
+match race!(feature_a, feature_b, feature_c).await {
+    // ...
+}
+```
+
+Having `join!` would be nice too for Alan, so he can avoid binding variables to features which later shall be awaited:
+
+```rust
+// How it's now
+let featrure_a = do_async_a();
+let featrure_b = do_async_b();
+let featrure_c = do_async_c();
+
+let result_a = featrure_a.await;
+let result_b = featrure_b.await;
+let result_c = featrure_c.await;
+
+// How it could be
+let (result_a, result_b, result_c) = join!(feature_a, feature_b, feature_c);
+```
 
 ## 🤔 Frequently Asked Questions
 
