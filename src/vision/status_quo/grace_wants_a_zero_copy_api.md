@@ -16,7 +16,7 @@ that Grace found were related to memory (mis)management, so she is excited for t
 
 However, Grace has a hard time getting this to work without heavily resorting to `unsafe` constructs. As she evolves her undertanding of Rust, she looks hopefully at the signature of `poll_read`:
 
-```ignore
+```rust
     fn poll_read(
         self: Pin<&mut Self>,
         cx: &mut Context,
