@@ -29,7 +29,7 @@ not guaranteed to be alive throughout the entire operation. There needs to be at
 
 Grace hears from her coworkers that they are all using Tokio anyway. But the Tokio traits, although different from the standard traits, are not much better:
 
-```ignore
+```rust
     fn poll_read(
         self: Pin<&mut Self>,
         cx: &mut Context<'_>,
