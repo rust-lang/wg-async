@@ -24,8 +24,8 @@ However, Grace has a hard time getting this to work without heavily resorting to
     ) -> Poll<Result<usize, Error>>
 ```
 
-She notices that the buffer is always passed to the invocation, but she can't pass it down to the operating system: because of the well-known cancellation problem, the buffer is
-not guaranteed to be alive throughout the entire operation. There needs to be at least one copy!
+She notices that the buffer is always passed to the invocation, but she can't pass it down to the operating system: because in rust-async tasks can be canceled at any time, which would
+free the buffer, those buffers are not guaranteed to be alive throughout the entire operation and there is no good way to extend their lifetime. There needs to be at least one copy!
 
 Grace hears from her coworkers that they are all using Tokio anyway. But the Tokio traits, although different from the standard traits, are not much better:
 
