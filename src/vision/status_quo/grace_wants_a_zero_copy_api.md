@@ -40,7 +40,7 @@ Grace hears from her coworkers that they are all using Tokio anyway. But the Tok
 There's a specialized type for the buffer, but its management and lifetime are still not suitable for zero-copy I/O.
 
 Grace then came across a famous [blog post](https://boats.gitlab.io/blog/post/io-uring/) from a seasoned developer that mentions
-another trait, `AsyncBufRead`, but she immediatly identifies two issues with that:
+another trait, `AsyncBufRead`, but she immediately identifies two issues with that:
 
 * There is not a similar trait for writes, which suffer from much the same problem
 * Grace's team is already using a plethora of convenience traits built upon these base traits, including `AsyncReadExt` and `AsyncBufReadExt`,
