@@ -36,7 +36,7 @@ match future_a.race(future_b).race(future_c).await {
 }
 ```
 
-While that helped Alan, it was completely unobvius to him. He expected to see a macro accepting futures and producing a new future to be awaited:
+While that helped Alan, it was completely unobvious to him. He expected to see a macro accepting futures and producing a new future to be awaited:
 
 ```rust
 match race!(feature_a, feature_b, feature_c).await {
