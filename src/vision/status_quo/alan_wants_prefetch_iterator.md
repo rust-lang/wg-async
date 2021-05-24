@@ -65,7 +65,7 @@ let (result_a, result_b, result_c) = join!(feature_a, feature_b, feature_c);
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
 ### **What are the morals of the story?**
-* Async looks not so hard after reading documentation and block posts on the topic, but when it comes to implementing your own async iterator, things stops seeming so beautiful as before. There's a very steep learning curve.
+* Even though Alan had experience writing async code in other languages, he had a hard time figuring out how to relatively simple things in Rust, like joining or racing on futures of different types.
 
 ### **What are the sources for this story?**
 Personal experience of the author.
