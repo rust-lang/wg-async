@@ -57,7 +57,7 @@ let result_b = featrure_b.await;
 let result_c = featrure_c.await;
 
 // How it could be
-let (result_a, result_b, result_c) = join!(feature_a, feature_b, feature_c);
+let (result_a, result_b, result_c) = join!(feature_a, feature_b, feature_c).await;
 ```
 
 ## 🤔 Frequently Asked Questions
