@@ -84,6 +84,8 @@
       - [Barbara makes a wish](./vision/shiny_future/barbara_makes_a_wish.md)
       - [Barbara wants async read write](./vision/shiny_future/barbara_wants_async_rw.md)
       - [Barbara wants async tracing](./vision/shiny_future/barbara_wants_async_tracing.md)
+   - [🎼  Harmonic Synthesis](./vision/harmonic.md)
+      - [Async traits are possible](./vision/harmonic/async_traits.md)
    - [📅 Roadmap for 2021](./vision/roadmap.md)
 - [🔍 Triage meetings](./triage.md)
 - [🔬 Design docs](./design_docs.md)
