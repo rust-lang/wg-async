@@ -31,30 +31,6 @@ By the time we reach our shiny future...
     * Working on embedded platforms that do not have an operating system or standard library
     * Working on web assembly (exactly what this means is a bit of an open question)
 
-## Some specific technical challenges
-
-Achieving the previous points will not be easy! We think we have an outline of how to do it, but there are some key technical challenges to overcome.
-Most or all of these have seen a lot of prior discussion:
-
-* Traits that support async fn and offer various ways to make that dyn safe
-* Async closures
-* Generators to make writing iterators and async iterators easy
-* Standard traits for portability tht are built on `async fn` primities (not the poll-based traits offered today):
-    * async read
-    * async write
-    * async iteration
-    * timers
-    * opening TCP, UDP ports, potentially other standard I/O primities
-    * spawning, spawn-blocking
-* Easy, standard patterns for doing common I/O operations without specifying a runtime
-    * presumably interacting with the traits above, but hopefully not requiring all portable code to be deeply generic
-* Standard combinators for async iterators, futures, implemented largely using async fn
-* Structured conncurrency: a way to launch tasks and to propagate cancellation downwards
-    * This should provide alternatives to `FuturesUnordered` and stream that are not as error-prone
-* A mechianism for being generic over sync vs async code
-* Defining some form of drop impl that will run asynchronously
-    * There remains debate about whether this is desirable. We argue that it is, because otherwise async code will always feel distinct from `Drop` code.
-
 ## Skill tree
 
 What follows is a "skill tree" that describes the key points of the harmonic synthesis. Each of the "blocks" in the tree represents a kind of coherent experience that we can achieve. There are a few sentences describing the impact of this experience on users, and then a list of technical items that must be implemented to achieve that goal. Note that we can work on many of the technical items in parallel -- including items that appear relatively late in the tree.
