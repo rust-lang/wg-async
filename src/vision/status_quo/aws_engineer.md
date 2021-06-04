@@ -18,6 +18,7 @@ This tells the story of Alan, an engineer who works at AWS.
     * [Juggling error handling](aws_engineer/juggling_error_handling.md): Alan tries to use `?` to process errors in a stream.
     * [Failure to parallelize](aws_engineer/failure_to_parallelize.md): Alan can't figure out how to parallelize a loop.
     * [Borrow check errors](aws_engineer/borrow_check_errors.md): Alan tries to write code that fills a buffer and returns references into it to the caller, only to learn that Rust's borrow checker makes that pattern difficult.
+* As Alan goes deeper into Async Rust, he learns that its underlying model can be surprising. One particular [deadlock](aws_engineer/solving_a_deadlock.md) takes him quite a long time to figure out.
 * [Encountering pin](aws_engineer/encountering_pin.md): Wrapping streams, `AsyncRead` implementations, and other types requires using `Pin` and it is challenging.
 * [Figuring out the best option](aws_engineer/figuring_out_the_best_option.md): Alan often encounters cases where he doesn't know what is the best way to implement something. He finds he has to implement it both ways to tell, and sometimes even then he can't be sure.
 * [Testing his service](aws_engineer/testing_the_service.md): Alan invents patterns for Dependency Injection in order to write tests.

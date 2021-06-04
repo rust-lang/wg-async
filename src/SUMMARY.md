@@ -45,6 +45,7 @@
          - [Juggling error handling](./vision/status_quo/aws_engineer/juggling_error_handling.md)
          - [Failure to parallelize](./vision/status_quo/aws_engineer/failure_to_parallelize.md)
          - [Borrow check errors](./vision/status_quo/aws_engineer/borrow_check_errors.md)
+         - [Solving a deadlock](./vision/status_quo/aws_engineer/solving_a_deadlock.md)
          - [Encoutering pin](./vision/status_quo/aws_engineer/encountering_pin.md)
          - [Figuring out the best option](./vision/status_quo/aws_engineer/figuring_out_the_best_option.md)
          - [Testing his service](./vision/status_quo/aws_engineer/testing_the_service.md)
