@@ -23,7 +23,7 @@ takes a URL, and recursively downloads all URLs named in all fetched
 pages.
 
 Alan goes to crates.io and searches for "http client", and finds a
-library called `reqwest`. He opens its documentation, and see that the
+library called `reqwest`. He opens its documentation, and sees that the
 library has him choose between an "async" and a "blocking" client.
 Confused, Alan types in "rust async" in his favorite search engine, and
 finds the [Rust async book]. On the very first page there's a summary of
@@ -36,7 +36,7 @@ async for this application.
 
 The async book tells Alan that he should mark his `main` function as
 `async fn`, so he does. He then follows the `reqwest` async examples,
-and is able to successfully make is crawler download a single web page.
+and is able to successfully make his crawler download a single web page.
 Next, he wants to parse each page to extract additional URLs to fetch.
 So, he finds a library that can parse HTML, `quick-xml`. He sets up his
 application with a `HashSet` to store all the yet-to-be-parsed URLs, and
@@ -408,7 +408,7 @@ at runtime.
 I wasn't expecting it to end up this long and detailed!
 
 I also wasn't expecting to have to get into the fact that `async fn`s
-capture their arguments, but got their very quickly by just walking
+capture their arguments, but got there very quickly by just walking
 through what I imagine Alan's thought process and development would be
 like.
 
