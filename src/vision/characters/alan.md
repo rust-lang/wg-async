@@ -14,6 +14,10 @@ Alan works at a Java shop. They run a number of network services built in Java, 
 
 Alan is developing networking programs in Kotlin. He loves Kotlin for its expressive syntax and clean integration with Java. Still, he sometimes encounters problems running his services due to garbage collection latencies or overall memory usage. He's heard that Rust can be fun to use too, and is curious to try it out.
 
+### Variant D: Go
+
+Alan develops a distributed database in Go, enjoying its simplicity and first-class treatment of concurrency. He's successfully built a transactional database that handles over 100K QPS. Intrigued by Rust's promise of "fearless concurrency", Alan tries Rust for more efficient use of memory and CPU. He's curious what classes of errors Rust async prevents and how Rust guarantees its safety without sacrificing the speed.
+
 ## 🤔 Frequently Asked Questions
 
 ### What does Alan want most from Async Rust?
