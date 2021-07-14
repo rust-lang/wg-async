@@ -23,6 +23,7 @@
       - [SLOW (Protocol implementation)](./vision/projects/SLOW.md)
    - [😱 Status quo](./vision/status_quo.md)
       - [Template](./vision/status_quo/template.md)
+      - [Alan builds a task scheduler](./vision/status_quo/alan_builds_a_task_scheduler.md)
       - [Alan finds dropping database handles is hard](./vision/status_quo/alan_finds_database_drops_hard.md)
       - [Alan has an external event loop](./vision/status_quo/alan_has_an_event_loop.md)
       - [Alan hates writing a `Stream`](./vision/status_quo/alan_hates_writing_a_stream.md)
