@@ -1,26 +1,48 @@
-# ✨ Shiny future: Where we want to get to
+# ✨ Shiny future
 
-## 🚧 Under construction! Help needed! 🚧
+This page represents a complete vision for where we want async to go. This vision is what we believe to be the best way to achieve the [experiences](./how_it_feels.md) that we want async to provide.
 
-We are still in the process of drafting the vision document. The stories you see on this page are examples meant to give a feeling for how a shiny future story looks; you can expect them to change. See the ["How to vision"][htv] page for instructions and details.
+## Work in progress
 
-[htv]: ./how_to_vision.md
+Note that while a lot of the steps needed are fairly clear, several of them also have [significant unknowns or points of controversy](./unresolved_questions.md). We have attempted to highlight those and expect to be working through those points as we go.
 
-## What it this
+## Certainty levels
 
-The "shiny future" is here to tell you what we are trying to build over the next 2 to 3 years. That is, it presents our "best guess" as to what will look like a few years from now. When describing specific features, it also embeds links to [design notes] that describe the constraints and general plans around that feature.
+- 🌈 -- Implemented and stable
+- 🌞 -- Everything is looking good
+- 🌤️ -- Still some stuff to figure out, but unlikely to see major changes in the design
+- 🌥️ -- Got one or two solid leads, but still have to figure out if it will work
+- 🌧️ -- No clear path yet, this may not even be a good idea
 
-🧐 You may also enjoy reading the [blog post] announcing the brainstorming effort.
+## Key aspects of the future
 
-[design notes]: ../design_notes.md
-[blog post]: https://blog.rust-lang.org/2021/04/14/async-vision-doc-shiny-future.html
+* 🌤️ If you know sync Rust, getting started in Async Rust is straightforward ([more][async_fn_everywhere])
+    * 🌤️ Mostly, you change `fn` to `async fn`, add some calls to await, and change over to other parts of the stdlib, though supporting `dyn Trait` requires making some choices, particularly in a no-std environment
+    * 🌤️ It still has that "if it compiles, it generally works, and it runs pretty darn fast" feeling
+    * 🌤️ Destructors and cleanup also work the same way as in sync Rust, thanks to `Drop` to `AsyncDrop`
+    * 🌤️ No need to write poll functions or to interact with pin except in quite specialized scenarios
+* 🌤️ High-quality documentation and tutorials helps you to get started and learn the ropes
+    * 🌤️ The docs also identify common patterns for structuring your async programs and their advantages and disadvantages
+* 🌥️ Tooling and debugger integration gives insight into the behavior of your program
+    * 🌥️ Easy to get a snapshot of overall acitivity (e.g. to find out what tasks or exist or why a task is blocked)
+    * 🌥️ Easy to see aggregate performance trends over time (e.g., number of active connections, waiting connections, etc)
+    * 🌥️ Easy to profile things in terms of your async tasks (e.g., to get a flamegraph of a specific connection)
+* 🌥️ Variety of high-quality runtimes available in cargo, and it's easy to change between them:
+    * 🌧️ When you use things from the standard library, they work across runtimes automatically
+    * 🌥️ There are standardized, foundational traits for common operations like I/O, spawning tasks, timers
+* 🌥️ Hierarchical scopes allow you to easily spawn parallel and concurrent tasks
+    * 🌥️ These can reference borrowed data, enabling easy parallel processing of async iterators (think "async rayon")
+* 🌥️ Cancellation works well and without surprises
+    * 🌥️ When cancellation is requested, it propagates to subtasks within a scope
+    * 🌧️ I/O operations and the like begin to fail, so that cancellation is automatic and flows through familiar error paths
+    * 🌥️ If desired, you can "opt-in" to synchronous cancellation, in which case any await becomes a cancellation point. This allows your `async fn` to be used with `select` without spawning a task.
 
-### Think big -- too big, if you have to
+## Learn more
 
-You'll notice that the ideas in this document are **maximalist and ambitious**. They stake out an opinionated position on how the ergonomics of Async I/O should feel. This position may not, in truth, be attainable, and for sure there will be changes along the way. Sometimes the realities of how computers actually work may prevent us from doing all that we'd like to. That's ok. This is a dream and a goal.
+Check out...
 
-We fully expect that the designs and stories described in this document will change as we work towards realizing them. When there are areas of particular uncertainty, we use the Frequently Asked Questions and the design docs to call them out.
+* [The user's manual of the future](./shiny_future/users_manual.md)
 
-## Where are the stories?
+## Where did all the stories go?
 
-We haven't written these yet!
+The full set of "submitted" shiny future stories [have been moved here](./submitted_stories/shiny_future.md). 

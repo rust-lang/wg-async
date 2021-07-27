@@ -17,6 +17,10 @@ We believe Rust can become one of the most popular choices for building distribu
 
 This document is a collaborative effort to build a shared vision for Async Rust. **Our goal is to engage the entire community in a collective act of the imagination:** how can we make the end-to-end experience of using Async I/O not only a pragmatic choice, but a *joyful* one?
 
+## 🚧 Under construction! Help needed! 🚧
+
+The first version of this document is not yet complete, but it's getting very close! We are in the process of finalizing the set of ["status quo"](./vision/status_quo.md) and ["shiny future"](./vision/shiny_future.md) stories and the details of the [proposed roadmap](./vision/roadmap.md). The current content however is believed to be relatively final, at this point we are elaborating and improving it.
+
 ## Where we are and where we are going
 
 The "vision document" starts with a [cast of characters][cc]. Each character is tied to a particular Rust value (e.g., performance, productivity, etc) determined by their background; this background also informs the expectations they bring when using Rust. [Grace], for example, wants to keep the same level of performance she currently get with C, but with the productivity benefits of memory safety. [Alan], meanwhile, is hoping Rust will give him higher performance without losing the safety and ergonomics that he enjoys with garbage collected languages. 
@@ -32,15 +36,3 @@ The vision is not just idle speculation. It is the central document that we use 
 ## Involving the whole community
 
 The async vision document provides a forum where the Async Rust community can plan a great overall experience for Async Rust users. Async Rust was intentionally designed not to have a "one size fits all" mindset, and we don't want to change that. Our goal is to build a shared vision for the end-to-end experience while retaining the loosely coupled, exploration-oriented ecosystem we have built.
-
-## 🚧 Under construction! Help needed! 🚧
-
-This document is not yet complete! We are actively working on it as part of the working group, and we would like your help! Check out the [How to vision doc](./vision/how_to_vision.md) page for more details.
-
-```mermaid
-graph TD;
-A-->B;
-A-->C;
-B-->D;
-C-->D;
-```
