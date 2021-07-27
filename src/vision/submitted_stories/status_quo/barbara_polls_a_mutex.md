@@ -145,7 +145,7 @@ internals of async and still be stopped in your tracks by this issue.
 ### **How would this story have played out differently for the other characters?**
 *In some cases, there are problems that only occur for people from specific backgrounds, or which play out differently. This question can be used to highlight that.*
 
-[status quo stories]: ./status_quo.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[status quo stories]: ../status_quo.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../../how_to_vision/status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

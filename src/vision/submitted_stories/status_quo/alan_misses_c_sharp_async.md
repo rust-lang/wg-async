@@ -404,11 +404,11 @@ general with [`continuable`](https://github.com/Naios/continuable)
 * [Niklaus] may not have had enough experience to be wary of some of the pitfalls encountered here.
 He might have introduced bugs around dropping futures (to cancel) without realizing it.
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../../how_to_vision/status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
