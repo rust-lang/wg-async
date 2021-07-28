@@ -12,6 +12,7 @@ edition = "2018"
 site-url = "/wg-async-foundations/"
 git-repository-url = "https://github.com/rust-lang/wg-async-foundations"
 additional-js =["mermaid.min.js", "mermaid-init.js"]
+edit-url-template = "https://github.com/rust-lang/wg-async-foundations/tree/master/{path}?mode=edit"
 
 [output.html.fold]
 enable = true
