@@ -65,12 +65,12 @@ let (result_a, result_b, result_c) = join!(future_a, future_b, future_c).await;
 *Here are some standard FAQ to get you started. Feel free to add more!*
 
 ### **What are the morals of the story?**
-* Even though Alan had experience writing async code in other languages, he had a hard time figuring out how to relatively simple things in Rust, like joining or racing on futures of different types.
+* Even though Alan had experience writing async code in other languages, he had a hard time figuring out how to do relatively simple things in Rust, like joining or racing on futures of different types.
 
 ### **What are the sources for this story?**
 Personal experience of the author.
 
-### **Why did you choose *NAME* to tell this story?**
+### **Why did you choose Alan to tell this story?**
 As a backend developer in a GC'd language, Alan writes async code every day. He wants to gain the maximum performance and have memory safety at the same time.
 
 ### **How would this story have played out differently for the other characters?**
