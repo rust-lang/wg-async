@@ -81,4 +81,4 @@ This is one key point that makes cancellation in async Rust rather different tha
 [Barbara]: ../characters/barbara.md
 [htvsq]: ../how_to_vision/status_quo.md
 [cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
-[YouBuy]; ../projects/YouBuy.md
+[YouBuy]: ../projects/YouBuy.md
