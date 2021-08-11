@@ -31,12 +31,13 @@ Grace debugs a crash dump.
 * Most of the abilities to inspect executor and task state while debugging a live process also work on crash dumps.
 * Debugging async programs is both runtime- and tooling- agnostic.
     * People should be able to get a good experience using whatever tools they are comfortable with, whether that's gdb, lldb, VS Code, IntelliJ, or a specialized Rust async debugger.
-    * Debugging tools should be able to work with different runtimes. Not all projects in an organization will use the same one, and some may be custom.
+    * Debugging tools should be able to work with different runtimes. Not all projects in an organization will use the same runtime, and some may be custom.
 * It's possible to see the following things while debugging:
     * What tasks are running, along with logical stack traces.
     * Some idea of what the task is waiting on if it is blocked.
     * If there are multiple executors, we can inspect each one.
     * Raw stack traces for the OS-level threads that the executors use to schedule tasks.
+    * Which futures have been passed into a `select!`, their current state, and which one is being polled.
 * Additional tooling may be necessary for custom or exotic executors. The hypothetical Async Debugging Protocol is one size fits all, but one size won't fit all. We don't want to constrain what an executor can do just so we can debug it.
 * An async runtime should not be required to support these common debugging features. For example, perhaps it requires more space to support and therefore is not appropriate for an extremely constrained embedded environment.
 
