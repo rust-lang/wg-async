@@ -93,6 +93,8 @@ She realizes this is going to take a lot longer than it would if this were a C++
 
 While much of the focus for async debugger is on the live debugging case, where a developer is running a build on their own machine, there will also be a need to debug crashes after the fact. For example, an application running on a consumer's device may upload crash dumps automatically, or a service running in a cloud environment may also collect a crash dump before restarting the server. Often the bugs that show up in these scenarios are hard to reproduce on a developer's machine, so the more information it's possible to glean from a crash dump, the better.
 
+Even just an accurate and complete stack trace can help a lot. Many error reporting systems cluster crashes by stack trace, so having an incomplete stack trace can lead to unrelated crashes being grouped together.
+
 ### **What are the sources for this story?**
 
 This is inspired by requests from internal teams looking to expand the use of Rust in services they develop.
