@@ -80,7 +80,7 @@ The backtrace shows a lot of detail about the executor, but not of this is reall
 
 This has some more information, but it is still not as helpful as Grace was hoping for.
 
-Grace quickly realizes her tools are not going to give her as much help as she'd like. She does manage to find the Tokio executor in memory, so she starts reading the Tokio code to understand how tasks are laid out in memory, etc. Even once she finds the list of tasks, she can only see the opaque contents of the closure. It is hard even to track these back to a line number, or to what operating system resource the task is blocked on (IOCP handle, io_uring event, etc.).
+Grace quickly realizes her tools are not going to give her as much help as she'd like. She does manage to find the executor in memory, so she starts reading the code to understand how tasks are laid out in memory, etc. Even once she finds the list of tasks, she can only see the opaque contents of the closure. It is hard even to track these back to a line number, or to what operating system resource the task is blocked on (IOCP handle, io_uring event, etc.).
 
 She realizes this is going to take a lot longer than it would if this were a C++ service, so she gets up to grab another cup and coffee and then settles in for a long debugging session.
 
