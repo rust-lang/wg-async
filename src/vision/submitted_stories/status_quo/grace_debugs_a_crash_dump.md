@@ -117,7 +117,8 @@ In [Niklaus]'s case, he would probably need to ask one of his more experienced t
 * In [Barbara wants async insights][async-insights], Barbara wants to use a debugger to inspect a running process. Most of the insights Barbara is looking for in that situation would also be relevant to Grace in a post-hoc debugging situation.
 * In [Barbara gets burned by select](barbara_gets_burned_by_select.md), Barbara has trouble debugging an issue where not all database updates are processed. Similar debugging tools would help both Barbara and Grace.
 * In [Grace deploys her service and hits obstacles](grace_deploys_her_service.md), Grace finds a tricky issue in production that only appears at high load. Because she doesn't have the right tooling to debug, she resorts to ad hoc logging, combined with some operating system tools. She could have benefited from the ability to inspect what is blocking tasks in an executor as well.
-* In [Grace waits for `gdb next`](grace_waits_for_gdb_next.md), Grace finds that her usually debugging techniques do not work well with async programs.
+* In [Grace waits for `gdb next`](grace_waits_for_gdb_next.md), Grace finds that her usual debugging techniques do not work well with async programs.
+
 * This is tangentially related to the story [Alan iteratively regresses performance](alan_iteratively_regresses.md), because there Alan was used to applying existing native tools to Rust, even though there is sometimes an impedence mismatch. The mismatch is likely to be even more challenging for async debugging, since this scenario is already not well supported in a lot of existing tools.
 
 
