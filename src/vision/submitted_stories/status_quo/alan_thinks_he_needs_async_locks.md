@@ -104,19 +104,19 @@ In the end, Barbara decides to write a blog post about how blocking in async cod
 ## 🤔 Frequently Asked Questions
 
 ### **What are the morals of the story?**
- * Locks can be quite common in async code as many tasks might need to mutate some shared state.
- * Error messages can be fairly good, but they still require a decent understanding of Rust (e.g., `Send`, `MutexGuard`, drop semantics) to fully understand what's going on.
- * This can lead to needing to use certain patterns (like dropping mutex guards early) in order to get code working.
- * The advice to never block in async code is not always true: if blocking is short enough, is it even blocking at all?
+    * Locks can be quite common in async code as many tasks might need to mutate some shared state.
+    * Error messages can be fairly good, but they still require a decent understanding of Rust (e.g., `Send`, `MutexGuard`, drop semantics) to fully understand what's going on.
+    * This can lead to needing to use certain patterns (like dropping mutex guards early) in order to get code working.
+    * The advice to never block in async code is not always true: if blocking is short enough, is it even blocking at all?
 ### **What are the sources for this story?**
- * Chats with [Alice](https://github.com/Darksonn) and [Lucio](https://github.com/LucioFranco).
- * Alice's [blog post](https://ryhl.io/blog/async-what-is-blocking/) on the subject has some good insights.
- * The issue of conservative analysis of whether values are used across await points causing futures to be `!Send` is [known](https://rust-lang.github.io/async-book/07_workarounds/03_send_approximation.html), but it takes some digging to find out about this issue. A tracking issue for this can be [found here](https://github.com/rust-lang/rust/issues/57478).
+    * Chats with [Alice](https://github.com/Darksonn) and [Lucio](https://github.com/LucioFranco).
+    * Alice's [blog post](https://ryhl.io/blog/async-what-is-blocking/) on the subject has some good insights.
+    * The issue of conservative analysis of whether values are used across await points causing futures to be `!Send` is [known](https://rust-lang.github.io/async-book/07_workarounds/03_send_approximation.html), but it takes some digging to find out about this issue. A tracking issue for this can be [found here](https://github.com/rust-lang/rust/issues/57478).
 ### **Why did you choose [Alan](../characters/alan.md) to tell this story?**
- * While Barbara might be tripped up on some of the subtleties, an experienced Rust developer can usually tell how to avoid some of the issues of using locks in async code. Alan on the other hand, might be surprised when his code does not compile as the issue the `Send` error is protecting against (i.e., a mutex guard being moved to another thread) is not protected against in other languages.
+    * While Barbara might be tripped up on some of the subtleties, an experienced Rust developer can usually tell how to avoid some of the issues of using locks in async code. Alan on the other hand, might be surprised when his code does not compile as the issue the `Send` error is protecting against (i.e., a mutex guard being moved to another thread) is not protected against in other languages.
 ### **How would this story have played out differently for the other characters?**
- * Grace would have likely had a similar time to Alan. These problems are not necessarily issues you would run into in other languages in the same way.
- * Niklaus may have been completely lost. This stuff requires a decent understanding of Rust and of async computational systems.
+    * Grace would have likely had a similar time to Alan. These problems are not necessarily issues you would run into in other languages in the same way.
+    * Niklaus may have been completely lost. This stuff requires a decent understanding of Rust and of async computational systems.
 
 [character]: ../characters.md
 [status quo stories]: ./status_quo.md

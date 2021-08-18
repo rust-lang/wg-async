@@ -66,7 +66,7 @@ The benchmark Barbara uses constructs a tree of Futures 5 levels deep, using bot
 
 Barbara sees that in a real codebase, this performance would not be good enough for writing a network stack capable of sustaining gigabit-level throughput on underpowered hardware. Barbara is disappointed, but knows that support for `async fn` in traits is in the works.
 
-Barbara looks at her organization's current priorities and decides that 100's of mbps will be an acceptable level of performance for the near term. She decides to adopt `async_trait` with the expectation that the performance penalty will go away in the long term.
+Barbara looks at her organization's current priorities and decides that 100's of mbps will be an acceptable level of performance for the near term. She decides to adopt `async_trait` with the expectation that the performance benefit will go away in the long term.
 
 ## 🤔 Frequently Asked Questions
 
