@@ -1,0 +1,1 @@
+# 🧬 Async fn in traits
