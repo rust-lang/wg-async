@@ -4,6 +4,7 @@
 - [🔮 The vision](./vision.md)
   - [❓How to vision](./vision/how_to_vision.md)
     - [Owners of goals and initiatives](./vision/how_to_vision/owner.md)
+    - [Stakeholders](./vision/how_to_vision/stakeholders.md)
     - [Projects](./vision/how_to_vision/projects.md)
     - ["Status quo" stories](./vision/how_to_vision/status_quo.md)
     - ["Shiny future" stories](./vision/how_to_vision/shiny_future.md)

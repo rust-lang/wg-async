@@ -25,6 +25,10 @@ Each top-level goal and initiative in the [roadmap] has an *owner*. The owner is
 
 Some of the top-level goals are marked with ✋, which means "help wanted". Those goals are looking for an owner. If you think you might be interested, you can read about the [responsibilities of owners] and contact the [wg leads].
 
+### Stakeholders
+
+While we always encourage feedback from the broader public, many of our initiatives also have identified sets of [stakeholders]. These are people who are specially consulted as part of the process to give feedback on the design and implementation. They can be representatives from major projects in the ecosystem, production users, or other sorts of experts. 
+
 ## Living document
 
 Although many of the pieces are complete, the vision doc is a living document and it will never be done. During the brainstorming period, we had a [lot of stories submitted](./submitted_stories.md) and we are now in the process of "harmonizing" those into a small set of [status quo] and [shiny future] narratives, each based around a representative [project] and the same set of [characters]. If you'd like to help out with that, contact the [wg leads].
