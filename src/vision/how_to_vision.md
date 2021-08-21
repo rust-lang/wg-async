@@ -29,7 +29,7 @@ Some of the top-level goals are marked with ✋, which means "help wanted". Thos
 
 Although many of the pieces are complete, the vision doc is a living document and it will never be done. During the brainstorming period, we had a [lot of stories submitted](./submitted_stories.md) and we are now in the process of "harmonizing" those into a small set of [status quo] and [shiny future] narratives, each based around a representative [project] and the same set of [characters]. If you'd like to help out with that, contact the [wg leads].
 
-We also plan to have regularly periods where we revisit the vision once we've made significant progress on implementation or if new information has come to light.
+We also plan to regularly revisit the vision once we've made significant progress on implementation or if new information has come to light.
 
 ### Submitting status quo and shiny future story PRs
 

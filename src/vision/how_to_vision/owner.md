@@ -14,11 +14,13 @@ As the owner of a **top-level goal** your role is to figure out overall plan for
 
 ## Owning an initiative
 
-Our definition of [initiative] is precisely the same as that used by the Rust lang team: it corresponds to a some active effort with a clear goal or deliverable. As the owner of an **initiative**, your role is to actually get the work done (quite possibly in collaboration with others). You also generally own the design of several components. You can read more about the roles of [initiative owners] on the lang team web page. 
+Our definition of [initiative] is precisely the same as that used by the Rust lang team: it corresponds to a some active effort with a clear goal or deliverable(s). As the owner of an **initiative**, your role is to actually get the work done (quite possibly in collaboration with others). You also generally own the design of several components. You can read more about the roles of [initiative owners] on the lang team web page. 
 
 [initiative]: https://lang-team.rust-lang.org/initiatives.html
 [initiative owners]: https://lang-team.rust-lang.org/initiatives/process/roles/owner.html
 
 ### Planning initiative milestones
 
-When you own an initiative, you should work with the owner of the top-level goal and others to plan out a series of **milestones** around the initiative. These milestones correspond to the various steps you need to take to complete the initiative. Milestones are not fixed and they frequently change as you progress. They usually start out quite vague, such as "author an RFC", and then get more precise as you learn more about what is required: "figure out the design for X", "implement feature Y". We update the status and set of milestones for each sprint status meeting. 
+When you own an initiative, you should work with the owner of the top-level goal and others to plan out a series of **milestones** around the initiative, along with a set of [stakeholders]. These milestones correspond to the various steps you need to take to complete the initiative. Milestones are not fixed and they frequently change as you progress. They usually start out quite vague, such as "author an RFC", and then get more precise as you learn more about what is required: "figure out the design for X", "implement feature Y". We update the status and set of milestones for each sprint status meeting. 
+
+[stakeholders]: ../roadmap/stages.md#stakeholders
