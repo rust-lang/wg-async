@@ -6,7 +6,6 @@
 | --- | --- |
 | 🛑  **Coming soon** | Participate in discussions and development towards [roadmap] goals |
 | 🛑  **Coming soon** | Take ownership of "help wanted" goals from the [roadmap] |
-| ⚠️ **Winding down** | Improve the [sample projects][hvp] |
 | ⚠️ **Winding down** | Propose new ["status quo" stories][hvsq] or [comment] on existing PRs |
 | ⚠️ **Winding down** | Propose new ["shiny future" stories][hvsf] or [comment] on existing PRs |
 | 🛑  Coming soon | Vote for the [awards] on the status quo and shiny future stories! |
@@ -17,9 +16,9 @@ We are currently working towards implementing the async vision described in the 
 
 ### Goal and initiative owners
 
-Each top-level goal and initiative in the [roadmap] has an *owner*. The owner is the one generally planning out and tracking that goal. You can learn more about the [responsibilities of owners](./how_to_vision/owner.md) in this page. If you have questions about whether you can help out with a goal or an initiative, the owner is probably the one to talk to.
+Each top-level goal and initiative in the [roadmap] has an **owner**. The owner of the top-level goal manages the goal overall, while the owner of an initiative manages the "nitty gritty" design work (for example, preparing the [evaluation](./how_to_vision/evaluations.md), authoring any RFCs required, or supervising the implementation). You can learn more about the [responsibilities of owners](./how_to_vision/owners.md) in this page. If you have questions about whether you can help out with a goal or an initiative, the owner is probably the one to talk to.
 
-[responsibilities of owners]: ./how_to_vision/owner.md
+[responsibilities of owners]: ./how_to_vision/owners.md
 
 ### Help wanted goals
 
@@ -27,7 +26,9 @@ Some of the top-level goals are marked with ✋, which means "help wanted". Thos
 
 ### Stakeholders
 
-While we always encourage feedback from the broader public, many of our initiatives also have identified sets of [stakeholders]. These are people who are specially consulted as part of the process to give feedback on the design and implementation. They can be representatives from major projects in the ecosystem, production users, or other sorts of experts. 
+While we always encourage feedback from the broader public, many of our initiatives also have identified sets of [stakeholders]. These are people who are specially consulted as part of the process to give feedback on the design and implementation. They can be representatives from major projects in the ecosystem, production users, or other sorts of experts.
+
+[stakeholders]: ./how_to_vision/stakeholders.md
 
 ## Living document
 
@@ -54,7 +55,6 @@ Yes! We are planning on giving [awards] in various categories for folks who writ
 [comment]: ./how_to_vision/comment.md
 [awards]: ./how_to_vision/awards.md
 [wg leads]: ../welcome.md#leads
-[hvp]: ./how_to_vision/projects.md
 [repo]: https://github.com/rust-lang/wg-async-foundations
 [open "status quo" issues]: https://github.com/rust-lang/wg-async-foundations/labels/status-quo-story-ideas
 [roadmap]: ./roadmap.md

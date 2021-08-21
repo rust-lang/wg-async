@@ -1,4 +1,4 @@
-# Goal and initiative owners
+# Owning a goal or initiative
 
 This page describes the roles and responsibilities associated with being the **owner** of an item on the [roadmap](../roadmap.md). Roadmap items fall into two categories, top-level goals and initiatives. In both cases, being an owner means that you are responsible for ensuring that the item gets done, but the details of owning a top-level goal are different from owning an initiative.
 
@@ -14,10 +14,11 @@ As the owner of a **top-level goal** your role is to figure out overall plan for
 
 ## Owning an initiative
 
-Our definition of [initiative] is precisely the same as that used by the Rust lang team: it corresponds to a some active effort with a clear goal or deliverable(s). As the owner of an **initiative**, your role is to actually get the work done (quite possibly in collaboration with others). You also generally own the design of several components. You can read more about the roles of [initiative owners] on the lang team web page. 
+Our definition of [initiative] is precisely the same as that used by the Rust lang team: it corresponds to a some active effort with a clear goal or deliverable(s). As the owner of an **initiative**, your role is to ensure that the work gets done (Which doesn't necessarily mean you do it yourself, it may be that you instead coordinate with volunteers or other implementors). You also guide the design of the deliverables within the initiative. As in the lang team process, the role of the owner is not to make the final decision (that belongs to the relevant rust team(s)), but to develop the "menu" of design choices, elaborate the tradeoffs involved, and make recommendations. For particularly complex designs, these evaluations will take the form of [evaluation documents] and are developed in collaboration with a defined set of [stakeholders].
 
 [initiative]: https://lang-team.rust-lang.org/initiatives.html
 [initiative owners]: https://lang-team.rust-lang.org/initiatives/process/roles/owner.html
+[evaluation documents]: ./evaluations.md
 
 ### Planning initiative milestones
 

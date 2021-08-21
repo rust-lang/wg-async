@@ -11,7 +11,7 @@ We categorize the goals and initiatives into four states:
 | ✋ | Help wanted: Seeking an [owner] to pursue this! Talk to the [wg leads] if you are interested. |
 | 💤 | Paused: we are waiting to work on this until some other stuff gets done. |
 
-[owner]: ./how_to_vision/owner.md
+[owner]: ./how_to_vision/owners.md
 
 ## Impact and milesetones
 
