@@ -22,8 +22,10 @@ This tells the story of Alan, an engineer who works at AWS.
 * [Encountering pin](aws_engineer/encountering_pin.md): Wrapping streams, `AsyncRead` implementations, and other types requires using `Pin` and it is challenging.
 * [Figuring out the best option](aws_engineer/figuring_out_the_best_option.md): Alan often encounters cases where he doesn't know what is the best way to implement something. He finds he has to implement it both ways to tell, and sometimes even then he can't be sure.
 * [Testing his service](aws_engineer/testing_the_service.md): Alan invents patterns for Dependency Injection in order to write tests.
+* [Using the debugger](aws_engineer/using_the_debugger.md): Alan wishes for a smoother debugging experience.
 * [Missed Waker leads to lost performance](aws_engineer/missed_waker_leads_to_lost_performance.md): Alan finds his service his not as fast as the reference server; the problem is ultimately due to a missed `Waker`, which was causing his streams to wake up much later than it should've.
 * [Debugging performance problems](aws_engineer/debugging_performance_problems.md): Alan finds more performance problems and tries to figure out their cause using tooling like `perf`. It's hard.
+* [Getting ready to deploy](aws_engineer/getting_ready_to_deploy.md): Alan prepares to deply the service.
 * [Using JNI](aws_engineer/using_jni.md): Alan uses JNI to access services that are only available using Java libraries.
 
 ## 🤔 Frequently Asked Questions

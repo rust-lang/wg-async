@@ -1,9 +1,9 @@
-# Portable async stdlib
+# Runtime
 
 ## Impact
 
-* Able to write simple, non-generic async Rust code that performs common operations like opening TCP sockets, sending UDP packets, accessing files, sleeping, and spawning tasks.
-* Able to retarget code that relies on these APIs across different platforms with no effort.
+* Able to write simple, non-generic async Rust code that performs common operations like opening TCP sockets, sending UDP packets, accessing files, sleeping, and spawning tasks, but which is not specific to a particular runtime.
+* Able to retarget code that relies on these APIs across different runtimes with no effort.
 
 ## Design notes
 

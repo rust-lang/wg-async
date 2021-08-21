@@ -6,6 +6,17 @@
     * Combined with profiler or other tooling support, this can help to tune the size of futures
 * Boxed async blocks allows particular *portions* of a function to be boxed, e.g. cold paths
 
+## Milestones
+
+| Milestone | State | Key participants |
+| --- | --- | --- |
+| Author [evaluation doc] | ✋ | Maybe you? |
+| [Feature complete] implementation | ✋ | Maybe you? |
+
+[evaluation doc]: ./roadmap/stages.html#evaluation
+[stabilize]: https://lang-team.rust-lang.org/initiatives/process/stages/stabilized.html
+[feature complete]: https://lang-team.rust-lang.org/initiatives/process/stages/feature_complete.html
+
 ## Design notes
 
 Example might be to use a decorator:

@@ -4,16 +4,37 @@
 
 | When | What |
 | --- | --- |
-| ⚠️ **Winding down** | Improve the [sample projects][hvp] |
+| 🛑  **Coming soon** | Participate in discussions and development towards [roadmap] goals |
+| 🛑  **Coming soon** | Take ownership of "help wanted" goals from the [roadmap] |
 | ⚠️ **Winding down** | Propose new ["status quo" stories][hvsq] or [comment] on existing PRs |
 | ⚠️ **Winding down** | Propose new ["shiny future" stories][hvsf] or [comment] on existing PRs |
 | 🛑  Coming soon | Vote for the [awards] on the status quo and shiny future stories! |
 
-## The big picture
+## Making the vision real
 
-The process we are using to write the vision doc encourages active collaboration and "positive sum" thinking. We started with a brainstorming period, during which we collected as many "status quo" and "shiny future" stories as we can. We are currently wrapping up that phase. We will still accept new PRs if people produce them, but we are no longer soliciting new stories. We would like to offer a [hearty thanks](../acknowledgements.md) to the many people who participated in this effort!
+We are currently working towards implementing the async vision described in the [shiny future] section. On the [roadmap] page, you can get an overview of the major goals that are part of implementing that future and how we have divided up the work. Each of the goals also has several initiatives, and those initiatives have upcoming milestones. If you'd like to participate in an initiative, you can find the appropriate Zulip stream and see if they are looking for help!
 
-We are now entering the "harmonizing period", and the working group is assembling the various stories and shiny futures into a coherent draft. This draft will be reviewed by the community and the Rust teams and adjusted based on feedback.
+### Goal and initiative owners
+
+Each top-level goal and initiative in the [roadmap] has an **owner**. The owner of the top-level goal manages the goal overall, while the owner of an initiative manages the "nitty gritty" design work (for example, preparing the [evaluation](./how_to_vision/evaluations.md), authoring any RFCs required, or supervising the implementation). You can learn more about the [responsibilities of owners](./how_to_vision/owners.md) in this page. If you have questions about whether you can help out with a goal or an initiative, the owner is probably the one to talk to.
+
+[responsibilities of owners]: ./how_to_vision/owners.md
+
+### Help wanted goals
+
+Some of the top-level goals are marked with ✋, which means "help wanted". Those goals are looking for an owner. If you think you might be interested, you can read about the [responsibilities of owners] and contact the [wg leads].
+
+### Stakeholders
+
+While we always encourage feedback from the broader public, many of our initiatives also have identified sets of [stakeholders]. These are people who are specially consulted as part of the process to give feedback on the design and implementation. They can be representatives from major projects in the ecosystem, production users, or other sorts of experts.
+
+[stakeholders]: ./how_to_vision/stakeholders.md
+
+## Living document
+
+Although many of the pieces are complete, the vision doc is a living document and it will never be done. During the brainstorming period, we had a [lot of stories submitted](./submitted_stories.md) and we are now in the process of "harmonizing" those into a small set of [status quo] and [shiny future] narratives, each based around a representative [project] and the same set of [characters]. If you'd like to help out with that, contact the [wg leads].
+
+We also plan to regularly revisit the vision once we've made significant progress on implementation or if new information has come to light.
 
 ### Submitting status quo and shiny future story PRs
 
@@ -26,9 +47,6 @@ Although the brainstorming period has ended, we are still open to new PRs, parti
 
 Yes! We are planning on giving [awards] in various categories for folks who write [status quo](./how_to_vision/status_quo.md) and [shiny future](./how_to_vision/shiny_future.md) PRs. The precise categories are TBD. Check out the [awards] page for more details.
 
-### Living document
-
-This meant to be a **living document**. We plan to revisit it regularly to track our progress and update it based on what we've learned in the meantime. Note that the shiny future stories in particular are going to involve a fair bit of uncertainty, so we expect them to change as we go.
  
 [hvsq]: ./how_to_vision/status_quo.md
 [hvsf]: ./how_to_vision/shiny_future.md
@@ -37,6 +55,10 @@ This meant to be a **living document**. We plan to revisit it regularly to track
 [comment]: ./how_to_vision/comment.md
 [awards]: ./how_to_vision/awards.md
 [wg leads]: ../welcome.md#leads
-[hvp]: ./how_to_vision/projects.md
 [repo]: https://github.com/rust-lang/wg-async-foundations
 [open "status quo" issues]: https://github.com/rust-lang/wg-async-foundations/labels/status-quo-story-ideas
+[roadmap]: ./roadmap.md
+[status quo]: ./status_quo.md
+[shiny future]: ./shiny_future.md
+[project]: ./project.md
+[characters]: ./characters.md

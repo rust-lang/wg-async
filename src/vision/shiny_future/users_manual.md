@@ -173,7 +173,7 @@ The `AsyncRead` and `AsyncWrite` traits are the most common way to do I/O. They 
 
 ### Async fns in traits, overview
 
-Async functions work in traits, too ([deliv_async_fn_in_traits]):
+Async functions work in traits, too ([deliv_async_fn_fundamentals]):
 
 ```rust
 trait HttpRequest {
@@ -334,23 +334,23 @@ One thing to be aware of when you implement `AsyncDrop` is that, because any Rus
 
 One other thing to be aware of is that async drop will trigger implicit awaits each time a value is dropped (e.g., when a block is exited). This is rarely an issue.
 
-[deliv_portable]: ../deliverables/portable.md
-[deliv_lint_blocking_fn]: ../deliverables/polish/lint_blocking_fns.md
-[deliv_portable_stdlib]: ../deliverables/portable/stdlib.md
-[deliv_documentation]: ../deliverables/documentation.md
-[deliv_async_iter]: ../deliverables/async_iter.md
-[deliv_cancellation]: ../deliverables/borrowed_data_and_cancellation.md
-[deliv_borrowed_data]: ../deliverables/borrowed_data_and_cancellation.md
-[deliv_async_read_write]: ../deliverables/portable/async_read_write.md
-[deliv_impl_trait_in_trait]: ../deliverables/async_fn/impl_trait_in_traits.md
-[deliv_gats]: ../deliverables/async_fn/gats.md
-[deliv_tait]: ../deliverables/async_fn/tait.md
-[deliv_dyn_async_trait]: ../deliverables/async_fn/dyn_async_trait.md
-[deliv_dyn_trait]: ../deliverables/async_fn/dyn_trait.md
-[deliv_scope_api]: ../deliverables/borrowed_data_and_cancellation/scope_api.md
-[deliv_inline_async_fn]: ../deliverables/async_fn/inline_async_fn.md
-[deliv_async_drop]: ../deliverables/async_fn/async_drop.md
-[deliv_async_fn_in_traits]: ../deliverables/async_fn/asaync_fn_in_traits.md
-[deliv_async_overloading]: ../deliverables/async_fn/deliv_async_overloading.md
-[deliv_tooling]: ../deliverables/tooling.md
-[deliv_boxable]: ../deliverables/async_fn/boxable.md
+[deliv_portable]: ../roadmap/portable.md
+[deliv_lint_blocking_fn]: ../roadmap/polish/lint_blocking_fns.md
+[deliv_portable_stdlib]: ../roadmap/portable/stdlib.md
+[deliv_documentation]: ../roadmap/documentation.md
+[deliv_async_iter]: ../roadmap/async_iter.md
+[deliv_cancellation]: ../roadmap/borrowed_data_and_cancellation.md
+[deliv_borrowed_data]: ../roadmap/borrowed_data_and_cancellation.md
+[deliv_async_read_write]: ../roadmap/portable/async_read_write.md
+[deliv_impl_trait_in_trait]: ../roadmap/async_fn/impl_trait_in_traits.md
+[deliv_gats]: ../roadmap/async_fn/gats.md
+[deliv_tait]: ../roadmap/async_fn/tait.md
+[deliv_dyn_async_trait]: ../roadmap/async_fn/dyn_async_trait.md
+[deliv_dyn_trait]: ../roadmap/async_fn/dyn_trait.md
+[deliv_scope_api]: ../roadmap/borrowed_data_and_cancellation/scope_api.md
+[deliv_inline_async_fn]: ../roadmap/async_fn/inline_async_fn.md
+[deliv_async_drop]: ../roadmap/async_fn/async_drop.md
+[deliv_async_fn_fundamentals]: ../roadmap/async_fn/asaync_fn_in_traits.md
+[deliv_async_overloading]: ../roadmap/async_fn/deliv_async_overloading.md
+[deliv_tooling]: ../roadmap/tooling.md
+[deliv_boxable]: ../roadmap/async_fn/boxable.md

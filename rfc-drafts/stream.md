@@ -247,7 +247,7 @@ trait Stream {
 
 Unfortunately, async methods in traits are not currently supported,
 and there [are a number of challenges to be
-resolved](https://rust-lang.github.io/wg-async-foundations/design_docs/async_fn_in_traits.html)
+resolved](https://rust-lang.github.io/wg-async-foundations/design_docs/async_fn_fundamentals.html)
 before they can be added. 
 
 Moreover, it is not clear yet how to make traits that contain async
