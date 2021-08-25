@@ -27,9 +27,11 @@ The following sections break out the biggest problems that we see.  These proble
 | | Async main |
 | | Async tests |
 | | Generators |
+| [**Missing capabilities**](./problems/capabilities.md) |
 | | Ability to guarantee destructors or progress |
 | | Ability to spawn tasks that access borrowed data |
 | | Ability to be generic over thread-safety |
+| | Ability to easily support io-uring/DMA/zero-copy/bringing to C++ |
 | [**Poor tooling support**](./problems/tooling.md) |
 | | Complex stacktraces |
 | | Inconsistent IDE support |

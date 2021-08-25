@@ -26,6 +26,7 @@
       - [Too many ways to do it](./vision/status_quo/problems/tmwdi.md)
       - [Footguns](./vision/status_quo/problems/footguns.md)
       - [Missing language features](./vision/status_quo/problems/language_features.md)
+      - [Missing capabilities](./vision/status_quo/problems/capabilities.md)
       - [Poor tooling support](./vision/status_quo/problems/tooling.md)
       - [Writing tests is hard](./vision/status_quo/problems/testing.md)
     - [Authoring the DistriData service](./vision/status_quo/DistriData.md)
