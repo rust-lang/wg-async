@@ -26,6 +26,7 @@ The following sections break out the biggest problems that we see.  These proble
 | | Async destructors |
 | | Async main |
 | | Async tests |
+| | Generators |
 | | Ability to guarantee destructors or progress |
 | | Ability to spawn tasks that access borrowed data |
 | | Ability to be generic over thread-safety |

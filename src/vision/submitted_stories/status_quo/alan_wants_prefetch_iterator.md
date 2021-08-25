@@ -10,7 +10,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 Alan once wrote a data processing microservice in a GC'd language which was designed for high throughput. Now he wants to write it in Rust and have strong ownership model.
 
-The original service consumes messages from a source stream (e.g. Kafka), process them and produces results to another stream and/or saves them to a database. Since the service acquaries some data from other sources like external services and its own PostgreSQL database, Alan batches incoming messages to acquarie as much as possible data from that sources with minimal overhead.
+The original service consumes messages from a source stream (e.g. Kafka), process them and produces results to another stream and/or saves them to a database. Since the service acquires some data from other sources like external services and its own PostgreSQL database, Alan batches incoming messages to acquire as much as possible data from that sources with minimal overhead.
 
 Since messages might arrive with some delays between them, or can end at some point for a while, their number is unknown, there's an async iterator which reads the input stream and waits some time before producing a batch if the next message isn't immediately ready.
 
