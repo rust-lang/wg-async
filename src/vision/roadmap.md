@@ -26,6 +26,8 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | Deliverable | State | Progress | [Owner] |
 | --- | --- | --- | --- |
 | 🔻 [Async fn everywhere] | 🦀  | ▰▰▱▱▱▱ | [tmandry] |
+| &nbsp;&nbsp;↳ [Type Alias Impl Trait] | 🦀  | ▰▰▰▰▰▱ | [oli-obk] |
+| &nbsp;&nbsp;↳ [Generic Associated Types] | 🦀  | ▰▰▰▰▰▱ | [jackh726] |
 | &nbsp;&nbsp;↳ [Fundamentals] | 🦀  | ▰▰▱▱▱▱ | [tmandry] |
 | &nbsp;&nbsp;↳ [Boxable async functions] | ✋ | ▰▱▱▱▱▱ | maybe you? |
 | &nbsp;&nbsp;↳ [Async main and tests] | 💤 | ▰▱▱▱▱▱ | |
@@ -88,6 +90,8 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 [Testing]: ./roadmap/testing.md
 [Threadsafe portability]: ./roadmap/threadsafe_portability.md
 [Async overloading]: ./roadmap/async_overloading.md
+[Generic Associated Types]: https://github.com/nikomatsakis/generic-associated-types-initiative/
+[Type Alias Impl Trait]: https://github.com/nikomatsakis/impl-trait-initiative/
 
 [nikomatsakis]: https://github.com/nikomatsakis
 [tmandry]: https://github.com/tmandry
@@ -96,5 +100,7 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 [eholk]: https://github.com/eholk
 [pnkfelix]: https://github.com/pnkfelix
 [eliza weisman]: https://github.com/hawkw
+[jackh726]: https://github.com/jackh726
+[oli-obk]: https://github.com/oli-obk
 
 [wg leads]: ../welcome.md#leads
