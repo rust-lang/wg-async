@@ -13,8 +13,6 @@
 
 | Milestone | State | Key participants |
 | --- | --- | --- |
-| [Feature complete] for [type alias impl trait] | 🦀 | [nikomatsakis], [oli-obk] |
-| [Feature complete] for [generic associated types] | 🦀 | [nikomatsakis], [jackh726] |
 | Author [evaluation doc] for [static async trait] | 🦀 | [tmandry]
 | Author [evaluation doc] for [dyn async trait]  | 🦀 | [tmandry]
 | Author [evaluation doc] for [async drop] | 🦀 | [tmandry]

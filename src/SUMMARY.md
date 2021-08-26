@@ -29,8 +29,6 @@
   - [📅 Roadmap](./vision/roadmap.md)
     - [Async fn everywhere](./vision/roadmap/async_fn.md)
       - [Async fn fundamentals](./vision/roadmap/async_fn/async_fn_fundamentals.md)
-        - [Type alias impl Trait](./vision/roadmap/async_fn/async_fn_fundamentals/tait.md)
-        - [Generic associated types](./vision/roadmap/async_fn/async_fn_fundamentals/gats.md)
         - [Static async trait](./vision/roadmap/async_fn/async_fn_fundamentals/static_async_trait.md)
         - [impl Trait in traits](./vision/roadmap/async_fn/async_fn_fundamentals/impl_trait_in_traits.md)
         - [Dyn async trait](./vision/roadmap/async_fn/async_fn_fundamentals/dyn_async_trait.md)
