@@ -338,7 +338,193 @@ while let Some(chunks) = shards.next().await {
 
 ## Deadlock from nested awaits
 
-* XXX Adapt [this story](../submitted_stories/status_quo/aws_engineer/solving_a_deadlock.md)
+Alan logs into work the next morning to see a message in Slack:
+
+> Alan, I've noticed that the code to replicate the shards across the hosts is sometimes leading to a deadlock. Any idea what's going on?
+
+This is the same code that Alan tried to parallelize earlier. He pulls up the function, but everything *seems* correct! It's not obvious what the problem could be.
+
+```rust
+// Prepare the outgoing HTTP requests to each host:
+let mut host_senders: Vec<hyper::body::Sender> = vec![];
+let mut host_futures = FuturesUnordered::new();
+for host in hosts {
+    let (sender, body) = hyper::body::Body::channel();
+    host_senders.push(sender);
+    host_futures.push(create_future_to_send_request(body));
+}
+
+// Send each chunk from each shared to each host:
+while let Some(chunks) = shards.next().await {
+    let chunk_futures = chunks
+        .into_iter()
+        .zip(&mut host_senders)
+        .map(|(chunk, sender)| sender.send_data(chunk));
+
+    join_all(chunk_futures)
+        .await
+        .into_iter()
+        .collect::<Result<Vec<_>, _>>()?;
+}
+
+// Wait for all HTTP requests to complete, aborting on error:
+loop {
+    match host_futures.next().await {
+        Some(Ok(response)) => handle_response(response)?,
+        Some(Err(e)) => return Err(e).map_err(box_err)?,
+        None => return Ok(()),
+    }
+}
+```
+
+He tries to reproduce the deadlock. He is able to reproduce the problem readily enough, but only with larger requests. He had always used small tests before. 
+
+### Trying a debugger
+
+When problems like this cropped up in the past, Alan always whipped out a debugger to see what the state were of all the threads and tasks. Most recently this was Java, but he has also written C#, and he had great experiences with [Visual Studio's debugger](https://devblogs.microsoft.com/visualstudio/how-do-i-debug-async-code-in-visual-studio/#is-there-a-way-to-better-visualize-tasks-and-async-code-flow), which was able to show him all the async tasks currently waiting, their call stacks and what resource they were waiting on. He decides to try it with Rust.
+
+His first attempt is to use IntelliJ's debugger, since he is using IntelliJ. But when he does so, he isn't able to make heads or tails of what he is seeing. Clicking around, he sees various threads that are blocked in various bits of Rust code, but none of it is code he is familiar with.
+
+He wonders if the problem is the debugger he is using. Doing a bit of web searching, he sees other people talking about `gdb`; it seems to be a popular choice for debugging Rust code. He thinks maybe he'll give it a try; a quick google search also reveals a blog post that has a helpful cheatsheet of `gdb` commands since he's not familiar with the debugger.
+
+Alan restarts the DistriData service under `gdb` and reprouces the issue. He then presses `Ctrl+C` and then types `bt` to get a backtrace:
+
+<details><summary>(gdb) bt</summary>
+
+```ignore
+(gdb) bt
+#0  0x00007ffff7d5e58a in epoll_wait (epfd=3, events=0x555555711340, maxevents=1024, timeout=49152)
+    at ../sysdeps/unix/sysv/linux/epoll_wait.c:30
+#1  0x000055555564cf7d in mio::sys::unix::selector::epoll::Selector::select (self=0x7fffffffd008, events=0x7fffffffba40, 
+    timeout=...) at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.7.11/src/sys/unix/selector/epoll.rs:68
+#2  0x000055555564a82f in mio::poll::Poll::poll (self=0x7fffffffd008, events=0x7fffffffba40, timeout=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.7.11/src/poll.rs:314
+#3  0x000055555559ad96 in tokio::io::driver::Driver::turn (self=0x7fffffffce28, max_wait=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/io/driver/mod.rs:162
+#4  0x000055555559b8da in <tokio::io::driver::Driver as tokio::park::Park>::park_timeout (self=0x7fffffffce28, duration=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/io/driver/mod.rs:238
+#5  0x00005555555e9909 in <tokio::signal::unix::driver::Driver as tokio::park::Park>::park_timeout (self=0x7fffffffce28, 
+    duration=...) at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/signal/unix/driver.rs:156
+#6  0x00005555555a9229 in <tokio::process::imp::driver::Driver as tokio::park::Park>::park_timeout (self=0x7fffffffce28, 
+    duration=...) at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/process/unix/driver.rs:84
+#7  0x00005555555a898d in <tokio::park::either::Either<A,B> as tokio::park::Park>::park_timeout (self=0x7fffffffce20, 
+    duration=...) at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/park/either.rs:37
+#8  0x00005555555ce0b8 in tokio::time::driver::Driver<P>::park_internal (self=0x7fffffffcdf8, limit=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/time/driver/mod.rs:226
+#9  0x00005555555cee60 in <tokio::time::driver::Driver<P> as tokio::park::Park>::park (self=0x7fffffffcdf8)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/time/driver/mod.rs:398
+#10 0x00005555555a87bb in <tokio::park::either::Either<A,B> as tokio::park::Park>::park (self=0x7fffffffcdf0)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/park/either.rs:30
+#11 0x000055555559ce47 in <tokio::runtime::driver::Driver as tokio::park::Park>::park (self=0x7fffffffcdf0)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/driver.rs:198
+#12 0x000055555557a2f7 in tokio::runtime::basic_scheduler::Inner<P>::block_on::{{closure}} (scheduler=0x7fffffffcdb8, 
+    context=0x7fffffffcaf0)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:224
+#13 0x000055555557b1b4 in tokio::runtime::basic_scheduler::enter::{{closure}} ()
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:279
+#14 0x000055555558174a in tokio::macros::scoped_tls::ScopedKey<T>::set (
+    self=0x555555701af8 <tokio::runtime::basic_scheduler::CURRENT>, t=0x7fffffffcaf0, f=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/macros/scoped_tls.rs:61
+#15 0x000055555557b0b6 in tokio::runtime::basic_scheduler::enter (scheduler=0x7fffffffcdb8, f=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:279
+#16 0x0000555555579d3b in tokio::runtime::basic_scheduler::Inner<P>::block_on (self=0x7fffffffcdb8, future=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:185
+#17 0x000055555557a755 in tokio::runtime::basic_scheduler::InnerGuard<P>::block_on (self=0x7fffffffcdb8, future=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:425
+#18 0x000055555557aa9c in tokio::runtime::basic_scheduler::BasicScheduler<P>::block_on (self=0x7fffffffd300, future=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:145
+#19 0x0000555555582094 in tokio::runtime::Runtime::block_on (self=0x7fffffffd2f8, future=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/mod.rs:450
+#20 0x000055555557c22f in inventory_service::main () at /home/alan/code/inventory_service/src/main.rs:4
+```
+
+</details>
+
+This looks a lot like what he saw in IntelliJ: the only line Alan even recognizes is the `main` entry point function for the service.
+He knows that async tasks in Rust aren't run individually on their own threads which allows them to scale better and use fewer resources but surely there has to be a thread somewhere that's running his code?
+He decides to dig a bit deeper.
+
+Alan doesn't completely understand how async works in Rust but he's seen the `Future::poll` method so he assumes that there is a thread which constantly polls tasks to see if they are ready to wake up.
+"Maybe I can find that thread and inspect its state?" he thinks and then consults the cheatsheet for the appropriate command to see the threads in the program.
+`info threads` seems promising so he tries that:
+
+<details><summary>(gdb) info threads</summary>
+
+```ignore
+(gdb) info threads
+  Id   Target Id                                          Frame 
+* 1    Thread 0x7ffff7c3b5c0 (LWP 1048) "inventory_servi" 0x00007ffff7d5e58a in epoll_wait (epfd=3, events=0x555555711340, 
+    maxevents=1024, timeout=49152) at ../sysdeps/unix/sysv/linux/epoll_wait.c:30
+```
+
+</details>
+
+Alan is now even more confused: "Where are my tasks?" he thinks.
+After looking through the cheatsheet and StackOverflow, he discovers there isn't a way to see which async tasks are waiting to be woken up in the debugger.
+Taking a shot in the dark, Alan concludes that this thread must be thread which is polling his tasks since it is the only one in the program.
+He googles "epoll_wait rust async tasks" but the results aren't very helpful and inspecting the stack frame doesn't yield him any clues as to where his tasks are so this seems to be a dead end.
+
+After thinking a bit, Alan realizes that since the runtime must know what tasks are waiting to be woken up, perhaps he can have the service ask the async runtime for that list of tasks every 10 seconds and print them to stdout? 
+While crude, this would probably also help him diagnose the hang.
+Alan gets to work and opens the runtime docs to figure out how to get that list of tasks.
+After spending 30 minutes reading the docs, looking at StackOverflow questions and even posting on users.rust-lang.org, he discovers this simply isn't possible and he will have to add tracing to his application to figure out what's going on.
+
+### Grace wants async insights
+
+
+
+
+
+
+He connects to the process with the debugger but he can't really make heads or tails of what tasks seem to be stuck (see [Alan tries to debug a hang](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_tries_to_debug_a_hang.html) or [Barbara wants async insights](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_wants_async_insights.html)). He resorts to sprinkling logging everywhere.
+
+At long last, he starts to see a pattern emerging. From the logs, he sees the data from each chunk is being sent to the hyper channel, but it never seems to be sent over the HTTP connection to the backend hosts. He is pretty confused by this -- he thought that the futures he pushed into `host_futures` should be taking care of sending the request body out over the internet. He goes to talk to Barbara -- [who, as it happens, has been through this very problem in the past](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_battles_buffered_streams.html) -- and she explains to him what is wrong.
+
+"When you push those futures into `FuturesUnordered`", she says, "they will only make progress when you are actually awaiting on the stream. With the way the loop is setup now, the actual sending of data won't start until that third loop. Presumably your deadlock is because the second loop is blocked, waiting for some of the data to be sent."
+
+"Huh. That's...weird. How can I fix it?", asks Alan.
+
+"You need to spawn a separate task," says Barbara. "Something like this should work." She modifies the code to spawn a task that is performing the third loop. That task is spawned before the second loop starts:
+
+```rust=
+// Prepare the outgoing HTTP requests to each host:
+let mut host_senders: Vec<hyper::body::Sender> = vec![];
+let mut host_futures = FuturesUnordered::new();
+for host in hosts {
+    let (sender, body) = hyper::body::Body::channel();
+    host_senders.push(sender);
+    host_futures.push(create_future_to_send_request(body));
+}
+
+// Make sure this runs in parallel with the loop below!
+let send_future = tokio::spawn(async move {
+    // Wait for all HTTP requests to complete, aborting on error:
+    loop {
+        match host_futures.next().await {
+            Some(Ok(response)) => handle_response(response)?,
+            Some(Err(e)) => break Err(e)?,
+            None => break Ok(()),
+        }
+    }
+});
+
+// Send each chunk from each shared to each host:
+while let Some(chunks) = shards.next().await {
+    let chunk_futures = chunks
+        .into_iter()
+        .zip(&mut host_senders)
+        .map(|(chunk, sender)| sender.send_data(chunk));
+
+    join_all(chunk_futures)
+        .await
+        .into_iter()
+        .collect::<Result<Vec<_>, _>>()?;
+}
+
+send_future.await
+```
+
+"Oof", says Alan, "I'll try to remember that!"
 
 ## Slowdown from missing waker
 
