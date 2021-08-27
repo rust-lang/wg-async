@@ -25,8 +25,8 @@
 | Lint: [Large copies], large generators     | 💤    | |
 | ↳ [Lang team] initiative proposal          | 💤    | |
 | ↳ Implementation                           | 💤    | |
-| Lint: [Live over yield]                    | 💤    | |
-| ↳ Landed the RFC                           | 💤    | |
+| Lint: [Must not suspend]                   | 💤    | |
+| ↳ Landed the [RFC]                         | 💤    | |
 | Lint: [Blocking in async context]          | 💤    | |
 
 
@@ -34,4 +34,5 @@
 [Lang team]: https://www.rust-lang.org/governance/teams/lang
 [Blocking in async context]: ./polish/lint_blocking_fns.md
 [Large copies]: ./polish/lint_large_copies.md
-[Live over yield]: ./polish/lint_must_not_suspend.md
+[Must not suspend]: ./polish/lint_must_not_suspend.md
+[RFC]: https://rust-lang.github.io/rfcs/3014-must-not-suspend-lint.html
