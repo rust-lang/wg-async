@@ -18,16 +18,19 @@
 | Milestone                                  | State | Key participants |
 | ---                                        | ---   | ---              |
 | Precise generator captures                 | 🦀    | [eholk]          |
-| ↳ Prototype                                | 🦀    | [eholk]          |
+| ↳ Prototyped                               | 🦀    | [eholk]          |
 | ↳ Documented in Rust Reference             | 🦀    | [eholk]          |
+| ↳ [Lang team] initiative proposal          | 💤    | [eholk]          |
 | ↳ [Lang team] signoff                      | 💤    | [Lang team]      |
 | ↳ Stabilized                               | 💤    | [eholk]          |
 | Lint: [Large copies], large generators     | 💤    | |
 | ↳ [Lang team] initiative proposal          | 💤    | |
-| ↳ Implementation                           | 💤    | |
+| ↳ Implementated                            | 💤    | |
 | Lint: [Must not suspend]                   | 💤    | |
-| ↳ Landed the [RFC]                         | 💤    | |
+| ↳ Implemented the [RFC]                    | 💤    | |
 | Lint: [Blocking in async context]          | 💤    | |
+| ↳ RFC proposed and accepted                | 💤    | |
+| ↳ Implementated                            | 💤    | |
 
 
 [eholk]: https://github.com/eholk/
