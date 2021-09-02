@@ -29,7 +29,7 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | &nbsp;&nbsp;↳ [Type Alias Impl Trait] | 🦀  | ▰▰▰▰▰▱ | [oli-obk] |
 | &nbsp;&nbsp;↳ [Generic Associated Types] | 🦀  | ▰▰▰▰▰▱ | [jackh726] |
 | &nbsp;&nbsp;↳ [Fundamentals] | 🦀  | ▰▰▱▱▱▱ | [tmandry] |
-| &nbsp;&nbsp;↳ [Boxable async functions] | ✋ | ▰▱▱▱▱▱ | maybe you? |
+| &nbsp;&nbsp;↳ [Boxable async functions] | 💤  | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Async main and tests] | 💤 | ▰▱▱▱▱▱ | |
 | 🔻 [Scoped spawn and reliable cancellation] | 💤 | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Capability] | 💤 | ▰▱▱▱▱▱ | |

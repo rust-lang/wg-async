@@ -10,8 +10,8 @@
 
 | Milestone | State | Key participants |
 | --- | --- | --- |
-| Author [evaluation doc] | ✋ | Maybe you? |
-| [Feature complete] implementation | ✋ | Maybe you? |
+| Author [evaluation doc] | 💤  | |
+| [Feature complete] implementation | 💤  | |
 
 [evaluation doc]: ./roadmap/stages.html#evaluation
 [stabilize]: https://lang-team.rust-lang.org/initiatives/process/stages/stabilized.html
@@ -27,4 +27,3 @@ async fn foo() { }
 ```
 
 This does not have to desugar to `-> Box<dyn Future<...>>`; it can instead desugar to `Box<impl Future>`, or perhaps a nominal type to permit recursion.
-
