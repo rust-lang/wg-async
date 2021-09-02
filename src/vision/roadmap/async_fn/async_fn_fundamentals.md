@@ -16,16 +16,16 @@
 | Author [evaluation doc] for [static async trait] | 🦀 | [tmandry]
 | Author [evaluation doc] for [dyn async trait]  | 🦀 | [tmandry]
 | Author [evaluation doc] for [async drop] | 🦀 | [tmandry]
-| Author [evaluation doc] for [impl Trait in traits]  | 💤 | 
-| [Stabilize] [type alias impl trait] | 💤  | 
-| [Stabilize] [generic associated types]  | 💤 | 
-| Author RFC for async fn in traits  | 💤 | 
-| Author [evaluation doc] for [async closures]  | 💤 | 
-| Author RFC for async fn in traits  | 💤 | 
-| [Feature complete] for async fn in traits | 💤 | 
-| [Feature complete] for [impl Trait in traits] | 💤 | 
-| [Feature complete] for [async drop] | 💤 | 
-| [Feature complete] for [async closures] | 💤 | 
+| Author [evaluation doc] for [impl Trait in traits]  | 💤 |
+| [Stabilize] [type alias impl trait] | 💤  |
+| [Stabilize] [generic associated types]  | 💤 |
+| Author RFC for async fn in traits  | 💤 |
+| Author [evaluation doc] for [async closures]  | 💤 |
+| Author RFC for async fn in traits  | 💤 |
+| [Feature complete] for async fn in traits | 💤 |
+| [Feature complete] for [impl Trait in traits] | 💤 |
+| [Feature complete] for [async drop] | 💤 |
+| [Feature complete] for [async closures] | 💤 |
 
 [nikomatsakis]: https://github.com/nikomatsakis/
 [oli-obk]: https://github.com/oli-obk/
@@ -43,4 +43,3 @@
 [evaluation doc]: ./roadmap/stages.html#evaluation
 [stabilize]: https://lang-team.rust-lang.org/initiatives/process/stages/stabilized.html
 [feature complete]: https://lang-team.rust-lang.org/initiatives/process/stages/feature_complete.html
-

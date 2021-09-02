@@ -1,6 +1,6 @@
 # Roadmap
 
-What follows is a list of *high-level goals*, like "async fn everywhere", that capture some part of the improved user experience. Each goal has associated *initiatives*, which are particular streams of work within that goal. Each goal and each initiative have an associated owner -- in some cases multiple owners -- who are the people responsible for ensuring that the goal/initiative is making progress. If you click on a goal/initiative, you will get a high-level description of its *impact*. That is, how the experience of using async Rust is going to change as a result of this work. 
+What follows is a list of *high-level goals*, like "async fn everywhere", that capture some part of the improved user experience. Each goal has associated *initiatives*, which are particular streams of work within that goal. Each goal and each initiative have an associated owner -- in some cases multiple owners -- who are the people responsible for ensuring that the goal/initiative is making progress. If you click on a goal/initiative, you will get a high-level description of its *impact*. That is, how the experience of using async Rust is going to change as a result of this work.
 
 We categorize the goals and initiatives into four states:
 
@@ -29,36 +29,36 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | &nbsp;&nbsp;↳ [Type Alias Impl Trait] | 🦀  | ▰▰▰▰▰▱ | [oli-obk] |
 | &nbsp;&nbsp;↳ [Generic Associated Types] | 🦀  | ▰▰▰▰▰▱ | [jackh726] |
 | &nbsp;&nbsp;↳ [Fundamentals] | 🦀  | ▰▰▱▱▱▱ | [tmandry] |
-| &nbsp;&nbsp;↳ [Boxable async functions] | ✋ | ▰▱▱▱▱▱ | maybe you? |
+| &nbsp;&nbsp;↳ [Boxable async functions] | 💤  | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Async main and tests] | 💤 | ▰▱▱▱▱▱ | |
 | 🔻 [Scoped spawn and reliable cancellation] | 💤 | ▰▱▱▱▱▱ | |
-| &nbsp;&nbsp;↳ [Capability] | 💤 | ▰▱▱▱▱▱ | | 
-| &nbsp;&nbsp;↳ [Scope API] | 💤 | ▰▱▱▱▱▱ | | 
+| &nbsp;&nbsp;↳ [Capability] | 💤 | ▰▱▱▱▱▱ | |
+| &nbsp;&nbsp;↳ [Scope API] | 💤 | ▰▱▱▱▱▱ | |
 | 🔻 [Async iteration] | 🦀  | ▰▰▱▱▱▱ | [estebank] |
-| &nbsp;&nbsp;↳ [Async iteration trait] | 💤 | ▰▰▰▱▱▱ | | 
-| &nbsp;&nbsp;↳ [Generator syntax] | 💤 | ▰▰▱▱▱▱ | | 
+| &nbsp;&nbsp;↳ [Async iteration trait] | 💤 | ▰▰▰▱▱▱ | |
+| &nbsp;&nbsp;↳ [Generator syntax] | 💤 | ▰▰▱▱▱▱ | |
 | 🔻 [Portable across runtimes] | 💤 | ▰▰▱▱▱▱ | |
-| &nbsp;&nbsp;↳ [Read/write traits] | 💤 | ▰▰▱▱▱▱ | | 
-| &nbsp;&nbsp;↳ [Timer traits] | 💤 | ▰▱▱▱▱▱ | | 
-| &nbsp;&nbsp;↳ [Spawn traits] | 💤 | ▰▱▱▱▱▱ | | 
-| &nbsp;&nbsp;↳ [Runtime trait] | 💤 | ▰▱▱▱▱▱ | | 
+| &nbsp;&nbsp;↳ [Read/write traits] | 💤 | ▰▰▱▱▱▱ | |
+| &nbsp;&nbsp;↳ [Timer traits] | 💤 | ▰▱▱▱▱▱ | |
+| &nbsp;&nbsp;↳ [Spawn traits] | 💤 | ▰▱▱▱▱▱ | |
+| &nbsp;&nbsp;↳ [Runtime trait] | 💤 | ▰▱▱▱▱▱ | |
 | 🔻 [Polish] | 🦀  | ▰▰▰▱▱▱ | [eholk] |
-| &nbsp;&nbsp;↳ [Error messages] | 💤 | ▰▰▰▱▱▱ | | 
-| &nbsp;&nbsp;↳ [Must not suspend lint] | 💤 | ▰▰▰▰▱▱ | | 
-| &nbsp;&nbsp;↳ [Blocking function lint] | 💤 | ▰▰▱▱▱▱ | | 
-| &nbsp;&nbsp;↳ [Lint against large copies] | 💤 | ▰▰▱▱▱▱ | | 
-| &nbsp;&nbsp;↳ [Cleaner async stacktraces] | 💤 | ▰▱▱▱▱▱ | | 
+| &nbsp;&nbsp;↳ [Error messages] | 💤 | ▰▰▰▱▱▱ | |
+| &nbsp;&nbsp;↳ [Must not suspend lint] | 💤 | ▰▰▰▰▱▱ | |
+| &nbsp;&nbsp;↳ [Blocking function lint] | 💤 | ▰▰▱▱▱▱ | |
+| &nbsp;&nbsp;↳ [Lint against large copies] | 💤 | ▰▰▱▱▱▱ | |
+| &nbsp;&nbsp;↳ [Cleaner async stacktraces] | 💤 | ▰▱▱▱▱▱ | |
 | 🔻 [Tooling] | 🦀  | ▰▰▱▱▱▱ | [pnkfelix] |
-| &nbsp;&nbsp;↳ [Tokio console] | 🦀  | ▰▰▰▰▱▱ | [eliza weisman] | 
+| &nbsp;&nbsp;↳ [Tokio console] | 🦀  | ▰▰▰▰▱▱ | [eliza weisman] |
 | &nbsp;&nbsp;↳ [Crashdump debugging] | 🦀  | ▰▰▱▱▱▱ | [michaelwoerister] |
-| 🔻 [Documentation] | 🦀  | ▰▰▱▱▱▱ | | 
-| &nbsp;&nbsp;↳ [Async book] | 💤 | ▰▰▱▱▱▱ | | 
+| 🔻 [Documentation] | 🦀  | ▰▰▱▱▱▱ | |
+| &nbsp;&nbsp;↳ [Async book] | 💤 | ▰▰▱▱▱▱ | |
 | 🔻 [Testing] | 💤 | ▰▱▱▱▱▱ |  |
-| &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ | 
+| &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
 | 🔻 [Threadsafe portability] | 💤 | ▰▱▱▱▱▱ |  |
-| &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ | 
+| &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
 | 🔻 [Async overloading] | 💤 | ▰▱▱▱▱▱ |  |
-| &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ | 
+| &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
 
 [Async fn everywhere]:  ./roadmap/async_fn.md
 [fundamentals]: ./roadmap/async_fn/async_fn_fundamentals.md
