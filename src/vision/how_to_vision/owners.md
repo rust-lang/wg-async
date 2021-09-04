@@ -6,10 +6,10 @@ This page describes the roles and responsibilities associated with being the **o
 
 Goal owners are responsible for splitting their area into a set of **initiatives**. These can be active or on hold.
 
-They are also responsible for ensuring that for each active initiative:
+They are also responsible for ensuring that for each initiative:
 
 - An owner is assigned
-- A landing page exists (see below)
+- A landing page exists
 - Milestones are defined on the landing page
 - Stakeholders are identified and looped in at the proper stages
 
@@ -37,7 +37,9 @@ As in the lang team process, the role of the owner is not to make the final deci
 
 ### Making a landing page
 
-Each initiative should have a landing page, linked to from the [roadmap]. This can be a page on this website or a dedicated repo. It should include, or have pointers to:
+Each initiative should have a landing page, linked to from the [roadmap]. This can be a page on this website or a dedicated repo.
+
+For in-progress initiatives the landing page should include, or have pointers to:
 
 - Goals and impact of the initiative
 - Milestones
