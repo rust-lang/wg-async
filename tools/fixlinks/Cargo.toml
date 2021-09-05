@@ -1,0 +1,10 @@
+[package]
+name = "fixlinks"
+version = "0.1.0"
+authors = ["Tyler Mandry <tmandry@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+camino = "1.0"
+regex = "1.5"
+pathdiff = "0.2"
