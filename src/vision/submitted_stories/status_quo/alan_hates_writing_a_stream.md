@@ -239,9 +239,9 @@ Choosing Alan was somewhat arbitrary, but this does get to reuse the experience 
 * This likely would have been a similar story for any character.
 * It's possible [Grace][] would be more used to writing state machines, coming from C.
 
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

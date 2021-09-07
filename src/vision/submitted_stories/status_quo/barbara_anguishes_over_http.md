@@ -42,9 +42,9 @@ Based on the author's personal experience of taking newcomers to Rust through th
 ### **Why did you choose [Barbara][] to tell this story?**
 Barbara knows all the considerations and their consequences. A less experienced Rust developer might just make a choice even if that choice isn't the right one for them.
 
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

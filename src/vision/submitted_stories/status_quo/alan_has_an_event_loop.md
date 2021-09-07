@@ -94,11 +94,11 @@ Alan gives up and uses a runtime in a separate thread from the UI. This means he
 * **How would this story have played out differently for the other characters?**
     * Since this is a technical and not a skill or experience issue, this would play out similar for other Characters. Although someone with deep knowledge of those Event loops, like Grace, might be more willing to re-implement them.
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

@@ -123,16 +123,16 @@ A few weeks later, Alan's work at his project at work is merged with his new for
 * <https://twitter.com/cryptoquick/status/1370155726056738817>
 * <https://blog.yoshuawuyts.com/rust-streams/#why-we-do-not-talk-about-the-sink-trait>
 * [[C++] Throwing Out The Kitchen Sink](https://thephd.github.io/output-ranges)
-### **Why did you choose [Alan](../characters/alan.md) to tell this story?**
+### **Why did you choose [Alan](../../characters/alan.md) to tell this story?**
 * Alan is more representative of the original author's background in JS, TypeScript, and NodeJS.
 ### **How would this story have played out differently for the other characters?**
 * (I'm not sure.)
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

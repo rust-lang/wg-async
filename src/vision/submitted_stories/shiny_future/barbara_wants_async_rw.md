@@ -82,13 +82,13 @@ No variations.
 
 
 
-[character]: ../characters.md
-[comment]: ./comment.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[projects]: ../projects.md
-[htvsq]: ../how_to_vision/shiny_future.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[comment]: ../../how_to_vision/comment.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[projects]: ../../projects.md
+[htvsq]: ../shiny_future.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

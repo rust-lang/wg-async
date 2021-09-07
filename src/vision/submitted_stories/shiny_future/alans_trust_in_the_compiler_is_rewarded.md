@@ -1,6 +1,6 @@
 # ✨ Shiny future stories: Alan's trust in the compiler is rewarded
 
-[How To Vision: Shiny Future]: ../how_to_vision/shiny_future.md
+[How To Vision: Shiny Future]: ../shiny_future.md
 [the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/shiny_future/template.md
 [`shiny_future`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
 [`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
@@ -173,8 +173,8 @@ A number of projects benefit:
 * Projects like [YouBuy] are able to get up and going faster.
 * Libraries like [SLOW] become easier because they can target the std APIs and there is a defined plan for porting across runtimes.
 
-[YouBuy]: ../projects/YouBuy.md
-[SLOW]: ../projects/SLOW.md
+[YouBuy]: ../../projects/YouBuy.md
+[SLOW]: ../../projects/SLOW.md
 
 ### **Are there any [projects] that are hindered by this future?**
 
@@ -188,13 +188,13 @@ This question can't really be answered in isolation, because so much depends on 
 
 Yes. For external libraries like `fetch_rs` to interoperate they will want to use the std APIs (and probably traits).
 
-[character]: ../characters.md
-[comment]: ./comment.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[projects]: ../projects.md
-[htvsq]: ../how_to_vision/shiny_future.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[comment]: ../../how_to_vision/comment.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[projects]: ../../projects.md
+[htvsq]: ../shiny_future.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

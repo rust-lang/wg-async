@@ -1,6 +1,6 @@
 # ✨ Shiny future stories: Barbara appreciates great performance analysis tools
 
-[How To Vision: Shiny Future]: ../how_to_vision/shiny_future.md
+[How To Vision: Shiny Future]: ../shiny_future.md
 [the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/shiny_future/template.md
 [`shiny_future`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
 [`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
@@ -61,7 +61,7 @@ All the projects benefit; there's a useful amount of tracing "for free", and pla
 
 [MonsterMesh] needs to be able to remove a lot of the tracing because the CPU and memory overhead is too high in release builds.
 
-[MonsterMesh]: ../projects/MonsterMesh.md
+[MonsterMesh]: ../../projects/MonsterMesh.md
 
 ### **What are the incremental steps towards realizing this shiny future?**
 
@@ -76,10 +76,10 @@ Next steps are to make integrating that with executors trivial (minimal code cha
 
 Yes. We need an agreed API for tracing that all async projects use - both to add tracing information, and to consume it in a useful form.
 
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[projects]: ../projects.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[projects]: ../../projects.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

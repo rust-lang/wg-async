@@ -2,7 +2,7 @@
 
 *This is a template for adding new projects. See the [instructions] for more details on how to add new project!*
 
-[instructions]: ../how_to_vision/projects.md
+[instructions]: ../projects.md
 
 ## What is this?
 

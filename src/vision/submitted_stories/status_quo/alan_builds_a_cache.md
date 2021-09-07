@@ -11,7 +11,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 [Alan][] is working on an HTTP server. The server makes calls to some other service. The performance of the downstream service is somewhat poor, so Alan would like to implement some basic caching.
 
-[Alan]: ../characters/alan.md
+[Alan]: ../../characters/alan.md
 
 Alan writes up some code which does the caching:
 

@@ -384,10 +384,10 @@ to resort to an internet search or asking on a rust community.
 * [Barbara makes their first steps in async] is Barbara in a slightly different universe.
 * [Alan started trusting the rust compiler][trusts the rust compiler] is a similar story about a different character.
 
-[status quo stories]: ./status_quo.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[status quo stories]: ../status_quo.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
 [trusts the rust compiler]: ./alan_started_trusting_the_rust_compiler_but_then_async.md
 [Barbara makes their first steps in async]: ./barbara_makes_their_first_steps_into_async.md
 [reddit]: https://www.reddit.com/r/rust

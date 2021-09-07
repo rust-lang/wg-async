@@ -166,14 +166,14 @@ It works, well enough that Alan is able to finish his changes and PR them into t
     * Grace would have felt constrained by the `async` syntax preventing some kind of workaround for this problem.
     * Barbara already knew about Futures and 'static and carefully organizes their programs accordingly.
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
 [RuffleAsync]: https://github.com/ruffle-rs/ruffle/blob/master/core/src/loader.rs
 [WasmFetch]: https://docs.rs/web-sys/0.3.50/web_sys/struct.Window.html#method.fetch_with_request
 [WasmJsFuture]: https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/struct.JsFuture.html

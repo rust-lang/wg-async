@@ -1,9 +1,9 @@
 # 😱 Status quo stories: Grace wants a zero-copy API
 
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
 
 ## 🚧 Warning: Draft status 🚧
 
@@ -72,7 +72,7 @@ when trying to expose zero-copy APIs.
 * That is usually done in C/C++, and Grace is the only one that is very likely to have this experience.
 * There is a chance Barbara would have ventured into similar problems. She would likely have had a similar experience than Grace.
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

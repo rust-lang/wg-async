@@ -1,6 +1,6 @@
 # 😱 Status quo stories: Barbara trims a stacktrace
 
-[How To Vision: Status Quo]: ../how_to_vision/status_quo.md
+[How To Vision: Status Quo]: ../status_quo.md
 [the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
 [`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
 [`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
@@ -164,11 +164,11 @@ at lib.rs:102:13
 ### **Doesn't Rust have backtrace trimming support?**
 Yes, this **is** the reduced backtrace. You don't even want to know what the [full one](https://gist.github.com/eminence/0b3e697b7c4e686451ff0d37c169c89d) looks like. Don't click it. Don't!
     
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

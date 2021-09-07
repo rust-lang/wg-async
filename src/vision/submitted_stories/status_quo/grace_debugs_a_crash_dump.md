@@ -122,13 +122,13 @@ In [Niklaus]'s case, he would probably need to ask one of his more experienced t
 * This is tangentially related to the story [Alan iteratively regresses performance](alan_iteratively_regresses.md), because there Alan was used to applying existing native tools to Rust, even though there is sometimes an impedence mismatch. The mismatch is likely to be even more challenging for async debugging, since this scenario is already not well supported in a lot of existing tools.
 
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
-[DistriData]: ../projects/DistriData.md
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[DistriData]: ../../projects/DistriData.md
 [async-insights]: barbara_wants_async_insights.md

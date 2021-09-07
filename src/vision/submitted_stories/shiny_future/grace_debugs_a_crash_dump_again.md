@@ -76,15 +76,15 @@ A lot of the work here probably will not be done by the core Rust team, other th
 
 There does not seem to be an obvious way to implement everything in this story. It would probably be good to focus on a particular runtime at least to get a proof of concept and better sketch out the requirements.
 
-[character]: ../characters.md
-[comment]: ./comment.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[projects]: ../projects.md
-[htvsq]: ../how_to_vision/shiny_future.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
-[DistriData]: ../projects/DistriData.md
+[character]: ../../characters.md
+[comment]: ../../how_to_vision/comment.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[projects]: ../../projects.md
+[htvsq]: ../shiny_future.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[DistriData]: ../../projects/DistriData.md
 [Language Server Protocol]: https://microsoft.github.io/language-server-protocol/

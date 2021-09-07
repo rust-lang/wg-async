@@ -11,7 +11,7 @@ Basic idea:
 Appealing characteristics:
 
 - **More analogous to sync code.** In sync code, if you want to defer immediately executing something, you make a closure. Same in async code, but it's an async closure.
-- **Consistency around async-drop.** If we adopt an [async drop](../compose_control_scheduling/async_drop.md) proposal, that implies that there will be "awaits" that occur as you exit a block (or perhaps from the control-flow of a `break` or `?`). These will not be signaled with a `.await`. So you can no longer rely on _every_ await point being visible with a keyword.
+- **Consistency around async-drop.** If we adopt an [async drop](../roadmap/async_fn/async_fn_fundamentals/async_drop.md) proposal, that implies that there will be "awaits" that occur as you exit a block (or perhaps from the control-flow of a `break` or `?`). These will not be signaled with a `.await`. So you can no longer rely on _every_ await point being visible with a keyword.
 - **No confusion around remembering to await.** Right now the compiler has to go to some lengths to offer you messages suggesting you insert `.await`. It'd be nice if you just didn't have to remember.
 - **Room for optimization.** When you first invoke an async function, it can immediately start executing; it only needs to create a future in the event that it suspends. This may also make closures somewhat smaller.
   - This could be partially achieved by adding an optional method on the trait that compiles a version of the fn meant to be used when it is _immediately awaited_.

@@ -444,5 +444,5 @@ like.
    compiler can both detect specific problems and propose actionable
    solutions
 
-[Alan]: ../characters/alan.md
-[htvsq]: ../how_to_vision/shiny_future.md
+[Alan]: ../../characters/alan.md
+[htvsq]: ../shiny_future.md

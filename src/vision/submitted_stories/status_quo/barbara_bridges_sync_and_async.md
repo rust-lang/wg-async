@@ -1,6 +1,6 @@
 # 😱 Status quo stories: Barbara bridges sync and async in `perf.rust-lang.org`
 
-[How To Vision: Status Quo]: ../how_to_vision/status_quo.md
+[How To Vision: Status Quo]: ../status_quo.md
 [the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
 [`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
 [`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
@@ -325,11 +325,11 @@ There are times when converting synchronous code to async is difficult or even i
 * the [`async-io`](https://docs.rs/async-std/1.9.0/async_std/task/fn.block_on.html) crate offers `block_on`
 * ...there are probably more, but I think you get the point.
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

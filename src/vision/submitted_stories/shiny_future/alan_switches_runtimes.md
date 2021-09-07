@@ -1,6 +1,6 @@
 # ✨ Shiny future stories: Alan switches runtimes
 
-[How To Vision: Shiny Future]: ../how_to_vision/shiny_future.md
+[How To Vision: Shiny Future]: ../shiny_future.md
 [the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/shiny_future/template.md
 [`shiny_future`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
 [`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
@@ -105,7 +105,7 @@ Grace is concerned with memory safety and being able to deploy her tricks she kn
 
 Niklaus finds it async Rust quite accessible, for the same reasons cited as in ["Alan's Trust in the Rust Compiler is Rewarded"].
 
-["Alan's Trust in the Rust Compiler is Rewarded"]: ../alans_trust_in_the_compiler_is_rewarded.md
+["Alan's Trust in the Rust Compiler is Rewarded"]: ./alans_trust_in_the_compiler_is_rewarded.md
 
 ### **What is [Barbara] most excited about in this future? Is she disappointed by anything?**
 
@@ -136,15 +136,15 @@ There are a few steps required to realize this future:
 Yes. We will need to collaborate to define traits that std can use to interface with each runtime, and the runtimes will need to implement those traits. This is going to be non-trivial, because we want to preserve the ability for independent runtimes to experiment, while also preserving the ability to "max and match" and re-use components. For example, it'd probably be useful to have a bunch of shared I/O infrastructure, or to have utility crates for locks, for running threadpools, and the like. On the other hand, tokio takes advantage of the fact that it owns the I/O types *and* the locks *and* the scheduler to do some [nifty tricks](https://tokio.rs/blog/2020-04-preemption) and we would want to ensure that remains an option.
 
 
-[character]: ../characters.md
-[comment]: ./comment.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[projects]: ../projects.md
-[htvsq]: ../how_to_vision/shiny_future.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
-[DistriData]: ../projects/DistriData.md
-[MonsterMesh]: ../projects/MonsterMesh.md
+[character]: ../../characters.md
+[comment]: ../../how_to_vision/comment.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[projects]: ../../projects.md
+[htvsq]: ../shiny_future.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[DistriData]: ../../projects/DistriData.md
+[MonsterMesh]: ../../projects/MonsterMesh.md

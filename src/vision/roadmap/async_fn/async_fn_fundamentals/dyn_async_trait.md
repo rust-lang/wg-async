@@ -2,7 +2,7 @@
 
 ## Impact
 
-* Traits that contain [`async fn`](./async_fn_fundamentals.md) or [impl trait in traits](./impl_trait_in_traits.md) can still be dyn safe
+* Traits that contain [`async fn`](../async_fn_fundamentals.md) or [impl trait in traits](./impl_trait_in_traits.md) can still be dyn safe
 * Costs like boxing of futures are limited to code that uses `dyn Trait` and not to all users of the trait
 * Reasonable defaults around things like `Send + Sync` and what kind of boxing is used
 * Ability to customize those defaults for individual traits or on a crate-wide or module-wide basis

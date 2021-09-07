@@ -60,9 +60,9 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | 🔻 [Async overloading] | 💤 | ▰▱▱▱▱▱ |  |
 | &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
 
-[Async fn everywhere]:  ./roadmap/async_fn.md
+[Async fn everywhere]: ./roadmap/async_fn.md
 [fundamentals]: ./roadmap/async_fn/async_fn_fundamentals.md
-[Async closures]: ./roadmap/async_fn/async_closures.md
+[Async closures]: ./roadmap/async_fn/async_fn_fundamentals/async_closures.md
 [Boxable async functions]: ./roadmap/async_fn/boxable.md
 [Async main and tests]: ./roadmap/async_fn/async_main_and_tests.md
 [Scoped spawn and reliable cancellation]: ./roadmap/scopes.md

@@ -1,9 +1,9 @@
 # 😱 Status quo stories: Grace wants to integrate a C-API
 
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
 
 [bindgen]: //docs.rs/bindgen/
 [`stream::unfold`]: //docs.rs/futures/0.1.17/futures/stream/fn.unfold.html

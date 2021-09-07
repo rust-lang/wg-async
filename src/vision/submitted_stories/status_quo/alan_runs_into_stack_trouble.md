@@ -1,9 +1,9 @@
 # 😱 Status quo stories: Alan runs into stack allocation trouble
 
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
 
 ## 🚧 Warning: Draft status 🚧
 

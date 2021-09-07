@@ -1,6 +1,6 @@
 # 😱 Status quo stories: Barbara battles buffered streams
 
-[How To Vision: Status Quo]: ../how_to_vision/status_quo.md
+[How To Vision: Status Quo]: ../status_quo.md
 [the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
 [`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
 [`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
@@ -204,15 +204,15 @@ async fn do_work(database: &Database) {
 
 Note that doing so is producing code that looks quite a bit different than where she started, though. :( This also behaves very differently. There can be a queue of tens of thousands of items that `do_select` grabs from, and this code will potentially pull far too many items out of the queue, which then would have to be requeued on shutdown. The intent of the `buffered(5)` call was to grab 5 work items from the queue at most, so that other hosts could pull out work items and share the load when there's a spike.
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
-[YouBuy]: ../projects/YouBuy.md
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[YouBuy]: ../../projects/YouBuy.md
 [farnz]: https://github.com/farnz
 
 

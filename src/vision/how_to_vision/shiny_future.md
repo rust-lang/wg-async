@@ -52,7 +52,7 @@ Every shiny future PR includes a FAQ. This FAQ should always include answers to 
 There are also some optional questions:
 
 * What are the incremental steps towards realizing this shiny future?
-    * Talk about the actual work we will do. You can link to [design docs](../design_docs.md) or even add new ones, as appropriate.
+    * Talk about the actual work we will do. You can link to [design docs](../../design_docs.md) or even add new ones, as appropriate.
     * You don't have to have the whole path figured out yet!
 * Does realizing this future require cooperation between many projects?
     * For example, if you are describing an interface in libstd that runtimes will have to implement, talk about that.

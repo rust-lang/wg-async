@@ -130,11 +130,11 @@ Disgruntled, Alan begins the arduous, boring task of instrumenting the applicati
 * Some of the characters with either a background in Rust or a background in systems programming might know that Rust's async doesn't always map to an underlying system feature and so they might expect that `gdb` or `lldb` is unable to help them.
 * Barbara, the experienced Rust dev, might also have used a tracing/instrumentation library from the beginning and have that to fall back on rather than having to do the work to add it now.
 
-[characters]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[characters]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
