@@ -2,8 +2,9 @@
 
 ## When, where
 
-The weekly triage meeting is held on [Zulip] at 13:00 US Eastern time on Fridays ([google calendar event for meeting](https://calendar.google.com/event?action=TEMPLATE&tmeid=M2VhYjRjczZxanE5ODcwbzR1bnZsNTV0MGFfMjAyMTAyMjZUMTgwMDAwWiA2dTVycnRjZTZscnR2MDdwZmkzZGFtZ2p1c0Bn&tmsrc=6u5rrtce6lrtv07pfi3damgjus%40group.calendar.google.com&scp=ALL)).
+The weekly triage meeting is held on [Zulip] at [11:30 US Eastern time on Mondays][everytimezone].
 
+[everytimezone]: https://everytimezone.com/s/c3abbec9
 [Zulip]: ./welcome.md#zulip
 
 ## So you want to fix a bug?
