@@ -4,7 +4,7 @@
 
 We are still in the process of drafting the vision document. The stories you see on this page are examples meant to give a feeling for how a shiny future story looks; you can expect them to change. See the ["How to vision"][htv] page for instructions and details.
 
-[htv]: ./how_to_vision.md
+[htv]: ../how_to_vision.md
 
 ## What it this
 

@@ -1,11 +1,11 @@
 # 😱 Status quo stories: Grace deploys her service and hits obstacles
 
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
 
-[Grace deploys her service and is able to fix problems]: ./shiny_future.md#grace-deploys-her-service-and-is-able-to-fix-problems
+[Grace deploys her service and is able to fix problems]: ../shiny_future.md#grace-deploys-her-service-and-is-able-to-fix-problems
 
 ## 🚧 Warning: Draft status 🚧
 

@@ -32,7 +32,7 @@
 [jackh726]: https://github.com/jackh726/
 [tmandry]: https://github.com/tmandry/
 [basics]: ./async_fn_fundamentals/basics.md
-[async drop]: ./async_fn_fundamentals/async_fn_fundamentals.md
+[async drop]: ./async_fn_fundamentals.md
 [async closures]: ./async_fn_fundamentals/async_closures.md
 [impl Trait in traits]: ./async_fn_fundamentals/impl_trait_in_traits.md
 [type alias impl trait]: ./async_fn_fundamentals/tait.md

@@ -47,11 +47,11 @@ Barbara is an experienced engineer who may come to async streams and async/await
 * Grace may have chosen a different core abstraction from the start. She has a good chance of thinking through how she'd like the data processing system to work. It's possible she would have found threads and channels a better fit. This would have had different trade-offs.
 * Niklaus may have also tried to go down the async stream path. The information available is mixed and hype around async/await is too strong. This makes it shine brighter than it should. Without experience with different systems languages to temper the direction, the most likely path would be to experiment with asynchrony and hope that "underneath the surface it does the right thing."
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

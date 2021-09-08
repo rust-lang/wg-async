@@ -9,5 +9,5 @@
 
 > Able to write `async fn main` and `#[test] async fn` just like you would in synchronous code.
 
-This initiative is **on hold** while we investigate mechanisms for [portability across runtimes](./roadmap/portable.md).
+This initiative is **on hold** while we investigate mechanisms for [portability across runtimes](../portable.md).
 

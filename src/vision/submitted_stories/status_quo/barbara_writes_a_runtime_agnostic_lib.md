@@ -114,9 +114,9 @@ deep integration with the runtime.
 ### What other runtime utilities are generally needed?
 * [async-locks][async-locks-story]
 
-[status quo stories]: ./status_quo.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
+[status quo stories]: ../status_quo.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
 [ahwas]: https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_hates_writing_a_stream.html
 [bnah]: https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_needs_async_helpers.html
 [working against orphan rules]: https://github.com/rust-lang/wg-async-foundations/issues/180

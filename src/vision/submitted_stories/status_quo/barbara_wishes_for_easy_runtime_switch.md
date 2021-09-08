@@ -69,5 +69,5 @@ codebase, so Barbara is the natural choice here.
 ### **How would this story have played out differently for the other characters?**
 It wouldn't. If this story happens them, they're on the same level of Rust expertise as Barbara is.
 
-[Barbara]: ../characters/barbara.md
+[Barbara]: ../../characters/barbara.md
 [run-time agnostic libraries]: https://github.com/rust-lang/wg-async-foundations/issues/45

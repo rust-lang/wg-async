@@ -1,7 +1,7 @@
 # 😱 Status quo stories: Alan writes a web framework
 
 
-[How To Vision: Status Quo]: ../how_to_vision/status_quo.md
+[How To Vision: Status Quo]: ../status_quo.md
 [the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
 [`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
 [`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
@@ -17,7 +17,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 ## The story
 
-[YouBuy](../projects/YouBuy.md) is written using an async web framework that predates the stabilization of async function syntax. When [Alan] joins the company, it is using async functions for its business logic, but can't use them for request handlers because the framework doesn't support it yet. It requires the handler's return value to be `Box<dyn Future<...>>`. Because the web framework predates async function syntax, it requires you to take ownership of the request context (`State`) and return it alongside your response in the success/error cases. This means that even with async syntax, an http route handler in this web framework looks something like this (from [the Gotham Diesel example](https://github.com/gotham-rs/gotham/blob/9f10935bf28d67339c85f16418736a4b6e1bd36e/examples/diesel/src/main.rs)):
+[YouBuy](../../projects/YouBuy.md) is written using an async web framework that predates the stabilization of async function syntax. When [Alan] joins the company, it is using async functions for its business logic, but can't use them for request handlers because the framework doesn't support it yet. It requires the handler's return value to be `Box<dyn Future<...>>`. Because the web framework predates async function syntax, it requires you to take ownership of the request context (`State`) and return it alongside your response in the success/error cases. This means that even with async syntax, an http route handler in this web framework looks something like this (from [the Gotham Diesel example](https://github.com/gotham-rs/gotham/blob/9f10935bf28d67339c85f16418736a4b6e1bd36e/examples/diesel/src/main.rs)):
 
 ```rust
 // For reference, the framework defines these type aliases.
@@ -221,11 +221,11 @@ When Alan sees another open source project struggling with the same issue, he no
 
 * I suspect that even many Barbara-shaped developers would struggle with this problem.
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade

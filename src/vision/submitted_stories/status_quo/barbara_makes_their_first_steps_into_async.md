@@ -67,11 +67,11 @@ Like the author of this story, Barbara had previous experience with Rust. Knowin
   On the other hand, since Rust's async story is noticeably different from other languages, having async experience in other languages might even be harmful by requiring the user to unlearn certain habits. I don't know if this is actually the case since I don't have any experience with async in other languages.
 * Characters which are less in touch with Rust's community than Barbara might have had a much worse time, since just skimming over the documentation might leave some lost, and unaware of common pitfalls. On the other hand, not having learned a lot about async through blog posts and other materials, might compel someone to read the documentation more thoroughly.
 
-[character]: ../characters.md
-[status quo stories]: ./status_quo.md
-[Alan]: ../characters/alan.md
-[Grace]: ../characters/grace.md
-[Niklaus]: ../characters/niklaus.md
-[Barbara]: ../characters/barbara.md
-[htvsq]: ../how_to_vision/status_quo.md
-[cannot be wrong]: ../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
+[character]: ../../characters.md
+[status quo stories]: ../status_quo.md
+[Alan]: ../../characters/alan.md
+[Grace]: ../../characters/grace.md
+[Niklaus]: ../../characters/niklaus.md
+[Barbara]: ../../characters/barbara.md
+[htvsq]: ../status_quo.md
+[cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
