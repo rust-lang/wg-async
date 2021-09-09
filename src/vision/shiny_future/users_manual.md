@@ -61,7 +61,7 @@ This document is a survey of some of the major aspects of writing async function
 
 ### Async iterators
 
-So far, using `async` seems like mostly more work to accomplish the same thing, since you have to add `await` keywords everywhere. But async functions are like synchronous functions with superpowers: they have the ability to easily compose complex schedules of parallel and concurrent workloads. This is particularly true when you start messing around with asynchronous iterators. 
+So far, using `async` seems like mostly more work to accomplish the same thing, since you have to add `await` keywords everywhere. But async functions are like synchronous functions with superpowers: they have the ability to easily compose complex schedules of parallel and concurrent workloads. This is particularly true when you start messing around with asynchronous iterators.
 
 Consider this example. Imagine that you have a bunch of networking requests coming in. For each one, you have to do a bit of lightweight preparation, and then some heavyweight processing. This processing can take up a lot of RAM, and takes a while, so you can only process one request at a time, but you would like to do up to 5 instances of that lightweight preparation in parallel while you wait, so that things are all queued up and ready to go. You want a schedule like this, in other words:
 
@@ -131,7 +131,7 @@ async fn do_work(database: &Database) {
         // Channel to send prepared items over to the
         // task that processes them one at a time:
         let mut (tx, rx) = std::async_sync::mpsc::channel();
-        
+
         // Spawn a task to spawn tasks:
         s.spawn(async move || {
             let work = do_select(database, FIND_WORK_QUERY)?;
@@ -173,7 +173,7 @@ The `AsyncRead` and `AsyncWrite` traits are the most common way to do I/O. They 
 
 ### Async fns in traits, overview
 
-Async functions work in traits, too ([deliv_async_fn_fundamentals]):
+Async functions work in traits, too ([deliv_async_fundamentals]):
 
 ```rust
 trait HttpRequest {
@@ -326,7 +326,7 @@ Just as in synchronous Rust, you are advised to keep destructors limited in thei
 
 #### Caveat: Synchronous drop
 
-One thing to be aware of when you implement `AsyncDrop` is that, because any Rust value can be dropped at any point, the type system will allow your type to be dropped synchronously as well. We do however have a lint that detects the most common cases and gives you a warning, so this is rare in practice. 
+One thing to be aware of when you implement `AsyncDrop` is that, because any Rust value can be dropped at any point, the type system will allow your type to be dropped synchronously as well. We do however have a lint that detects the most common cases and gives you a warning, so this is rare in practice.
 
 **Note:** If a type that implements `AsyncDrop` *but not `Drop`* is dropped synchronously, the program will abort!
 
@@ -342,15 +342,15 @@ One other thing to be aware of is that async drop will trigger implicit awaits e
 [deliv_cancellation]: ../roadmap/borrowed_data_and_cancellation.md
 [deliv_borrowed_data]: ../roadmap/borrowed_data_and_cancellation.md
 [deliv_async_read_write]: ../../design_docs/async_read_write.md
-[deliv_impl_trait_in_trait]: ../roadmap/async_fn/async_fn_fundamentals/impl_trait_in_traits.md
-[deliv_gats]: ../roadmap/async_fn/async_fn_fundamentals/gats.md
-[deliv_tait]: ../roadmap/async_fn/async_fn_fundamentals/tait.md
-[deliv_dyn_async_trait]: ../roadmap/async_fn/async_fn_fundamentals/dyn_async_trait.md
-[deliv_dyn_trait]: ../roadmap/async_fn/async_fn_fundamentals/dyn_trait.md
+[deliv_impl_trait_in_trait]: https://rust-lang.github.io/async-fundamentals-initiative/design-discussions/impl_trait_in_traits.html
+[deliv_gats]: https://github.com/rust-lang/generic-associated-types-initiative
+[deliv_tait]: https://github.com/rust-lang/rust/issues/63063
+[deliv_dyn_async_trait]: https://rust-lang.github.io/async-fundamentals-initiative/design-discussions/dyn_async_trait.html
+[deliv_dyn_trait]: https://rust-lang.github.io/async-fundamentals-initiative/design-discussions/dyn_trait.html
 [deliv_scope_api]: ../roadmap/scopes/scope_api.md
 [deliv_inline_async_fn]: ../roadmap/async_fn/inline_async_fn.md
-[deliv_async_drop]: ../roadmap/async_fn/async_fn_fundamentals/async_drop.md
-[deliv_async_fn_fundamentals]: ../roadmap/async_fn/asaync_fn_in_traits.md
+[deliv_async_drop]: https://rust-lang.github.io/async-fundamentals-initiative/design-discussions/async_drop.html
+[deliv_async_fundamentals]: https://rust-lang.github.io/async-fundamentals-initiative/
 [deliv_async_overloading]: ../roadmap/async_fn/deliv_async_overloading.md
 [deliv_tooling]: ../roadmap/tooling.md
 [deliv_boxable]: ../roadmap/async_fn/boxable.md

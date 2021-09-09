@@ -61,8 +61,8 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
 
 [Async fn everywhere]: ./roadmap/async_fn.md
-[fundamentals]: ./roadmap/async_fn/async_fn_fundamentals.md
-[Async closures]: ./roadmap/async_fn/async_fn_fundamentals/async_closures.md
+[fundamentals]: https://rust-lang.github.io/async-fundamentals-initiative/
+[Async closures]: https://rust-lang.github.io/async-fundamentals-initiative/design-discussions/async_closures.html
 [Boxable async functions]: ./roadmap/async_fn/boxable.md
 [Async main and tests]: ./roadmap/async_fn/async_main_and_tests.md
 [Scoped spawn and reliable cancellation]: ./roadmap/scopes.md

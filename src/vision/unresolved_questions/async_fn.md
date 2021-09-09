@@ -1,3 +1,3 @@
 # How to represent the AsyncFn traits?
 
-As noted in the [async fn page](../portable_generic_code/function.md), the ["inline async fn"](../async_fn_everywhere/dyn_async_fn.md) technique cannot represent async closures.
+As noted in the [async fn page](https://rust-lang.github.io/async-fundamentals-initiative/), the ["inline async fn"](https://rust-lang.github.io/async-fundamentals-initiative/design-discussions/dyn_async_trait.html) technique cannot represent async closures.

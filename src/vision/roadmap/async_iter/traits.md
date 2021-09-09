@@ -26,7 +26,7 @@ trait AsyncIterator {
 
 Note the name change from `Stream` to `AsyncIterator`.
 
-One implication of this change is that pinning is no longer necessary when driving an async iterator. For example, one could now write an async iterator that recursively walks through a set of URLs like so (presuming `std::async_iter::from_fn` and [async closures](../async_fn_everywhere/async_closures)):
+One implication of this change is that pinning is no longer necessary when driving an async iterator. For example, one could now write an async iterator that recursively walks through a set of URLs like so (presuming `std::async_iter::from_fn` and [async closures](https://rust-lang.github.io/async-fundamentals-initiative/design-discussions/async_closures.html)):
 
 ```rust
 fn explore(start_url: Url) -> impl AsyncIterator {
