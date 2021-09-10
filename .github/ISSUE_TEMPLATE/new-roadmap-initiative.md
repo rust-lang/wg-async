@@ -1,7 +1,7 @@
 ---
 name: New roadmap initiative
 about: Checklist for owners setting up a new initiative on the roadmap
-title: Roadmap initiative: [...]
+title: "Roadmap initiative: [...]"
 labels: roadmap
 assignees: ''
 ---

@@ -1,7 +1,7 @@
 ---
 name: New roadmap goal
 about: Checklist for owners setting up a new top-level goal on the roadmap
-title: Roadmap goal: [...]
+title: "Roadmap goal: [...]"
 labels: roadmap
 assignees: ''
 ---
