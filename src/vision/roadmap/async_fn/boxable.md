@@ -27,3 +27,25 @@ async fn foo() { }
 ```
 
 This does not have to desugar to `-> Box<dyn Future<...>>`; it can instead desugar to `Box<impl Future>`, or perhaps a nominal type to permit recursion.
+
+Another approach is the `box` keyword:
+
+```rust
+box async fn foo() { }
+```
+
+We can apply the keyword modifier to async blocks and closures:
+
+```rust
+fn foo() -> BoxFuture<Output = ()> {
+    box async { ... }
+}
+```
+
+```rust
+async fn stuff(s: impl AsyncIterator) {
+    s.map(box async |x| { ... })
+}
+```
+
+This is useful for breaking up future types to make them more shallow.
