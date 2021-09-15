@@ -27,6 +27,8 @@ trait AsyncWrite {
 
 This form doesn't permit one to simultaneously be reading and writing. Moreover, SSL requires changing modes, so that e.g. performing a read may require writing to the underlying socket, and vice versa. (Link?)
 
+Note also that using `std::io::Result` would make the traits unusable in `#[no_std]` (this is also the case with the regular `Read` and `Write` traits), which might preclude embedded uses of these traits. These fundamental traits could all be added to `alloc` (but not `core`, because `std::io::Error` depends on `Box`).
+
 ### Variant A: Readiness
 
 One possibility is the design that [CarlLerche proposed](https://gist.github.com/carllerche/5d7037bd55dac1cb72891529a4ff1540), which separates "readiness" from the actual (non-async) methods to acquire the data:
