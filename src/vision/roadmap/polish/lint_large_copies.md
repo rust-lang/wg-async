@@ -8,10 +8,11 @@
 
 | Milestone                                | Status | Key Participants |
 | ---                                      | ---    | ---              |
-| ↳ [Lang team] initiative proposal        | 💤     |  |
-| ↳ Implemented                            | 💤     |  |
-
+| [Lang team] initiative proposal        | 💤     |  |
+| Implemented                            | 💤     |  |
 
 ## Design notes
 
 This is already implemented in experimental form. We would also need easy and effective ways to reduce the size of a future, though, such as [deliv_boxable](../async_fn/boxable.md).
+
+[Lang team]: https://www.rust-lang.org/governance/teams/lang

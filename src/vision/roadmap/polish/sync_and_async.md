@@ -6,8 +6,8 @@
 synchronous code with `async` or mark a sync `fn` as `async`, nothing
 unexpected should happen.
 
-- The code should evaluate to the same value after awaiting.
-- Any compilation errors should be essentially the same, modulo details around implicit futures in the return type.
+* The code should evaluate to the same value after awaiting.
+* Any compilation errors should be essentially the same, modulo details around implicit futures in the return type.
 
 ## Milestones
 

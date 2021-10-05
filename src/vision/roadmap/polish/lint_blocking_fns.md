@@ -8,5 +8,5 @@
 
 | Milestone                                | Status | Key Participants |
 | ---                                      | ---    | ---              |
-| ↳ RFC proposed and accepted              | 💤     |  |
-| ↳ Implemented                            | 💤     |  |
+| RFC proposed and accepted              | 💤     |  |
+| Implemented                            | 💤     |  |
