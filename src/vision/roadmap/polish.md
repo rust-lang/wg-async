@@ -18,12 +18,12 @@
 | Initiative                                 | State | Key participants |
 | ---                                        | ---   | --- |
 | [Error messages]                           | 💤    | |
-| Lint: [Must not suspend]                   | 💤    | [Gus Wynn] |
+| Lint: [Must not suspend]                   | 🦀    | [Gus Wynn] |
 | Lint: [Blocking in async context]          | 💤    | |
 | Lint: [Large copies], large generators     | 💤    | |
 | [Cleaner async stacktraces]                | 💤    | |
 | [Precise generator captures]               | 🦀    | [eholk] |
-
+| [Sync and async behave the same]           | 💤    | |
 
 [eholk]: https://github.com/eholk/
 [Lang team]: https://www.rust-lang.org/governance/teams/lang
@@ -33,5 +33,6 @@
 [RFC]: https://rust-lang.github.io/rfcs/3014-must-not-suspend-lint.html
 [Precise generator captures]: ./polish/precise_generator_captures.md
 [Gus Wynn]: https://github.com/guswynn
-[Error messages]: ./roadmap/polish/error_messages.md
-[Cleaner async stacktraces]: ./roadmap/polish/stacktraces.md
+[Error messages]: ./polish/error_messages.md
+[Cleaner async stacktraces]: ./polish/stacktraces.md
+[Sync and async behave the same]: ./polish/sync_and_async.md
