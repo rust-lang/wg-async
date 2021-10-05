@@ -48,6 +48,7 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | &nbsp;&nbsp;↳ [Blocking function lint] | 💤 | ▰▰▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Lint against large copies] | 💤 | ▰▰▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Cleaner async stacktraces] | 💤 | ▰▱▱▱▱▱ | |
+| &nbsp;&nbsp;↳ [Precise generator captures] | 🦀 | ▰▱▱▱▱▱ | |
 | 🔻 [Tooling] | 🦀  | ▰▰▱▱▱▱ | [pnkfelix] |
 | &nbsp;&nbsp;↳ [Tokio console] | 🦀  | ▰▰▰▰▱▱ | [eliza weisman] |
 | &nbsp;&nbsp;↳ [Crashdump debugging] | 🦀  | ▰▰▱▱▱▱ | [michaelwoerister] |
@@ -92,6 +93,7 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 [Async overloading]: ./roadmap/async_overloading.md
 [Generic Associated Types]: https://github.com/nikomatsakis/generic-associated-types-initiative/
 [Type Alias Impl Trait]: https://github.com/nikomatsakis/impl-trait-initiative/
+[Precise generator captures]: ./roadmap/polish/precise_generator_captures.md
 
 [nikomatsakis]: https://github.com/nikomatsakis
 [tmandry]: https://github.com/tmandry
