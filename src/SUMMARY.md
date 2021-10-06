@@ -49,6 +49,8 @@
       - [Lint large copies](./vision/roadmap/polish/lint_large_copies.md)
       - [Error messages for the most confusing scenarios](./vision/roadmap/polish/error_messages.md)
       - [Stacktraces](./vision/roadmap/polish/stacktraces.md)
+      - [Precise Generator Captures](./vision/roadmap/polish/precise_generator_captures.md)
+      - [Sync and async behave the same](./vision/roadmap/polish/sync_and_async.md)
     - [Tooling](./vision/roadmap/tooling.md)
       - [Crashdump](./vision/roadmap/tooling/crashdump.md)
     - [Testing](./vision/roadmap/testing.md)

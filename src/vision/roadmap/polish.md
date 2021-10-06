@@ -13,25 +13,17 @@
   * Integration with low-level tooling and the like is high-quality.
   * The generated code from the compiler is high quality and performant.
 
-## Milestones
+## Initiatives
 
-| Milestone                                  | State | Key participants |
-| ---                                        | ---   | ---              |
-| Precise generator captures                 | 🦀    | [eholk]          |
-| ↳ Prototyped                               | 🦀    | [eholk]          |
-| ↳ Documented in Rust Reference             | 🦀    | [eholk]          |
-| ↳ [Lang team] initiative proposal          | 💤    | [eholk]          |
-| ↳ [Lang team] signoff                      | 💤    | [Lang team]      |
-| ↳ Stabilized                               | 💤    | [eholk]          |
-| Lint: [Large copies], large generators     | 💤    | |
-| ↳ [Lang team] initiative proposal          | 💤    | |
-| ↳ Implementated                            | 💤    | |
-| Lint: [Must not suspend]                   | 💤    | |
-| ↳ Implemented the [RFC]                    | 💤    | |
+| Initiative                                 | State | Key participants |
+| ---                                        | ---   | --- |
+| [Error messages]                           | 💤    | |
+| Lint: [Must not suspend]                   | 🦀    | [Gus Wynn] |
 | Lint: [Blocking in async context]          | 💤    | |
-| ↳ RFC proposed and accepted                | 💤    | |
-| ↳ Implementated                            | 💤    | |
-
+| Lint: [Large copies], large generators     | 💤    | |
+| [Cleaner async stacktraces]                | 💤    | |
+| [Precise generator captures]               | 🦀    | [eholk] |
+| [Sync and async behave the same]           | 💤    | |
 
 [eholk]: https://github.com/eholk/
 [Lang team]: https://www.rust-lang.org/governance/teams/lang
@@ -39,3 +31,8 @@
 [Large copies]: ./polish/lint_large_copies.md
 [Must not suspend]: ./polish/lint_must_not_suspend.md
 [RFC]: https://rust-lang.github.io/rfcs/3014-must-not-suspend-lint.html
+[Precise generator captures]: ./polish/precise_generator_captures.md
+[Gus Wynn]: https://github.com/guswynn
+[Error messages]: ./polish/error_messages.md
+[Cleaner async stacktraces]: ./polish/stacktraces.md
+[Sync and async behave the same]: ./polish/sync_and_async.md
