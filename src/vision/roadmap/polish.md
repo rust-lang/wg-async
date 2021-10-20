@@ -32,7 +32,7 @@ If you are looking for a specific area to help, there are several places where w
 * Issues on the [wg-async-foundations repo]. These tend to relate to project organization and longer term objectives.
 * Issues on the [Rust repo]. Specifically, issues tagged [AsyncAwait-Polish], [A-async-await]. Issues that are also tagged with E-mentor will have mentoring instructions, which are usually pointers to specific points in the code where changes will be needed to fix the issue.
 
-Finally, a great way to contribute it to point out any rough edges you come across with writing async Rust.
+Finally, a great way to contribute is to point out any rough edges you come across with writing async Rust.
 This can be done either through issues on the [Rust repo], or by starting a topic on our [Zulip stream].
 Examples of rough edges that we are interested in include confusing error messages or places where Rust behaved in a way you found surprising or counter-intuitive.
 Knowing about these issues helps to ensure we are fixing the right things.
