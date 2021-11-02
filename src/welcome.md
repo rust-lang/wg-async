@@ -9,14 +9,21 @@ The leads of this working group are [@tmandry] and [@nikomatsakis]. Both of them
 [@tmandry]: https://github.com/tmandry
 [@nikomatsakis]: https://github.com/nikomatsakis
 
-## Getting involved
+## 🛠️ Getting involved
 
-There is a weekly [triage meeting] that takes place in our [Zulip stream][zulip]. Feel free to stop by then (or any time!) to introduce yourself. 
+There is a weekly [triage meeting] that takes place in our [Zulip stream][zulip]. Feel free to stop by then (or any time!) to introduce yourself.
 
 If you're interested in fixing bugs, though, there is no need to wait for the meeting! [Take a look at the instructions here.][fix-bugs]
 
+We are actively working on bringing the [async vision] to reality, so there are lots of ways to help.
+Check out the [Roadmap] to see the various things we are working on.
+Each of the high level goals should have further instructions for how to get starting helping with that goal in particular.
+Look for the 🛠️ icon, which highlights areas where further how to help resources are available.
+
 [triage meeting]: ./triage.md
 [fix-bugs]: ./triage.md#so-you-want-to-fix-a-bug
+[async vision]: ./vision.md
+[Roadmap]: ./vision/roadmap.md
 
 ## What is the goal of this working group?
 

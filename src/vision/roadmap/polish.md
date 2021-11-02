@@ -13,7 +13,7 @@
   * Integration with low-level tooling and the like is high-quality.
   * The generated code from the compiler is high quality and performant.
 
-## How to Help
+## 🛠️ How to Help
 
 The goal of a highly polished async experience in Rust has many details and touches many aspects of the project, including both the async area in particular and the Rust project in general.
 This means there are lots of ways to get involved!
