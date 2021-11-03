@@ -11,6 +11,9 @@ We categorize the goals and initiatives into four states:
 | ✋ | Help wanted: Seeking an [owner] to pursue this! Talk to the [wg leads] if you are interested. |
 | 💤 | Paused: we are waiting to work on this until some other stuff gets done. |
 
+Some goals and initiatives have further "how to help" instructions for those wanting to contribute.
+These are marked by the 🛠️ symbol.
+
 [owner]: ./how_to_vision/owners.md
 
 ## Impact and milesetones
@@ -42,7 +45,7 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | &nbsp;&nbsp;↳ [Timer traits] | 💤 | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Spawn traits] | 💤 | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Runtime trait] | 💤 | ▰▱▱▱▱▱ | |
-| 🔻 [Polish] | 🦀  | ▰▰▰▱▱▱ | [eholk] |
+| 🔻 [Polish] [[🛠️][how-to-help-polish]] | 🦀  | ▰▰▰▱▱▱ | [eholk] |
 | &nbsp;&nbsp;↳ [Error messages] | 💤 | ▰▰▰▱▱▱ | |
 | &nbsp;&nbsp;↳ [Must not suspend lint] | 🦀 | ▰▰▰▰▱▱ | |
 | &nbsp;&nbsp;↳ [Blocking function lint] | 💤 | ▰▰▱▱▱▱ | |
@@ -79,6 +82,7 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 [Spawn traits]: ./roadmap/portable/spawn.md
 [Runtime trait]: ./roadmap/portable/runtime.md
 [polish]: ./roadmap/polish.md
+[how-to-help-polish]: ./roadmap/polish.md#-how-to-help
 [Error messages]: ./roadmap/polish/error_messages.md
 [Blocking function lint]: ./roadmap/polish/lint_blocking_fns.md
 [Must not suspend lint]: ./roadmap/polish/lint_must_not_suspend.md
