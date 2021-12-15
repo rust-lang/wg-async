@@ -632,6 +632,10 @@ It does help in the most common cases, however, and when users take a more manua
 
 There are several ways to do this, with varying levels of implementation effort and cost.
 
+As to what this would look like for library authors, ideally we would have something like a `#[backtrace_transparent]` attribute that is applied to a function and indicates that the function should be hidden from backtraces by default.
+
+There are several ways we could do the underlying implementation, which are discussed below.
+
 The conceptually simplest is to allow multiple `__rust_begin_short_backtrace`/`__rust_end_short_backtrace` pairs.
 Implementing this could be done almost entirely with changes to [`_print_fmt`].
 This approach has some serious drawbacks.
@@ -645,6 +649,7 @@ It might be possible instead to include more information in the debugging symbol
 For example, we might be able to add a flag indicating that a certain function should be hidden from the backtrace.
 To do this, we would first need to make sure existing debugging formats such as DWARF and PDB are able to encode such information.
 If there is already support for this, then it's likely debuggers would benefit as well since they would also be able to display trimmed backtraces.
+It is worth noting that this solution would not help much for builds without debug symbols.
 
 A third option is to use some kind of name based heuristics.
 For example, by default we may want to only show frames in the root crate, although this may be too restrictive for large projects.
