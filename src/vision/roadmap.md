@@ -90,7 +90,7 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 [Lint against large copies]: ./roadmap/polish/lint_large_copies.md
 [Tooling]: ./roadmap/tooling.md
 [Tokio console]: https://github.com/tokio-rs/console
-[Crashdump debugging]: ./roadmap/tooling/crashdump.md
+[Crashdump debugging]: https://github.com/rust-lang/async-crashdump-debugging-initiative
 [Documentation]: ./roadmap/documentation.md
 [Async book]: ./roadmap/documentation/async_book.md
 [Testing]: ./roadmap/testing.md
