@@ -9,7 +9,11 @@
 
 | Milestone                                | Status | Key Participants |
 | ---                                      | ---    | ---              |
-| Implemented the [RFC]                  | 🦀    | [Gus Wynn] |
+| Implemented the [RFC]                  | ✅     | [Gus Wynn] |
+| [Improve drop range tracking]          | 🦀     | [Eric Holk] |
+| Stabilize the lint                     | 💤     |[Gus Wynn] |
 
 [RFC]: https://rust-lang.github.io/rfcs/3014-must-not-suspend-lint.html
+[Improve drop range tracking]: https://github.com/rust-lang/rust/pull/91032
 [Gus Wynn]: https://github.com/guswynn
+[Eric Holk]: https://github.com/eholk
