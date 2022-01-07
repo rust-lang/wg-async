@@ -160,6 +160,7 @@
   - [🗑️ Async drop](./design_docs/async_drop.md)
     - [♻️ Async lifecycle](./design_docs/async_lifecycle.md)
   - [⏳ Completion-based futures](./design_docs/completion_based_futures.md)
+  - [🥞 Async Stack Traces](./design_docs/async_stack_traces.md)
 - [💬 Conversations](./conversations.md)
   - [🐦 2021-02-12 Twitter thread](./conversations/2021-02-12-Twitter-Thread.md)
 - [❤️ Acknowledgments](./acknowledgments.md)
