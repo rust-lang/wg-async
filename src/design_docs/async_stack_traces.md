@@ -708,3 +708,9 @@ Or, we could simply omit the frames and have non-consecutive frame numbers.
 
 In an interactive context, such as a debugger, the `...` approach is probably best, since it could also provide an option to expand that section and see the frames that are missing.
 In non-interactive cases, such as printing a backtrace with some `RUST_BACKTRACE` setting, it may be better to omit the frame numbers that were skipped since that leads to a slightly more compact backtrace.
+
+## References
+
+* [Beautiful tracebacks in Trio v0.7.0 (Python)](https://vorpus.org/blog/beautiful-tracebacks-in-trio-v070/)
+* [Faster async functions and Promises (JavaScript)](https://v8.dev/blog/fast-async#improved-developer-experience)
+* [Zero-cost async stack traces (JavaScript)](https://docs.google.com/document/d/13Sy_kBIJGP0XT34V1CV3nkWya4TwYx9L3Yv45LdGB6Q/edit#heading=h.e6lcalo0cl47)
