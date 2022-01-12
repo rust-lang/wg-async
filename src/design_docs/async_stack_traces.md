@@ -714,3 +714,10 @@ In non-interactive cases, such as printing a backtrace with some `RUST_BACKTRACE
 * [Beautiful tracebacks in Trio v0.7.0 (Python)](https://vorpus.org/blog/beautiful-tracebacks-in-trio-v070/)
 * [Faster async functions and Promises (JavaScript)](https://v8.dev/blog/fast-async#improved-developer-experience)
 * [Zero-cost async stack traces (JavaScript)](https://docs.google.com/document/d/13Sy_kBIJGP0XT34V1CV3nkWya4TwYx9L3Yv45LdGB6Q/edit#heading=h.e6lcalo0cl47)
+* Async stack traces in folly [[1][folly-1]] [[2][folly-2]] [[3][folly-3]] [[4][folly-4]] [[5][folly-5]]
+
+[folly-1]: https://developers.facebook.com/blog/post/2021/09/16/async-stack-traces-folly-Introduction/
+[folly-2]: https://developers.facebook.com/blog/post/2021/09/23/async-stack-traces-folly-synchronous-asynchronous-stack-traces/
+[folly-3]: https://developers.facebook.com/blog/post/2021/09/30/async-stack-traces-folly-forming-async-stack-individual-frames/
+[folly-4]: https://developers.facebook.com/blog/post/2021/10/14/async-stack-traces-c-plus-plus-coroutines-folly-walking-async-stack/
+[folly-5]: https://developers.facebook.com/blog/post/2021/10/21/async-stack-traces-folly-improving-debugging-developer-lifecycle/
