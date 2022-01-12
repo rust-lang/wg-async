@@ -709,6 +709,42 @@ Or, we could simply omit the frames and have non-consecutive frame numbers.
 In an interactive context, such as a debugger, the `...` approach is probably best, since it could also provide an option to expand that section and see the frames that are missing.
 In non-interactive cases, such as printing a backtrace with some `RUST_BACKTRACE` setting, it may be better to omit the frame numbers that were skipped since that leads to a slightly more compact backtrace.
 
+### Generate more informative symbol names
+
+Currently `async` functions result in a function name like `foo::generator$0`.
+This can be confusing to users, since it leaks implementation details about `async` functions.
+We probably have a lot of flexibility in the generated names, so `rustc` could encode more information about where this symbol came from.
+Backtrace printers could then decode these names to give the information to the user in a meaningful way.
+
+Here is an example of what this might look like in practice:
+```
+panicked at 'explicit panic', C:\Users\ericholk\repo\backtrace-examples\async-common\src\lib.rs:10:5
+Backtrace:
+ 0 [12]: async fn common::baz
+        at C:\Users\ericholk\repo\backtrace-examples\async-common\src\lib.rs:10
+ 1 [14]: async fn common::bar
+        at C:\Users\ericholk\repo\backtrace-examples\async-common\src\lib.rs:6
+ 2 [16]: async fn common::foo
+        at C:\Users\ericholk\repo\backtrace-examples\async-common\src\lib.rs:2
+ 3 [18]: async fn async_tokio::main
+        at C:\Users\ericholk\repo\backtrace-examples\async-tokio\src\main.rs:5
+ 4 [30]: fn async_tokio::main
+        at C:\Users\ericholk\repo\backtrace-examples\async-tokio\src\main.rs:5
+```
+
+Here we have done aggressive filtering on the backtrace to remove runtime-internal frames.
+The raw frame numbers are still listed in brackets, however, so the user can see if frames have been hidden.
+The function names are now printed as either `fn foo` or `async fn bar` to indicate what kind of function was called.
+
+We could support a couple of suffixes on generated functions, such as:
+- `foo::generator$0` - current suffix, but would be used only for generator blocks
+- `foo::async_fn$` - indicates that this is the body of an `async fn`
+- `foo::async$0` - the function came from an `async {}` block within another function[^async-block]
+- `foo::generator_fn$` - analogous to `foo::async_fn$` for when generator functions are supported
+For the block suffixes, we could potentially encode the line number or the block or some other way of identifying multiple blocks that would be useful to the user.
+
+[^async-block]: How we want stack traces involving async blocks to look is still an open question.
+
 ## References
 
 * [Beautiful tracebacks in Trio v0.7.0 (Python)](https://vorpus.org/blog/beautiful-tracebacks-in-trio-v070/)
