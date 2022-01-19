@@ -1,13 +1,11 @@
 # 👋🏽 Welcome
 
-Welcome to the wg-async-foundations website!
+Welcome to the home of wg-async-foundations! This working group is focused
+around implementation/design of the “foundations” for Async I/O.
 
-## Leads
+You can learn more by reading our [charter].
 
-The leads of this working group are [@tmandry] and [@nikomatsakis]. Both of them can be found on [Zulip].
-
-[@tmandry]: https://github.com/tmandry
-[@nikomatsakis]: https://github.com/nikomatsakis
+[charter]: ./CHARTER.md
 
 ## 🛠️ Getting involved
 
@@ -24,15 +22,6 @@ Look for the 🛠️ icon, which highlights areas where further how to help reso
 [fix-bugs]: ./triage.md#so-you-want-to-fix-a-bug
 [async vision]: ./vision.md
 [Roadmap]: ./vision/roadmap.md
-
-## What is the goal of this working group?
-
-This working group is focused around implementation/design of the “foundations” for Async I/O. This means that we are focused on designing and implementing extensions to the language, standard library, and other "core" bits of support offered by the Rust organization. We do not directly work on external projects like [tokio], [async-std], [smol], [embassy] and so forth, although we definitely discuss ideas and coordinate with them where appropriate.
-
-[tokio]: https://tokio.rs/
-[async-std]: https://async.rs/
-[smol]: https://github.com/smol-rs/smol/
-[embassy]: https://github.com/akiles/embassy
 
 ## Zulip
 
