@@ -38,3 +38,15 @@ Leads: [@tmandry] and [@nikomatsakis]
 [@tmandry]: https://github.com/tmandry
 [@nikomatsakis]: https://github.com/nikomatsakis
 [Members]: https://www.rust-lang.org/governance/wgs/wg-async-foundations
+
+### Membership requirements
+
+Members are invited at the discretion of the working group leads, usually after a period of sustained contribution to the working group.
+
+In order to remain an active member, WG members must have active participation in last 6 months, where participation is one of the following:
+
+* Attended triage/sprint meetings
+* Opened PRs
+* Reviewed PRs
+* Mentored people to fix polish issues
+* Led an initiative
