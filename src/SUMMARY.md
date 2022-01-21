@@ -1,6 +1,7 @@
 # Summary
 
 - [👋🏽 Welcome](./welcome.md)
+- [📜 Charter](./CHARTER.md)
 - [🔮 The vision](./vision.md)
   - [❓How to vision](./vision/how_to_vision.md)
     - [Owning a goal or initiative](./vision/how_to_vision/owners.md)
