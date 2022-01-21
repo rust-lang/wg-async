@@ -46,7 +46,7 @@ Members are invited at the discretion of the working group leads, usually after 
 In order to remain an active member, WG members must have active participation in last 6 months, where participation is one of the following:
 
 * Attended triage/sprint meetings
-* Opened PRs
-* Reviewed PRs
+* Opened rust-lang PRs related to async
+* Reviewed rust-lang PRs related to async
 * Mentored people to fix polish issues
-* Led an initiative
+* Led a focus area or initiative
