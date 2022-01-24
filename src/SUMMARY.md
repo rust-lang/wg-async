@@ -39,7 +39,7 @@
     - [Async iteration](./vision/roadmap/async_iter.md)
       - [Traits](./vision/roadmap/async_iter/traits.md)
       - [Generators](./vision/roadmap/async_iter/generators.md)
-    - [Portabile and interoperable](./vision/roadmap/portable.md)
+    - [Portable and interoperable](./vision/roadmap/portable.md)
       - [Read/write traits](./vision/roadmap/portable/read_write.md)
       - [Timers](./vision/roadmap/portable/timers.md)
       - [Spawn](./vision/roadmap/portable/spawn.md)
