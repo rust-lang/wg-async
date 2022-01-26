@@ -15,11 +15,10 @@ Async functions are commonly written with borrowed references as arguments:
 async fn do_something(db: &Db) { ... }
 ```
 
-but important utilities like `spawn` and `spawn_blocking` require `'static` tasks. Without "unfogettable" traits, the only way to circumvent this is with mechanisms like `FuturesUnordered`, which is then subject to footguns as described in [Barbara battles buffered streams](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_battles_buffered_streams.html).
+but important utilities like `spawn` and `spawn_blocking` require `'static` tasks. Without "unfogettable" traits, the only way to circumvent this is with mechanisms like `FuturesUnordered`, which is then subject to footguns as described in [Barbara battles buffered streams](https://rust-lang.github.io/wg-async/vision/status_quo/barbara_battles_buffered_streams.html).
 
 There are two main approaches under consideration to address this issue:
 
 * [Introducing a new trait for futures, Async](./capability/variant_async_trait.md)
 * [Introducing a new "default" trait, Leak](./capability/variant_leak.md) that can be used to prevent values from leaking
     * If we say that scopes cannot be leaked, and the scope defines `AsyncDrop`, then we can (presumably) be sure that its destructor will run.
-    

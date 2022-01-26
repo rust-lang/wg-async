@@ -117,11 +117,11 @@ deep integration with the runtime.
 [status quo stories]: ../status_quo.md
 [Barbara]: ../../characters/barbara.md
 [htvsq]: ../status_quo.md
-[ahwas]: https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_hates_writing_a_stream.html
-[bnah]: https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_needs_async_helpers.html
-[working against orphan rules]: https://github.com/rust-lang/wg-async-foundations/issues/180
+[ahwas]: https://rust-lang.github.io/wg-async/vision/status_quo/alan_hates_writing_a_stream.html
+[bnah]: https://rust-lang.github.io/wg-async/vision/status_quo/barbara_needs_async_helpers.html
+[working against orphan rules]: https://github.com/rust-lang/wg-async/issues/180
 [futures crate]: https://crates.io/crates/futures
-[nalirwwar]: https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_picks_web_server.html#first-problem-incompatible-runtimes
+[nalirwwar]: https://rust-lang.github.io/wg-async/vision/status_quo/alan_picks_web_server.html#first-problem-incompatible-runtimes
 [`agnostik`]: https://crates.io/crates/agnostik
 [`zbus`]: https://crates.io/crates/zbus/2.0.0-beta.3
-[async-locks-story]: https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_thinks_he_needs_async_locks.html
+[async-locks-story]: https://rust-lang.github.io/wg-async/vision/status_quo/alan_thinks_he_needs_async_locks.html

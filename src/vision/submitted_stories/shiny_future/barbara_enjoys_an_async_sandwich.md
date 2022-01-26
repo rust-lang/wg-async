@@ -1,8 +1,8 @@
-# ✨ Shiny future stories: Barbara enjoys her async-sync-async sandwich :sandwich: 
+# ✨ Shiny future stories: Barbara enjoys her async-sync-async sandwich :sandwich:
 
 :::warning
 Alternative titles:
-- Barbara enjoys her async-sync-async sandwich :sandwich: 
+- Barbara enjoys her async-sync-async sandwich :sandwich:
 - Barbara recursively blocks
 - Barbara blocks and blocks and blocks
 :::
@@ -69,7 +69,7 @@ struct FetchConfig;
 impl PermitRequest for FetchConfig {
     fn permit(&self, req: &Request) -> bool {
         let token = req.headers().get("authorization");
-        
+
         #[allow(async_blocking)]
         task::block_on(async {
             select! {
@@ -98,8 +98,8 @@ Thanks to the runtime warning, Barbara does some checking that the surround code
 
 While this story isn't an exact re-telling of an existing status quo, it covers the morals of a couple:
 
-- [Barbara bridges sync and async](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_bridges_sync_and_async.html)
-- [A comment about async in `ResolveServerCerts`](https://github.com/rust-lang/wg-async-foundations/pull/164#issuecomment-824028298)
+- [Barbara bridges sync and async](https://rust-lang.github.io/wg-async/vision/status_quo/barbara_bridges_sync_and_async.html)
+- [A comment about async in `ResolveServerCerts`](https://github.com/rust-lang/wg-async/pull/164#issuecomment-824028298)
 
 ### What are the key attributes of this shiny future?
 
@@ -111,7 +111,7 @@ While this story isn't an exact re-telling of an existing status quo, it covers 
     - A runtime log warns when the usage could have reacted badly with other code.
         - This gives the user some more information if a specific combination degrades their application.
 
-### What is the "most shiny" about this future? 
+### What is the "most shiny" about this future?
 
 It significantly increases the areas where `block_on` "just works", which should improve *productivity*.
 

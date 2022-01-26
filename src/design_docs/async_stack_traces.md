@@ -13,7 +13,7 @@ The two main suggestions are:
 
 The current state of stack traces was captured pretty well in the story [Barbara Trims a Stack Trace][barbara-trims-stack-trace]. We've recreated a similar example to the one in the story here. We'll look at several executors.
 
-[barbara-trims-stack-trace]: https://rust-lang.github.io/wg-async-foundations/vision/submitted_stories/status_quo/barbara_trims_a_stacktrace.html
+[barbara-trims-stack-trace]: https://rust-lang.github.io/wg-async/vision/submitted_stories/status_quo/barbara_trims_a_stacktrace.html
 
 ### Tokio
 

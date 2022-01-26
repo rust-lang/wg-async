@@ -3,7 +3,7 @@
 
 ## 🚧 Warning: Draft status 🚧
 
-This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
 
 If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!
 
@@ -18,7 +18,7 @@ But Niklaus would really really like to document async to avoid disappointing [p
 Niklaus was excited about [the RFC proposing that `block_on` be added to the stdlib][block-on-rfc], because it seemed like that would solve Niklaus' problems. Niklaus would really like to include `async` in a big update to the documentation. No pressure.
 
 [trpl]: https://doc.rust-lang.org/stable/book/
-[people like Barbara]: https://github.com/rust-lang/wg-async-foundations/blame/5ce418ac4076850f515034010cc51b707441f695/src/vision/status_quo/barbara_makes_their_first_steps_into_async.md#L22
+[people like Barbara]: https://github.com/rust-lang/wg-async/blame/5ce418ac4076850f515034010cc51b707441f695/src/vision/status_quo/barbara_makes_their_first_steps_into_async.md#L22
 [block-on-rfc]: https://github.com/rust-lang/rust/pull/65875
 [htvsq]: ../status_quo.md
 [cannot be wrong]: ../../how_to_vision/comment.md#comment-to-understand-or-improve-not-to-negate-or-dissuade
@@ -28,7 +28,7 @@ Niklaus was excited about [the RFC proposing that `block_on` be added to the std
 
 ### **What are the morals of the story?**
 Writing documentation to go with the language/stdlib for something that is half in the language/stdlib and half in the ecosystem is hard.
-This is related to [Barbara's story](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_makes_their_first_steps_into_async.html) about wanting to get started without needing to pick an executor. 
+This is related to [Barbara's story](https://rust-lang.github.io/wg-async/vision/status_quo/barbara_makes_their_first_steps_into_async.html) about wanting to get started without needing to pick an executor.
 There are topics of async that apply no matter what executor you pick, but it's hard to explain those topics without picking an executor to demonstrate with.
 We all have too much work to do and not enough time.
 

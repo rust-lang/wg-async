@@ -1,9 +1,9 @@
 # ✨ Shiny future stories: Barbara appreciates great performance analysis tools
 
 [How To Vision: Shiny Future]: ../shiny_future.md
-[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/shiny_future/template.md
-[`shiny_future`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async/master/src/vision/shiny_future/template.md
+[`shiny_future`]: https://github.com/rust-lang/wg-async/tree/master/src/vision/shiny_future
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async/blob/master/src/SUMMARY.md
 
 ## 🚧 Warning: Draft status 🚧
 

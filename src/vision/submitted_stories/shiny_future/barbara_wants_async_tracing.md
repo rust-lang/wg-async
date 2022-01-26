@@ -17,7 +17,7 @@ features their customer’s use. They’ve built the backend for these services 
 `async` to manage IO bound operations and help make concurrency easier to leverage. However, the services
 have grown quite a bit and there are a large number of features and data requirements and different internal
 systems which they must interact with. The result is a very complex network of `async` expressions that do the
-job well and perform great, but, are too complex to easily reason about anymore and can be extraordinarily 
+job well and perform great, but, are too complex to easily reason about anymore and can be extraordinarily
 intimidating when trying to fix transient small issues. Issues such as infrequent slow requests or a very small number
 of requests executing certain actions out of order are very hard to resolve when the network of `async` expressions
 is complex.
@@ -29,7 +29,7 @@ complex code base this lag could be coming from and why it’s happening.  Fortu
 now provides a built in Tracing tool.  By building her service with the `tracing` flag on, her code is automatically
 instrumented and will start logging trace data to a file for later analysis.
 
-Barbara runs the instrumented code in QA and recreates the laggy event several times.  Then she takes the 
+Barbara runs the instrumented code in QA and recreates the laggy event several times.  Then she takes the
 generated trace file and looks through the data.  When she views the trace data with the analysis tools she is given a list
 of all the requests from her test, along with a timestamp and duration. She very quickly identifies the slow
 requests and chooses to view more detail on one of them.  Here she can view a graph of the request's execution:
@@ -43,7 +43,7 @@ that the root cause was some updates made to the database which led to some quer
 to run relatively slowly. With tracing, Barbara was saved the effort of having to meticulous work through the code
 and try to deduce what the cause was and she didn’t have to add in a large amount of logging or other
 instrumentation.  All the instrumentation and analysis was provided out of the box and required no development
-work for Barbara to isolate the cause. 
+work for Barbara to isolate the cause.
 
 Barbara can’t believe how much time she saved having this debugging tool provided out of the box.
 
@@ -54,16 +54,16 @@ Barbara can’t believe how much time she saved having this debugging tool provi
 ### What status quo stories are you retelling?
 
 *Link to status quo stories if they exist. If not, that's ok, we'll help find them.*
-[Alan Builds A Cache](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_builds_a_cache.html)
-[Alan Iteratively Regresses Performance](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_iteratively_regresses.html)
-[Alan Tries To Debug A Hang](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_tries_to_debug_a_hang.html)
+[Alan Builds A Cache](https://rust-lang.github.io/wg-async/vision/status_quo/alan_builds_a_cache.html)
+[Alan Iteratively Regresses Performance](https://rust-lang.github.io/wg-async/vision/status_quo/alan_iteratively_regresses.html)
+[Alan Tries To Debug A Hang](https://rust-lang.github.io/wg-async/vision/status_quo/alan_tries_to_debug_a_hang.html)
 
 ### What are the key attributes of this shiny future?
 
 - Provide a protocol for linking events across async expressions.
 - Provide an output that allows a user to understand the path of execution of a program through a network of async expressions.
 
-### What is the "most shiny" about this future? 
+### What is the "most shiny" about this future?
 
 *Thing about Rust's core "value propositions": performance, safety and correctness, productivity. Which benefit the most relative to today?*
 
@@ -86,7 +86,7 @@ No.
 
 ### What are some variations of this story that you considered, or that you think might be fun to write? Have any variations of this story already been written?
 
-Another variation of this story is tracking down functional bugs: where the program is not always executing the expected code paths.  An example of this is from the status quo story [Alan Builds A Cache](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_builds_a_cache.html).  In this type of story, a developer uses tracing to see execution flow of an event as it is fully processed by the application. This can the be used to make sure that every expected or required action is completed and done in the correct order; and if actions were missed, be able to determine why.
+Another variation of this story is tracking down functional bugs: where the program is not always executing the expected code paths.  An example of this is from the status quo story [Alan Builds A Cache](https://rust-lang.github.io/wg-async/vision/status_quo/alan_builds_a_cache.html).  In this type of story, a developer uses tracing to see execution flow of an event as it is fully processed by the application. This can the be used to make sure that every expected or required action is completed and done in the correct order; and if actions were missed, be able to determine why.
 
 ### What are some of the things we'll have to figure out to realize this future? What projects besides Rust itself are involved, if any? (Optional)
 

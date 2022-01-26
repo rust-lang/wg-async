@@ -4,7 +4,7 @@ As Alan is building the server, he encounters a case where he wants to extend a 
 
 [`AsyncRead`]: https://docs.rs/tokio/1.5.0/tokio/io/trait.AsyncRead.html
 
-Alan's experiences here are well documented in [Alan hates writing a Stream](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_hates_writing_a_stream.html). Suffice to say that, at long last, he does it to work, but he does not feel he really understands what is going on. Talking with his coworkers on slack he notes, "Mostly I just add `Pin` and whatever else the compiler asks for until it works; then I pray it doesn’t crash." :crossed_fingers: 
+Alan's experiences here are well documented in [Alan hates writing a Stream](https://rust-lang.github.io/wg-async/vision/status_quo/alan_hates_writing_a_stream.html). Suffice to say that, at long last, he does it to work, but he does not feel he really understands what is going on. Talking with his coworkers on slack he notes, "Mostly I just add `Pin` and whatever else the compiler asks for until it works; then I pray it doesn’t crash." :crossed_fingers:
 
 *References:*
 

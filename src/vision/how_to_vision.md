@@ -40,14 +40,14 @@ We also plan to regularly revisit the vision once we've made significant progres
 
 Although the brainstorming period has ended, we are still open to new PRs, particularly if they cover space that has not been well covered:
 
-* [Templates and instructions for status quo stories can be found here.][hvsq] 
+* [Templates and instructions for status quo stories can be found here.][hvsq]
 * [Templates and instructions for shiny future stories can be found here.][hvsf]
 
 ### Wait, did somebody say awards?
 
 Yes! We are planning on giving [awards] in various categories for folks who write [status quo](./how_to_vision/status_quo.md) and [shiny future](./how_to_vision/shiny_future.md) PRs. The precise categories are TBD. Check out the [awards] page for more details.
 
- 
+
 [hvsq]: ./how_to_vision/status_quo.md
 [hvsf]: ./how_to_vision/shiny_future.md
 [Vote]: ./how_to_vision/awards.md
@@ -55,8 +55,8 @@ Yes! We are planning on giving [awards] in various categories for folks who writ
 [comment]: ./how_to_vision/comment.md
 [awards]: ./how_to_vision/awards.md
 [wg leads]: ../welcome.md#leads
-[repo]: https://github.com/rust-lang/wg-async-foundations
-[open "status quo" issues]: https://github.com/rust-lang/wg-async-foundations/labels/status-quo-story-ideas
+[repo]: https://github.com/rust-lang/wg-async
+[open "status quo" issues]: https://github.com/rust-lang/wg-async/labels/status-quo-story-ideas
 [roadmap]: ./roadmap.md
 [status quo]: ./status_quo.md
 [shiny future]: ./shiny_future.md

@@ -23,9 +23,9 @@ assignees: ''
 * (Optional) What are the key points or morals to emphasize?
     * *Write some morals here.*
 
-[character(s)]: https://rust-lang.github.io/wg-async-foundations/vision/characters.html
-[project(s)]: https://rust-lang.github.io/wg-async-foundations/vision/projects.html
-[Alan]: https://rust-lang.github.io/wg-async-foundations/vision/characters/alan.html
-[Grace]: https://rust-lang.github.io/wg-async-foundations/vision/characters/grace.html
-[Niklaus]: https://rust-lang.github.io/wg-async-foundations/vision/characters/niklaus.html
-[Barbara]: https://rust-lang.github.io/wg-async-foundations/vision/characters/barbara.html
+[character(s)]: https://rust-lang.github.io/wg-async/vision/characters.html
+[project(s)]: https://rust-lang.github.io/wg-async/vision/projects.html
+[Alan]: https://rust-lang.github.io/wg-async/vision/characters/alan.html
+[Grace]: https://rust-lang.github.io/wg-async/vision/characters/grace.html
+[Niklaus]: https://rust-lang.github.io/wg-async/vision/characters/niklaus.html
+[Barbara]: https://rust-lang.github.io/wg-async/vision/characters/barbara.html

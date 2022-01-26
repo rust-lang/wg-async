@@ -38,7 +38,7 @@ Remember, you don't have to do these all at once!
 
 This issue can be closed when all of the above items are complete.
 
-[roadmap]: https://rust-lang.github.io/wg-async-foundations/vision/roadmap.html
-[owning]: https://rust-lang.github.io/wg-async-foundations/vision/how_to_vision/owners.html
-[stakeholders]: https://rust-lang.github.io/wg-async-foundations/vision/how_to_vision/stakeholders.html
+[roadmap]: https://rust-lang.github.io/wg-async/vision/roadmap.html
+[owning]: https://rust-lang.github.io/wg-async/vision/how_to_vision/owners.html
+[stakeholders]: https://rust-lang.github.io/wg-async/vision/how_to_vision/stakeholders.html
 [template]: https://github.com/rust-lang/initiative-template

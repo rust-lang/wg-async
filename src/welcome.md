@@ -1,6 +1,6 @@
 # 👋🏽 Welcome
 
-Welcome to the home of wg-async-foundations! This working group is focused
+Welcome to the home of wg-async! This working group is focused
 around implementation/design of the “foundations” for Async I/O.
 
 You can learn more by reading our [charter].
@@ -27,7 +27,7 @@ Look for the 🛠️ icon, which highlights areas where further how to help reso
 
 [zulip]: #zulip
 
-We hold discussions on [the `#wg-async-foundations` stream in Zulip](https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async-foundations)
+We hold discussions on [the `#wg-async` stream in Zulip](https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async)
 
 ## License
 
