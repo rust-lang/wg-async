@@ -2,7 +2,7 @@
 
 ## 🚧 Warning: Draft status 🚧
 
-This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
 
 If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!
 
@@ -14,7 +14,7 @@ She does this by sprinkling `async/.await` everywhere, picking an executor, and 
 
 Once she has the program compiling, she thinks "oh that was easy". She runs it for the first time and surprisingly she finds out that when hitting an endpoint, nothing happens.
 
-Barbara, always prepared, has already added logging to her service and she checks the logs. As she expected, she sees here that the endpoint handler has been invoked but then... nothing. Barbara exclaims, "Oh no! This was not what I was expecting, but let's dig deeper." 
+Barbara, always prepared, has already added logging to her service and she checks the logs. As she expected, she sees here that the endpoint handler has been invoked but then... nothing. Barbara exclaims, "Oh no! This was not what I was expecting, but let's dig deeper."
 
 She checks the code and sees that the endpoint spawns several tasks, but unfortunately those tasks don't have much logging in them.
 
@@ -44,7 +44,7 @@ She thinks, "Anyhow it is working now, let's see if we got some performance gain
 * Debugging process for non-trivial issues is almost guaranteed to be painful and expensive.
 
 ### **What are the sources for this story?**
-[Issue 75](https://github.com/rust-lang/wg-async-foundations/issues/75)
+[Issue 75](https://github.com/rust-lang/wg-async/issues/75)
 
 ### **What are examples of the kinds of things a user might want to have insight into?**
 * Custom Events - logging/tracing (Per task?)

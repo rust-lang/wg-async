@@ -16,7 +16,7 @@ We want all Async Rust users and their hopes and dreams for what Async Rust shou
 Just want to get started? Here are quick instructions to get you going:
 
 * **To write your own story:**
-    * Create a PR based on the ["shiny future" template][template]. 
+    * Create a PR based on the ["shiny future" template][template].
     * Do not add your file to [`SUMMARY.md`] -- that will create conflicts, we'll do it manually after merging.
 
 ## How to open a PR
@@ -108,6 +108,6 @@ Add it to the FAQ!
 
 Glad you asked! The vision document is a living document, and we intend to revisit it regularly. This is important because it turns out that predicting the future is hard. We fully expect that some aspects of the "shiny future" stories we write are going to be wrong, sometimes very wrong. We will be regularly returning to the vision document to check how things are going and adjust our trajectory appropriately.
 
-[template]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future/template.md
-[sfd]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
+[template]: https://github.com/rust-lang/wg-async/tree/master/src/vision/shiny_future/template.md
+[sfd]: https://github.com/rust-lang/wg-async/tree/master/src/vision/shiny_future
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async/blob/master/src/SUMMARY.md

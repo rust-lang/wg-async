@@ -2,11 +2,11 @@
 
 
 [How To Vision: Status Quo]: ../status_quo.md
-[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
-[`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
-[open issues]: https://github.com/rust-lang/wg-async-foundations/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
-[open an issue of your own]: https://github.com/rust-lang/wg-async-foundations/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async/master/src/vision/status_quo/template.md
+[`status_quo`]: https://github.com/rust-lang/wg-async/tree/master/src/vision/status_quo
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async/blob/master/src/SUMMARY.md
+[open issues]: https://github.com/rust-lang/wg-async/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
+[open an issue of your own]: https://github.com/rust-lang/wg-async/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
 
 
 ## 🚧 Warning: Draft status 🚧
@@ -211,7 +211,7 @@ When Alan sees another open source project struggling with the same issue, he no
 
 ### What are the sources for this story?
 
-* This is from the author's [own experience](https://github.com/rust-lang/wg-async-foundations/issues/78#issuecomment-808193936).
+* This is from the author's [own experience](https://github.com/rust-lang/wg-async/issues/78#issuecomment-808193936).
 
 ### Why did you choose Alan/YouBuy to tell this story?
 

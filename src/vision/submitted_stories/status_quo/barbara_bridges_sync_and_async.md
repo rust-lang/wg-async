@@ -1,15 +1,15 @@
 # 😱 Status quo stories: Barbara bridges sync and async in `perf.rust-lang.org`
 
 [How To Vision: Status Quo]: ../status_quo.md
-[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
-[`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
-[open issues]: https://github.com/rust-lang/wg-async-foundations/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
-[open an issue of your own]: https://github.com/rust-lang/wg-async-foundations/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async/master/src/vision/status_quo/template.md
+[`status_quo`]: https://github.com/rust-lang/wg-async/tree/master/src/vision/status_quo
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async/blob/master/src/SUMMARY.md
+[open issues]: https://github.com/rust-lang/wg-async/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
+[open an issue of your own]: https://github.com/rust-lang/wg-async/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
 
 ## 🚧 Warning: Draft status 🚧
 
-This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
 
 If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!
 
@@ -57,7 +57,7 @@ error[E0277]: a value of type `Vec<Data>` cannot be built from an iterator over 
    = help: the trait `FromIterator<impl Future>` is not implemented for `Vec<Data>`
 ```
 
-"Of course," she thinks, "I can't call an async function from a closure." 
+"Of course," she thinks, "I can't call an async function from a closure."
 
 ### Introducing `block_on`
 
@@ -97,7 +97,7 @@ async fn main() {
 
 Everything seems to work ok on her laptop, but when she pushes the code to production, it deadlocks immediately. "What's this?" she says. Confused, she runs the code on her laptop a few more times, but it seems to work fine. (There's a faq explaining what's going on. -ed.)
 
-She decides to try debugging. She fires up a debugger but finds it is isn't really giving her useful information about what is stuck (she has [basically the same problems that Alan has](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_tries_to_debug_a_hang.html)). [She wishes she could get insight into tokio's state.](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_wants_async_insights.html)
+She decides to try debugging. She fires up a debugger but finds it is isn't really giving her useful information about what is stuck (she has [basically the same problems that Alan has](https://rust-lang.github.io/wg-async/vision/status_quo/alan_tries_to_debug_a_hang.html)). [She wishes she could get insight into tokio's state.](https://rust-lang.github.io/wg-async/vision/status_quo/barbara_wants_async_insights.html)
 
 Frustrated, she starts reading the tokio docs more closely and she realizes that `tokio` runtimes offer their own `block_on` method. "Maybe using tokio's `block_on` will help?" she thinks, "Worth a try, anyway." She changes the `aggregate` function to use tokio's `block_on`:
 
@@ -220,7 +220,7 @@ async fn aggregate(urls: &[Url]) -> Vec<Data> {
 }
 ```
 
-This is annoying, but performance isn't critical, so it's ok. 
+This is annoying, but performance isn't critical, so it's ok.
 
 ### And the cycle begins again
 
@@ -248,7 +248,7 @@ I would expect it would work out fairly similarly, except that the type errors a
 
 ### Why did Barbara only get deadlocks in production, and not on her laptop?
 
-This is because the production instance she was using had only a single core, but her laptop is a multicore machine. The actual cause of the deadlocks is that `block_on` basically "takes over" the tokio worker thread, and hence the tokio scheduler cannot run. If that `block_on` is blocked on another future that will have to execute, then some other thread must take over of completing that future. On Barbara's multicore machine, there were more threads available, so the system did not deadlock. But on the production instance, there was only a single thread. Barbara could have encountered deadlocks on her local machine as well if she had enough instances of `block_on` running at once. 
+This is because the production instance she was using had only a single core, but her laptop is a multicore machine. The actual cause of the deadlocks is that `block_on` basically "takes over" the tokio worker thread, and hence the tokio scheduler cannot run. If that `block_on` is blocked on another future that will have to execute, then some other thread must take over of completing that future. On Barbara's multicore machine, there were more threads available, so the system did not deadlock. But on the production instance, there was only a single thread. Barbara could have encountered deadlocks on her local machine as well if she had enough instances of `block_on` running at once.
 
 ### Could the runtime have prevented the deadlock?
 
@@ -288,7 +288,7 @@ reqwest does offer a synchronous API, but it's not enabled by default, you have 
 
 Regardless, the synchronous reqwest API is actually itself implemented using `block_on`: so Barbara would have ultimately hit the same issues. Further, not all crates offer synchronous APIs -- some offer only async APIs. In fact, these same issues are probably the sources of those panics that Barbara encountered in the past.
 
-In general, though, embedded sync within async or vice versa works "ok", once you know the right tricks. Where things become challenging is when you have a "sandwich", with async-sync-async. 
+In general, though, embedded sync within async or vice versa works "ok", once you know the right tricks. Where things become challenging is when you have a "sandwich", with async-sync-async.
 
 ### Do people mix `spawn_blocking` and `spawn` successfully in real code?
 

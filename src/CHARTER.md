@@ -1,4 +1,4 @@
-# wg-async-foundations charter
+# wg-async charter
 <!--
  Provide an introduction summarising the goals and motivation behind your
  project group.
@@ -37,7 +37,7 @@ Leads: [@tmandry] and [@nikomatsakis]
 
 [@tmandry]: https://github.com/tmandry
 [@nikomatsakis]: https://github.com/nikomatsakis
-[Members]: https://www.rust-lang.org/governance/wgs/wg-async-foundations
+[Members]: https://www.rust-lang.org/governance/wgs/wg-async
 
 ### Membership requirements
 

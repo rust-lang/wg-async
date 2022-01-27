@@ -2,7 +2,7 @@
 
 ## 🚧 Warning: Draft status 🚧
 
-This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
 
 If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!
 
@@ -26,7 +26,7 @@ async fn get_response(&mut self, key: String) {
     // Get the response from the downstream service
     let response = self.http_client.make_request(key).await;
     self.channel.send(response).await;
-    
+
     // Store the response in the cache
     self.cache.set(key, response);
 }
@@ -87,7 +87,7 @@ async fn get_response(&mut self, key: String) {
 * Without a Barbara, it might be hard to even know where to start: No lints are available, Alan is left with a normal debugger and `println!`.
 
 ### **What are the sources for this story?**
-The relevant sources of discussion for this story have been gathered [in this github issue](https://github.com/rust-lang/wg-async-foundations/issues/65).
+The relevant sources of discussion for this story have been gathered [in this github issue](https://github.com/rust-lang/wg-async/issues/65).
 
 ### **Why did you choose Alan to tell this story?**
 Alan has enough experience and understanding of push based async languages to make the assumptions that will trigger the bug.

@@ -3,16 +3,16 @@ authors = ["Niko Matsakis"]
 language = "en"
 multilingual = false
 src = "src"
-title = "wg-async-foundations"
+title = "wg-async"
 
 [rust]
 edition = "2018"
 
 [output.html]
-site-url = "/wg-async-foundations/"
-git-repository-url = "https://github.com/rust-lang/wg-async-foundations"
+site-url = "/wg-async/"
+git-repository-url = "https://github.com/rust-lang/wg-async"
 additional-js =["mermaid.min.js", "mermaid-init.js"]
-edit-url-template = "https://github.com/rust-lang/wg-async-foundations/tree/master/{path}?mode=edit"
+edit-url-template = "https://github.com/rust-lang/wg-async/tree/master/{path}?mode=edit"
 
 [output.html.fold]
 enable = true

@@ -44,7 +44,7 @@ One goal of scopes is to avoid the "nested await" problem, as described in [Barb
 
 [^hard]: This is not a hard rule. But invoking poll manually is best regarded as a risky thing to be managed with care -- not only because of the formal safety guarantees, but because of the possibility for "nested await"-style failures.
 
-[bbbs]: https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_battles_buffered_streams.html
+[bbbs]: https://rust-lang.github.io/wg-async/vision/status_quo/barbara_battles_buffered_streams.html
 [`buffered`]: https://docs.rs/futures/0.3.15/futures/prelude/stream/trait.StreamExt.html#method.buffered
 
 In the case of [BBBS], the problem arises because of `buffered`, which spawns off concurrent work to process multiple connections. Under this system, the implementation of `buffered` would create an internal scope for spawn its tasks into that scope, side-stepping the problem. One could imagine also offering a variant of `buffered` like `buffered_in` that takes a scope parameter, permitting the user to choose the scope of those spawned tasks:
@@ -104,7 +104,7 @@ It starts to feel like simply passing "scope" values may be simpler, and perhaps
 
 ### How does cancellation work in other settings?
 
-Many other languages use a shard flag to observe when cancellation has been requested. 
+Many other languages use a shard flag to observe when cancellation has been requested.
 
 In some languages, there is also an immediate callback that is invoked when cancellation is requested which permits you to take immediate action. [Swift proposal E0304](https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md#cancellation-handlers), for example, includes "cancellation handlers" that are run immediately.
 

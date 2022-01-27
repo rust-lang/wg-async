@@ -50,7 +50,7 @@ check_bin jq
 
 function get_issue_numbers() {
   local result="$(curl -s -u $user:$token -H "Accept: application/vnd.github.v3+json" \
-    "https://api.github.com/repos/rust-lang/wg-async-foundations/issues?state=all&labels=$1&per_page=100" \
+    "https://api.github.com/repos/rust-lang/wg-async/issues?state=all&labels=$1&per_page=100" \
     | jq '.[].number')"
 
   if [ "$(echo $result | wc -w)" -ge 100 ];
@@ -67,7 +67,7 @@ function issue_contributors() {
 
   for num in $numbers; do
     curl -s -u $user:$token -H "Accept: application/vnd.github.v3+json" \
-      https://api.github.com/repos/rust-lang/wg-async-foundations/issues/$num/comments | jq -r \
+      https://api.github.com/repos/rust-lang/wg-async/issues/$num/comments | jq -r \
       '.[] | "[" + .user.login + "](" + .user.html_url + ")"'
   done | sort | uniq
 }
@@ -75,7 +75,7 @@ function issue_contributors() {
 # Get a list of direct code contributors
 function code_contributors() {
   curl -s -u $user:$token -H "Accept: application/vnd.github.v3+json" \
-    "https://api.github.com/repos/rust-lang/wg-async-foundations/contributors?per_page=100" | jq -r \
+    "https://api.github.com/repos/rust-lang/wg-async/contributors?per_page=100" | jq -r \
     '.[] | "[" + .login + "](" + .html_url + ")"' | sort | uniq
 }
 

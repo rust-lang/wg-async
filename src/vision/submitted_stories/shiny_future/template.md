@@ -8,9 +8,9 @@
 *For more detailed instructions, see the [How To Vision: Shiny Future] page!*
 
 [How To Vision: Shiny Future]: ../shiny_future.md
-[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/shiny_future/template.md
-[`shiny_future`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async/master/src/vision/shiny_future/template.md
+[`shiny_future`]: https://github.com/rust-lang/wg-async/tree/master/src/vision/shiny_future
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async/blob/master/src/SUMMARY.md
 
 
 ## 🚧 Warning: Draft status 🚧
@@ -35,7 +35,7 @@ If you would like to expand on this story, or adjust the answers to the FAQ, fee
 
 *Summarize the main attributes of the design you were trying to convey.*
 
-### What is the "most shiny" about this future? 
+### What is the "most shiny" about this future?
 
 *Thing about Rust's core "value propositions": performance, safety and correctness, productivity. Which benefit the most relative to today?*
 

@@ -2,7 +2,7 @@
 
 ## 🚧 Warning: Draft status 🚧
 
-This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
 
 If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!
 
@@ -162,7 +162,7 @@ So now Barbara starts the journey of replacing tokio with a myriad of off the sh
 * [`async-std`] has one, but it seems to be tied to another runtime so she can't use that.
 * [`smol`] has one that is independent.
 
-This process of "figure out which alternative is an option" is repeated many times. She also tries to use the [`select!`](https://docs.rs/futures/0.3.14/futures/macro.select.html) macro from [`futures`] but it requires more pinning and workarounds (not to mention a [stack overflow](https://rust-lang.github.io/wg-async-foundations/vision/status_quo/alan_runs_into_stack_trouble.html) or two).
+This process of "figure out which alternative is an option" is repeated many times. She also tries to use the [`select!`](https://docs.rs/futures/0.3.14/futures/macro.select.html) macro from [`futures`] but it requires more pinning and workarounds (not to mention a [stack overflow](https://rust-lang.github.io/wg-async/vision/status_quo/alan_runs_into_stack_trouble.html) or two).
 
 But Barbara fights through all of it. In the end, she gets it to work, but she realizes that she has a ton of random dependencies and associated compilation time. She wonders if all that dependencies will have a negative effect on the binary size. She also had to rewrite some bits of functionality on her own.
 
@@ -176,7 +176,7 @@ But Barbara fights through all of it. In the end, she gets it to work, but she r
 * Some patterns are clean if you know the right utility crate and very painful otherwise.
 
 ### **What are the sources for this story?**
-[Issue 105](https://github.com/rust-lang/wg-async-foundations/issues/105)
+[Issue 105](https://github.com/rust-lang/wg-async/issues/105)
 
 ### **What are helper functions/macros?**
 They are functions/macros that helps with certain basic pieces of functionality and features. Like to await on multiple futures concurrently (`join!` in tokio), or else race the futures and take the result of the one that finishes first.

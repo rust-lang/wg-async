@@ -1,6 +1,6 @@
 # ❓ How to vision: "Status quo" stories
 
-We want to make sure all Async Rust users and their experiences are reflected in the async vision doc, so please help us by writing 'status quo' stories about your experiences or the experiences of others! Remember, **status quo stories are not "real", but neither are they fiction.** They are constructed from the real experiences of people using Async Rust (often multiple people). 
+We want to make sure all Async Rust users and their experiences are reflected in the async vision doc, so please help us by writing 'status quo' stories about your experiences or the experiences of others! Remember, **status quo stories are not "real", but neither are they fiction.** They are constructed from the real experiences of people using Async Rust (often multiple people).
 
 [sq]: ../status_quo.md
 [character]: ../characters.md
@@ -11,29 +11,29 @@ We want to make sure all Async Rust users and their experiences are reflected in
 Just want to get started? Here are quick instructions to get you going:
 
 * **To write your own story:**
-    * Create a PR based on the ["status quo" template][template]. 
+    * Create a PR based on the ["status quo" template][template].
     * Do not add your file to [`SUMMARY.md`] -- that will create conflicts, we'll do it manually after merging.
 * **To get feedback on a story idea, or look for someone else to write it:**
-    * Open up a ["status quo" story issue][issue] on the [wg-async-foundations repository].
+    * Open up a ["status quo" story issue][issue] on the [wg-async repository].
 * **To find ideas of what to write, or to share your experiences:**
     * Search the [open issues tagged as status-quo-story-idea][oi].
     * Remember to [comment supportively][comment].
 
 ## Optional: open an issue to discuss your story or find others with similar experiences
 
-If you have a story idea but you don't have the time to write about it, or if you would like to know whether other folks have encountered the same sorts of problems, you can [open up a "status quo" story issue][issue] on the [wg-async-foundations repository]. Alternatively, if you're looking for a story to write, you can browse the [open issues tagged as status-quo-story-idea][oi] and see if anything catches your eye. If you see people describing problems you have hit, or have questions about the experiences people are sharing, then please leave a comment -- but remember to [comment supportively][comment]. (You can also come to [Zulip] to discuss.)
+If you have a story idea but you don't have the time to write about it, or if you would like to know whether other folks have encountered the same sorts of problems, you can [open up a "status quo" story issue][issue] on the [wg-async repository]. Alternatively, if you're looking for a story to write, you can browse the [open issues tagged as status-quo-story-idea][oi] and see if anything catches your eye. If you see people describing problems you have hit, or have questions about the experiences people are sharing, then please leave a comment -- but remember to [comment supportively][comment]. (You can also come to [Zulip] to discuss.)
 
-[sqsi]: https://github.com/rust-lang/wg-async-foundations/labels/status-quo-story-ideas
+[sqsi]: https://github.com/rust-lang/wg-async/labels/status-quo-story-ideas
 [Zulip]: ../../welcome.md#Zulip
-[issue]: https://github.com/rust-lang/wg-async-foundations/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
-[oi]: https://github.com/rust-lang/wg-async-foundations/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
-[wg-async-foundations repository]: https://github.com/rust-lang/wg-async-foundations/
+[issue]: https://github.com/rust-lang/wg-async/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
+[oi]: https://github.com/rust-lang/wg-async/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
+[wg-async repository]: https://github.com/rust-lang/wg-async/
 
 ## How to open a PR
 
 If you have an idea you'd like to write about, please [open a PR using this template][template] and adding a new file into [the `status_quo` directory][sqd]. Do not add your file to [`SUMMARY.md`] -- that will create conflicts, we'll do it manually after merging.
 
-## Goals of a status quo PR 
+## Goals of a status quo PR
 
 When writing a [status quo][sq] story, your goal is to present what you see as a major challenge for Async Rust. You want to draw upon people's experiences (sometimes multiple people) to show all the aspects of the problem in an engaging and entertaining way.
 
@@ -89,6 +89,6 @@ It doesn't have to be perfect. Pick the one that seems like the closest fit. If 
 The more specific you can get, the better. If you can link to tweets or blog posts, that's ideal. You can also add notes into the [conversations] folder and link to those. Of course, you should be sure people are ok with that.
 
 [conversations]: ../../conversations.md
-[template]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo/template.md
-[sqd]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
+[template]: https://github.com/rust-lang/wg-async/tree/master/src/vision/status_quo/template.md
+[sqd]: https://github.com/rust-lang/wg-async/tree/master/src/vision/status_quo
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async/blob/master/src/SUMMARY.md

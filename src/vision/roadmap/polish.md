@@ -29,7 +29,7 @@ If you are looking for a specific area to help, there are several places where w
 
 * The [Initiatives](#initiatives) list down below.
 * The Async Work Group [Project Board]. The "On Deck" column is a good place to start looking.
-* Issues on the [wg-async-foundations repo]. These tend to relate to project organization and longer term objectives.
+* Issues on the [wg-async repo]. These tend to relate to project organization and longer term objectives.
 * Issues on the [Rust repo]. Specifically, issues tagged [AsyncAwait-Polish], [A-async-await]. Issues that are also tagged with E-mentor will have mentoring instructions, which are usually pointers to specific points in the code where changes will be needed to fix the issue.
 
 Finally, a great way to contribute is to point out any rough edges you come across with writing async Rust.
@@ -42,8 +42,8 @@ Knowing about these issues helps to ensure we are fixing the right things.
 [Project Board]: https://github.com/orgs/rust-lang/projects/2
 [Rust repo]: https://github.com/rust-lang/rust/issues
 [Triage meeting]: ../../triage.md
-[wg-async-foundations repo]: https://github.com/rust-lang/wg-async-foundations/issues
-[Zulip stream]: https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async-foundations
+[wg-async repo]: https://github.com/rust-lang/wg-async/issues
+[Zulip stream]: https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async
 
 ## Initiatives
 
