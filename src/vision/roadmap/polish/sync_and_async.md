@@ -13,5 +13,7 @@ unexpected should happen.
 
 | Milestone                                | Status | Key Participants |
 | ---                                      | ---    | ---              |
-| Define "behave the same"                 | 💤     |  |
-| Create testing to ensure same behavior   | 💤     |  |
+| Define "behave the same"                 | 💤     | [yoshuawuyts] |
+| Create testing to ensure same behavior   | 💤     | [yoshuawuyts] |
+
+[yoshuawuyts]: https://github.com/yoshuawuyts

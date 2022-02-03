@@ -62,7 +62,7 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
 | 🔻 [Threadsafe portability] | 💤 | ▰▱▱▱▱▱ |  |
 | &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
-| 🔻 [Async overloading] | 💤 | ▰▱▱▱▱▱ |  |
+| 🔻 [Async overloading] | 💤 | ▰▱▱▱▱▱ | [yoshuawuyts] |
 | &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
 
 [Async fn everywhere]: ./roadmap/async_fn.md
@@ -110,5 +110,6 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 [eliza weisman]: https://github.com/hawkw
 [jackh726]: https://github.com/jackh726
 [oli-obk]: https://github.com/oli-obk
+[yoshuawuyts]: https://github.com/yoshuawuyts
 
 [wg leads]: ../welcome.md#leads
