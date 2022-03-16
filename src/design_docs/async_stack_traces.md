@@ -655,6 +655,7 @@ A third option is to use some kind of name based heuristics.
 For example, by default we may want to only show frames in the root crate, although this may be too restrictive for large projects.
 Probably the best approach here is to extend the set of options allowed for the `RUST_BACKTRACE` environment variable to make it behave more like `RUST_LOG`.
 We could allow options such as `RUST_BACKTRACE="short,exclude=tokio::*"` to hide all frames from the `tokio` crate, or `RUST_BACKTRACE="short,include=my_crate::*"` to only show frames from `my_crate`.
+These ideas are being prototyped in the [better-backtrace] repo.
 
 This third option could also be implemented mostly through changes to [`_print_fmt`].
 It also gives a great deal of control.
@@ -711,6 +712,9 @@ In non-interactive cases, such as printing a backtrace with some `RUST_BACKTRACE
 
 ### Generate more informative symbol names
 
+Note that a similar renaming to what is proposed here was implemented in [#92873].
+New approaches to formatting based on these symbols are being explored in the [better-backtrace] repo.
+
 Currently `async` functions result in a function name like `foo::generator$0`.
 This can be confusing to users, since it leaks implementation details about `async` functions.
 We probably have a lot of flexibility in the generated names, so `rustc` could encode more information about where this symbol came from.
@@ -752,6 +756,8 @@ For the block suffixes, we could potentially encode the line number or the block
 * [Zero-cost async stack traces (JavaScript)](https://docs.google.com/document/d/13Sy_kBIJGP0XT34V1CV3nkWya4TwYx9L3Yv45LdGB6Q/edit#heading=h.e6lcalo0cl47)
 * Async stack traces in folly [[1][folly-1]] [[2][folly-2]] [[3][folly-3]] [[4][folly-4]] [[5][folly-5]]
 
+[#92873]: https://github.com/rust-lang/rust/pull/92873
+[better-backtrace]: https://github.com/eholk/better-backtrace
 [folly-1]: https://developers.facebook.com/blog/post/2021/09/16/async-stack-traces-folly-Introduction/
 [folly-2]: https://developers.facebook.com/blog/post/2021/09/23/async-stack-traces-folly-synchronous-asynchronous-stack-traces/
 [folly-3]: https://developers.facebook.com/blog/post/2021/09/30/async-stack-traces-folly-forming-async-stack-individual-frames/
