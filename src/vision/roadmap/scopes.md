@@ -121,3 +121,7 @@ In async Rust today, one signals cancellation of a future by (synchronously) dro
 Given `AsyncDrop`, we could adopt a similar convention, where canceling an `Async` is done by (asynchronously) dropping it. This would presumably amend the unsafe contract of the `Async` trait so that the value must be polled to completion _or_ async-dropped. To avoid the footguns we see today, a typical future could simply continue execution from its `AsyncDrop` method (but disregard the result). It might however set an internal flag to true or otherwise allow the user to find out that it has been canceled. It's not clear, though, precisely what value is being added by `AsyncDrop` in this scenario versus the `Async` simply not implementing `AsyncDrop` -- perhaps though it serves as an elegant way to give both an immediate "cancellation" callback and an opportunity to continue.
 
 An alternative is to use a cancellation token of some kind, so that _scopes_ can be canceled and that cancelation can be observed. The main reason to have that token or observation mechanism be "built-in" to some degree is so that it can be observed and used to drive "voluntary cancellation" from I/O routines and the like. Under that model, `AsyncDrop` would be intended more for values (like database handles) that have cleanup to be done, much like `Drop` today, and less as a way to signal cancellation.
+
+## Related Work
+
+- [Async Cancellation I (Yoshua Wuyts, 2021)](https://blog.yoshuawuyts.com/async-cancellation-1/)
