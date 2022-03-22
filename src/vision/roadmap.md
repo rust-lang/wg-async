@@ -40,7 +40,7 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | 🔻 [Async iteration] | 🦀  | ▰▰▱▱▱▱ | [estebank] |
 | &nbsp;&nbsp;↳ [Async iteration trait] | 💤 | ▰▰▰▱▱▱ | |
 | &nbsp;&nbsp;↳ [Generator syntax] | 💤 | ▰▰▱▱▱▱ | |
-| 🔻 [Portable across runtimes] | 💤 | ▰▰▱▱▱▱ | |
+| 🔻 [Portable across runtimes] | 💤 | ▰▰▱▱▱▱ | [nrc] |
 | &nbsp;&nbsp;↳ [Read/write traits] | 💤 | ▰▰▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Timer traits] | 💤 | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Spawn traits] | 💤 | ▰▱▱▱▱▱ | |
@@ -111,5 +111,6 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 [jackh726]: https://github.com/jackh726
 [oli-obk]: https://github.com/oli-obk
 [yoshuawuyts]: https://github.com/yoshuawuyts
+[nrc]: https://github.com/nrc
 
 [wg leads]: ../welcome.md#leads
