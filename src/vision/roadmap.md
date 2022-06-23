@@ -37,11 +37,11 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | 🔻 [Scoped spawn and reliable cancellation] | 💤 | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Capability] | 💤 | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Scope API] | 💤 | ▰▱▱▱▱▱ | |
-| 🔻 [Async iteration] | 🦀  | ▰▰▱▱▱▱ | [estebank] |
+| 🔻 [Async iteration] | 💤  | ▰▰▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Async iteration trait] | 💤 | ▰▰▰▱▱▱ | |
 | &nbsp;&nbsp;↳ [Generator syntax] | 💤 | ▰▰▱▱▱▱ | |
-| 🔻 [Portable across runtimes] | 💤 | ▰▰▱▱▱▱ | [nrc] |
-| &nbsp;&nbsp;↳ [Read/write traits] | 💤 | ▰▰▱▱▱▱ | |
+| 🔻 [Portable across runtimes] | 🦀 | ▰▰▱▱▱▱ | [nrc] |
+| &nbsp;&nbsp;↳ [Read/write traits] | 🦀 | ▰▰▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Timer traits] | 💤 | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Spawn traits] | 💤 | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Runtime trait] | 💤 | ▰▱▱▱▱▱ | |
@@ -62,8 +62,8 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
 | 🔻 [Threadsafe portability] | 💤 | ▰▱▱▱▱▱ |  |
 | &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
-| 🔻 [Async overloading] | 💤 | ▰▱▱▱▱▱ | [yoshuawuyts] |
-| &nbsp;&nbsp;↳ tbd | 💤 | ▰▱▱▱▱▱ |
+| 🔻 [Keyword generics] | 🦀 | ▰▱▱▱▱▱ | [yoshuawuyts] |
+| &nbsp;&nbsp;↳ [Async overloading] | 🦀 | ▰▱▱▱▱▱ | [yoshuawuyts] |
 
 [Async fn everywhere]: ./roadmap/async_fn.md
 [fundamentals]: https://rust-lang.github.io/async-fundamentals-initiative/
@@ -76,8 +76,8 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 [Async iteration]: ./roadmap/async_iter.md
 [Async iteration trait]: ./roadmap/async_iter/traits.md
 [Generator syntax]: ./roadmap/async_iter/generators.md
-[Portable across runtimes]: ./roadmap/portable.md
-[Read/write traits]: ./roadmap/portable/read_write.md
+[Portable across runtimes]: https://github.com/nrc/portable-interoperable
+[Read/write traits]: https://github.com/nrc/portable-interoperable/blob/master/io-traits/README.md
 [Timer traits]: ./roadmap/portable/timers.md
 [Spawn traits]: ./roadmap/portable/spawn.md
 [Runtime trait]: ./roadmap/portable/runtime.md
@@ -100,10 +100,10 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 [Type Alias Impl Trait]: https://github.com/nikomatsakis/impl-trait-initiative/
 [Precise generator captures]: ./roadmap/polish/precise_generator_captures.md
 [Sync and async behave the same]: ./roadmap/polish/sync_and_async.md
+[Keyword generics]: https://rust-lang.github.io/keyword-generics-initiative/
 
 [nikomatsakis]: https://github.com/nikomatsakis
 [tmandry]: https://github.com/tmandry
-[estebank]: https://github.com/estebank
 [michaelwoerister]: https://github.com/michaelwoerister
 [eholk]: https://github.com/eholk
 [pnkfelix]: https://github.com/pnkfelix
