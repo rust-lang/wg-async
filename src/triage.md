@@ -2,8 +2,10 @@
 
 ## When, where
 
-The weekly triage meeting is held on [Zulip] at [11:30 US Eastern time on Mondays][everytimezone].
+The weekly triage meeting is held on [Zulip] at [11:30 US Eastern time on every other Monday][everytimezone].
+For the date of the next triage meeting, see the [meetings page].
 
+[meetings page]: ./meetings.md
 [everytimezone]: https://everytimezone.com/s/c3abbec9
 [Zulip]: ./welcome.md#zulip
 
@@ -26,7 +28,7 @@ It is used to drive the triage process.
 
 ## Triage process
 
-In our weekly triage meetings, we take new issues assigned [`A-async-await`] and categorize them. 
+In our weekly triage meetings, we take new issues assigned [`A-async-await`] and categorize them.
 The process is:
 
 - Review the [project board], from right to left:
@@ -45,16 +47,15 @@ The process is:
 
 If an issue is a good candidate for mentoring, mark `E-needs-mentor` and try to find a mentor.
 
-Mentors assigned to issues should write up mentoring instructions. 
-**Often, this is just a couple lines pointing to the relevant code.** 
+Mentors assigned to issues should write up mentoring instructions.
+**Often, this is just a couple lines pointing to the relevant code.**
 Mentorship doesn't require intimate knowledge of the compiler, just some familiarity and a willingness to look around for the right code.
 
-After writing instructions, mentors should un-assign themselves, add `E-mentor`, and remove `E-needs-mentor`. 
-On the project board, if a mentor is assigned to an issue, it should go to the **Claimed** column until mentoring instructions are provided. 
+After writing instructions, mentors should un-assign themselves, add `E-mentor`, and remove `E-needs-mentor`.
+On the project board, if a mentor is assigned to an issue, it should go to the **Claimed** column until mentoring instructions are provided.
 After that, it should go to **To do** until someone has volunteered to work on it.
 
 [`A-async-await`]: https://github.com/rust-lang/rust/labels/A-async-await
 [uncategorized issues]: https://github.com/search?q=org%3Arust-lang+is%3Aissue+label%3AA-async-await+is%3Aopen+-label%3AAsyncAwait-Triaged&type=Issues
-[`P-high`]: https://github.com/search?q=org%3Arust-lang+is%3Aissue+label%3AAsyncAwait-Triaged+label%3AP-high+is%3Aopen&type=Issues
 [`P-medium`]: https://github.com/search?q=org%3Arust-lang+is%3Aissue+label%3AAsyncAwait-Triaged+label%3AP-medium+is%3Aopen&type=Issues
 [`P-low`]: https://github.com/search?q=org%3Arust-lang+is%3Aissue+label%3AAsyncAwait-Triaged+label%3AP-low+is%3Aopen&type=Issues
