@@ -2,6 +2,8 @@
 
 - [👋🏽 Welcome](./welcome.md)
 - [📜 Charter](./CHARTER.md)
+- [🤝 Meetings](./meetings.md)
+  - [🔍 Triage](./triage.md)
 - [🔮 The vision](./vision.md)
   - [❓How to vision](./vision/how_to_vision.md)
     - [Owning a goal or initiative](./vision/how_to_vision/owners.md)
@@ -144,7 +146,6 @@
       - [Barbara wants async read write](./vision/submitted_stories/shiny_future/barbara_wants_async_rw.md)
       - [Barbara wants async tracing](./vision/submitted_stories/shiny_future/barbara_wants_async_tracing.md)
       - [Grace debugs a crash dump again](./vision/submitted_stories/shiny_future/grace_debugs_a_crash_dump_again.md)
-- [🔍 Triage meetings](./triage.md)
 - [🔬 Design docs](./design_docs.md)
   - [⚠️ Yield-safe lint](./design_docs/yield_safe.md)
   - [☔ Stream trait](./design_docs/stream.md)
