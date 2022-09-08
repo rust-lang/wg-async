@@ -15,12 +15,12 @@ All are welcome to attend any meeting!
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
 | 2022-09-01 | [09:00 PT] | Reading Club    | [A look back at asynchronous Rust](https://tomaka.medium.com/a-look-back-at-asynchronous-rust-d54d63934a1c) ([notes](https://hackmd.io/RRVC9tDVQZSKgs9JNbo5LQ))
-| 2022-09-08 | [09:00 PT] | Sprint Planning | –
+| 2022-09-08 | [09:00 PT] | Sprint Planning | [Sprint](https://hackmd.io/gPgXC4fsTZOgOnd-Bwhoag?view#2022-09-08---2022-10-06)
 | 2022-09-12 | [08:30 PT] | Triage          | –
-| 2022-09-15 | [09:00 PT] | Reading Club    |
-| 2022-09-22 | [09:00 PT] | Reading Club    |
+| 2022-09-15 | [09:00 PT] | Reading Club    | [Futures concurrency 3](https://blog.yoshuawuyts.com/futures-concurrency-3/)
+| 2022-09-22 | [09:00 PT] | Reading Club    | [Async/await in Swift](https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md)
 | 2022-09-26 | [08:30 PT] | Triage          | –
-| 2022-09-29 | [09:00 PT] | Reading Club    |
+| 2022-09-29 | [09:00 PT] | Deep Dive       | Async I/O Traits
 
 ## Upcoming Meetings (October 2022)
 
