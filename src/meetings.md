@@ -10,7 +10,32 @@ For video meetings, we will announce each of them on the [#wg-async] Zulip strea
 
 All are welcome to attend any meeting!
 
-## Upcoming Meetings (September 2022)
+## Upcoming Meetings (October 2022)
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2022-10-06 | [09:00 PT] | Sprint Planning | –
+| 2022-10-10 | [08:30 PT] | Triage          | –
+| 2022-10-13 | [09:00 PT] | Reading Club    | [How nextest uses tokio (and generally why async rust)](https://sunshowers.io/posts/nextest-and-tokio-1/)
+| 2022-10-20 | [09:00 PT] | Reading Club    | [Language feature: in-place construction](https://y86-dev.github.io/blog/safe-pinned-initialization/in-place.html)
+| 2022-10-24 | [08:30 PT] | Triage          | –
+| 2022-10-27 | [09:00 PT] | Deep Dive       | Async fn in trait
+
+## Upcoming Meetings (November 2022)
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2022-11-03 | [09:00 PT] | Sprint Planning | –
+| 2022-11-07 | [08:30 PT] | Triage          | –
+| 2022-11-10 | [09:00 PT] | Reading Club    |
+| 2022-11-17 | [09:00 PT] | Reading Club    |
+| 2022-11-21 | [08:30 PT] | Triage          | –
+| 2022-11-24 | [09:00 PT] | Reading Club    |
+
+<details>
+<summary>Past meetings</summary>
+
+## September 2022
 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
@@ -22,16 +47,7 @@ All are welcome to attend any meeting!
 | 2022-09-26 | [08:30 PT] | Triage          | –
 | 2022-09-29 | [09:00 PT] | Deep Dive       | Async I/O Traits
 
-## Upcoming Meetings (October 2022)
-
-| Date       | Time       | Meeting Type    | Topic |
-|------------|------------|-----------------|-------|
-| 2022-10-06 | [09:00 PT] | Sprint Planning | –
-| 2022-10-10 | [08:30 PT] | Triage          | –
-| 2022-10-13 | [09:00 PT] | Reading Club    |
-| 2022-10-20 | [09:00 PT] | Reading Club    |
-| 2022-10-24 | [08:30 PT] | Triage          | –
-| 2022-10-27 | [09:00 PT] | Reading Club    |
+</details>
 
 [reading club]: https://hackmd.io/6kSbmyggT6eAy5uvdB6srA?both
 [triage meeting]: ./triage.md
