@@ -33,7 +33,7 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 | &nbsp;&nbsp;↳ [Generic Associated Types] | 🦀  | ▰▰▰▰▰▱ | [jackh726] |
 | &nbsp;&nbsp;↳ [Fundamentals] | 🦀  | ▰▰▱▱▱▱ | [tmandry] |
 | &nbsp;&nbsp;↳ [Boxable async functions] | 💤  | ▰▱▱▱▱▱ | |
-| &nbsp;&nbsp;↳ [Async main and tests] | 💤 | ▰▱▱▱▱▱ | |
+| &nbsp;&nbsp;↳ [Async main and tests] | 🦀 | ▰▰▱▱▱▱ | [vincenzopalazzo] |
 | 🔻 [Scoped spawn and reliable cancellation] | 💤 | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Capability] | 💤 | ▰▱▱▱▱▱ | |
 | &nbsp;&nbsp;↳ [Scope API] | 💤 | ▰▱▱▱▱▱ | |
@@ -112,5 +112,6 @@ Clicking on active initiatives also shows a list of *milestones*. These mileston
 [oli-obk]: https://github.com/oli-obk
 [yoshuawuyts]: https://github.com/yoshuawuyts
 [nrc]: https://github.com/nrc
+[vincenzopalazzo]: https://github.com/vincenzopalazzo
 
 [wg leads]: ../welcome.md#leads
