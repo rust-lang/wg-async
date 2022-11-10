@@ -10,31 +10,36 @@ For video meetings, we will announce each of them on the [#wg-async] Zulip strea
 
 All are welcome to attend any meeting!
 
-## Upcoming Meetings (October 2022)
+See also:
 
-| Date       | Time       | Meeting Type    | Topic |
-|------------|------------|-----------------|-------|
-| 2022-10-06 | [09:00 PT] | Sprint Planning | –
-| 2022-10-10 | [08:30 PT] | Triage          | –
-| 2022-10-13 | [09:00 PT] | Reading Club    | [How nextest uses tokio (and generally why async rust)](https://sunshowers.io/posts/nextest-and-tokio-1/)
-| 2022-10-20 | [09:00 PT] | Reading Club    | [Language feature: in-place construction](https://y86-dev.github.io/blog/safe-pinned-initialization/in-place.html)
-| 2022-10-24 | [08:30 PT] | Triage          | –
-| 2022-10-27 | [09:00 PT] | Deep Dive       | Async fn in trait
+* [Reading club notes][reading club]
+* [Sprint planning notes](https://hackmd.io/gPgXC4fsTZOgOnd-Bwhoag?view)
 
 ## Upcoming Meetings (November 2022)
 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
-| 2022-11-03 | [09:00 PT] | Sprint Planning | –
+| 2022-11-03 | [09:00 PT] | (Canceled)      | –
 | 2022-11-07 | [08:30 PT] | Triage          | –
-| 2022-11-10 | [09:00 PT] | Reading Club    |
-| 2022-11-17 | [09:00 PT] | Reading Club    |
+| 2022-11-10 | [09:00 PT] | Sprint Planning | –
+| 2022-11-17 | [09:00 PT] | Reading Club    | [Trio tutorial](https://trio.readthedocs.io/en/stable/tutorial.html)
 | 2022-11-21 | [08:30 PT] | Triage          | –
-| 2022-11-24 | [09:00 PT] | Reading Club    |
+| 2022-11-24 | [09:00 PT] | (Canceled)      | –
 
 <details>
 <summary>Past meetings</summary>
 
+## October 2022
+
+| Date       | Time       | Meeting Type    | Topic | Notes |
+|------------|------------|-----------------|-------|-------|
+| 2022-10-06 | [09:00 PT] | Sprint Planning | –
+| 2022-10-10 | [08:30 PT] | Triage          | –
+| 2022-10-13 | [09:00 PT] | Reading Club    | [How nextest uses tokio (and generally why async rust)](https://sunshowers.io/posts/nextest-and-tokio-1/) | [notes](https://hackmd.io/yYSKcetFSwuH-n8KAOYkxQ)
+| 2022-10-20 | [09:00 PT] | Reading Club    | [Language feature: in-place construction](https://y86-dev.github.io/blog/safe-pinned-initialization/in-place.html) | [notes](https://hackmd.io/XfeniruATrq-gY5qOQ32yg?view)
+| 2022-10-24 | [08:30 PT] | Triage          | –
+| 2022-10-27 | [09:00 PT] | Reading Club    | [RFC 3318, Field Projection](https://github.com/y86-dev/rfcs/blob/field-projection/text/3318-field-projection.md) | [notes](https://hackmd.io/79TICQb0SPWCIcz02IiWaA?view)
+  
 ## September 2022
 
 | Date       | Time       | Meeting Type    | Topic |
