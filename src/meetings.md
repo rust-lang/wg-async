@@ -15,7 +15,35 @@ See also:
 * [Reading club notes][reading club]
 * [Sprint planning notes](https://hackmd.io/gPgXC4fsTZOgOnd-Bwhoag?view)
 
-## Upcoming Meetings (November 2022)
+## Scheduled meetings
+
+### February 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-02-02 | [09:00 PT] | Sprint Planning | –     |
+
+### January 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-01-12 | [09:00 PT] | Sprint Planning | –
+| 2023-01-19 | [09:00 PT] | Deep Dive       | [futures-concurrency](https://docs.rs/futures-concurrency/latest/futures_concurrency/)
+| 2023-01-26 | [09:00 PT] | Reading Club    | [Context reactor hook](https://jblog.andbit.net/2022/12/28/context-reactor-hook/)
+
+<details>
+<summary>Past meetings</summary>
+
+### December 2022
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2022-12-01 | [09:00 PT] | Sprint Planning | –
+| 2022-12-05 | [08:30 PT] | Triage          | –
+| 2022-12-08 | [09:00 PT] | Deep Dive       | [Async main and test](https://hackmd.io/@vincenzopalazzo-rust/SJkBzhJOo)
+| 2022-12-19 | [08:30 PT] | Triage          | –
+
+### November 2022
 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
@@ -26,10 +54,8 @@ See also:
 | 2022-11-21 | [08:30 PT] | Triage          | –
 | 2022-11-24 | [09:00 PT] | (Canceled)      | –
 
-<details>
-<summary>Past meetings</summary>
 
-## October 2022
+### October 2022
 
 | Date       | Time       | Meeting Type    | Topic | Notes |
 |------------|------------|-----------------|-------|-------|
@@ -40,7 +66,7 @@ See also:
 | 2022-10-24 | [08:30 PT] | Triage          | –
 | 2022-10-27 | [09:00 PT] | Reading Club    | [RFC 3318, Field Projection](https://github.com/y86-dev/rfcs/blob/field-projection/text/3318-field-projection.md) | [notes](https://hackmd.io/79TICQb0SPWCIcz02IiWaA?view)
   
-## September 2022
+### September 2022
 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
