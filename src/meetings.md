@@ -61,7 +61,7 @@ See also:
 | 2022-11-03 | [09:00 PT] | (Canceled)      | –
 | 2022-11-07 | [08:30 PT] | Triage          | –
 | 2022-11-10 | [09:00 PT] | Sprint Planning | –
-| 2022-11-17 | [09:00 PT] | Reading Club    | [Trio tutorial](https://trio.readthedocs.io/en/stable/tutorial.html)
+| 2022-11-17 | [09:00 PT] | Reading Club    | [Trio: Async concurrency for mere mortals](https://www.youtube.com/watch?v=oLkfnc_UMcE) ([notes](https://hackmd.io/Lep6OZHFRXulsVFcgT7sdA?view))
 | 2022-11-21 | [08:30 PT] | Triage          | –
 | 2022-11-24 | [09:00 PT] | (Canceled)      | –
 
