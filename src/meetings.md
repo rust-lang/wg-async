@@ -22,17 +22,28 @@ See also:
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
 | 2023-02-02 | [09:00 PT] | Sprint Planning | –     |
+| 2023-02-09 | [09:00 PT] | Reading Club    | [Notes on structured concurrency, or: Go statement considered harmful](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/) |
+| 2022-02-13 | [08:30 PT] | Triage          | –
+| 2023-02-16 | [09:00 PT] | Deep Dive       | Async vision 2024 |
+| 2023-02-23 | [09:00 PT] | Reading Club    | [Mental experiments with `io_uring`](https://vorner.github.io/2019/11/03/io-uring-mental-experiments.html) |
+| 2022-02-27 | [08:30 PT] | Triage          | –
+
+### March 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-03-02 | [09:00 PT] | Sprint Planning | –     |
+
+<details>
+<summary>Past meetings</summary>
 
 ### January 2023
 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
 | 2023-01-12 | [09:00 PT] | Sprint Planning | –
-| 2023-01-19 | [09:00 PT] | Deep Dive       | [futures-concurrency](https://docs.rs/futures-concurrency/latest/futures_concurrency/)
-| 2023-01-26 | [09:00 PT] | Reading Club    | [Context reactor hook](https://jblog.andbit.net/2022/12/28/context-reactor-hook/)
-
-<details>
-<summary>Past meetings</summary>
+| 2023-01-19 | [09:00 PT] | Deep Dive       | [futures-concurrency](https://docs.rs/futures-concurrency/latest/futures_concurrency/) ([notes](https://hackmd.io/28MpaMEUT8S6yDX9tciApw?view))
+| 2023-01-26 | [09:00 PT] | Reading Club    | [Context reactor hook](https://jblog.andbit.net/2022/12/28/context-reactor-hook/) ([notes](https://hackmd.io/8NCF0R-NTXmvRzx8selRVg?view))
 
 ### December 2022
 
