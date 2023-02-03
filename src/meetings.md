@@ -34,8 +34,7 @@ See also:
 |------------|------------|-----------------|-------|
 | 2023-03-02 | [09:00 PT] | Sprint Planning | –     |
 
-<details>
-<summary>Past meetings</summary>
+## Past meetings
 
 ### January 2023
 
@@ -84,12 +83,29 @@ See also:
 | 2022-09-01 | [09:00 PT] | Reading Club    | [A look back at asynchronous Rust](https://tomaka.medium.com/a-look-back-at-asynchronous-rust-d54d63934a1c) ([notes](https://hackmd.io/RRVC9tDVQZSKgs9JNbo5LQ))
 | 2022-09-08 | [09:00 PT] | Sprint Planning | [Sprint](https://hackmd.io/gPgXC4fsTZOgOnd-Bwhoag?view#2022-09-08---2022-10-06)
 | 2022-09-12 | [08:30 PT] | Triage          | –
-| 2022-09-15 | [09:00 PT] | Reading Club    | [Futures concurrency 3](https://blog.yoshuawuyts.com/futures-concurrency-3/)
-| 2022-09-22 | [09:00 PT] | Reading Club    | [Async/await in Swift](https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md)
+| 2022-09-15 | [09:00 PT] | Reading Club    | [Futures concurrency 3](https://blog.yoshuawuyts.com/futures-concurrency-3/) ([notes](https://hackmd.io/8gvVE3yaTUGw7IjWqsbuwA))
+| 2022-09-22 | [09:00 PT] | Reading Club    | [Async/await in Swift](https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md) ([notes](https://hackmd.io/DG4APdWoS6iYsTMgf_n_Kg))
 | 2022-09-26 | [08:30 PT] | Triage          | –
 | 2022-09-29 | [09:00 PT] | Deep Dive       | Async I/O Traits
 
-</details>
+### Earlier
+
+| Reading Club Document | Date and Zulip thread or notes link |
+| --- | --- |
+| [Async cancellation 1](https://blog.yoshuawuyts.com/async-cancellation-1/) | [2022-03-07] |
+| [Async overloading](https://blog.yoshuawuyts.com/async-overloading/) | [2022-03-21]
+| [RPITIDT](https://rust-lang.github.io/async-fundamentals-initiative/explainer/async_fn_in_dyn_trait.html) | [2022-04-04]
+| [Kotlin Coroutines Introduction](https://play.kotlinlang.org/hands-on/Introduction%20to%20Coroutines%20and%20Channels/06_StructuredConcurrency) | [2022-04-18]
+| [dyn* doesn't need to be special](https://dev.to/cad97/dyn-doesnt-need-to-be-special-3ldm) | 2022-05-18 ([notes](https://hackmd.io/-Jqg46vmRCiwSNLXFsv70Q?view)) |
+| [Async destructors, async genericity, and completion futures](https://sabrinajewson.org/blog/async-drop) | 2022-06-23 and 2022-06-30 (video) ([notes](https://hackmd.io/DBC2RvHXT_GQqdyRRI8geQ?view)) |
+| [Safe Pin projections through view types](https://blog.yoshuawuyts.com/safe-pin-projections-through-view-types/) | 2022-07-28 (video) ([notes](https://hackmd.io/FPBnaaAHTYmO0QPWJY3dEw?both)) |
+| [Panics vs cancellation, part 1](https://smallcultfollowing.com/babysteps//blog/2022/01/27/panics-vs-cancellation-part-1/) | 2022-08-18 [notes](https://hackmd.io/Ux6nxmMMRuat6v4O1ci1ng) |
+
+[2022-03-07]: https://zulip-archive.rust-lang.org/stream/187312-wg-async/topic/async.20reading.20club.202022-03-07.html
+[2022-03-21]: https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async/topic/async.20reading.20club.202022-03-07
+[2022-04-04]: https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async/topic/async.20reading.20club.202022-04-04
+[2022-04-18]: https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async/topic/async.20reading.20club.202022-04-18
+
 
 [reading club]: https://hackmd.io/6kSbmyggT6eAy5uvdB6srA?both
 [triage meeting]: ./triage.md
