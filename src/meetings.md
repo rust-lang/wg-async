@@ -86,7 +86,7 @@ See also:
 | 2022-09-15 | [09:00 PT] | Reading Club    | [Futures concurrency 3](https://blog.yoshuawuyts.com/futures-concurrency-3/) ([notes](https://hackmd.io/8gvVE3yaTUGw7IjWqsbuwA))
 | 2022-09-22 | [09:00 PT] | Reading Club    | [Async/await in Swift](https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md) ([notes](https://hackmd.io/DG4APdWoS6iYsTMgf_n_Kg))
 | 2022-09-26 | [08:30 PT] | Triage          | –
-| 2022-09-29 | [09:00 PT] | Deep Dive       | Async I/O Traits
+| 2022-09-29 | [09:00 PT] | Deep Dive       | Async I/O Traits ([notes](https://hackmd.io/VtzIRH2pTZGBJMln2xBEGQ))
 
 ### Earlier
 
