@@ -17,6 +17,26 @@ See also:
 
 ## Scheduled meetings
 
+### March 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-03-02 | [09:00 PT] | Sprint Planning | –     |
+| 2023-03-09 | [11:00 PT] | Reading Club    | [Mental experiments with `io_uring`](https://vorner.github.io/2019/11/03/io-uring-mental-experiments.html) |
+| 2022-03-13 | [08:30 PT] | Triage          | –     |
+| 2023-03-16 | [09:00 PT] | Deep Dive       | Async vision update |
+| 2023-03-23 | [11:00 PT] | Open Discussion | Add your topics to [this doc](https://hackmd.io/ddpCJa44SXmhNhFrYLh1EA) |
+| 2022-03-27 | [08:30 PT] | Triage          | –     |
+| 2023-03-30 | [09:00 PT] | Deep Dive       | AFIT case studies |
+
+### April 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-04-06 | [11:00 PT] | Sprint Planning | –     |
+
+## Past meetings
+
 ### February 2023
 
 | Date       | Time       | Meeting Type    | Topic |
@@ -24,17 +44,9 @@ See also:
 | 2023-02-02 | [09:00 PT] | Sprint Planning | –     |
 | 2023-02-09 | [09:00 PT] | Reading Club    | [Notes on structured concurrency, or: Go statement considered harmful](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/) |
 | 2022-02-13 | [08:30 PT] | Triage          | –
-| 2023-02-16 | [09:00 PT] | Deep Dive       | Async vision 2024 |
-| 2023-02-23 | [09:00 PT] | Reading Club    | [Mental experiments with `io_uring`](https://vorner.github.io/2019/11/03/io-uring-mental-experiments.html) |
+| 2023-02-16 | [09:00 PT] | Deep Dive       | Send bounds and AFIT ([notes](https://hackmd.io/F4gXjoNMQwek5gVKWfmg4Q)) |
+| 2023-02-23 | [09:00 PT] | Deep Dive       | Async vision ([notes](https://hackmd.io/UOoD7w7MQ6CvoC66DdX_Rg?view)) |
 | 2022-02-27 | [08:30 PT] | Triage          | –
-
-### March 2023
-
-| Date       | Time       | Meeting Type    | Topic |
-|------------|------------|-----------------|-------|
-| 2023-03-02 | [09:00 PT] | Sprint Planning | –     |
-
-## Past meetings
 
 ### January 2023
 
@@ -109,6 +121,7 @@ See also:
 
 [reading club]: https://hackmd.io/6kSbmyggT6eAy5uvdB6srA?both
 [triage meeting]: ./triage.md
-[08:30 PT]: https://dateful.com/time-zone-converter?t=830am&tz2=PST-PDT-Pacific-Time
-[09:00 PT]: https://dateful.com/time-zone-converter?t=9am&tz2=PST-PDT-Pacific-Time
+[08:30 PT]: https://dateful.com/time-zone-converter?t=0830&tz2=PST-PDT-Pacific-Time
+[09:00 PT]: https://dateful.com/time-zone-converter?t=09&tz2=PST-PDT-Pacific-Time
+[11:00 PT]: https://dateful.com/time-zone-converter?t=11&tz2=PST-PDT-Pacific-Time
 [#wg-async]: https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async
