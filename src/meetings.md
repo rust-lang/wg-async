@@ -17,6 +17,25 @@ See also:
 
 ## Scheduled meetings
 
+We are currently in the process of choosing new times for our planning meetings and will update this page when that is done. See [this zulip topic](https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async/topic/meeting.20schedule.20this.20spring) for more.
+
+### April 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-04-06 | [11:00 PT] | Sprint Planning | –     |
+| 2023-04-13 | ???        | Reading Club    | [Patterns and abstractions](https://without.boats/blog/patterns-and-abstractions/) |
+| 2023-04-20 | ???        | Deep Dive       | [AsyncIterator](https://hackmd.io/pfgy92PZQV-Zr_c00-aMnQ?both) |
+| 2023-04-27 | ???        | Open Discussion | Add your topics to [this doc](https://hackmd.io/p7q-egk-TRKissJetk2zRw) |
+
+### May 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-05-04 | ???        | Sprint Planning | –     |
+
+## Past meetings
+
 ### March 2023
 
 | Date       | Time       | Meeting Type    | Topic |
@@ -28,14 +47,6 @@ See also:
 | 2023-03-23 | [11:00 PT] | Open Discussion | Add your topics to [this doc](https://hackmd.io/ddpCJa44SXmhNhFrYLh1EA) |
 | 2022-03-27 | [08:30 PT] | Triage          | –     |
 | 2023-03-30 | [09:00 PT] | Deep Dive       | AFIT case studies |
-
-### April 2023
-
-| Date       | Time       | Meeting Type    | Topic |
-|------------|------------|-----------------|-------|
-| 2023-04-06 | [11:00 PT] | Sprint Planning | –     |
-
-## Past meetings
 
 ### February 2023
 
