@@ -10,16 +10,16 @@
 *If you're looking for ideas of what to write about, take a look at the [open issues]. You can also [open an issue of your own] to throw out an idea for others.*
 
 [How To Vision: Status Quo]: ../status_quo.md
-[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
-[`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
-[open issues]: https://github.com/rust-lang/wg-async-foundations/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
-[open an issue of your own]: https://github.com/rust-lang/wg-async-foundations/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async/master/src/vision/status_quo/template.md
+[`status_quo`]: https://github.com/rust-lang/wg-async/tree/master/src/vision/status_quo
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async/blob/master/src/SUMMARY.md
+[open issues]: https://github.com/rust-lang/wg-async/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
+[open an issue of your own]: https://github.com/rust-lang/wg-async/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
 
 
 ## 🚧 Warning: Draft status 🚧
 
-This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
 
 If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!
 

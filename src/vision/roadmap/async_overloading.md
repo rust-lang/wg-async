@@ -44,3 +44,4 @@ Further, by default, when you call a function, you invoke it in the same schedul
 ### Related work
 
 * [SE-0296: Allow overloads that differ only in async](https://github.com/apple/swift-evolution/pull/1392)
+* [Async Overloading (Yoshua Wuyts, 2021)](https://blog.yoshuawuyts.com/async-overloading/)

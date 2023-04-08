@@ -70,4 +70,4 @@ codebase, so Barbara is the natural choice here.
 It wouldn't. If this story happens them, they're on the same level of Rust expertise as Barbara is.
 
 [Barbara]: ../../characters/barbara.md
-[run-time agnostic libraries]: https://github.com/rust-lang/wg-async-foundations/issues/45
+[run-time agnostic libraries]: https://github.com/rust-lang/wg-async/issues/45

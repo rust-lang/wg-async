@@ -7,21 +7,21 @@
 [summary]: #summary
 
 Introduce the `Stream` trait into the standard library, using the
-design from `futures`. Redirect the `Stream` trait definition in the 
+design from `futures`. Redirect the `Stream` trait definition in the
 `futures-core` crate (which is "pub-used" by the `futures` crate) to the standard library.
 
 # Motivation
 [motivation]: #motivation
 
-Streams are a core async abstraction. We want to enable portable libraries that 
+Streams are a core async abstraction. We want to enable portable libraries that
 produce/consume streams without being tied to a particular executor.
 
-People can do this currently using the `Stream` trait defined in the 
-[futures](https://crates.io/crates/futures) crate. However, the 
-stability guarantee of that trait would be clearer if it were added 
-to the standard library. For example, if [Tokio](https://tokio.rs/) 
-wishes to declare a [5 year stability period](http://smallcultfollowing.com/babysteps/blog/2020/02/11/async-interview-6-eliza-weisman/#communicating-stability), 
-having the stream trait in the standard library means there are no concerns 
+People can do this currently using the `Stream` trait defined in the
+[futures](https://crates.io/crates/futures) crate. However, the
+stability guarantee of that trait would be clearer if it were added
+to the standard library. For example, if [Tokio](https://tokio.rs/)
+wishes to declare a [5 year stability period](http://smallcultfollowing.com/babysteps/blog/2020/02/11/async-interview-6-eliza-weisman/#communicating-stability),
+having the stream trait in the standard library means there are no concerns
 about the trait changing during that time ([citation](http://smallcultfollowing.com/babysteps/blog/2019/12/23/async-interview-3-carl-lerche/#what-should-we-do-next-stabilize-stream)).
 
 ## Examples of crates that are consuming streams
@@ -36,7 +36,7 @@ about the trait changing during that time ([citation](http://smallcultfollowing.
 
 ## Why a shared trait?
 
-We eventually want dedicated syntax for working with streams, which will require a shared trait. 
+We eventually want dedicated syntax for working with streams, which will require a shared trait.
 This includes a trait for producing streams and a trait for consuming streams.
 
 # Guide-level explanation
@@ -62,7 +62,7 @@ pub trait Stream {
     // Core items:
     type Item;
     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>>;
-    
+
     // Optional optimization hint, just like with iterators:
     #[inline]
     fn size_hint(&self) -> (usize, Option<usize>) {
@@ -121,7 +121,7 @@ where
 
 impl<S> Stream for AssertUnwindSafe<S>
 where
-    S: Stream, 
+    S: Stream,
 {
     type Item = <S as Stream>::Item;
 }
@@ -131,13 +131,13 @@ where
 
 We should also implement a next method, similar to [the implementation in the futures-util crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
 
-In general, we have purposefully kept the core trait definition minimal. 
-There are a number of useful extension methods that are available, for example, 
-in the futures-stream crate, but we have not included them because they involve 
+In general, we have purposefully kept the core trait definition minimal.
+There are a number of useful extension methods that are available, for example,
+in the futures-stream crate, but we have not included them because they involve
 closure arguments, and we have not yet finalized the design of async closures.
 
-However, the core methods alone are extremely unergonomic. You can't even iterate 
-over the items coming out of the stream. Therefore, we include a few minimal 
+However, the core methods alone are extremely unergonomic. You can't even iterate
+over the items coming out of the stream. Therefore, we include a few minimal
 convenience methods that are not dependent on any unstable features. Most notably, next
 
 ```rust
@@ -190,20 +190,20 @@ while let Some(x) = s.try_next().await?
 ```
 
 Adding the `try_next` method is out of the scope of this RFC to keep us focused
-on adding the critical methods needed for async streams first, then adding in 
+on adding the critical methods needed for async streams first, then adding in
 additional ones at a later date.
 
 One thing to note, if a user is using an older version of `futures-util`,
 they would experience ambiguity when trying to use the `next` method that
 is added to the standard library (and redirected to from `futures-core`).
 
-This can be done as a non-breaking change, but would require everyone to 
+This can be done as a non-breaking change, but would require everyone to
 upgrade rustc. We will want to create a transition plan on what this
 means for users and pick the timing carefully.
 
 ### Why does next require Self:Unpin?
 
-When drafting this RFC, there was a [good deal of discussion](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r452482084) around why the `next` method requires `Self:Unpin`.
+When drafting this RFC, there was a [good deal of discussion](https://github.com/rust-lang/wg-async/pull/15#discussion_r452482084) around why the `next` method requires `Self:Unpin`.
 
 To understand this, it helps to take a closer look at the definition of `Next` (this struct is further discussed later in this RFC) in the [futures-util crate](https://docs.rs/futures-util/0.3.5/src/futures_util/stream/stream/next.rs.html#10-12).
 
@@ -240,15 +240,15 @@ that defines an async `next` method:
 ```rust
 trait Stream {
     type Item;
-    
+
     async fn next(&mut self) -> Option<Self::Item>;
 }
 ```
 
 Unfortunately, async methods in traits are not currently supported,
 and there [are a number of challenges to be
-resolved](https://rust-lang.github.io/wg-async-foundations/design_docs/async_fn_fundamentals.html)
-before they can be added. 
+resolved](https://rust-lang.github.io/wg-async/design_docs/async_fn_fundamentals.html)
+before they can be added.
 
 Moreover, it is not clear yet how to make traits that contain async
 functions be `dyn` safe, and it is imporant to be able to pass around `dyn
@@ -268,7 +268,7 @@ Why should we *not* do this?
 
 ## Where should stream live?
 
-As mentioned above, `core::stream` is analogous to `core::future`. But, do we want to find 
+As mentioned above, `core::stream` is analogous to `core::future`. But, do we want to find
 some other naming scheme that can scale up to other future additions, such as io traits or channels?
 
 # Prior art
@@ -309,7 +309,7 @@ design issues] to be resolved before they are added. Therefore, we've
 decided to enable progress on the stream trait by stabilizing a core,
 and to come back to the problem of extending it with combinators.
 
-[outstanding design issues]: https://rust-lang.github.io/wg-async-foundations/design_docs/async_closures.html
+[outstanding design issues]: https://rust-lang.github.io/wg-async/design_docs/async_closures.html
 
 This path does carry some risk. Adding combinator methods can cause
 existing code to stop compiling due to the ambiguities in method
@@ -334,7 +334,7 @@ Iterators have an `IntoIterator` that is used with `for` loops to convert items 
 
 ```rust
 pub trait IntoIterator where
-    <Self::IntoIter as Iterator>::Item == Self::Item, 
+    <Self::IntoIter as Iterator>::Item == Self::Item,
 {
     type Item;
 
@@ -386,7 +386,7 @@ This trait could look like this:
 
 ```rust
 pub trait IntoStream
-where 
+where
     <Self::IntoStream as Stream>::Item == Self::Item,
 {
     type Item;
@@ -397,7 +397,7 @@ where
 }
 ```
 
-This trait (as expressed by @taiki-e in [a comment on a draft of this RFC](https://github.com/rust-lang/wg-async-foundations/pull/15/files#r449880986)) makes it easy to write streams in combination with [async stream](https://github.com/taiki-e/futures-async-stream). For example:
+This trait (as expressed by @taiki-e in [a comment on a draft of this RFC](https://github.com/rust-lang/wg-async/pull/15/files#r449880986)) makes it easy to write streams in combination with [async stream](https://github.com/taiki-e/futures-async-stream). For example:
 
 ```rust
 type S(usize);
@@ -414,7 +414,7 @@ impl IntoStream for S {
             }
         }
     }
-}   
+}
 ```
 
 ### FromStream
@@ -480,9 +480,9 @@ pub trait Stream {
 }
 ```
 
-When drafting this RFC, there was [discussion](https://github.com/rust-lang/wg-async-foundations/pull/15#discussion_r451182595) 
+When drafting this RFC, there was [discussion](https://github.com/rust-lang/wg-async/pull/15#discussion_r451182595)
 about whether to implement from_stream for all T where `T: FromIterator` as well.
-`FromStream` is perhaps more general than `FromIterator` because the await point is allowed to suspend execution of the 
+`FromStream` is perhaps more general than `FromIterator` because the await point is allowed to suspend execution of the
 current function, but doesn't have too. Therefore, many (if not all) existing impls of `FromIterator` would work
 for `FromStream` as well. While this would be a good point for a future discussion, it is not in the scope of this RFC.
 
@@ -509,7 +509,7 @@ As detailed in previous sections, the migrations to add these traits are out of 
 Currently, if someone wishes to iterate over a `Stream` as defined in the `futures` crate,
 they are not able to use  `for` loops, they must use `while let` and `next/try_next` instead.
 
-We may wish to extend the `for` loop so that it works over streams as well. 
+We may wish to extend the `for` loop so that it works over streams as well.
 
 ```rust
 #[async]
@@ -518,12 +518,12 @@ for elem in stream { ... }
 
 One of the complications of using `while let` syntax is the need to pin.
 A `for` loop syntax that takes ownership of the stream would be able to
-do the pinning for you. 
+do the pinning for you.
 
 On the other hand, we may not want to make sequential processing "too easy" without also enabling
 parallel/concurrent processing, which people frequently want. One challenge is
 that parallel processing wouldn't naively permit early returns and other complex
-control flow. We could add a `par_stream()` method, similar to 
+control flow. We could add a `par_stream()` method, similar to
 [Rayon's](https://github.com/rayon-rs/rayon) `par_iter()`.
 
 Designing this extension is out of scope for this RFC. However, it could be prototyped using procedural macros today.
@@ -537,24 +537,24 @@ There has been much discussion around lending streams (also referred to as attac
 [Source](https://smallcultfollowing.com/babysteps/blog/2019/12/10/async-interview-2-cramertj-part-2/#the-need-for-streaming-streams-and-iterators)
 
 
-In a **lending** stream (also known as an "attached" stream), the `Item` that gets 
-returned by `Stream` may be borrowed from `self`. It can only be used as long as 
+In a **lending** stream (also known as an "attached" stream), the `Item` that gets
+returned by `Stream` may be borrowed from `self`. It can only be used as long as
 the `self` reference remains live.
 
-In a **non-lending** stream (also known as a "detached" stream), the `Item` that 
-gets returned by `Stream` is "detached" from self. This means it can be stored 
+In a **non-lending** stream (also known as a "detached" stream), the `Item` that
+gets returned by `Stream` is "detached" from self. This means it can be stored
 and moved about independently from `self`.
 
-This RFC does not cover the addition of lending streams (streams as implemented through 
+This RFC does not cover the addition of lending streams (streams as implemented through
 this RFC are all non-lending streams).
 
 We can add the `Stream` trait to the standard library now and delay
 adding in this distinction between the two types of streams - lending and
 non-lending. The advantage of this is it would allow us to copy the `Stream`
-trait from `futures` largely 'as is'. 
+trait from `futures` largely 'as is'.
 
-The disadvantage of this is functions that consume streams would 
-first be written to work with `Stream`, and then potentially have 
+The disadvantage of this is functions that consume streams would
+first be written to work with `Stream`, and then potentially have
 to be rewritten later to work with `LendingStream`s.
 
 ### Current Stream Trait
@@ -572,7 +572,7 @@ pub trait Stream {
 }
 ```
 
-This trait, like `Iterator`, always gives ownership of each item back to its caller. This offers flexibility - 
+This trait, like `Iterator`, always gives ownership of each item back to its caller. This offers flexibility -
 such as the ability to spawn off futures processing each item in parallel.
 
 ### Potential Lending Stream Trait
@@ -583,7 +583,7 @@ where
     S: Stream,
 {
     type Item<'_> = S::Item;
-    
+
     fn poll_next<'s>(
         self: Pin<&'s mut Self>,
         cx: &mut Context<'_>,
@@ -593,23 +593,23 @@ where
 }
 ```
 
-This is a "conversion" trait such that anything which implements `Stream` can also implement 
+This is a "conversion" trait such that anything which implements `Stream` can also implement
 `Lending Stream`.
 
-This trait captures the case we re-use internal buffers. This would be less flexible for 
-consumers, but potentially more efficient. Types could implement the `LendingStream` 
+This trait captures the case we re-use internal buffers. This would be less flexible for
+consumers, but potentially more efficient. Types could implement the `LendingStream`
 where they need to re-use an internal buffer and `Stream` if they do not. There is room for both.
 
 We would also need to pursue the same design for iterators - whether through adding two traits
 or one new trait with a "conversion" from the old trait.
 
 This also brings up the question of whether we should allow conversion in the opposite way - if
-every non-lending stream can become a lending one, should _some_ lending streams be able to 
-become non-lending ones? 
+every non-lending stream can become a lending one, should _some_ lending streams be able to
+become non-lending ones?
 
 **Coherence**
 
-The impl above has a problem. As the Rust language stands today, we cannot cleanly convert 
+The impl above has a problem. As the Rust language stands today, we cannot cleanly convert
 impl Stream to impl LendingStream due to a coherence conflict.
 
 If you have other impls like:
@@ -624,7 +624,7 @@ and
 impl<T> LendingStream for Box<T> where T: LendingStream
 ```
 
-There is a coherence conflict for `Box<impl Stream>`, so presumably it will fail the coherence rules. 
+There is a coherence conflict for `Box<impl Stream>`, so presumably it will fail the coherence rules.
 
 [More examples are available here](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=a667a7560f8dc97ab82a780e27dfc9eb).
 
@@ -640,16 +640,16 @@ trait Stream: LendingStream
 
 This would allow us to leverage `default impl`.
 
-These use cases for lending/non-lending streams need more thought, which is part of the reason it 
+These use cases for lending/non-lending streams need more thought, which is part of the reason it
 is out of the scope of this particular RFC.
 
 ## Generator syntax
 [generator syntax]: #generator-syntax
 
-In the future, we may wish to introduce a new form of function - 
+In the future, we may wish to introduce a new form of function -
 `gen fn` in iterators and `async gen` in async code that
 can contain `yield` statements. Calling such a function would
-yield a `impl Iterator` or `impl Stream`, for sync and async 
+yield a `impl Iterator` or `impl Stream`, for sync and async
 respectively. Given an "attached" or "borrowed" stream, the generator
 yield could return references to local variables. Given a "detached"
 or "owned" stream, the generator yield could return things
@@ -681,13 +681,13 @@ After desugaring would result in a function like:
 fn foo() -> impl Stream<Item = Value>
 ```
 
-If we introduce `-> Stream` first, we will have to permit `LendingStream` in the future. 
+If we introduce `-> Stream` first, we will have to permit `LendingStream` in the future.
 Additionally, if we introduce `LendingStream` later, we'll have to figure out how
 to convert a `LendingStream` into a `Stream` seamlessly.
 
 ### Differences between Iterator generators and Async generators
 
-We want `Stream` and `Iterator` to work as analogously as possible, including when used with generators. However, in the current design, there is a crucial difference between the two. 
+We want `Stream` and `Iterator` to work as analogously as possible, including when used with generators. However, in the current design, there is a crucial difference between the two.
 
 Consider Iterator's core `next` method:
 
@@ -710,7 +710,7 @@ pub trait Stream {
 }
 ```
 
-Iterator does not require pinning its core next method. In order for a `gen fn` to operate with the Iterator ecosystem, there must be some kind of initial pinning step that converts its result into an iterator. This will be tricky, since you can't return a pinned value except by boxing. 
+Iterator does not require pinning its core next method. In order for a `gen fn` to operate with the Iterator ecosystem, there must be some kind of initial pinning step that converts its result into an iterator. This will be tricky, since you can't return a pinned value except by boxing.
 
 The general shape will be:
 
@@ -720,7 +720,7 @@ gen_fn().pin_somehow().adapter1().adapter2()
 
 With streams, the core interface _is_ pinned, so pinning occurs at the last moment.
 
-The general shape would be 
+The general shape would be
 
 ```rust
 async_gen_fn().adapter1().adapter2().pin_somehow()
@@ -728,7 +728,7 @@ async_gen_fn().adapter1().adapter2().pin_somehow()
 
 Pinning at the end, like with a stream, lets you build and return those adapters and then apply pinning at the end. This may be the more efficient setup and implies that, in order to have a `gen fn` that produces iterators, we will need to potentially disallow borrowing yields or implement some kind of `PinnedIterator` trait that can be "adapted" into an iterator by pinning.
 
-For example: 
+For example:
 
 ```rust
 trait PinIterator {
@@ -741,7 +741,7 @@ impl<I: PinIterator, P: Deref<Target = I> + DerefMut> Iterator for Pin<P> {
     fn next(&mut self) -> Self::Item { self.as_mut().next() }
 }
 
-// this would be nice.. but would lead to name resolution ambiguity for our combinators 😬 
+// this would be nice.. but would lead to name resolution ambiguity for our combinators 😬
 default impl<T: Iterator> PinIterator for T { .. }
 ```
 Pinning also applies to the design of AsyncRead/AsyncWrite, which currently uses Pin even through there is no clear plan to make them implemented with generator type syntax. The asyncification of a signature is currently understood as pinned receiver + context arg + return poll.
@@ -751,9 +751,9 @@ Pinning also applies to the design of AsyncRead/AsyncWrite, which currently uses
 It would be useful to be able to yield from inside a for loop, as long as the for loop is
 over a borrowed input and not something owned by the stack frame.
 
-In the spirit of experimentation, boats has written the [propane](https://github.com/withoutboats/propane) 
+In the spirit of experimentation, boats has written the [propane](https://github.com/withoutboats/propane)
 crate. This crate includes a `#[propane] fn` that changes the function signature
-to return `impl Iterator` and lets you `yield`. The non-async version uses 
+to return `impl Iterator` and lets you `yield`. The non-async version uses
 `static generator` that is currently in nightly only.
 
 Further designing generator functions is out of the scope of this RFC.

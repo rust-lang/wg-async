@@ -1,15 +1,15 @@
 # 😱 Status quo stories: Barbara battles buffered streams
 
 [How To Vision: Status Quo]: ../status_quo.md
-[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
-[`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
-[open issues]: https://github.com/rust-lang/wg-async-foundations/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
-[open an issue of your own]: https://github.com/rust-lang/wg-async-foundations/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async/master/src/vision/status_quo/template.md
+[`status_quo`]: https://github.com/rust-lang/wg-async/tree/master/src/vision/status_quo
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async/blob/master/src/SUMMARY.md
+[open issues]: https://github.com/rust-lang/wg-async/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
+[open an issue of your own]: https://github.com/rust-lang/wg-async/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
 
 ## 🚧 Warning: Draft status 🚧
 
-This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
 
 If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!
 
@@ -51,7 +51,7 @@ Following a hunch, she adds more logging in and around the `process_work_item` f
 
 ### Barbara thought she understood how async worked
 
-Barbara thought she understood futures fairly well. She thought of `async fn` as basically "like a synchronous function with more advanced control flow". She knew that Rust's futures were lazy -- that they didn't start executing until they were awaited -- and she knew that could compose them using utilities like [`join`](https://docs.rs/futures/0.3/futures/future/fn.join.html), [`FuturesUnordered`], or the [`buffered`](https://docs.rs/futures/0.3/futures/stream/trait.StreamExt.html#method.buffered) method (as in this example). 
+Barbara thought she understood futures fairly well. She thought of `async fn` as basically "like a synchronous function with more advanced control flow". She knew that Rust's futures were lazy -- that they didn't start executing until they were awaited -- and she knew that could compose them using utilities like [`join`](https://docs.rs/futures/0.3/futures/future/fn.join.html), [`FuturesUnordered`], or the [`buffered`](https://docs.rs/futures/0.3/futures/stream/trait.StreamExt.html#method.buffered) method (as in this example).
 
 [`FuturesUnordered`]: https://docs.rs/futures/0.3.14/futures/stream/struct.FuturesUnordered.html
 
@@ -71,7 +71,7 @@ while let Some(work_item) = stream.next().await {
 }
 ```
 
-The task can only "wait" on one "await" at a time. It will execute that await until it completes and only then move on to the rest of the function. When the task is blocked on the first `await`, it will process all the futures that are part of the stream, and hence the various buffered connections all make progress. 
+The task can only "wait" on one "await" at a time. It will execute that await until it completes and only then move on to the rest of the function. When the task is blocked on the first `await`, it will process all the futures that are part of the stream, and hence the various buffered connections all make progress.
 
 But once a work item is produced, the task will block on the *second* `await` -- the one that resulted from `process_work_item`. This means that, until `process_work_item` completes, control will *never return to the first `await`*. As a result, none of the futures in the stream will make progress, even if they could do so!
 

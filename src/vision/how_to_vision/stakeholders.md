@@ -12,7 +12,7 @@ Stakeholders can be:
 * Representatives from major libraries
 * Production users
 
-Stakeholders can be selected in coordination with the async foundations working group leads. Potential new stakeholders can also get in touch with the owner.
+Stakeholders can be selected in coordination with the async working group leads. Potential new stakeholders can also get in touch with the owner.
 
 ## Feedback on the design
 

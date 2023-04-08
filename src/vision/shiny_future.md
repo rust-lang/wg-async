@@ -16,7 +16,7 @@ Note that while a lot of the steps needed are fairly clear, several of them also
 
 ## Key aspects of the future
 
-* 🌤️ If you know sync Rust, getting started in Async Rust is straightforward ([more][async_fn_everywhere])
+* 🌤️ If you know sync Rust, getting started in Async Rust is straightforward ([more](roadmap/async_fn.md)])
     * 🌤️ Mostly, you change `fn` to `async fn`, add some calls to await, and change over to other parts of the stdlib, though supporting `dyn Trait` requires making some choices, particularly in a no-std environment
     * 🌤️ It still has that "if it compiles, it generally works, and it runs pretty darn fast" feeling
     * 🌤️ Destructors and cleanup also work the same way as in sync Rust, thanks to `Drop` to `AsyncDrop`
@@ -45,4 +45,4 @@ Check out...
 
 ## Where did all the stories go?
 
-The full set of "submitted" shiny future stories [have been moved here](./submitted_stories/shiny_future.md). 
+The full set of "submitted" shiny future stories [have been moved here](./submitted_stories/shiny_future.md).

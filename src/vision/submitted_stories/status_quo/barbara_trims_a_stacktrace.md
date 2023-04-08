@@ -1,16 +1,16 @@
 # 😱 Status quo stories: Barbara trims a stacktrace
 
 [How To Vision: Status Quo]: ../status_quo.md
-[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/status_quo/template.md
-[`status_quo`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/status_quo
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
-[open issues]: https://github.com/rust-lang/wg-async-foundations/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
-[open an issue of your own]: https://github.com/rust-lang/wg-async-foundations/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async/master/src/vision/status_quo/template.md
+[`status_quo`]: https://github.com/rust-lang/wg-async/tree/master/src/vision/status_quo
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async/blob/master/src/SUMMARY.md
+[open issues]: https://github.com/rust-lang/wg-async/issues?q=is%3Aopen+is%3Aissue+label%3Astatus-quo-story-ideas
+[open an issue of your own]: https://github.com/rust-lang/wg-async/issues/new?assignees=&labels=good+first+issue%2C+help+wanted%2C+status-quo-story-ideas&template=-status-quo--story-issue.md&title=
 
 
 ## 🚧 Warning: Draft status 🚧
 
-This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today. 
+This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.
 
 If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!
 
@@ -81,7 +81,7 @@ stack backtrace:
    3: slow_rs::process_many::{{closure}} at ./src/main.rs:10:5
    5: slow_rs::main::{{closure}}::{{closure}} at ./src/main.rs:4:9
    7: slow_rs::main::{{closure}} at ./src/main.rs:3:5
-  13: <tokio stuff> 
+  13: <tokio stuff>
   19: slow_rs::main
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 ```
@@ -102,7 +102,7 @@ Fin.
     * calls to `poll`.
 
 ### **What are the sources for this story?**
-[Sergey Galich](https://github.com/rust-lang/wg-async-foundations/issues/69#issuecomment-803208049) reported this problem, among many others.
+[Sergey Galich](https://github.com/rust-lang/wg-async/issues/69#issuecomment-803208049) reported this problem, among many others.
 
 ### **Why did you choose Barbara to tell this story?**
 She knows about the desugarings that give rise to symbols like `::{closure}`, but she still finds them annoying to deal with in practice.
@@ -163,7 +163,7 @@ at lib.rs:102:13
 
 ### **Doesn't Rust have backtrace trimming support?**
 Yes, this **is** the reduced backtrace. You don't even want to know what the [full one](https://gist.github.com/eminence/0b3e697b7c4e686451ff0d37c169c89d) looks like. Don't click it. Don't!
-    
+
 [character]: ../../characters.md
 [status quo stories]: ../status_quo.md
 [Alan]: ../../characters/alan.md

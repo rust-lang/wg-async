@@ -44,7 +44,7 @@ One goal of scopes is to avoid the "nested await" problem, as described in [Barb
 
 [^hard]: This is not a hard rule. But invoking poll manually is best regarded as a risky thing to be managed with care -- not only because of the formal safety guarantees, but because of the possibility for "nested await"-style failures.
 
-[bbbs]: https://rust-lang.github.io/wg-async-foundations/vision/status_quo/barbara_battles_buffered_streams.html
+[bbbs]: https://rust-lang.github.io/wg-async/vision/status_quo/barbara_battles_buffered_streams.html
 [`buffered`]: https://docs.rs/futures/0.3.15/futures/prelude/stream/trait.StreamExt.html#method.buffered
 
 In the case of [BBBS], the problem arises because of `buffered`, which spawns off concurrent work to process multiple connections. Under this system, the implementation of `buffered` would create an internal scope for spawn its tasks into that scope, side-stepping the problem. One could imagine also offering a variant of `buffered` like `buffered_in` that takes a scope parameter, permitting the user to choose the scope of those spawned tasks:
@@ -104,7 +104,7 @@ It starts to feel like simply passing "scope" values may be simpler, and perhaps
 
 ### How does cancellation work in other settings?
 
-Many other languages use a shard flag to observe when cancellation has been requested. 
+Many other languages use a shard flag to observe when cancellation has been requested.
 
 In some languages, there is also an immediate callback that is invoked when cancellation is requested which permits you to take immediate action. [Swift proposal E0304](https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md#cancellation-handlers), for example, includes "cancellation handlers" that are run immediately.
 
@@ -121,3 +121,7 @@ In async Rust today, one signals cancellation of a future by (synchronously) dro
 Given `AsyncDrop`, we could adopt a similar convention, where canceling an `Async` is done by (asynchronously) dropping it. This would presumably amend the unsafe contract of the `Async` trait so that the value must be polled to completion _or_ async-dropped. To avoid the footguns we see today, a typical future could simply continue execution from its `AsyncDrop` method (but disregard the result). It might however set an internal flag to true or otherwise allow the user to find out that it has been canceled. It's not clear, though, precisely what value is being added by `AsyncDrop` in this scenario versus the `Async` simply not implementing `AsyncDrop` -- perhaps though it serves as an elegant way to give both an immediate "cancellation" callback and an opportunity to continue.
 
 An alternative is to use a cancellation token of some kind, so that _scopes_ can be canceled and that cancelation can be observed. The main reason to have that token or observation mechanism be "built-in" to some degree is so that it can be observed and used to drive "voluntary cancellation" from I/O routines and the like. Under that model, `AsyncDrop` would be intended more for values (like database handles) that have cleanup to be done, much like `Drop` today, and less as a way to signal cancellation.
+
+## Related Work
+
+- [Async Cancellation I (Yoshua Wuyts, 2021)](https://blog.yoshuawuyts.com/async-cancellation-1/)

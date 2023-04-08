@@ -1,9 +1,9 @@
 # ✨ Shiny future stories: Alan switches runtimes
 
 [How To Vision: Shiny Future]: ../shiny_future.md
-[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async-foundations/master/src/vision/shiny_future/template.md
-[`shiny_future`]: https://github.com/rust-lang/wg-async-foundations/tree/master/src/vision/shiny_future
-[`SUMMARY.md`]: https://github.com/rust-lang/wg-async-foundations/blob/master/src/SUMMARY.md
+[the raw source from this template]: https://raw.githubusercontent.com/rust-lang/wg-async/master/src/vision/shiny_future/template.md
+[`shiny_future`]: https://github.com/rust-lang/wg-async/tree/master/src/vision/shiny_future
+[`SUMMARY.md`]: https://github.com/rust-lang/wg-async/blob/master/src/SUMMARY.md
 
 ## 🚧 Warning: Draft status 🚧
 
@@ -125,9 +125,9 @@ We have to pay careful attention to embedded projects like [MonsterMesh]. Some o
 
 There are a few steps required to realize this future:
 
-* We have to determine the core mechanism that is used for std types to interface with the current scheduler. 
+* We have to determine the core mechanism that is used for std types to interface with the current scheduler.
     * Is it based on dynamic dispatch? Delayed linking? Some other tricks we have yet to invent?
-    * Depending on the details, language changes may be required. 
+    * Depending on the details, language changes may be required.
 * We have to hammer out the set of traits or other interfaces used to define the parts of a runtime (see below for some of the considerations).
     * We can start with easier cases and proceed to more difficult ones, however.
 
