@@ -24,15 +24,15 @@ We are currently in the process of choosing new times for our planning meetings 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
 | 2023-04-06 | [11:00 PT] | Sprint Planning | –     |
-| 2023-04-13 | ???        | Reading Club    | [Patterns and abstractions](https://without.boats/blog/patterns-and-abstractions/) |
-| 2023-04-20 | ???        | Deep Dive       | [AsyncIterator](https://hackmd.io/pfgy92PZQV-Zr_c00-aMnQ?both) |
-| 2023-04-27 | ???        | Open Discussion | Add your topics to [this doc](https://hackmd.io/p7q-egk-TRKissJetk2zRw) |
+| 2023-04-13 | [09:00 PT] | Reading Club    | [Patterns and abstractions](https://without.boats/blog/patterns-and-abstractions/) |
+| 2023-04-20 | [13:30 PT] | Deep Dive       | [AsyncIterator](https://hackmd.io/pfgy92PZQV-Zr_c00-aMnQ?both) |
+| 2023-04-27 | [09:00 PT] | Open Discussion | Add your topics to [this doc](https://hackmd.io/p7q-egk-TRKissJetk2zRw) |
 
 ### May 2023
 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
-| 2023-05-04 | ???        | Sprint Planning | –     |
+| 2023-05-04 | [13:30 PT] | Sprint Planning | –     |
 
 ## Past meetings
 
@@ -135,4 +135,5 @@ We are currently in the process of choosing new times for our planning meetings 
 [08:30 PT]: https://dateful.com/time-zone-converter?t=0830&tz2=PST-PDT-Pacific-Time
 [09:00 PT]: https://dateful.com/time-zone-converter?t=09&tz2=PST-PDT-Pacific-Time
 [11:00 PT]: https://dateful.com/time-zone-converter?t=11&tz2=PST-PDT-Pacific-Time
+[13:30 PT]: https://dateful.com/time-zone-converter?t=1330&tz2=PST-PDT-Pacific-Time
 [#wg-async]: https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async
