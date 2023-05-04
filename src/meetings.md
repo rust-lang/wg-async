@@ -19,6 +19,23 @@ See also:
 
 We are currently in the process of choosing new times for our planning meetings and will update this page when that is done. See [this zulip topic](https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async/topic/meeting.20schedule.20this.20spring) for more.
 
+### May 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-05-04 | [11:00 PT] | Sprint Planning | –     |
+| 2023-05-11 | [09:00 PT] | Reading Club    | [Linear types one-pager](https://blog.yoshuawuyts.com/linear-types-one-pager/) |
+| 2023-05-18 | [13:30 PT] | Open Discussion | [Notes](https://hackmd.io/B7VCpA4-Q_yTuv96uYa_Bw?both) |
+| 2023-05-25 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/B7VCpA4-Q_yTuv96uYa_Bw?both) |
+
+### June 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-06-01 | [13:30 PT] | Sprint Planning | –     |
+
+## Past meetings
+
 ### April 2023
 
 | Date       | Time       | Meeting Type    | Topic |
@@ -27,14 +44,6 @@ We are currently in the process of choosing new times for our planning meetings 
 | 2023-04-13 | [09:00 PT] | Reading Club    | [Patterns and abstractions](https://without.boats/blog/patterns-and-abstractions/) |
 | 2023-04-20 | [13:30 PT] | Deep Dive       | [AsyncIterator](https://hackmd.io/pfgy92PZQV-Zr_c00-aMnQ?both) |
 | 2023-04-27 | [09:00 PT] | Open Discussion | Add your topics to [this doc](https://hackmd.io/p7q-egk-TRKissJetk2zRw) |
-
-### May 2023
-
-| Date       | Time       | Meeting Type    | Topic |
-|------------|------------|-----------------|-------|
-| 2023-05-04 | [13:30 PT] | Sprint Planning | –     |
-
-## Past meetings
 
 ### March 2023
 
