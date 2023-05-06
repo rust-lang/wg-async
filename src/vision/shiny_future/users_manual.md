@@ -14,7 +14,7 @@ These days, most Rust code that interacts with the network or does high-performa
 
 ### Choosing a runtime
 
-When you use sync Rust, operations like I/O and so forth are taken care of by your operating system (or your libc implementation, in any case). When you use *async* Rust, though, the mapping between asynchronous tasks is performed by a *library*, called a runtime. One of Rust's key distinguishing features is that it doesn't bake in the choice of a runtime. This means that people are free to develop libaries which use a variety of different strategies to schedule tasks, I/O, and so forth. The choice of runtime can in some cases make a big difference to your overall performance, or what kind of environments you can run in.
+When you use sync Rust, operations like I/O and so forth are taken care of by your operating system (or your libc implementation, in any case). When you use *async* Rust, though, the mapping between asynchronous tasks is performed by a *library*, called a runtime. One of Rust's key distinguishing features is that it doesn't bake in the choice of a runtime. This means that people are free to develop libraries which use a variety of different strategies to schedule tasks, I/O, and so forth. The choice of runtime can in some cases make a big difference to your overall performance, or what kind of environments you can run in.
 
 If this seems overwhelming, don't worry. Rust makes it easy to experiment with runtimes and try different ones ([deliv_portable]). Here is a list of some of the popular runtimes, and the sorts of applications where they are suitable:
 
