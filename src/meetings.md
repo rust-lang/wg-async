@@ -19,22 +19,32 @@ See also:
 
 We are currently in the process of choosing new times for our planning meetings and will update this page when that is done. See [this zulip topic](https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async/topic/meeting.20schedule.20this.20spring) for more.
 
-### May 2023
-
-| Date       | Time       | Meeting Type    | Topic |
-|------------|------------|-----------------|-------|
-| 2023-05-04 | [11:00 PT] | Sprint Planning | –     |
-| 2023-05-11 | [09:00 PT] | Reading Club    | [Linear types one-pager](https://blog.yoshuawuyts.com/linear-types-one-pager/) |
-| 2023-05-18 | [13:30 PT] | Open Discussion | [Notes](https://hackmd.io/B7VCpA4-Q_yTuv96uYa_Bw?both) |
-| 2023-05-25 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/B7VCpA4-Q_yTuv96uYa_Bw?both) |
-
 ### June 2023
 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
 | 2023-06-01 | [13:30 PT] | Sprint Planning | –     |
+| 2023-06-08 | [09:00 PT] | Reading Club    | [Iterator, Generator](https://without.boats/blog/iterator-generator/) |
+| 2023-06-15 | [13:30 PT] | Open Discussion | [Notes](https://hackmd.io/lxpR7bg7Q1isfgfGWW7J_w?both) |
+| 2023-06-22 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/lxpR7bg7Q1isfgfGWW7J_w?both) |
+| 2023-06-29 | [13:30 PT] | Open Discussion | [Notes](https://hackmd.io/lxpR7bg7Q1isfgfGWW7J_w?both) |
+
+### July 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-07-06 | [13:30 PT] | Sprint Planning | –     |
 
 ## Past meetings
+
+### May 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-05-04 | [11:00 PT] | Sprint Planning | –     |
+| 2023-05-11 | [09:00 PT] | Reading Club    | [Linear types one-pager](https://blog.yoshuawuyts.com/linear-types-one-pager/) ([notes](https://hackmd.io/qxvBTutISVKzjCbaKF5BYQ?view)) |
+| 2023-05-18 | [13:30 PT] | Open Discussion | [Notes](https://hackmd.io/B7VCpA4-Q_yTuv96uYa_Bw?both) |
+| 2023-05-25 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/B7VCpA4-Q_yTuv96uYa_Bw?both) |
 
 ### April 2023
 
