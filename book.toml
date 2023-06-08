@@ -12,7 +12,7 @@ edition = "2018"
 site-url = "/wg-async/"
 git-repository-url = "https://github.com/rust-lang/wg-async"
 additional-js =["mermaid.min.js", "mermaid-init.js"]
-edit-url-template = "https://github.com/rust-lang/wg-async/tree/master/{path}?mode=edit"
+edit-url-template = "https://github.com/rust-lang/wg-async/edit/master/{path}"
 
 [output.html.fold]
 enable = true
