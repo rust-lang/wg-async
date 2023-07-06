@@ -19,6 +19,23 @@ See also:
 
 We are currently in the process of choosing new times for our planning meetings and will update this page when that is done. See [this zulip topic](https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async/topic/meeting.20schedule.20this.20spring) for more.
 
+### July 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-07-06 | [09:00 PT] | Sprint Planning | –     |
+| 2023-07-13 | [09:00 PT] | Deep Dive       | Should wg-async be a team? ([notes](https://hackmd.io/cXffl1cFQA2udGWZm5Nxbg?both)) |
+| 2023-07-20 | [09:00 PT] | Reading Club    | [Tree-Structured Concurrency](https://blog.yoshuawuyts.com/tree-structured-concurrency/) ([notes](https://hackmd.io/ptZt-YOwQk-CbQn6yMZgRQ?both)) |
+| 2023-07-27 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/pA-RT8t_SNOhff4SBzkP5Q?both) |
+
+### August 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-08-03 | [09:00 PT] | Sprint Planning | –     |
+
+## Past meetings
+
 ### June 2023
 
 | Date       | Time       | Meeting Type    | Topic |
@@ -28,14 +45,6 @@ We are currently in the process of choosing new times for our planning meetings 
 | 2023-06-15 | [13:30 PT] | Open Discussion | [Notes](https://hackmd.io/lxpR7bg7Q1isfgfGWW7J_w?both) |
 | 2023-06-22 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/lxpR7bg7Q1isfgfGWW7J_w?both) |
 | 2023-06-29 | [13:30 PT] | Open Discussion | [Notes](https://hackmd.io/lxpR7bg7Q1isfgfGWW7J_w?both) |
-
-### July 2023
-
-| Date       | Time       | Meeting Type    | Topic |
-|------------|------------|-----------------|-------|
-| 2023-07-06 | [13:30 PT] | Sprint Planning | –     |
-
-## Past meetings
 
 ### May 2023
 
