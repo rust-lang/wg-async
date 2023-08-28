@@ -32,7 +32,7 @@ We are currently in the process of choosing new times for our planning meetings 
 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
-| 2023-09-07 | [09:00 PT] | Sprint Planning | –     |
+| 2023-08-31 | [09:00 PT] | Sprint Planning | –     |
 
 ## Past meetings
 
