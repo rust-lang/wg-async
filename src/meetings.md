@@ -25,8 +25,8 @@ We are currently in the process of choosing new times for our planning meetings 
 |------------|------------|-----------------|-------|
 | 2023-08-31 | [09:00 PT] | Sprint Planning | –     |
 | 2023-09-07 | [09:00 PT] | No meeting (work on sprint goals) | – |
-| 2023-09-14 | [09:00 PT] | Reading Club    | [A case for CancellationTokens](https://gist.github.com/Matthias247/354941ebcc4d2270d07ff0c6bf066c64) ([notes](https://hackmd.io/h27_RB3UTpK6V2ao3CntFg?both)) |
-| 2023-09-21 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/JWIp_2rJRgmfn5axJUbsVg?both) |
+| 2023-09-14 | [09:00 PT] | No meeting (cancelled for RustConf) | – |
+| 2023-09-21 | [09:00 PT] | Reading Club    | [A case for CancellationTokens](https://gist.github.com/Matthias247/354941ebcc4d2270d07ff0c6bf066c64) ([notes](https://hackmd.io/h27_RB3UTpK6V2ao3CntFg?both)) |
 | 2023-09-28 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/JWIp_2rJRgmfn5axJUbsVg?both) |
 
 ### October 2023
