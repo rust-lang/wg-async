@@ -19,6 +19,24 @@ See also:
 
 We are currently in the process of choosing new times for our planning meetings and will update this page when that is done. See [this zulip topic](https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async/topic/meeting.20schedule.20this.20spring) for more.
 
+### September 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-08-31 | [09:00 PT] | Sprint Planning | –     |
+| 2023-09-07 | [09:00 PT] | No meeting (work on sprint goals) | – |
+| 2023-09-14 | [09:00 PT] | Reading Club    | [A case for CancellationTokens](https://gist.github.com/Matthias247/354941ebcc4d2270d07ff0c6bf066c64) ([notes](https://hackmd.io/h27_RB3UTpK6V2ao3CntFg?both)) |
+| 2023-09-21 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/JWIp_2rJRgmfn5axJUbsVg?both) |
+| 2023-09-28 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/JWIp_2rJRgmfn5axJUbsVg?both) |
+
+### October 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-10-05 | [09:00 PT] | Sprint Planning | –     |
+
+## Past meetings
+
 ### August 2023
 
 | Date       | Time       | Meeting Type    | Topic |
@@ -27,14 +45,6 @@ We are currently in the process of choosing new times for our planning meetings 
 | 2023-08-10 | [09:00 PT] | Deep Dive       | 2024 Prelude + Future::map ([notes](https://hackmd.io/LfWcsTSYTPK5TuORJ4l22g?both)) |
 | 2023-08-17 | [09:00 PT] | Deep Dive       | IntoFuture autoderef + #42940 ([notes](https://hackmd.io/G6ULofyXSIS4CK9u-jwYRg?both)) |
 | 2023-08-24 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/x8gCTOykQfqoSyGGbZXPlg?both) |
-
-### September 2023
-
-| Date       | Time       | Meeting Type    | Topic |
-|------------|------------|-----------------|-------|
-| 2023-08-31 | [09:00 PT] | Sprint Planning | –     |
-
-## Past meetings
 
 ### July 2023
 
