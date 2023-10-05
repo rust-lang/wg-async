@@ -19,6 +19,23 @@ See also:
 
 We are currently in the process of choosing new times for our planning meetings and will update this page when that is done. See [this zulip topic](https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async/topic/meeting.20schedule.20this.20spring) for more.
 
+### October 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-10-05 | [09:00 PT] | Sprint Planning | –     |
+| 2023-10-12 | [09:00 PT] | Reading Club    | [The Async Iterator Trait](https://blog.yoshuawuyts.com/async-iterator-trait/) ([notes](https://hackmd.io/AWbdozcHSO20bzcRxYmQyQ?both=)) |
+| 2023-10-19 | [09:00 PT] | Reading Club    | [Writing a basic `async` debugger](https://cliffle.com/blog/lildb/) ([notes](https://hackmd.io/IAVYtQlzQayQXVlEobrcjw?both=)) |
+| 2023-10-26 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/pPSntAu7SCanKdyQAdlMig?both) |
+
+### November 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-11-02 | [09:00 PT] | Sprint Planning | –     |
+
+## Past meetings
+
 ### September 2023
 
 | Date       | Time       | Meeting Type    | Topic |
@@ -28,14 +45,6 @@ We are currently in the process of choosing new times for our planning meetings 
 | 2023-09-14 | [09:00 PT] | No meeting (cancelled for RustConf) | – |
 | 2023-09-21 | [09:00 PT] | Reading Club    | [A case for CancellationTokens](https://gist.github.com/Matthias247/354941ebcc4d2270d07ff0c6bf066c64) ([notes](https://hackmd.io/h27_RB3UTpK6V2ao3CntFg?both)) |
 | 2023-09-28 | [09:00 PT] | Open Discussion | [Notes](https://hackmd.io/JWIp_2rJRgmfn5axJUbsVg?both) |
-
-### October 2023
-
-| Date       | Time       | Meeting Type    | Topic |
-|------------|------------|-----------------|-------|
-| 2023-10-05 | [09:00 PT] | Sprint Planning | –     |
-
-## Past meetings
 
 ### August 2023
 
