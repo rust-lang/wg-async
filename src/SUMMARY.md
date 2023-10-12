@@ -165,4 +165,5 @@
   - [🥞 Async Stack Traces](./design_docs/async_stack_traces.md)
 - [💬 Conversations](./conversations.md)
   - [🐦 2021-02-12 Twitter thread](./conversations/2021-02-12-Twitter-Thread.md)
+- [📖 Glossary](./glossary.md)
 - [❤️ Acknowledgments](./acknowledgments.md)
