@@ -9,7 +9,7 @@ You can learn more by reading our [charter].
 
 ## 🛠️ Getting involved
 
-We have several [meetings] throughout the month. Feel free to stop by then (or any time!) to introduce yourself.
+We have several [meetings] throughout the month. Feel free to stop by then (or any time!) to introduce yourself. We take meeting notes and keep them on our [HackMD](https://hackmd.io/@wg-async).
 
 If you're interested in fixing bugs, though, there is no need to wait for the meeting! [Take a look at the instructions here.][fix-bugs]
 
