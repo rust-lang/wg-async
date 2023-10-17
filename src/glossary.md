@@ -14,3 +14,7 @@ What follows is a best-effort list of those acronyms and links to resources disc
 ## RTN - return type notation
 - [Tracking Issue: rust#109417](https://github.com/rust-lang/rust/issues/109417)
 - Experimental, pre-RFC feature providing bounds for return types on `async fn`s
+
+## TAIT - type alias `impl trait`
+- [Tracking Issue: rust#63063](https://github.com/rust-lang/rust/issues/63063)
+- Allows the ability to write `type Foo = impl Bar`
