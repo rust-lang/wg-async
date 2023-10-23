@@ -21,3 +21,11 @@ One role for stakeholders is to give feedback on the design as it progresses. St
 ## Experimenting with the implementation
 
 Another role for stakeholders is evaluating the implemenation. This is partiularly important for production users. Stakeholders might, for example, agree to port their code to use the nightly version of the feature and adapt it as the design evolves.
+
+## Goals of the stakeholder program
+
+The goal of the stakeholder program is to make Rust's design process even more inclusive. We have observed that existing mechanisms like the RFC process or issue threads are often not a very good fit for certain categories of users, such as production users or the maintainers of large libraries, as they are not able to keep up with the discussion. As a result, they don't participate, and we wind up depriving ourselves of valuable feedback. The stakeholder program looks to supplement those mechanisms with direct contact.
+
+Another goal is to get more testing: one problem we have observed is that features are often developed and deployed on nightly, but production users don't really want to try them out until they hit stable! We would like to get some commitment from people to give things a try so that we have a better chance of finding problems before stabilization.
+
+We want to emphasize that we welcome design feedback from **all Rust users**, regardless of whether you are a named stakeholder or not. If you're using async Rust, or have read through the designs and have a question or idea for improvement, please feel free to open an issue on the appropriate repository.
