@@ -15,9 +15,13 @@ See also:
 * [Reading club notes][reading club]
 * [Sprint planning notes](https://hackmd.io/gPgXC4fsTZOgOnd-Bwhoag?view)
 
-## Scheduled meetings
+## Meeting schedule
 
-We are currently in the process of choosing new times for our planning meetings and will update this page when that is done. See [this zulip topic](https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async/topic/meeting.20schedule.20this.20spring) for more.
+Our weekly meetings are held at [09:00 PT].
+
+See [wg-async discussion schedule](https://github.com/orgs/rust-lang/projects/40/views/1) for recent and upcoming meetings.
+
+## Earlier meetings
 
 ### October 2023
 
@@ -33,8 +37,6 @@ We are currently in the process of choosing new times for our planning meetings 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
 | 2023-11-02 | [09:00 PT] | Sprint Planning | –     |
-
-## Past meetings
 
 ### September 2023
 
@@ -167,7 +169,7 @@ We are currently in the process of choosing new times for our planning meetings 
 | 2022-09-26 | [08:30 PT] | Triage          | –
 | 2022-09-29 | [09:00 PT] | Deep Dive       | Async I/O Traits ([notes](https://hackmd.io/VtzIRH2pTZGBJMln2xBEGQ))
 
-### Earlier
+### Even earlier
 
 | Reading Club Document | Date and Zulip thread or notes link |
 | --- | --- |
