@@ -3,6 +3,7 @@
 - [Welcome](./welcome.md)
 - [Charter](./CHARTER.md)
 - [Meetings](./meetings.md)
+  - [Discussion schedule](https://github.com/orgs/rust-lang/projects/40/views/1)
   - [Triage](./triage.md)
 - [The vision](./vision.md)
   - [❓How to vision](./vision/how_to_vision.md)
