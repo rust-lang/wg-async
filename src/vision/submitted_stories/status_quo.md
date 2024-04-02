@@ -36,7 +36,7 @@ Rust strives to be a language that brings together performance, productivity, an
 
 <details><summary>Making hard choices from a complex ecosystem from the start</summary>
 
-The problems begin from the very first moment a user starts to try out async Rust. The async Rust support in Rust itself is very basic, consisting only of the core Future mechanism. Everything else -- including the basic async runtimes themselves -- lives in user space. This means that users must make a number of choices rom the very beginning:
+The problems begin from the very first moment a user starts to try out async Rust. The async Rust support in Rust itself is very basic, consisting only of the core Future mechanism. Everything else -- including the basic async runtimes themselves -- lives in user space. This means that users must make a number of choices from the very beginning:
 
 * what runtime to use
     * [Barbara makes their first foray into async](status_quo/barbara_makes_their_first_steps_into_async.md)
