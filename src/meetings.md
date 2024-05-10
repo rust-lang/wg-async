@@ -17,11 +17,74 @@ See also:
 
 ## Meeting schedule
 
-Our weekly meetings are held at [09:00 PT].
+Our weekly meetings are held at [10:00 PT].
 
 See [wg-async discussion schedule](https://github.com/orgs/rust-lang/projects/40/views/1) for recent and upcoming meetings.
 
 ## Earlier meetings
+
+### May 2024
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2024-05-02 | [09:00 PT] | –               | [Notes](https://hackmd.io/gqt-5xxwRjmrqJPJF61ELg) | 
+| 2024-05-09 | [09:00 PT] | –               | [Notes](https://hackmd.io/RblquL8zQdqscplFTKFGqw) | 
+
+### April 2024
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2024-04-04 | [09:00 PT] | –               | [Notes](https://hackmd.io/kvSrfk3OS_iUoWZ7bILYNg) | 
+| 2024-04-11 | [09:00 PT] | –               | [Notes](https://hackmd.io/bYaPiCdqR3WIyjKhFWzdtQ) | 
+| 2024-04-18 | [09:00 PT] | –               | [Notes](https://hackmd.io/Ed0DtZ2KRGuBa0wCjNet9g) | 
+| 2024-04-25 | [09:00 PT] | –               | [Notes](https://hackmd.io/1FasSjY4T_a78hRAsQjO-Q) | 
+
+### March 2024
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2024-03-07 | [09:00 PT] | –               | ? | 
+| 2024-03-14 | [09:00 PT] | –               | ? | 
+| 2024-03-21 | [09:00 PT] | –               | [Notes](https://hackmd.io/vsF4W080SJ6H3PZjp9xlGA) | 
+| 2024-03-28 | [09:00 PT] | –               | [Notes](https://hackmd.io/ZO-gVZxDRcabVp25ooVHTA) | 
+
+### February 2024
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2024-02-01 | [09:00 PT] | –               | [Notes](https://hackmd.io/y_KY5pB0Rqq3VNVBe2xG0A) | 
+| 2024-02-08 | [09:00 PT] | –               | [Notes](https://hackmd.io/qsCxElt6SM-riz2pMdKBNA) | 
+| 2024-02-15 | [09:00 PT] | –               | [Notes](https://hackmd.io/EplPcmBCTCSQ9LPOU6IZDw) | 
+| 2024-02-22 | [09:00 PT] | –               | [Notes](https://hackmd.io/918bIfHvRXaoqR6p455Cww) | 
+| 2024-02-29 | [09:00 PT] | –               | [Notes](https://hackmd.io/9o1X1degTECn9gjEvHS-MA) | 
+
+### January 2024
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2024-01-04 | [09:00 PT] | –               | [Notes](https://hackmd.io/gPgXC4fsTZOgOnd-Bwhoag) | 
+| 2024-01-11 | [09:00 PT] | –               | [Notes](https://hackmd.io/YFrqx3zsTy-_x5UAgau5Nw) | 
+| 2024-01-18 | [09:00 PT] | –               | [Notes](https://hackmd.io/HKBIGY5nSPuhyrcCe0TOHA) | 
+| 2024-01-25 | [09:00 PT] | –               | [Notes](https://hackmd.io/ZDzG2sySTmm-DrAvI2j1Xw) | 
+
+### December 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-12-07 | [09:00 PT] | –               | [Notes](https://hackmd.io/4bnHpZRFQgCFdp9qpU8ANw) | 
+| 2023-12-14 | [09:00 PT] | –               | [Notes](https://hackmd.io/ZcJ3PGpWSLymr65NeyBKWA) | 
+| 2023-12-21 | [09:00 PT] | –               | ? | 
+| 2023-12-28 | [09:00 PT] | –               | ? | 
+
+### November 2023
+
+| Date       | Time       | Meeting Type    | Topic |
+|------------|------------|-----------------|-------|
+| 2023-11-02 | [09:00 PT] | –               | ? | 
+| 2023-11-09 | [09:00 PT] | –               | [Notes](https://hackmd.io/P6WWnfHvSeeE-Kyp-pp33A) | 
+| 2023-11-16 | [09:00 PT] | –               | [Notes](https://hackmd.io/TbDc4RWCSkGEketBWMLmfA) | 
+| 2023-11-23 | [09:00 PT] | –               | ? | 
+| 2023-11-30 | [09:00 PT] | –               | [Notes](https://hackmd.io/uFSuyncKTiGXaDcP8LbnUg) | 
 
 ### October 2023
 
