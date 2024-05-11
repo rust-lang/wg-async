@@ -255,6 +255,7 @@ See [wg-async discussion schedule](https://github.com/orgs/rust-lang/projects/40
 [triage meeting]: ./triage.md
 [08:30 PT]: https://dateful.com/time-zone-converter?t=0830&tz2=PST-PDT-Pacific-Time
 [09:00 PT]: https://dateful.com/time-zone-converter?t=09&tz2=PST-PDT-Pacific-Time
+[10:00 PT]: https://dateful.com/time-zone-converter?t=10&tz2=PST-PDT-Pacific-Time
 [11:00 PT]: https://dateful.com/time-zone-converter?t=11&tz2=PST-PDT-Pacific-Time
 [13:30 PT]: https://dateful.com/time-zone-converter?t=1330&tz2=PST-PDT-Pacific-Time
 [#wg-async]: https://rust-lang.zulipchat.com/#narrow/stream/187312-wg-async
