@@ -27,15 +27,15 @@ See [wg-async discussion schedule](https://github.com/orgs/rust-lang/projects/40
 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
-| 2024-05-02 | [09:00 PT] | –               | [Notes](https://hackmd.io/gqt-5xxwRjmrqJPJF61ELg) | 
-| 2024-05-09 | [09:00 PT] | –               | [Notes](https://hackmd.io/RblquL8zQdqscplFTKFGqw) | 
+| 2024-05-02 | [10:00 PT] | –               | [Notes](https://hackmd.io/gqt-5xxwRjmrqJPJF61ELg) | 
+| 2024-05-09 | [10:00 PT] | –               | [Notes](https://hackmd.io/RblquL8zQdqscplFTKFGqw) | 
 
 ### April 2024
 
 | Date       | Time       | Meeting Type    | Topic |
 |------------|------------|-----------------|-------|
-| 2024-04-04 | [09:00 PT] | –               | [Notes](https://hackmd.io/kvSrfk3OS_iUoWZ7bILYNg) | 
-| 2024-04-11 | [09:00 PT] | –               | [Notes](https://hackmd.io/bYaPiCdqR3WIyjKhFWzdtQ) | 
+| 2024-04-04 | [10:00 PT] | –               | [Notes](https://hackmd.io/kvSrfk3OS_iUoWZ7bILYNg) | 
+| 2024-04-11 | [10:00 PT] | –               | [Notes](https://hackmd.io/bYaPiCdqR3WIyjKhFWzdtQ) | 
 | 2024-04-18 | [09:00 PT] | –               | [Notes](https://hackmd.io/Ed0DtZ2KRGuBa0wCjNet9g) | 
 | 2024-04-25 | [09:00 PT] | –               | [Notes](https://hackmd.io/1FasSjY4T_a78hRAsQjO-Q) | 
 
