@@ -37,7 +37,7 @@ Leads: [@tmandry] and [@nikomatsakis]
 
 [@tmandry]: https://github.com/tmandry
 [@nikomatsakis]: https://github.com/nikomatsakis
-[Members]: https://www.rust-lang.org/governance/wgs/wg-async
+[Members]: https://www.rust-lang.org/governance/teams/lang#team-wg-async
 
 ### Membership requirements
 
