@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Barbara appreciates great performance analysis tools - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/shiny_future/barbara_appreciates_performance_tools.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-shiny-future-stories-barbara-appreciates-great-performance-analysis-tools"><a class="header" href="#-shiny-future-stories-barbara-appreciates-great-performance-analysis-tools">✨ Shiny future stories: Barbara appreciates great performance analysis tools</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "shiny future" story submitted as part of the brainstorming period. It is derived from what actual Rust users wish async Rust should be, and is meant to deal with some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as peoples needs and desires for async Rust may differ greatly, shiny future stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>. At worst they are only useful for a small set of people or their problems might be better solved with alternative solutions). Alternatively, you may wish to <a href="../status_quo.html">add your own shiny vision story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p><a href="../../characters/barbara.html">Barbara</a> has built an initial system prototype in sync Rust. She notes that it's completely I/O bound, and benchmarking shows that most of her CPU consumption is thread switch overheads. She decides to rewrite it in async Rust, using an executor that she believes will fix her bottlenecks.</p>
+<p>She sprinkles <code>async/.await</code> in all the right places, switches her sync dependencies to async libraries, and gets the code compiling. When she runs it, she discovers that the service no longer responds when she sends a request to the endpoint. Her logging shows her that the endpoint handler has been invoked, many tasks have been spawned, but that something isn't working as she expected.</p>
+<p>Fortunately, there are great tracing tools available for async Rust. Barbara turns on tracing, and immediately gets interesting information in her trace viewer. She can see all the tasks she has spawned, the lines of code where a <code>.await</code> returns control to the executor, and delays between a <code>Waker</code> being invoked and the corresponding <code>.await</code> resuming execution.</p>
+<p>With this information in hand, she finds a decompression path that is unexpectedly CPU-bound, because she can see a stack trace for the task that is running and blocking a woken up future from getting invoked again. The memory use of this future tells her that the compressed blobs are larger than she thought, but inspecting shows that this is reasonable. She thus puts the decompression onto its own blocking task, which doesn't fix things, but makes it clear that there is a deadlock passing data between two bounded channels; the trace shows the <code>Waker</code> for a <code>rx.next().await</code> being invoked, but the corresponding <code>.await</code> never runs. Looking into the code, she notes that the task is waiting on a <code>tx.send().await</code> call, and that the channel it is trying to send to is full. When Barbara reads this code, she identifies a classic AB-BA deadlock; the task that would consume items from the channel this task is waiting on is itself waiting on a transmit to the queue that this task will drain.</p>
+<p>She refactors her code to resolve this issue, and then re-checks traces. This time, the endpoint behaves as expected, but she's not seeing the wall clock time she expects; the trace shows that she's waiting on a network call to another service (also written in async Rust), and it's taking about 10x longer to reply than she would expect. She looks into the tracing libraries, and finds two useful features:</p>
+<ol>
+<li>She can annotate code with extra information that appears on the traces.</li>
+<li>Every point in the code has access to a unique ID that can be passed to external services to let her correlate traces.</li>
+</ol>
+<p>Barbara adds annotations that let her know how many bytes she's sending to the external service; it's not unreasonable, so she's still confused. A bit of work with the service owner, and she can now get traces from the external service that have IDs she sends with a request in them. The tooling combines traces nicely, so that she can now trace across the network into the external service, and she realises that it's going down a slow code path because she set the wrong request parameters.</p>
+<p>With the extra insights from the external service's trace, she's able to fix up her code to run perfectly, and she gets the desired wins from async Rust. Plus, she's got a good arsenal of tooling to use when next she sees an unidentified problem.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-status-quo-story-or-stories-are-you-retelling"><a class="header" href="#what-status-quo-story-or-stories-are-you-retelling">What status quo story or stories are you retelling?</a></h3>
+<ul>
+<li><a href="../status_quo/barbara_compares_some_cpp_code.html">Barbara compares some C++ code (and has a performance problem)</a></li>
+<li><a href="../status_quo/barbara_wants_async_insights.html">Barbara wants Async Insights</a></li>
+</ul>
+<h3 id="what-is-alan-most-excited-about-in-this-future-is-he-disappointed-by-anything"><a class="header" href="#what-is-alan-most-excited-about-in-this-future-is-he-disappointed-by-anything"><strong>What is <a href="../../characters/alan.html">Alan</a> most excited about in this future? Is he disappointed by anything?</strong></a></h3>
+<p>Alan is excited about how easy it is to find out when his projects don't work as expected. He's happy</p>
+<h3 id="what-is-grace-most-excited-about-in-this-future-is-she-disappointed-by-anything"><a class="header" href="#what-is-grace-most-excited-about-in-this-future-is-she-disappointed-by-anything"><strong>What is <a href="../../characters/grace.html">Grace</a> most excited about in this future? Is she disappointed by anything?</strong></a></h3>
+<p>Grace is happy because the performance tools give her all the low level insights she wants into her code, and shows her what's going on "behind the scenes" in the executor. As a C++ developer, she is also excited when she sees that Rust developers who see an issue with her services can give her useful information about exactly what they see her C++ doing - which she can correlate with her existing C++ performance tools via the unique ID.</p>
+<h3 id="what-is-niklaus-most-excited-about-in-this-future-is-he-disappointed-by-anything"><a class="header" href="#what-is-niklaus-most-excited-about-in-this-future-is-he-disappointed-by-anything"><strong>What is <a href="../../characters/niklaus.html">Niklaus</a> most excited about in this future? Is he disappointed by anything?</strong></a></h3>
+<p>Niklaus is content. The tooling tells him what he needs to know, and allows him to add interesting information to places where he'd otherwise be stuck trying to extract it via <code>println!()</code>. He's not entirely sure how to use some of the detailed information, but he can ignore it easily because the tools let him filter down to just the information he added to the traces - getting timestamps and task identifiers "for free" is just gravy to Niklaus.</p>
+<h3 id="what-is-barbara-most-excited-about-in-this-future-is-she-disappointed-by-anything"><a class="header" href="#what-is-barbara-most-excited-about-in-this-future-is-she-disappointed-by-anything"><strong>What is <a href="../../characters/barbara.html">Barbara</a> most excited about in this future? Is she disappointed by anything?</strong></a></h3>
+<p>Barbara is impressed at how easy it is to spot problems and handle them; she is especially impressed when the tooling is able to combine traces from two services and show her their interactions in a useful fashion as-if they were one process. She kinda wishes that the compiler would spot more of the mistakes she made - the decompression path should be something the compiler should get right for her - but at least the tooling made the problems easy to find.</p>
+<h3 id="what-projects-benefit-the-most-from-this-future"><a class="header" href="#what-projects-benefit-the-most-from-this-future"><strong>What <a href="../../projects.html">projects</a> benefit the most from this future?</strong></a></h3>
+<p>All the projects benefit; there's a useful amount of tracing "for free", and places where you can add your own data as needed.</p>
+<h3 id="are-there-any-projects-that-are-hindered-by-this-future"><a class="header" href="#are-there-any-projects-that-are-hindered-by-this-future"><strong>Are there any <a href="../../projects.html">projects</a> that are hindered by this future?</strong></a></h3>
+<p><a href="../../projects/MonsterMesh.html">MonsterMesh</a> needs to be able to remove a lot of the tracing because the CPU and memory overhead is too high in release builds.</p>
+<h3 id="what-are-the-incremental-steps-towards-realizing-this-shiny-future"><a class="header" href="#what-are-the-incremental-steps-towards-realizing-this-shiny-future"><strong>What are the incremental steps towards realizing this shiny future?</strong></a></h3>
+<p>The <a href="https://crates.io/crates/tracing">tracing</a> crate has a starting point for a useful API; combined with <a href="https://crates.io/crates/tracing-futures">tracing-futures</a>, we have a prototype.</p>
+<p>Next steps are to make integrating that with executors trivial (minimal code change), and to add in extra information to <a href="https://crates.io/crates/tracing-futures">tracing-futures</a> so that we can output the best possible traces. In parallel to that, we'll want to work on tooling to display, combine, and filter traces so that we can always extract just what we need from any given trace.</p>
+<h3 id="does-realizing-this-future-require-cooperation-between-many-projects"><a class="header" href="#does-realizing-this-future-require-cooperation-between-many-projects"><strong>Does realizing this future require cooperation between many projects?</strong></a></h3>
+<p>Yes. We need an agreed API for tracing that all async projects use - both to add tracing information, and to consume it in a useful form.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/shiny_future/alan_switches_runtimes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/shiny_future/barbara_enjoys_an_async_sandwich.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/shiny_future/alan_switches_runtimes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/shiny_future/barbara_enjoys_an_async_sandwich.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

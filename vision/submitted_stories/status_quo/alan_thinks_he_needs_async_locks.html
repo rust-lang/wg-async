@@ -1,0 +1,315 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alan thinks he needs async locks - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/alan_thinks_he_needs_async_locks.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-alan-thinks-he-needs-async-locks"><a class="header" href="#-status-quo-stories-alan-thinks-he-needs-async-locks">😱 Status quo stories: Alan thinks he needs async locks</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>One of Alan's first Rust related tasks in his job at YouBuy is writing an HTTP based service. This service is a simple internal proxy router that inspects an incoming HTTP request and picks the downstream service to call based on certain aspects of the HTTP request.</p>
+<p>Alan decides that he'll simply use some shared state that request handlers can read from in order to decide how to proxy the request.</p>
+<p>Alan, having read the Rust book and successfully completed the challenge in the <a href="https://doc.rust-lang.org/book/ch20-02-multithreaded.html">last chapters</a>, knows that shared state can be achieved in Rust with reference counting (using <code>std::sync::Arc</code>) and locks (using <code>std::sync::Mutex</code>). Alan starts by throwing his shared state (a <code>std::collections::HashMap&lt;String, url::Url&gt;</code>) into an <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>.</p>
+<p>Alan, smitten with how quickly he can write Rust code, ends up with some code that compiles that looks roughly like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Clone)]
+struct Proxy {
+   routes: Arc&lt;Mutex&lt;HashMap&lt;String, String&gt;&gt;,
+}
+
+impl Proxy {
+  async fn handle(&amp;self, key: String, request: Request) -&gt; crate::Result&lt;Response&gt; {
+      let routes = self.state.lock().unwrap();
+      let route = routes.get(key).unwrap_or_else(crate::error::MissingRoute)?;
+      Ok(self.client.perform_request(route, request).await?)
+  }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Alan is happy that his code seems to be compiling! The short but hard learning curve has been worth it. He's having fun now!</p>
+<p>Unfortunately, Alan's happiness soon comes to end as he starts integrating his request handler into calls to <code>tokio::spawn</code> which he knows will allow him to manage multiple requests at a time. The error message is somewhat cryptic, but Alan is confident he'll be able to figure it out:</p>
+<pre><code>189 |     tokio::spawn(async {
+    |     ^^^^^^^^^^^^ future created by async block is not `Send`
+::: /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.5.0/src/task/spawn.rs:129:21
+    |
+129 |         T: Future + Send + 'static,
+    |                     ---- required by this bound in `tokio::spawn`
+
+note: future is not `Send` as this value is used across an await
+   --&gt; src/handler.rs:787:9
+      |
+786   |         let routes = self.state.lock().unwrap();
+      |             - has type `std::sync::MutexGuard&lt;'_, HashMap&lt;String, Url&gt;&gt;` which is not `Send`
+787   |         Ok(self.client.perform_request(route, request).await?)
+      |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ await occurs here, with `routes` maybe used later
+788   |     })
+      |     - `routes` is later dropped here
+</code></pre>
+<p>Alan stops and takes a deep breath. He tries his best to make sense of the error message. He sort of understands the issue the compiler is telling him. Apparently <code>routes</code> is not marked as <code>Send</code>, and because it is still alive over a call to <code>await</code>, it is making the future his handler returns not <code>Send</code>. And tokio's <code>spawn</code> function seems to require that the future it received be <code>Send</code>.</p>
+<p>Alan reaches the boundaries of his knowledge of Rust, so he reaches out over chat to ask his co-worker Barbara for help. Not wanting to bother her, Alan provides the context he's already figured out for himself.</p>
+<p>Barbara knows that mutex guards are not <code>Send</code> because sending mutex guards to different threads is not a good idea. She suggests looking into async locks which can be held across await points because they are <code>Send</code>. Alan looks into the tokio documentation for more info and is easily able to move the use of the standard library's mutex to tokio's mutex. It compiles!</p>
+<p>Alan ships his code and it gets a lot of usage. After a while, Alan notices some potential performance issues. It seems his proxy handler does not have the throughput he would expect. Barbara, having newly joined his team, sits down with him to take a look at potential issues. Barbara is immediately worried by the fact that the lock is being held much longer than it needs to be. The lock only needs to be held while accessing the route and not during the entire duration of the downstream request.</p>
+<p>She suggests to Alan to switch to not holding the lock across the I/O operations. Alan first tries to do this by explicitly cloning the url and dropping the lock before the proxy request is made:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Proxy {
+  async fn handle(&amp;self, key: String, request: Request) -&gt; crate::Result&lt;Response&gt; {
+      let routes = self.state.lock().unwrap();
+      let route = routes.get(key).unwrap_or_else(crate::error::MissingRoute)?.clone();
+      drop(routes);
+      Ok(self.client.perform_request(route, request).await?)
+  }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This compiles fine and works in testing! After shipping to production, they notice a large increase in throughput. It seems their change made a big difference. Alan is really excited about Rust, and wants to write more!</p>
+<p>Alan continues his journey of learning even more about async Rust. After some enlightening talks at the latest RustConf, he decides to revisit the code that he and Barbara wrote together. He asks himself, is using an <em>async</em> lock the right thing to do? This lock should only be held for a very short amount of time. Yielding to the runtime is likely more expensive than just synchronously locking. But he remembers vaguely hearing that you should never use blocking code in async code as this will block the entire async executor from being able to make progress, so he doubts his intuition.</p>
+<p>After chatting with Barbara, who encourages him to benchmark and measure, he decides to switch back to synchronous locks.</p>
+<p>Unfortunately, switching back to synchronous locks brings back the old compiler error message about his future not being <code>Send</code>. Alan is confused as he's dropping the mutex guard before it ever crosses an await point.</p>
+<p>Confused Alan goes to Barbara for advice. She is also confused, and it takes several minutes of exploration before she comes to a solution that works: wrapping the mutex access in a block and implicitly dropping the mutex.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Proxy {
+  async fn handle(&amp;self, key: String, request: Request) -&gt; crate::Result&lt;Response&gt; {
+      let route = {
+        let routes = self.state.lock().unwrap();
+        routes.get(key).unwrap_or_else(crate::error::MissingRoute)?.clone()
+      };
+      Ok(self.client.perform_request(route, request).await?)
+  }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Barbara mentions she's unsure why explicitly dropping the mutex guard did not work, but they're both happy that the code compiles. In fact it seems to have improved the performance of the service when its under extreme load. Alan's intuition was right!</p>
+<p>In the end, Barbara decides to write a blog post about how blocking in async code isn't always such a bad idea.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<ul>
+<li>Locks can be quite common in async code as many tasks might need to mutate some shared state.</li>
+<li>Error messages can be fairly good, but they still require a decent understanding of Rust (e.g., <code>Send</code>, <code>MutexGuard</code>, drop semantics) to fully understand what's going on.</li>
+<li>This can lead to needing to use certain patterns (like dropping mutex guards early) in order to get code working.</li>
+<li>The advice to never block in async code is not always true: if blocking is short enough, is it even blocking at all?</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<ul>
+<li>Chats with <a href="https://github.com/Darksonn">Alice</a> and <a href="https://github.com/LucioFranco">Lucio</a>.</li>
+<li>Alice's <a href="https://ryhl.io/blog/async-what-is-blocking/">blog post</a> on the subject has some good insights.</li>
+<li>The issue of conservative analysis of whether values are used across await points causing futures to be <code>!Send</code> is <a href="https://rust-lang.github.io/async-book/07_workarounds/03_send_approximation.html">known</a>, but it takes some digging to find out about this issue. A tracking issue for this can be <a href="https://github.com/rust-lang/rust/issues/57478">found here</a>.</li>
+</ul>
+<h3 id="why-did-you-choose-alan-to-tell-this-story"><a class="header" href="#why-did-you-choose-alan-to-tell-this-story"><strong>Why did you choose <a href="../../characters/alan.html">Alan</a> to tell this story?</strong></a></h3>
+<ul>
+<li>While Barbara might be tripped up on some of the subtleties, an experienced Rust developer can usually tell how to avoid some of the issues of using locks in async code. Alan on the other hand, might be surprised when his code does not compile as the issue the <code>Send</code> error is protecting against (i.e., a mutex guard being moved to another thread) is not protected against in other languages.</li>
+</ul>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<ul>
+<li>Grace would have likely had a similar time to Alan. These problems are not necessarily issues you would run into in other languages in the same way.</li>
+<li>Niklaus may have been completely lost. This stuff requires a decent understanding of Rust and of async computational systems.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_started_trusting_the_rust_compiler_but_then_async.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_tries_a_socket_sink.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_started_trusting_the_rust_compiler_but_then_async.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_tries_a_socket_sink.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

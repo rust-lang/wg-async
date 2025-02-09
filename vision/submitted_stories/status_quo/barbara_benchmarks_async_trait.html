@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Barbara begets backpressure and benchmarks async_trait - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/barbara_benchmarks_async_trait.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="barbara-begets-backpressure-and-benchmarks-async_trait"><a class="header" href="#barbara-begets-backpressure-and-benchmarks-async_trait">Barbara begets backpressure and benchmarks async_trait</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p><em>Write your story here! Feel free to add subsections, citations, links, code examples, whatever you think is best.</em></p>
+<p>Barbara is implementing the network stack for an experimental new operating system in Rust. She loves Rust's combination of performance, expressiveness, and safety. She and her team set off implementing the network protocols, using traits to separate protocol layers, break up the work, and make them testable.</p>
+<p>Unlike most operating systems, this network stack is designed to live in a <em>separate process</em> from the driver itself. Barbara eventually realizes a problem: this system architecture will require modeling backpressure explicitly when sending outbound packets.</p>
+<p>She starts looking into how to model backpressure without having to rewrite all of her team's code.
+She realizes that async is actually the perfect model for expressing backpressure implicitly. By using async, she can keep most of her code without explicitly propagating backpressure information.</p>
+<p>When she sets off to implement this, Barbara quickly realizes async won't work off the shelf because of the lack of support for <code>async fn</code> in traits.</p>
+<p>Barbara is stuck. She has a large codebase that she would like to convert to using async, but core features of the language she was using are not available with async. She starts looking for workarounds.</p>
+<p>Barbara begins by writing out requirements for her use case. She needs to</p>
+<ul>
+<li>Continue using trait abstractions for core protocol implementations</li>
+<li>Take advantage of the backpressure model implied by async</li>
+<li>Maintain performance target of at most 4 µs per packet on underpowered hardware</li>
+</ul>
+<p>The last requirement is important for sustaining gigabit speeds, a key goal of the network stack and one reason why Rust was chosen.</p>
+<p>Barbara thinks about writing down the name of each Future type, but realizes that this wouldn't work with the <code>async</code> keyword. Using Future combinators directly would be extremely verbose and painful.</p>
+<p>Barbara finds the <code>async_trait</code> crate. Given her performance constraints, she is wary of the allocations and dynamic dispatch introduced by the crate.</p>
+<p>She decides to write a benchmark to simulate the performance impact of <code>async_trait</code> compared to a future where <code>async fn</code> is fully supported in traits. Looking at the <code>async_trait</code> documentation, she sees that it desugars code like</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[async_trait]
+impl Trait for Foo {
+    async fn run(&amp;self) {
+        // ...
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>to</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Trait for Foo {
+    fn run&lt;'a&gt;(
+        &amp;'a self,
+    ) -&gt; Pin&lt;Box&lt;dyn std::future::Future&lt;Output = ()&gt; + Send + 'a&gt;&gt;
+    where
+        Self: Sync + 'a,
+    {
+        async fn run(_self: &amp;Foo) {
+            // original body
+        }
+        Box::pin(run(self))
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The benchmark Barbara uses constructs a tree of Futures 5 levels deep, using both <code>async</code> blocks and a manual desugaring similar to above. She runs the benchmark on hardware that is representative for her use case and finds that while executing a single native async future takes 639 ns, the manual desugaring using <code>boxed</code> takes 1.82 µs.</p>
+<p>Barbara sees that in a real codebase, this performance would not be good enough for writing a network stack capable of sustaining gigabit-level throughput on underpowered hardware. Barbara is disappointed, but knows that support for <code>async fn</code> in traits is in the works.</p>
+<p>Barbara looks at her organization's current priorities and decides that 100's of mbps will be an acceptable level of performance for the near term. She decides to adopt <code>async_trait</code> with the expectation that the performance penalty will go away in the long term.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<p><em>Here are some standard FAQ to get you started. Feel free to add more!</em></p>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<p><em>Talk about the major takeaways-- what do you see as the biggest problems.</em></p>
+<ul>
+<li>Language features that don't work well together can be a major roadblock in the course of development. Developers expect all of a language's features to be at their disposal, not using one to cut them off from using another.</li>
+<li>Allocation and dynamic dispatch aren't acceptable runtime performance costs for all use cases.</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<p><em>Talk about what the story is based on, ideally with links to blog posts, tweets, or other evidence.</em></p>
+<p>This story is based on actual experience implementing the 3rd-generation network stack for the Fuchsia operating system.</p>
+<p>The benchmarks are <a href="https://fxrev.dev/528302">implemented here</a>.</p>
+<h3 id="why-do-you-need-to-model-backpressure"><a class="header" href="#why-do-you-need-to-model-backpressure"><strong>Why do you need to model backpressure?</strong></a></h3>
+<p>The Linux network stack doesn't do this; instead it drops packets as hardware buffers fill up.</p>
+<p>Because our network stack lives in a separate process from the driver, paying attention to hardware queue depth directly is not an option. There is a communication channel of bounded depth between the network stack and the driver. Dropping packets when this channel fills up would result in an unacceptable level of packet loss. Instead, the network stack must "push" this backpressure up to the applications using the network. This means each layer of the system has to be aware of backpressure.</p>
+<h3 id="how-would-you-solve-this-in-other-systems-languages"><a class="header" href="#how-would-you-solve-this-in-other-systems-languages"><strong>How would you solve this in other systems languages?</strong></a></h3>
+<p>In C++ we would probably model this using callbacks which are passed all the way down the stack (through each leayer of the system).</p>
+<h3 id="whats-nice-about-async-when-modelling-backpressure"><a class="header" href="#whats-nice-about-async-when-modelling-backpressure"><strong>What's nice about async when modelling backpressure?</strong></a></h3>
+<p>Futures present a uniform mechanism for communicating backpressure through polling. When requests stack up but their handler futures are not being polled, this indicates backpressure. Using this model means we get backpressure "for free" by simply adding <code>async</code> and <code>.await</code> to our code, at least in theory.</p>
+<p>Async is a viral concern in a codebase, but so is backpressure. You can't have a backpressure aware system when one layer of that system isn't made aware of backpressure in some way. So in this case it's actually <em>helpful</em> that there's not an easy way to call an async fn from a sync fn; if there were, we might accidentally "break the chain" of backpressure awareness.</p>
+<h3 id="what-was-the-benchmarking-methodology"><a class="header" href="#what-was-the-benchmarking-methodology"><strong>What was the benchmarking methodology?</strong></a></h3>
+<p>A macro was used to generate 512 slightly different versions of the same code, to defeat the branch predictor. Each version varied slightly to prevent LLVM from merging duplicate code.</p>
+<p>The leaf futures in the benchmark always returned <code>Poll::Ready</code>. The call depth was always 5 async functions deep.</p>
+<h3 id="did-you-learn-anything-else-from-the-benchmarks"><a class="header" href="#did-you-learn-anything-else-from-the-benchmarks"><strong>Did you learn anything else from the benchmarks?</strong></a></h3>
+<p>In one of the benchmarks we compared the <code>async fn</code> version to the equivalent synchronous code. This helps us see the impact of the state machine transformation on performance.</p>
+<p>The results: synchronous code took 311.39 ns while the <code>async fn</code> code took 433.40 ns.</p>
+<h3 id="why-did-you-choose-barbara-to-tell-this-story"><a class="header" href="#why-did-you-choose-barbara-to-tell-this-story"><strong>Why did you choose Barbara to tell this story?</strong></a></h3>
+<p><em>Talk about the character you used for the story and why.</em></p>
+<p>The implementation work in this story was done by <a href="https://github.com/joshlf">@joshlf</a>, an experienced Rust developer who was new to async.</p>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<p><em>In some cases, there are problems that only occur for people from specific backgrounds, or which play out differently. This question can be used to highlight that.</em></p>
+<p>Alan might not have done the benchmarking up front, leading to a surprise later on when the performance wasn't up to par with Rust's promise. Grace might have decided to implement async state machines manually, giving up on the expressiveness of async.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_battles_buffered_streams.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_bridges_sync_and_async.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_battles_buffered_streams.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_bridges_sync_and_async.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alan tries to debug a hang - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/alan_tries_to_debug_a_hang.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-alan-tries-to-debug-a-hang"><a class="header" href="#-status-quo-stories-alan-tries-to-debug-a-hang">😱 Status quo stories: Alan tries to debug a hang</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>Alan's startup has officially launched and YouBuy is live for the world to use.
+The whole team is very excited especially as this will be their first use of Rust in production!
+Normally, as a .NET shop, they would have written the entire application in C#, but because of the scalability and latency requirements on their inventory service, they decided to write a microservice in Rust utilizing the <code>async</code> features they've heard so much about.</p>
+<p>The day's excitement soon turns into concern as reports begin coming into support of customers who can't checkout.
+After a few cases, a pattern begins to emerge: when a customer tries to buy the last available item, the checkout process hangs forever.</p>
+<p>Alan suspects there is an issue with the lock used in the inventory service to prevent multiple people from buying the last available item at the same time.
+With this hunch, he builds the latest code and opens this local dev environment to conduct some tests.
+Soon enough, Alan has a repro of the bug.</p>
+<p>With the broken environment still running, he decides to use a debugger to see if he can confirm his theory.
+In the past, Alan has used Visual Studio's debugger to <a href="https://devblogs.microsoft.com/visualstudio/how-do-i-debug-async-code-in-visual-studio/#is-there-a-way-to-better-visualize-tasks-and-async-code-flow">diagnose a very similar issue in a C# application he wrote</a>.
+The debugger was able to show him all the async Tasks currently waiting, their call stacks and what resource they were waiting on.</p>
+<p>Alan hasn't used a debugger with Rust before, usually a combination of the strict compiler and a bit of manual testing has been enough to fix all the bugs he's previously encountered.
+He does a quick Google search to see what debugger he should use and decides to go with <code>gdb</code> because it is already installed on his system and sounds like it should work.
+Alan also pulls up a blog post that has a helpful cheatsheet of <code>gdb</code> commands since he's not familiar with the debugger.</p>
+<p>Alan restarts the inventory service under <code>gdb</code> and gets to work reproducing the issue.
+He reproduces the issue a few times in the hope of making it easier to identify the cause of the problem.
+Ready to pinpoint the issue, Alan presses <code>Ctrl+C</code> and then types <code>bt</code> to get a backtrace:</p>
+<details><summary>(gdb) bt</summary>
+<pre><code class="language-ignore">(gdb) bt
+#0  0x00007ffff7d5e58a in epoll_wait (epfd=3, events=0x555555711340, maxevents=1024, timeout=49152)
+    at ../sysdeps/unix/sysv/linux/epoll_wait.c:30
+#1  0x000055555564cf7d in mio::sys::unix::selector::epoll::Selector::select (self=0x7fffffffd008, events=0x7fffffffba40, 
+    timeout=...) at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.7.11/src/sys/unix/selector/epoll.rs:68
+#2  0x000055555564a82f in mio::poll::Poll::poll (self=0x7fffffffd008, events=0x7fffffffba40, timeout=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.7.11/src/poll.rs:314
+#3  0x000055555559ad96 in tokio::io::driver::Driver::turn (self=0x7fffffffce28, max_wait=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/io/driver/mod.rs:162
+#4  0x000055555559b8da in &lt;tokio::io::driver::Driver as tokio::park::Park&gt;::park_timeout (self=0x7fffffffce28, duration=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/io/driver/mod.rs:238
+#5  0x00005555555e9909 in &lt;tokio::signal::unix::driver::Driver as tokio::park::Park&gt;::park_timeout (self=0x7fffffffce28, 
+    duration=...) at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/signal/unix/driver.rs:156
+#6  0x00005555555a9229 in &lt;tokio::process::imp::driver::Driver as tokio::park::Park&gt;::park_timeout (self=0x7fffffffce28, 
+    duration=...) at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/process/unix/driver.rs:84
+#7  0x00005555555a898d in &lt;tokio::park::either::Either&lt;A,B&gt; as tokio::park::Park&gt;::park_timeout (self=0x7fffffffce20, 
+    duration=...) at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/park/either.rs:37
+#8  0x00005555555ce0b8 in tokio::time::driver::Driver&lt;P&gt;::park_internal (self=0x7fffffffcdf8, limit=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/time/driver/mod.rs:226
+#9  0x00005555555cee60 in &lt;tokio::time::driver::Driver&lt;P&gt; as tokio::park::Park&gt;::park (self=0x7fffffffcdf8)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/time/driver/mod.rs:398
+#10 0x00005555555a87bb in &lt;tokio::park::either::Either&lt;A,B&gt; as tokio::park::Park&gt;::park (self=0x7fffffffcdf0)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/park/either.rs:30
+#11 0x000055555559ce47 in &lt;tokio::runtime::driver::Driver as tokio::park::Park&gt;::park (self=0x7fffffffcdf0)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/driver.rs:198
+#12 0x000055555557a2f7 in tokio::runtime::basic_scheduler::Inner&lt;P&gt;::block_on::{{closure}} (scheduler=0x7fffffffcdb8, 
+    context=0x7fffffffcaf0)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:224
+#13 0x000055555557b1b4 in tokio::runtime::basic_scheduler::enter::{{closure}} ()
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:279
+#14 0x000055555558174a in tokio::macros::scoped_tls::ScopedKey&lt;T&gt;::set (
+    self=0x555555701af8 &lt;tokio::runtime::basic_scheduler::CURRENT&gt;, t=0x7fffffffcaf0, f=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/macros/scoped_tls.rs:61
+#15 0x000055555557b0b6 in tokio::runtime::basic_scheduler::enter (scheduler=0x7fffffffcdb8, f=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:279
+#16 0x0000555555579d3b in tokio::runtime::basic_scheduler::Inner&lt;P&gt;::block_on (self=0x7fffffffcdb8, future=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:185
+#17 0x000055555557a755 in tokio::runtime::basic_scheduler::InnerGuard&lt;P&gt;::block_on (self=0x7fffffffcdb8, future=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:425
+#18 0x000055555557aa9c in tokio::runtime::basic_scheduler::BasicScheduler&lt;P&gt;::block_on (self=0x7fffffffd300, future=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/basic_scheduler.rs:145
+#19 0x0000555555582094 in tokio::runtime::Runtime::block_on (self=0x7fffffffd2f8, future=...)
+    at /home/alan/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-1.4.0/src/runtime/mod.rs:450
+#20 0x000055555557c22f in inventory_service::main () at /home/alan/code/inventory_service/src/main.rs:4
+</code></pre>
+</details>
+<p>Puzzled, the only line Alan even recognizes is the <code>main</code> entry point function for the service.
+He knows that async tasks in Rust aren't run individually on their own threads which allows them to scale better and use fewer resources but surely there has to be a thread somewhere that's running his code?
+Alan doesn't completely understand how async works in Rust but he's seen the <code>Future::poll</code> method so he assumes that there is a thread which constantly polls tasks to see if they are ready to wake up.
+"Maybe I can find that thread and inspect its state?" he thinks and then consults the cheatsheet for the appropriate command to see the threads in the program.
+<code>info threads</code> seems promising so he tries that:</p>
+<details><summary>(gdb) info threads</summary>
+<pre><code class="language-ignore">(gdb) info threads
+  Id   Target Id                                          Frame 
+* 1    Thread 0x7ffff7c3b5c0 (LWP 1048) "inventory_servi" 0x00007ffff7d5e58a in epoll_wait (epfd=3, events=0x555555711340, 
+    maxevents=1024, timeout=49152) at ../sysdeps/unix/sysv/linux/epoll_wait.c:30
+</code></pre>
+</details>
+<p>Alan is now even more confused: "Where are my tasks?" he thinks.
+After looking through the cheatsheet and StackOverflow, he discovers there isn't a way to see which async tasks are waiting to be woken up in the debugger.
+Taking a shot in the dark, Alan concludes that this thread must be thread which is polling his tasks since it is the only one in the program.
+He googles "epoll_wait rust async tasks" but the results aren't very helpful and inspecting the stack frame doesn't yield him any clues as to where his tasks are so this seems to be a dead end.</p>
+<p>After thinking a bit, Alan realizes that since the runtime must know what tasks are waiting to be woken up, perhaps he can have the service ask the async runtime for that list of tasks every 10 seconds and print them to stdout?
+While crude, this would probably also help him diagnose the hang.
+Alan gets to work and opens the runtime docs to figure out how to get that list of tasks.
+After spending 30 minutes reading the docs, looking at StackOverflow questions and even posting on users.rust-lang.org, he discovers this simply isn't possible and he will have to add tracing to his application to figure out what's going on.</p>
+<p>Disgruntled, Alan begins the arduous, boring task of instrumenting the application in the hope that the logs will be able to help him.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<ul>
+<li>Developers, especially coming from an language that has a tightly integrated development environment, expect their debugger to help them particularly in situations where "println" debugging can't.</li>
+<li>If the debugger can't help them, developers will often try to reach for a programmatic solution such as debug functions in their runtime that can be invoked at critical code paths.</li>
+<li>Trying to debug an issue by adding logging and then triggering the issue is painful because of the long turn-around times when modifying code, compiling and then repro'ing the issue.</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<ul>
+<li>@erickt's comments in #76, similar comments I've heard from other developers.</li>
+</ul>
+<h2 id="why-did-you-choose-alan-to-tell-this-story"><a class="header" href="#why-did-you-choose-alan-to-tell-this-story"><strong>Why did you choose Alan to tell this story?</strong></a></h2>
+<ul>
+<li>Coming from a background in managed languages where the IDE, debugger and runtime are tightly integrated, Alan would be used to using those tools to diagnose his issue.</li>
+<li>Alan has also been a bit insulated from the underlying OS and expects the debugger to understand the language and runtime even if the OS doesn't have similar concepts such as async tasks.</li>
+</ul>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<ul>
+<li>Some of the characters with either a background in Rust or a background in systems programming might know that Rust's async doesn't always map to an underlying system feature and so they might expect that <code>gdb</code> or <code>lldb</code> is unable to help them.</li>
+<li>Barbara, the experienced Rust dev, might also have used a tracing/instrumentation library from the beginning and have that to fall back on rather than having to do the work to add it now.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_tries_a_socket_sink.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_builds_a_cache.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_tries_a_socket_sink.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_builds_a_cache.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

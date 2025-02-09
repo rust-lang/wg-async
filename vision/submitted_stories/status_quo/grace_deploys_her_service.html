@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Grace deploys her service and hits obstacles - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/grace_deploys_her_service.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-grace-deploys-her-service-and-hits-obstacles"><a class="header" href="#-status-quo-stories-grace-deploys-her-service-and-hits-obstacles">😱 Status quo stories: Grace deploys her service and hits obstacles</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>When examining her service metrics, <a href="../../characters/grace.html">Grace</a> notices tail latencies in the P99 that exceed their target. She identifies GC in the routing layer as the culprit. Grace follows industry trends and is already aware of Rust and its ecosystem at a high level. She decides to investigate rewriting the routing service in Rust.</p>
+<p>To meet throughput requirements, Grace has already decided to use a thread-per-core model and minimize cross-thread communication. She explores available ecosystem options and finds no option that gets her exactly what she is looking for out of the box. However, she can use Tokio with minimal configuration to achieve her architecture.</p>
+<p>A few months of frantic hacking follow.</p>
+<p><img src="https://media.giphy.com/media/ule4vhcY1xEKQ/giphy.gif" alt="montage of cats typing" width=200></img></p>
+<p>Soon enough, she and her team have a proof of concept working. They run some local stress tests and notice that 5% of requests hang and fail to respond. The client eventually times out. She cannot reproduce this problem when running one-off requests locally. It only shows up when sending above 200 requests-per-second.</p>
+<p>She realizes that she doesn't have any tooling to give her insight into what's going on. She starts to add lots of logging, attempting to tie log entries to specific connections. Using an operating system tool, she can identify the socket addresses for the hung connections, so she also includes the socket addresses in each log message. She then filters the logs to find entries associated with hung connections. Of course, the logs only tell her what the connection managed to do successfully; they don't tell her why it stopped -- so she keeps going back to add more logging until she can narrow down the exact call that hangs.</p>
+<p>Eventually, she identifies that the last log message is right before authenticating the request. An existing C library performs authentication, integrated with the routing service using a custom future implementation. She eventually finds a bug in the implementation that resulted in occasional lost wake-ups.</p>
+<p>She fixes the bug. The service is now working as expected and meeting Grace's performance goals.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<ul>
+<li>When coming from a background of network engineering, users will bring their own design choices around architecture.
+<ul>
+<li>Examples: <a href="http://seastar.io/">seastar</a> and <a href="https://www.datadoghq.com/blog/engineering/introducing-glommio/">Glommio</a></li>
+</ul>
+</li>
+<li>There is a lack of debugging tools for async.</li>
+<li>Writing futures by hand is error prone.</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<p>This is based on the experiences of helping a tokio user to diagnose a bug in their code.</p>
+<h3 id="why-did-you-choose-grace-to-tell-this-story"><a class="header" href="#why-did-you-choose-grace-to-tell-this-story"><strong>Why did you choose Grace to tell this story?</strong></a></h3>
+<ul>
+<li>The actual user who experienced this problem fit the profile of Grace.</li>
+<li>The story is focused on the experience of people aiming to use workflows they are familiar with from C in a Rust setting.</li>
+</ul>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<p>Alan or Niklaus may well have had a much harder time diagnosing the problem due to not having as much of a background in systems programming. For example, they may not have known about the system tool that allowed them to find the list of dangling connections.</p>
+<h3 id="could-grace-have-used-another-runtime-to-achieve-the-same-objectives"><a class="header" href="#could-grace-have-used-another-runtime-to-achieve-the-same-objectives"><strong>Could Grace have used another runtime to achieve the same objectives?</strong></a></h3>
+<ul>
+<li>Maybe! But in this instance the people this story is based on were using tokio, so that's the one we wrote into the story.</li>
+<li>(If folks want to expand this answer with details of how to achieve similar goals on other runtimes that would be welcome!)</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/grace_debugs_a_crash_dump.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/grace_tries_new_libraries.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/grace_debugs_a_crash_dump.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/grace_tries_new_libraries.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

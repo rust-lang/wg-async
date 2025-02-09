@@ -1,0 +1,856 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alan builds a task scheduler - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/alan_builds_a_task_scheduler.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-alan-builds-a-task-scheduler"><a class="header" href="#-status-quo-stories-alan-builds-a-task-scheduler">😱 Status quo stories: Alan builds a task scheduler</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>A core component of <a href="../../projects/DistriData.html"><code>DistriData</code></a>, called <code>TaskScheduler</code>, is in charge of (1) receiving client requests via an HTTP server, (2) serializing them in a task queue, (3) relaying each task to the state machine applier (e.g., apply change to the storage backend), and (4) returning the result back to the client.</p>
+<p><code>TaskScheduler</code> was originally implemented in Go. New to Rust, <a href="../../characters/alan.html">Alan</a> believes Rust could provide the same quality of service but with less memory. Then decides to reimplement <code>TaskScheduler</code> in Rust, without knowing the challenges ahead.</p>
+<p>Alan only read the first few chapters of <a href="https://doc.rust-lang.org/nightly/book/title-page.html">Rust book</a> to understand the core concepts like ownership model and syntax. Already proficient in Go, Alan jumped into the coding by working through a hands-on project. Alan often referred to the examples found in each Rust crate but may lack deep understanding of how Rust works. Alan first focused on translating the Go code to Rust and as a result, the first iteration may be filled with non-idiomatic Rust code.</p>
+<h3 id="implementing-request-id-generator"><a class="header" href="#implementing-request-id-generator"><strong>Implementing request ID generator</strong></a></h3>
+<p>Alan first transliterates request ID generator code, originally written in Go:</p>
+<pre><code class="language-go">import "sync/atomic"
+
+type Generator interface {
+	next() uint64
+}
+
+type generator struct {
+	prefix uint64
+	suffix uint64
+}
+
+func (gen *generator) next() uint64 {
+	suffix := atomic.SwapUint64(&amp;gen.suffix, gen.suffix+1)
+	id := gen.prefix | (suffix &amp; (math.MaxUint64 &gt;&gt; 16))
+	return id
+}
+</code></pre>
+<p>Alan learns Rust trait as the closest concept to Go interface but is now torn between <a href="https://doc.rust-lang.org/std/sync/atomic">std::sync::atomic</a> and <a href="https://docs.rs/crossbeam">crossbeam::atomic::AtomicCell</a>. Reading multiple articles about how great crossbeam is and for its thread-safety promises, Alan chooses crossbeam (see <a href="https://www.reddit.com/r/rust/comments/hat5bt/what_are_your_favorite_better_than_std_crates/">"crates better than std (from Reddit)"</a>):</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use crossbeam::atomic::AtomicCell;
+
+pub struct Generator {
+    prefix: u64,
+    suffix: AtomicCell&lt;u64&gt;,
+}
+
+impl Generator {
+    pub fn new(...) -&gt; Self {
+        ...
+    }
+
+    pub fn next(&amp;self) -&gt; u64 {
+        let suffix = self.suffix.fetch_add(1);
+        let id = self.prefix | (suffix &amp; (u64::MAX &gt;&gt; 16));
+        id
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Accustomed to an opinionated way of doing concurrency in Go, Alan loses confidence in Rust async support, as he sees fragmented but specialized solutions in Rust async ecosystem.</p>
+<h3 id="implementing-event-notifier"><a class="header" href="#implementing-event-notifier"><strong>Implementing event notifier</strong></a></h3>
+<p>Alan then implements the notifier to propagate the request and apply the progress with the scheduler and low-level state machine. In Go, it can be simply implemented as below:</p>
+<pre><code class="language-go">type Notifier interface {
+	register(id uint64) (&lt;-chan string, error)
+	trigger(id uint64, x string) error
+}
+
+type notifier struct {
+	mu       sync.RWMutex
+	requests map[uint64]chan string
+}
+
+func (ntf *notifier) register(id uint64) (&lt;-chan string, error) {
+	ntf.mu.Lock()
+	defer ntf.mu.Unlock()
+	ch := ntf.requests[id]
+	if ch != nil {
+		return nil, fmt.Errorf("dup id %x", id)
+	}
+
+	ch = make(chan string, 1)
+	ntf.requests[id] = ch
+	return ch, nil
+}
+
+func (ntf *notifier) trigger(id uint64, x string) error {
+	ntf.mu.Lock()
+	ch, ok := ntf.requests[id]
+	if ch == nil || !ok {
+		ntf.mu.Unlock()
+		return fmt.Errorf("request ID %d not found", id)
+	}
+	delete(ntf.requests, id)
+	ntf.mu.Unlock()
+	ch &lt;- x
+	close(ch)
+	return nil
+}
+</code></pre>
+<p>Alan now needs the equivalent to Go <code>sync.RWMutex</code>, and found multiple options:</p>
+<ul>
+<li><a href="https://doc.rust-lang.org/std/sync/struct.RwLock.html"><code>std::sync::RwLock</code></a></li>
+<li><a href="https://docs.rs/parking_lot"><code>parking_lot::RwLock</code></a></li>
+</ul>
+<p>Already losing confidence in Rust std, Alan instead chooses <code>parking_lot</code>, as it claims up to 5x faster performance than <code>std::sync::Mutex</code> (see <a href="https://github.com/Amanieu/parking_lot#parking_lot">github</a>). After numeruous hours of trials and errors, Alan discovered that <code>parking_lot::RwLock</code> is not intended for async/future environments (see <a href="https://github.com/Amanieu/parking_lot/issues/86">github issue</a>). Having to think about which library to use for thread and async programming, Alan appreciates the simplicity of Go concurrency where threads are effectively abstracted away from its users. Alan is now using <a href="https://docs.rs/async-std/1.9.0/async_std/sync/struct.RwLock.html"><code>async_std::sync::RwLock</code></a> which seems nicely integrated with Rust async programming.</p>
+<p>To send and receive events, Alan needs the equivalent of Go channel but is not sure about <a href="https://doc.rust-lang.org/std/sync/mpsc/fn.channel.html"><code>std::sync::mpsc::channel</code></a>, as he sees two other options: <a href="https://github.com/zesterer/flume">Flume</a> which claims to be much faster than std (see <a href="https://www.reddit.com/r/rust/comments/fj17z6/flume_a_100_safe_mpsc_thats_faster_than_std_and/">"Flume, a 100% safe MPSC that's faster than std (from Reddit)"</a>), and <a href="https://docs.rs/crossbeam-channel/0.5.1/crossbeam_channel/"><code>crossbeam_channel</code></a>. Having used crossbeam, Alan chose crossbeam channel:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use async_std::sync::RwLock;
+use crossbeam_channel::{self, unbounded};
+
+pub struct Notifier {
+    requests: RwLock&lt;HashMap&lt;u64, crossbeam_channel::Sender&lt;String&gt;&gt;&gt;,
+}
+
+impl Notifier {
+    pub fn new() -&gt; Self {
+        Self {
+            requests: RwLock::new(HashMap::new()),
+        }
+    }
+
+    pub fn register(&amp;self, id: u64) -&gt; io::Result&lt;crossbeam_channel::Receiver&lt;String&gt;&gt; {
+        let mut _mu;
+        match self.requests.try_write() {
+            Some(guard) =&gt; _mu = guard,
+            None =&gt; return Err(...),
+        }
+
+        let (request_tx, request_rx) = unbounded();
+        if _mu.get(&amp;id).is_none() {
+            _mu.insert(id, request_tx);
+        } else {
+            return Err(...)
+        }
+
+        Ok(request_rx)
+    }
+
+    pub fn trigger(&amp;self, id: u64, x: String) -&gt; io::Result&lt;()&gt; {
+        let mut _mu;
+        match self.requests.try_write() {
+            Some(guard) =&gt; _mu = guard,
+            None =&gt; return Err(...),
+        }
+
+        let request_tx;
+        match _mu.get(&amp;id) {
+            Some(ch) =&gt; request_tx = ch,
+            None =&gt; return Err(...),
+        }
+
+        match request_tx.send(x) {
+            Ok(_) =&gt; _mu.remove(&amp;id),
+            Err(e) =&gt; return Err(...),
+        }
+
+        Ok(())
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Alan is still not sure if <code>crossbeam_channel</code> is safe for async programming and whether he should instead use another crate <a href="https://docs.rs/async-std/1.9.0/async_std/channel/index.html"><code>async_std::channel</code></a>. While <code>crossbeam_channel</code> seems to work, Alan is not confident about his choice. Disgruntled with seemingly unnecessary divergence in the community, Alan wonders why all those cool improvements had not been made back to Rust core std libraries.</p>
+<h3 id="implementing-task-applier"><a class="header" href="#implementing-task-applier"><strong>Implementing task applier</strong></a></h3>
+<p>Alan implements a task applier, which simply echoes the requested message, as in Go:</p>
+<pre><code class="language-go">type EchoManager interface {
+	apply(req *EchoRequest) (string, error)
+}
+
+type echoManager struct {
+	mu sync.RWMutex
+}
+
+func (ea *echoManager) apply(req *EchoRequest) (string, error) {
+	ea.mu.Lock()
+	defer ea.mu.Unlock()
+	switch req.Kind {
+	case "create":
+		return fmt.Sprintf("SUCCESS create %q", req.Message), nil
+	case "delete":
+		return fmt.Sprintf("SUCCESS delete %q", req.Message), nil
+	default:
+		return "", fmt.Errorf("unknown request %q", req)
+	}
+}
+</code></pre>
+<p>Having implemented event notifier above, Alan is now somewhat familiar with Rust mutex and writes the following Rust code:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 1st version
+use async_std::sync::RwLock;
+
+pub struct Manager {
+    mu: RwLock&lt;()&gt;,
+}
+
+impl Manager {
+    pub fn new() -&gt; Self {
+        Self {
+            mu: RwLock::new(()),
+        }
+    }
+
+    pub fn apply(&amp;self, req: &amp;Request) -&gt; io::Result&lt;String&gt; {
+        let _mu;
+        match self.mu.try_write() {
+            Some(guard) =&gt; _mu = guard,
+            None =&gt; return Err(...),
+        }
+        match req.kind.as_str() {
+            "create" =&gt; Ok(format!(
+                "SUCCESS create {}",
+                to_string(req.message.to_owned())
+            )),
+            "delete" =&gt; Ok(format!(
+                "SUCCESS delete {}",
+                to_string(req.message.to_owned())
+            )),
+            _ =&gt; Err(...),
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The code compiles and thus must be safe. However, after reviewing the code with <a href="../../characters/barbara.html">Barbara</a>, Alan learns that while <code>std::sync::Mutex</code> protects data from concurrent access, <code>std::sync::Mutex</code> itselt must be also protected between threads. And the code will not compile if he tries to use it from multiple threads. This is where <a href="https://doc.rust-lang.org/std/sync/struct.Arc.html"><code>std::sync::Arc</code></a> comes in to provide safe multi-threaded access to the <code>Mutex</code>.</p>
+<p><a href="https://doc.rust-lang.org/std/sync/struct.Mutex.html"><code>std::sync::Mutex</code></a> documentation explains <code>Arc</code> in depth. If Alan had chosen <code>std::sync::Mutex</code> library, he would have known about <code>Arc</code>. Because Alan was initially given multiple alternatives for mutex, he overlooked the documentation in <code>std::sync::Mutex</code> and instead used <a href="https://docs.rs/async-std/1.9.0/async_std/sync/struct.RwLock.html"><code>async_std::sync::RwLock</code></a> whose documentation did not explain <code>Arc</code>. As a result, Alan did not know how to properly use mutex in Rust.</p>
+<p>Deeply confused, Alan made a quick fix to wrap <code>Mutex</code> with <code>Arc</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 2nd version
+use async_std::{sync::Arc, sync::RwLock};
+
+pub struct Manager {
+    mu: Arc&lt;RwLock&lt;()&gt;&gt;,
+}
+
+impl Manager {
+    pub fn new() -&gt; Self {
+        Self {
+            mu: Arc::new(RwLock::new(())),
+        }
+    }
+    ...
+<span class="boring">}</span></code></pre></pre>
+<p>This raises multiple questions for Alan:</p>
+<ol>
+<li>If <code>Mutex</code> itself had to be protected, why <code>Arc</code> is not unified into a single type? Is the flexibility of having different types really worth the less safety guarantee?</li>
+<li>Rust claims unparalleled safety. Is it still true for async programming? Rust compiler not complaining about the missing <code>Arc</code> means <code>Mutex</code> is still safe without <code>Arc</code>?</li>
+<li>What happens if the code went into production without <code>Arc</code>? Would the code have race conditions?</li>
+<li>Does having <code>Arc</code> make code slower? Did I just introduce extra runtime cost?</li>
+<li>Which one is safe for async programming: <code>std::sync::Arc</code> and <code>async_std::sync::Arc</code>?</li>
+</ol>
+<h3 id="implementing-task-scheduler"><a class="header" href="#implementing-task-scheduler"><strong>Implementing task scheduler</strong></a></h3>
+<p>Alan then implements the task scheduler that calls event notifier and task applier above, as in Go:</p>
+<pre><code class="language-go">type Request struct {
+	echoRequest *EchoRequest
+}
+
+type Applier interface {
+	start()
+	stop() error
+	apply(req Request) (string, error)
+}
+
+type applier struct {
+	requestTimeout time.Duration
+
+	requestIDGenerator Generator
+	notifier           Notifier
+
+	requestCh chan requestTuple
+
+	stopCh chan struct{}
+	doneCh chan struct{}
+
+	echoManager EchoManager
+}
+
+type requestTuple struct {
+	requestID uint64
+	request   Request
+}
+
+func (ap *applier) start() {
+	go func() {
+		for {
+			select {
+			case tup := &lt;-ap.requestCh:
+				reqID := tup.requestID
+				req := tup.request
+				switch {
+				case req.echoRequest != nil:
+					rs, err := ap.echoManager.apply(req.echoRequest)
+					if err != nil {
+						rs = fmt.Sprintf("failed to apply %v", err)
+					}
+					if err = ap.notifier.trigger(reqID, rs); err != nil {
+						fmt.Printf("failed to trigger %v", err)
+					}
+				default:
+				}
+			case &lt;-ap.stopCh:
+				ap.doneCh &lt;- struct{}{}
+				return
+			}
+		}
+	}()
+}
+
+func (ap *applier) stop() error {
+	select {
+	case ap.stopCh &lt;- struct{}{}:
+	case &lt;-time.After(5 * time.Second):
+		return errors.New("took too long to signal stop")
+	}
+	select {
+	case &lt;-ap.doneCh:
+	case &lt;-time.After(5 * time.Second):
+		return errors.New("took too long to receive done")
+	}
+	return nil
+}
+
+func (ap *applier) apply(req Request) (string, error) {
+	reqID := ap.requestIDGenerator.next()
+	respRx, err := ap.notifier.register(reqID)
+	if err != nil {
+		return "", err
+	}
+
+	select {
+	case ap.requestCh &lt;- requestTuple{requestID: reqID, request: req}:
+	case &lt;-time.After(ap.requestTimeout):
+		if err = ap.notifier.trigger(reqID, fmt.Sprintf("failed to schedule %d in time", reqID)); err != nil {
+			return "", err
+		}
+	}
+
+	msg := ""
+	select {
+	case msg = &lt;-respRx:
+	case &lt;-time.After(ap.requestTimeout):
+		return "", errors.New("apply timeout")
+	}
+
+	return msg, nil
+}
+</code></pre>
+<p>Not fully grokking Rust ownership model in async, Alan implements the following code, but faced with a bunch of compiler error messages:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use async_std::task;
+
+pub struct Applier {
+    notifier: notify::Notifier,
+    ...
+}
+
+impl Applier {
+    pub fn new(req_timeout: Duration) -&gt; Self {
+        ...
+        Self {
+            ...
+            notifier: notify::Notifier::new(),
+            ...
+        }
+    }
+    ...
+
+    pub async fn start(&amp;self) -&gt; io::Result&lt;()&gt; {
+        task::spawn(apply_async(
+            self.notifier,
+            ...
+        ));
+        ...
+        Ok(())
+    }
+    ...
+
+
+pub async fn apply_async(
+    notifier: notify::Notifier,
+    ...
+) -&gt; io::Result&lt;()&gt; {
+  ...
+<span class="boring">}</span></code></pre></pre>
+<pre><code>error[E0507]: cannot move out of `self.notifier` which is behind a shared reference
+  --&gt; src/apply.rs:72:13
+   |
+72 |             self.notifier,
+   |             ^^^^^^^^^^^^^ move occurs because `self.notifier` has type `Notifier`, which does not implement the `Copy` trait
+</code></pre>
+<p>After discussing with <a href="../../characters/barbara.html">Barbara</a>, Alan adds <code>Arc</code> to provide a shared ownership between async tasks:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use async_std::{sync::Arc, task};
+
+pub struct Applier {
+    notifier: Arc&lt;notify::Notifier&gt;,
+    ...
+}
+
+impl Applier {
+    pub fn new(req_timeout: Duration) -&gt; Self {
+        ...
+        Self {
+            ...
+            notifier: Arc::new(notify::Notifier::new()),
+            ...
+        }
+    }
+    ...
+
+    pub async fn start(&amp;self) -&gt; io::Result&lt;()&gt; {
+        task::spawn(apply_async(
+            self.notifier.clone(),
+            ...
+        ));
+        ...
+        Ok(())
+    }
+    ...
+
+
+pub async fn apply_async(
+    notifier: Arc&lt;notify::Notifier&gt;,
+    ...
+) -&gt; io::Result&lt;()&gt; {
+  ...
+<span class="boring">}</span></code></pre></pre>
+<p>Alan is satisfied with the compilation success for the moment, but doesn't feel confident about the production readiness of Rust async.</p>
+<h3 id="implementing-http-server-handler"><a class="header" href="#implementing-http-server-handler">Implementing HTTP server handler</a></h3>
+<p>Familiar with Go standard libraries, Alan implemented the following request handler without any third-party dependencies:</p>
+<pre><code class="language-go">import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+type Handler interface {
+	start()
+}
+
+type handler struct {
+	listenerPort uint64
+	applier      Applier
+}
+
+func (hd *handler) start() {
+	hd.applier.start()
+
+	serverMux := http.NewServeMux()
+	serverMux.HandleFunc("/echo", hd.wrapFunc(handleRequest))
+
+	httpServer := &amp;http.Server{
+		Addr:    fmt.Sprintf(":%d", hd.listenerPort),
+		Handler: serverMux,
+	}
+
+	tch := make(chan os.Signal, 1)
+	signal.Notify(tch, syscall.SIGINT)
+	done := make(chan struct{})
+	go func() {
+		httpServer.Close()
+		close(done)
+	}()
+
+	if err := httpServer.ListenAndServe(); err != nil {
+		fmt.Printf("http server error: %v\n", err)
+	}
+	select {
+	case &lt;-done:
+	default:
+	}
+
+	if err := hd.applier.stop(); err != nil {
+		panic(err)
+	}
+}
+
+func (hd *handler) wrapFunc(fn func(applier Applier, w http.ResponseWriter, req *http.Request)) func(w http.ResponseWriter, req *http.Request) {
+	return func(w http.ResponseWriter, req *http.Request) {
+		fn(hd.applier, w, req)
+	}
+}
+
+func handleRequest(applier Applier, w http.ResponseWriter, req *http.Request) {
+	switch req.Method {
+	case "POST":
+		var echoRequest EchoRequest
+		err := json.NewDecoder(req.Body).Decode(&amp;echoRequest)
+		if err != nil {
+			fmt.Fprintf(w, "failed to read request %v", err)
+			return
+		}
+		s, err := applier.apply(Request{echoRequest: &amp;echoRequest})
+		if err != nil {
+			fmt.Fprintf(w, "failed to apply request %v", err)
+			return
+		}
+		fmt.Fprint(w, s)
+
+	default:
+		http.Error(w, "Method Not Allowed", 405)
+	}
+}
+</code></pre>
+<p>For Rust, Alan has multiple options to build a web server: <a href="https://github.com/hyperium/hyper">hyper</a>, <a href="https://github.com/actix/actix-web">actix-web</a>, <a href="https://github.com/seanmonstar/warp">warp</a>, <a href="https://github.com/SergioBenitez/Rocket">rocket</a>, <a href="https://github.com/http-rs/tide">tide</a>, etc..</p>
+<p>Alan strongly believes in Go's minimal dependency approach, and thereby chooses "hyper" for its low-level API. While "hyper" is meant to be a low-level building block, implementing a simple request handler in "hyper" still requires four different external dependencies. Alan is not surprised anymore, and rather accepts the status quo of split Rust ecosystem:</p>
+<pre><code class="language-bash">cargo add http
+cargo add futures
+cargo add hyper --features full
+cargo add tokio --features full
+</code></pre>
+<p>After multiple days, Alan finally writes the following code:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use async_std::sync::Arc;
+use futures::TryStreamExt;
+use http::{Method, Request, Response, StatusCode, Version};
+use hyper::server::conn::AddrStream;
+use hyper::service::{make_service_fn, service_fn};
+use hyper::{Body, Server};
+use tokio::signal;
+
+pub struct Handler {
+    listener_port: u16,
+    applier: Arc&lt;apply::Applier&gt;,
+}
+
+impl Handler {
+    ...
+    pub async fn start(&amp;self) -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+        println!("starting server");
+        match self.applier.start().await {
+            Ok(_) =&gt; println!("started applier"),
+            Err(e) =&gt; panic!("failed to stop applier {}", e),
+        }
+
+        let addr = ([0, 0, 0, 0], self.listener_port).into();
+        let svc = make_service_fn(|socket: &amp;AddrStream| {
+            let remote_addr = socket.remote_addr();
+            let applier = self.applier.clone();
+            async move {
+                Ok::&lt;_, Infallible&gt;(service_fn(move |req: Request&lt;Body&gt;| {
+                    handle_request(remote_addr, req, applier.clone())
+                }))
+            }
+        });
+
+        let server = Server::bind(&amp;addr)
+            .serve(svc)
+            .with_graceful_shutdown(handle_sigint());
+
+        if let Err(e) = server.await {
+            println!("server error: {}", e);
+        }
+
+        match self.applier.stop().await {
+            Ok(_) =&gt; println!("stopped applier"),
+            Err(e) =&gt; println!("failed to stop applier {}", e),
+        }
+
+        Ok(())
+    }
+}
+
+async fn handle_request(
+    addr: SocketAddr,
+    req: Request&lt;Body&gt;,
+    applier: Arc&lt;apply::Applier&gt;,
+) -&gt; Result&lt;Response&lt;Body&gt;, hyper::Error&gt; {
+    let http_version = req.version();
+    let method = req.method().clone();
+    let cloned_uri = req.uri().clone();
+    let path = cloned_uri.path();
+
+    let resp = match http_version {
+        Version::HTTP_11 =&gt; {
+            match method {
+                Method::POST =&gt; {
+                    let mut resp = Response::builder()
+                        .status(StatusCode::INTERNAL_SERVER_ERROR)...
+                    match req
+                        .into_body()
+                        .try_fold(Vec::new(), |mut data, chunk| async move {
+                            data.extend_from_slice(&amp;chunk);
+                            Ok(data)
+                        })
+                        .await
+                    {
+                        Ok(body) =&gt; {
+                            let mut success = false;
+                            let mut req = apply::Request::new();
+                            match path {
+                                "/echo" =&gt; match echo::parse_request(&amp;body) {
+                                    Ok(bb) =&gt; {
+                                        req.echo_request = Some(bb);
+                                        success = true;
+                                    }
+                                    Err(e) =&gt; {
+                                        resp = Response::builder()
+                                            .status(StatusCode::INTERNAL_SERVER_ERROR)...
+                                    }
+                                },
+                                _ =&gt; {
+                                    println!("unknown path {}", path);
+                                    resp = Response::builder()
+                                        .status(StatusCode::INTERNAL_SERVER_ERROR)...
+                                }
+                            }
+                            if success {
+                                match applier.apply(req).await {
+                                    Ok(rs) =&gt; resp = Response::new(Body::from(rs)),
+                                    Err(e) =&gt; {
+                                        resp = Response::builder()
+                                            .status(StatusCode::INTERNAL_SERVER_ERROR)...
+                                    }
+                                }
+                            }
+                        }
+                        Err(e) =&gt; ...
+                    }
+                    resp
+                }
+
+                _ =&gt; Response::builder()
+                    .status(StatusCode::NOT_FOUND)...
+            }
+        }
+
+        _ =&gt; Response::builder()
+            .status(StatusCode::HTTP_VERSION_NOT_SUPPORTED)...
+    };
+    Ok(resp)
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<p>Alan's trust in Go mainly comes from its consistent and coherent approach to the problems. Alan prefers a standard way of doing things and as a result, multiple libraries available for async Rust caused Alan confusion. For instance, <a href="https://github.com/etcd-io/etcd">etcd</a> relies on Go's standard HTTP libraries for HTTP/1 and <a href="https://github.com/grpc/grpc-go">grpc-go</a> for HTTP/2 which is used by many other Go projects. The core networking library <a href="https://github.com/golang/net"><code>golang.org/x/net</code></a> is actively maintained by Go team with common interests from the community.</p>
+<p>The existing Rust syntax becomes more unwieldy and complicated to use for async Rust code. To make things worse, the lack of coherence in Rust async ecosystem can easily undermine basic user trust in a significant way.</p>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<ul>
+<li>Years of experience building a distributed key-value store in Go, <a href="https://github.com/etcd-io/etcd">etcd</a>.</li>
+<li>Simplified etcd server implementation in Go and Rust can be found at <a href="https://github.com/gyuho/task-scheduler-examples">gyuho/task-scheduler-examples</a>.</li>
+</ul>
+<h3 id="why-did-you-choose-alan-to-tell-this-story"><a class="header" href="#why-did-you-choose-alan-to-tell-this-story"><strong>Why did you choose Alan to tell this story?</strong></a></h3>
+<p>I chose Alan because he is used to Go, where these issues play out differently. Go natively supports: (1) asynchronous task with "goroutine", (2) asynchronous communication with "channel", and (3) performant HTTP server library. Each component is nicely composed together. There is no need to worry about picking the right external dependencies or resolving dependency conflicts. Concurrency being treated as first-class by Go maintainers built great confidence in Alan's decision to use Go.</p>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<p>This story would likely have played out the same for almost everyone new to Rust (except <a href="../../characters/barbara.html">Barbara</a>).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/template.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_creates_a_hanging_alarm.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/template.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_creates_a_hanging_alarm.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

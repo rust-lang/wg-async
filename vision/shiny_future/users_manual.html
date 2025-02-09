@@ -1,0 +1,475 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>📚 User&#x27;s manual of the future - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/shiny_future/users_manual.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="users-manual-of-the-future"><a class="header" href="#users-manual-of-the-future">User's Manual of the Future</a></h1>
+<p><img src="https://media.giphy.com/media/ZhESFK96NxbuO1yDgy/giphy.gif" alt="I always dreamed of seeing the future" /></p>
+<p>This text is written from the perspective of async Rust's "shiny future". It describes the async Rust that future users will experience. Embedded within are links of the form "deliv_xxx" that connect to the specific deliverables that are being described.</p>
+<p><em>Note:</em> Not everything in the future is great. Search for "Caveat" and you'll find a few notes of problems that we don't expect to fix.</p>
+<h2 id="introduction-async-io-as-a-user"><a class="header" href="#introduction-async-io-as-a-user">Introduction: Async I/O as a user</a></h2>
+<h3 id="what-is-async-io"><a class="header" href="#what-is-async-io">What is async I/O?</a></h3>
+<p>These days, most Rust code that interacts with the network or does high-performance I/O is Async I/O. Async I/O is, in some sense, an implementation detail. It is a set of language extensions that make it easy to run many asynchronous tasks using only a small number of underlying <em>operating system threads</em>. This means that you can scale up to a very large number of tasks using only a small amount of resources. To be frank, for many applications, async I/O is overkill. However, there are some for which it is absolutely essential, and that's why most of the high quality libraries are using asynchronous interfaces. Fortunately, async Rust is quite easy to use, so even if you don't really <em>need</em> the power right now, that's not a problem.</p>
+<h3 id="choosing-a-runtime"><a class="header" href="#choosing-a-runtime">Choosing a runtime</a></h3>
+<p>When you use sync Rust, operations like I/O and so forth are taken care of by your operating system (or your libc implementation, in any case). When you use <em>async</em> Rust, though, the mapping between asynchronous tasks is performed by a <em>library</em>, called a runtime. One of Rust's key distinguishing features is that it doesn't bake in the choice of a runtime. This means that people are free to develop libaries which use a variety of different strategies to schedule tasks, I/O, and so forth. The choice of runtime can in some cases make a big difference to your overall performance, or what kind of environments you can run in.</p>
+<p>If this seems overwhelming, don't worry. Rust makes it easy to experiment with runtimes and try different ones (<a href="../roadmap/portable.html">deliv_portable</a>). Here is a list of some of the popular runtimes, and the sorts of applications where they are suitable:</p>
+<ul>
+<li>General purpose, good for just about anything: tokio, async-std</li>
+<li>High-performance file I/O, thread-per-core architecture: glommio</li>
+<li>Focused on reliability: bastion</li>
+<li>Embedded environments: embassy</li>
+</ul>
+<p>If you are not sure what's best for you, we recommend picking any of the general purpose runtimes.</p>
+<h3 id="async-fn-where-it-all-starts"><a class="header" href="#async-fn-where-it-all-starts">Async fn: where it all starts</a></h3>
+<p>Getting started with async Rust is easy. Most anywhere that you write <code>fn</code> in Rust, you can now write <code>async fn</code> (exception: extern blocks), starting with the main function:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">#[tokio::main] // or async_std::main, glommio::main, etc
+async fn main() {
+    println!("Hello, world!"); // &lt;-- expect a warning here
+}</code></pre></pre>
+<p>You can see that we decorated <code>main</code> with a <code>#[tokio::main]</code> attribute. This is how we select the runtime we will use: most runtimes emit a similar decorator, so you could change this to <code>#[async_std::main]</code>, <code>#[glommio::main]</code>, or <code>#[embassy::main]</code> and all the examples and code we talk about in this document would work just the same. (<a href="../roadmap/portable.html">deliv_portable</a>)</p>
+<p>Whichever runtime you choose, if you actually try to compile this, you're going to see that you get a warning (<a href="../roadmap/polish/lint_blocking_fns.html">deliv_lint_blocking_fn</a>):</p>
+<pre><code>    println!("Hello, world!");
+    ^^^^^^^ synchronous I/O in async fn
+</code></pre>
+<p>This is because macros like <code>println!</code> expand to <em>blocking</em> operations, that take control of the underlying thread and don't allow the scheduler to continue. You need to use the async equivalent (<a href="../roadmap/portable/stdlib.html">deliv_portable_stdlib</a>), then <code>await</code> the result:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">async fn main() {
+    async_println!("Hello, world!").await;
+}</code></pre></pre>
+<p>When you <code>await</code> on something, you are pausing execution and waiting for it to complete before you continue. <em>Under the hood</em>, an await corresponds to giving up the current thread of control so that the runtime can do something else instead while you wait (e.g., process another task).</p>
+<h3 id="documentation-and-common-patterns"><a class="header" href="#documentation-and-common-patterns">Documentation and common patterns</a></h3>
+<p>This document is a survey of some of the major aspects of writing async functions. If you'd like a deeper introduction, the async book both explains how to get started in async but also common patterns, mistakes to avoid, and some of the details of the various runtimes you can choose from. (<a href="../roadmap/documentation.html">deliv_documentation</a>)</p>
+<h3 id="async-iterators"><a class="header" href="#async-iterators">Async iterators</a></h3>
+<p>So far, using <code>async</code> seems like mostly more work to accomplish the same thing, since you have to add <code>await</code> keywords everywhere. But async functions are like synchronous functions with superpowers: they have the ability to easily compose complex schedules of parallel and concurrent workloads. This is particularly true when you start messing around with asynchronous iterators.</p>
+<p>Consider this example. Imagine that you have a bunch of networking requests coming in. For each one, you have to do a bit of lightweight preparation, and then some heavyweight processing. This processing can take up a lot of RAM, and takes a while, so you can only process one request at a time, but you would like to do up to 5 instances of that lightweight preparation in parallel while you wait, so that things are all queued up and ready to go. You want a schedule like this, in other words:</p>
+<pre><code>   ┌───────────────┐
+   │ Preparation 1 │ ─────┐
+   └───────────────┘      │
+                          │
+   ┌───────────────┐      │     ┌───────────────┐
+   │ Preparation 2 │ ─────┼────►│ Process item  │ ─────►
+   └───────────────┘      │     └───────────────┘
+                          │
+     ...                  │
+                          │
+   ┌───────────────┐      │
+   │ Preparation 5 │ ─────┘
+   └───────────────┘
+</code></pre>
+<p>You can create that quite easily:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn do_work(database: &amp;Database) {
+    let work = do_select(database, FIND_WORK_QUERY)?;
+    stream::iter(work)
+        .map(async |item| preparation(database, item).await)
+        .buffered(5)
+        .for_each(async |work_item| process_work_item(database, work_item).await)
+        .await;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>buffered</code> combinator on async iterators creates a schedule that does up to 5 items in parallel, but still produces one item at a time as the result. Thus <code>for_each</code> executes on only one item at a time.</p>
+<p>How does all this work? The basic <code>AsyncIterator</code> trait (<a href="../roadmap/async_iter.html">deliv_async_iter</a>) looks quite similar to the standard <code>Iterator</code> trait, except that it has an <code>async fn</code> (this fn also has a <code>#[repr]</code> annotation; you can ignore it for now, but we discuss it later).</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait AsyncIter {
+    type Item;
+
+    #[repr(inline)]
+    async fn next(&amp;mut self) -&gt; Self::Item;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>However, when you use combinators like <code>buffered</code> that introduce parallelism, you are now using a <em>parallel</em> async iterator (<a href="../roadmap/async_iter.html">deliv_async_iter</a>), similar to the parallel iterators offered by [rayon]. The core operation here is <code>for_each</code> (which processes each item in the iterator):</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait ParAsyncIter {
+    type Item;
+
+    async fn for_each(&amp;mut self, op: impl AsyncFn(Self::Item));
+}
+<span class="boring">}</span></code></pre></pre>
+<p><em>Editor's note:</em> There's a subtle difference between <code>for_each</code> here and Rayon's <code>for_each</code>. It might actually be nice to rework Rayon's approach too. Detail hammering still required!</p>
+<h3 id="scopes"><a class="header" href="#scopes">Scopes</a></h3>
+<p>Parallel async iterators are implemented atop of something called <em>scopes</em> (<a href="../roadmap/scopes/scope_api.html">deliv_scope_api</a>). Scopes are a way of structuring your async tasks into a hierarchy. In this hierarchy, every parent task waits for its children to complete before it itself is complete. Scopes are also connected to cancellation: when you mark a parent task as cancelled, it propagates that cancellation down to its children as well (but still waits for them to finish up) (<a href="../roadmap/borrowed_data_and_cancellation.html">deliv_cancellation</a>).</p>
+<p>Scopes allow you to spawn parallel tasks that access borrowed data (<a href="../roadmap/borrowed_data_and_cancellation.html">deliv_borrowed_data</a>). For example, you could rewrite the parallel iterator above using scopes. For simplicity, we'll ignore the "up to 5 items being prepared" and just spawn a task for all items at once:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn do_work(database: &amp;Database) {
+    std::async_thread::scope(async |s| {
+        // Channel to send prepared items over to the
+        // task that processes them one at a time:
+        let mut (tx, rx) = std::async_sync::mpsc::channel();
+
+        // Spawn a task to spawn tasks:
+        s.spawn(async move || {
+            let work = do_select(database, FIND_WORK_QUERY)?;
+            work.for_each(|item| {
+                // Spawn a task processing each item and then
+                // sending it on the channel:
+                s.spawn(async |item| {
+                    let prepared_item = preparation(database, item).await
+                    tx.send(prepared_item).await;
+                });
+            });
+        });
+
+        // Spawn a task to spawn tasks:
+        s.spawn(async move || {
+            while let Some(item) = rx.next().await {
+                process_item(item).await;
+            }
+        });
+    });
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="cancellation"><a class="header" href="#cancellation">Cancellation</a></h3>
+<p>Cancelling a task is a common operation in async code. Often this is because of a dropped connection, but it could also be because of non-error conditions, such as waiting for the first of two requests to complete and taking whichever finished first. (<a href="../roadmap/borrowed_data_and_cancellation.html">deliv_cancellation</a>)</p>
+<p><em>Editor's note:</em> Clearly, this needs to be elaborated. Topics:</p>
+<ul>
+<li>Ambient cancellation flag vs explicit passing</li>
+<li>Connecting to I/O operations so they produce errors</li>
+<li>Opt-in synchronous cancellation, select</li>
+</ul>
+<h3 id="async-read-and-write-traits"><a class="header" href="#async-read-and-write-traits">Async read and write traits</a></h3>
+<p>The <code>AsyncRead</code> and <code>AsyncWrite</code> traits are the most common way to do I/O. They are the async equivalent of the <code>std::io::Read</code> and <code>std::io::Write</code> traits. They are used in a similar way. <a href="../../design_docs/async_read_write.html">deliv_async_read_write</a></p>
+<p><em>Editor's note:</em> This requires elaboration. The challenge is that the best design for these traits is unclear.</p>
+<h3 id="async-fns-in-traits-overview"><a class="header" href="#async-fns-in-traits-overview">Async fns in traits, overview</a></h3>
+<p>Async functions work in traits, too (<a href="https://rust-lang.github.io/async-fundamentals-initiative/">deliv_async_fundamentals</a>):</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait HttpRequest {
+    async fn request(&amp;self, url: &amp;Url) -&gt; HttpResponse;
+}
+<span class="boring">}</span></code></pre></pre>
+<h4 id="desugaring-async-fn-in-traits-into-impl-trait-and-generic-associated-types"><a class="header" href="#desugaring-async-fn-in-traits-into-impl-trait-and-generic-associated-types">Desugaring async fn in traits into <code>impl Trait</code> and generic associated types</a></h4>
+<p>Async functions actually desugar into functions that return an <code>impl Future</code>. When you use an async function in a trait (<a href="https://rust-lang.github.io/async-fundamentals-initiative/roadmap/impl_trait_in_traits.html">deliv_impl_trait_in_trait</a>), that is desugared into a (generic) associated type in the trait (<a href="https://github.com/rust-lang/generic-associated-types-initiative">deliv_gats</a>) whose value is inferred by the compiler (<a href="https://github.com/rust-lang/rust/issues/63063">deliv_tait</a>):</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait SomeTrait {
+    async fn foo(&amp;mut self);
+}
+
+// becomes:
+
+trait SomeTrait {
+    fn foo&lt;(&amp;mut self) -&gt; impl Future&lt;Output = ()&gt; + '_;
+}
+
+// becomes something like:
+//
+// Editor's note: The name of the associated type is under debate;
+// it may or may not be something user can name, though they should
+// have *some* syntax for referring to it.
+
+trait SomeTrait {
+    type Foo&lt;'me&gt;: Future&lt;Output = ()&gt; + '_
+    where
+        Self: 'me;
+
+    async fn foo(&amp;mut self) -&gt; Self::Foo&lt;'_&gt;;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>What this means is that the future type <code>SomeTrait::Foo</code> is going to be a generated type returned by the compiler that is speciic to that future.</p>
+<h4 id="caveat-gritty-details-around-dyn-trait-and-no-std"><a class="header" href="#caveat-gritty-details-around-dyn-trait-and-no-std">Caveat: Gritty details around dyn Trait and no-std</a></h4>
+<p>However, there is a catch here. When a trait contains <code>async fn</code>, using <code>dyn</code> types (e.g., <code>dyn HttpRequest</code>, for the trait above) can get a bit complicated. (<a href="https://rust-lang.github.io/async-fundamentals-initiative/roadmap/dyn_async_trait.html">deliv_dyn_async_trait</a>) By default, we assume that folks using <code>dyn HttpRequest</code> are doing so in a multithreaded, standard environment. This means that, by default:</p>
+<ul>
+<li>A reference like <code>&amp;T</code> can only be cast to <code>&amp;dyn HttpRequest</code> if all the <code>async fn</code> in its impl are <code>Send</code>
+<ul>
+<li>Note that you can still write impls whose <code>async fn</code> are not send, but you cannot use them with <code>dyn</code> (again, by default).</li>
+</ul>
+</li>
+<li>Async calls that go through a <code>dyn HttpRequest</code> will allocate a <code>Box</code> to store their data
+<ul>
+<li>This is usually fine, but in particularly tight loops can be a performance hazard.</li>
+<li>Note that this <em>only applies</em> when you use <code>dyn HttpRequest</code>; most tight loops tend to use generics like <code>T: HttpRequest</code> anyway, and here there is no issue.</li>
+</ul>
+</li>
+</ul>
+<p>These assumptions don't work for everyone, so there are some knobs you can turn:</p>
+<ul>
+<li>You can request that the futures not be assumed to be Send.</li>
+<li>You can change the "smart pointer" type used to allocate data; for example, instead of <code>Box</code>, a choice like <code>Stack&lt;32&gt;</code> would stack allocate up to 32 bytes (compilation errors will result if more than 32 bytes are required), and <code>SmallBox&lt;32&gt;</code> would stack allocate up to 32 bytes but heap allocate after that. (<a href="https://rust-lang.github.io/async-fundamentals-initiative/roadmap/dyn_async_trait.html">deliv_dyn_async_trait</a>)</li>
+<li>You can use 'inline' async functions, though these are not always suitable. (These are covered under "Diving into the details".)</li>
+</ul>
+<p>The way that all of this is implemented is that users can define their own impls of the form <code>impl Trait for dyn Trait</code> (<a href="https://rust-lang.github.io/async-fundamentals-initiative/roadmap/dyn_trait.html">deliv_dyn_trait</a>). This permits us to supply a number of derives that can be used to implement the above options.</p>
+<h2 id="tooling"><a class="header" href="#tooling">Tooling</a></h2>
+<p>There are a number of powerful development tools available for debugging, profiling, and tuning your Async Rust applications (<a href="../roadmap/tooling.html">deliv_tooling</a>). These tools allow you to easily view the current tasks in your application, find out what they are blocked on, and do profiling to see where they spend their time.</p>
+<p>Async Rust includes profiling tools that are sufficiently lightweight that you can run them in your production runs, giving very accurate data about what is really happening in your system. They also allow you to process the data in a number of ways, such as viewing profiles per request, or for requests coming from a specific source.</p>
+<p>The tools also include "hazard detection" that uncovers potential bugs or performance problems that you may not have noticed. For example, they can identify functions that run too long with any form of await or yield, which can lead to "hogging" the CPU and preventing other tasks from running.</p>
+<p>Finally, the tools can make suggestions to help you to tune your async code performance. They can identify code that ought to be outlined into separate functions, for example, or instances where the size of futures can be reduced through judicious use of heap allocation (<a href="../roadmap/async_fn/boxable.html">deliv_boxable</a>). These edits come in the form of suggestions, much like the compiler, which can be automatically applied with <code>cargo fix</code>.</p>
+<h3 id="bridging-the-sync-and-async-worlds"><a class="header" href="#bridging-the-sync-and-async-worlds">Bridging the sync and async worlds</a></h3>
+<p>One of the challenges of async programming is how to embed <em>synchronous</em> snippets of code. A synchronous snippet is anything that may occupy the thread for a long period of time without executing an await. This might be because it is a very long-running long loop, or it may be because of it invokes blocking primitives (like synchronous I/O). For efficiency, the async runtimes are setup to assume that this doesn't happen. This means that it is your responsibility to mark any piece of synchronous code with a call to <code>blocking</code>. This is a signal to the runtime that the code may block, and it allows the runtime to execute the code on another thread or take other forms of action:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>std::async::blocking(|| ...).await;
+<span class="boring">}</span></code></pre></pre>
+<p>Note that <code>blocking</code> is an async function. Interally, it is built on the scope method <code>spawn_blocking</code>, which spawns out a task into an inner scope (<a href="../roadmap/scopes/scope_api.html">deliv_scope_api</a>):</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn blocking&lt;R&gt;(f: impl FnOnce() -&gt; R) -&gt; R {
+    scope(|s| s.spawn_blocking(f).await).await
+}
+<span class="boring">}</span></code></pre></pre>
+<h4 id="caveat-beware-the-async-sandwich"><a class="header" href="#caveat-beware-the-async-sandwich">Caveat: Beware the async sandwich</a></h4>
+<p>One challenge with integrating sync and async code is called the "async sandwich". This occurs when you have async code that calls into sync code which in turn wishes to invoke async code:</p>
+<ul>
+<li>an <code>async fn</code> A that calls ..</li>
+<li>a synchronous <code>fn</code> B that wishes to block on ..</li>
+<li>an <code>async fn</code> C doing some I/O</li>
+</ul>
+<p>The problem here is that, for this to work, the <code>async fn</code> A really needs to call the synchronous function with <code>blocking</code>, but that may not be apparent, and A may not be in your control (that is, you may be authoring B and/or C, and not be able to modify A). This is a difficult situation without a great answer. Some runtimes offer methods that can help in this situation, but deadlocks may result.</p>
+<p>We hope to address this with 'overloaded async' functions, but more work is needed to flesh out that design (<a href="../roadmap/async_overloading.html">deliv_async_overloading</a>).</p>
+<h2 id="diving-into-the-details"><a class="header" href="#diving-into-the-details">Diving into the details</a></h2>
+<p>The previous topics covered the "high-level view" of async. This section dives a bit more into some of the details of how things work.</p>
+<h3 id="inline-async-functions"><a class="header" href="#inline-async-functions">"Inline" async functions</a></h3>
+<p>Inline async functions (<a href="../roadmap/async_fn/inline_async_fn.html">deliv_inline_async_fn</a>) are an optimization that is useful for traits where the trait represents the <em>primary purpose</em> of the type that implements it; typically such traits are implemented by dedicated types that exist just for that purpose. Examples include:</p>
+<ul>
+<li>The read and write traits.</li>
+<li>Async iterators.</li>
+<li>Async functions.</li>
+</ul>
+<p>Inline async functions are also crucial to <code>AsyncDrop</code> (<a href="https://rust-lang.github.io/async-fundamentals-initiative/roadmap/async_drop.html">deliv_async_drop</a>), discussed below.</p>
+<p>Inline async functions are declared within a trait body. They indicate that all intermediate state for the function is stored within the struct itself:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait AsyncIter {
+    type Item;
+
+    #[repr(inline)]
+    async fn next(&amp;mut self) -&gt; Self::Item;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This implies some limitations, but it has some benefits as well. For example, traits that contain only inline async functions are purely <code>dyn</code> safe without any overhead or limitations.</p>
+<h3 id="boxable-heap-allocation"><a class="header" href="#boxable-heap-allocation">Boxable heap allocation</a></h3>
+<p>One of the challening parts of writing a system that juggles many concurrent requests is deciding how much stack to allocate. Pthread-based systems solve this problem by reserving a very large portion of memory for the stack, but this doesn't scale up well when you have very large numbers of requests. A better alternative is to start with a small stack and grow dynamically: but that can be tricky to do without hitting potential performance hazards.</p>
+<p>Rust occupies an interesting spot in the design space. For simple Rust futures, we will allocate <em>exactly as much stack space as is needed</em>. This is done by analyzing the future and seeing what possible calls it may make.</p>
+<p>Sometimes, though, this analysis is not possible. For example, a recursive function can use infinite stack. In cases like this, you can annotate your async function to indicate that its stack space should be allocated on the heap where it is called (<a href="../roadmap/async_fn/boxable.html">deliv_boxable</a>):</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>box async fn foo() { .. }
+<span class="boring">}</span></code></pre></pre>
+<p>These annotations are also useful for tuning performance. The tooling (<a href="../roadmap/tooling.html">deliv_tooling</a>) can be used to suggest inserting <code>box</code> keywords on cold code paths, thus avoiding allocating stack space that is rarely used.</p>
+<h3 id="async-drop"><a class="header" href="#async-drop">Async drop</a></h3>
+<p>Cleaning up resources in async code is done using destructors, just as in synchronous Rust. Simply implement the <code>AsyncDrop</code> trait (<a href="https://rust-lang.github.io/async-fundamentals-initiative/roadmap/async_drop.html">deliv_async_drop</a>) instead of <code>Drop</code>, and you're good to go:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl AsyncDrop for MyType {
+    async fn drop(&amp;mut self) {
+        ...
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Just as in synchronous Rust, you are advised to keep destructors limited in their effects.</p>
+<h4 id="caveat-synchronous-drop"><a class="header" href="#caveat-synchronous-drop">Caveat: Synchronous drop</a></h4>
+<p>One thing to be aware of when you implement <code>AsyncDrop</code> is that, because any Rust value can be dropped at any point, the type system will allow your type to be dropped synchronously as well. We do however have a lint that detects the most common cases and gives you a warning, so this is rare in practice.</p>
+<p><strong>Note:</strong> If a type that implements <code>AsyncDrop</code> <em>but not <code>Drop</code></em> is dropped synchronously, the program will abort!</p>
+<h4 id="caveat-implicit-await-points"><a class="header" href="#caveat-implicit-await-points">Caveat: Implicit await points</a></h4>
+<p>One other thing to be aware of is that async drop will trigger implicit awaits each time a value is dropped (e.g., when a block is exited). This is rarely an issue.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../vision/shiny_future.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../vision/roadmap.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../vision/shiny_future.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../vision/roadmap.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

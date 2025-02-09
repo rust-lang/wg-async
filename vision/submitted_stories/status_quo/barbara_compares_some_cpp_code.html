@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Barbara compares some C++ code - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/barbara_compares_some_cpp_code.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-barbara-compares-some-code-and-has-a-performance-problem"><a class="header" href="#-status-quo-stories-barbara-compares-some-code-and-has-a-performance-problem">😱 Status quo stories: Barbara compares some code (and has a performance problem)</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>Barbara is recreating some code that has been written in other languages they have some familiarity with. These include C++, but
+also GC'd languages like Python.</p>
+<p>This code collates a large number of requests to network services, with each response containing a large amount of data.
+To speed this up, Barbara uses <code>buffer_unordered</code>, and writes code like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut queries = futures::stream::iter(...)
+    .map(|query| async move {
+        let d: Data = self.client.request(&amp;query).await?;
+        d
+     })
+     .buffer_unordered(32);
+
+use futures::stream::StreamExt;
+let results = queries.collect::&lt;Vec&lt;Data&gt;&gt;().await;
+<span class="boring">}</span></code></pre></pre>
+<p>Barbara thinks this is similar in function to things she has seen using
+Python's <a href="https://docs.python.org/3/library/asyncio-task.html#asyncio.wait">asyncio.wait</a>,
+as well as some code her coworkers have written using c++20's <code>coroutines</code>,
+using <a href="https://github.com/facebook/folly/blob/master/folly/experimental/coro/Collect.h#L321">this</a>:</p>
+<pre><code class="language-C++">std::vector&lt;folly::coro::Task&lt;Data&gt;&gt; tasks;
+ for (const auto&amp; query : queries) {
+    tasks.push_back(
+        folly::coro::co_invoke([this, &amp;query]() -&gt; folly::coro::Task&lt;Data&gt; {
+              co_return co_await client_-&gt;co_request(query);
+        }
+    )
+}
+auto results = co_await folly:coro::collectAllWindowed(
+      move(tasks), 32);
+</code></pre>
+<p>However, <em>the Rust code performs quite poorly compared to the other impls,
+appearing to effectively complete the requests serially, despite on the surface
+looking like effectively identical code.</em></p>
+<p>While investigating, Barbara looks at <code>top</code>, and realises that her coworker's C++20 code sometimes results in her 16 core laptop using 1600% CPU; her Rust async code never exceeds 100% CPU usage.  She spends time investigating her runtime setup, but Tokio is configured to use enough worker threads to keep all her CPU cores busy. This feels to her like a bug in <code>buffer_unordered </code> or <code>tokio</code>, needing more time to investigate.</p>
+<p>Barbara goes deep into investigating this, spends time reading how <code>buffer_unordered</code> is
+implemented, how its underlying <code>FuturesUnordered</code> is implemented, and even thinks about
+how polling and the <code>tokio</code> runtime she is using works. She evens tries to figure out if the
+upstream service is doing some sort of queueing.</p>
+<p>Eventually Barbara starts reading more about c++20 coroutines, looking closer at the folly
+implementation used above, noticing that is works primarily with <em>tasks</em>, which are not exactly
+equivalent to rust <code>Future</code>'s.</p>
+<p>Then it strikes her! <code>request</code> is implemented something like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Client {
+    async fn request(&amp;self) -&gt; Result&lt;Data&gt; {
+        let bytes = self.inner.network_request().await?
+        Ok(serialization_libary::from_bytes(&amp;bytes)?)
+   }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The results from the network service are sometimes (but not always) VERY large, and the <code>BufferedUnordered</code> stream is contained within 1 tokio task.
+<strong>The request future does non-trivial cpu work to deserialize the data.
+This causes significant slowdowns in wall-time as the the process CAN BE bounded by the time it takes
+the single thread running the tokio-task to deserialize all the data.</strong>
+This problem hadn't shown up in test cases, where the results from the mocked network service are always small; many common uses of the network service only ever have small results, so it takes a specific production load to trigger this issue, or a large scale test.</p>
+<p>The solution is to spawn tasks (note this requires <code>'static</code> futures):</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut queries = futures::stream::iter(...)
+    .map(|query| async move {
+        let d: Data = tokio::spawn(
+        self.client.request(&amp;query)).await??;
+        d
+     })
+     .buffer_unordered(32);
+
+use futures::stream::StreamExt;
+let results = queries.collect::&lt;Vec&lt;Data&gt;&gt;().await;
+<span class="boring">}</span></code></pre></pre>
+<p>Barbara was able to figure this out by reading enough and trying things out, but had that not worked, it
+would have probably required figuring out how to use <code>perf</code> or some similar tool.</p>
+<p>Later on, Barbara gets surprised by this code again. It's now being used as part of a system that handles a very high number of requests per second, but sometimes the system stalls under load. She enlists Grace to help debug, and the two of them identify via <code>perf</code> that all the CPU cores are busy running <code>serialization_libary::from_bytes</code>. Barbara revisits this solution, and discovers <code>tokio::task::block_in_place</code> which she uses to wrap the calls to <code>serialization_libary::from_bytes</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Client {
+    async fn request(&amp;self) -&gt; Result&lt;Data&gt; {
+        let bytes = self.inner.network_request().await?
+        Ok(tokio::task::block_in_place(move || serialization_libary::from_bytes(&amp;bytes))?)
+   }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This resolves the problem as seen in production, but leads to Niklaus's code review suggesting the use of <code>tokio::task::spawn_blocking</code> inside <code>request</code>, instead of <code>spawn</code> inside <code>buffer_unordered</code>. This discussion is challenging, because the tradeoffs between <code>spawn</code> on a <code>Future</code> including <code>block_in_place</code> and <code>spawn_blocking</code> and then not spawning the containing <code>Future</code> are subtle and tricky to explain. Also, either <code>block_in_place</code> and <code>spawn_blocking</code> are heavyweight and Barbara would prefer to avoid them when the cost of serialization is low, which is usually a runtime-property of the system.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="are-any-of-these-actually-the-correct-solution"><a class="header" href="#are-any-of-these-actually-the-correct-solution"><strong>Are any of these actually the correct solution?</strong></a></h3>
+<ul>
+<li>Only in part. It may cause other kinds of contention or blocking on the runtime. As mentioned above, the deserialization work probably needs to be wrapped in something like <a href="https://docs.rs/tokio/1/tokio/task/fn.block_in_place.html"><code>block_in_place</code></a>, so that other tasks are not starved on the runtime, or might want to use <a href="https://docs.rs/tokio/1/tokio/task/fn.spawn_blocking.html"><code>spawn_blocking</code></a>. There are some important caveats/details that matter:
+<ul>
+<li>This is dependent on how the runtime works.</li>
+<li><code>block_in_place</code> + <code>tokio::spawn</code> might be better if the caller wants to control concurrency, as spawning is heavyweight when the deserialization work happens to be small. However, as mentioned above, this can be complex to reason about, and in some cases, may be as heavyweight as <code>spawn_blocking</code></li>
+<li><code>spawn_blocking</code>, at least in some executors, cannot be cancelled, a departure from the prototypical cancellation story in async Rust.</li>
+<li>"Dependently blocking work" in the context of async programming is a hard problem to solve generally. https://github.com/async-rs/async-std/pull/631 was an attempt but the details are making runtime's agnostic blocking are extremely complex.</li>
+<li>The way this problem manifests may be subtle, and it may be specific production load that triggers it.</li>
+<li>The outlined solutions have tradeoffs that each only make sense for certain kind of workloads. It may be better to expose the io aspect of the request and the deserialization aspect as separate APIs, but that complicates the library's usage, lays the burden of choosing the tradeoff on the callee (which may not be generally possible).</li>
+</ul>
+</li>
+</ul>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<ul>
+<li>Producing concurrent, performant code in Rust async is not always trivial. Debugging performance
+issues can be difficult.</li>
+<li>Rust's async model, particularly the blocking nature of <code>polling</code>, can be complex to reason about,
+and in some cases is different from other languages choices in meaningful ways.</li>
+<li>CPU-bound code can be easily hidden.</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<ul>
+<li>This is a issue I personally hit while writing code required for production.</li>
+</ul>
+<h3 id="why-did-you-choose-barbara-to-tell-this-story"><a class="header" href="#why-did-you-choose-barbara-to-tell-this-story"><strong>Why did you choose <em>Barbara</em> to tell this story?</strong></a></h3>
+<p>That's probably the person in the cast that I am most similar to, but Alan
+and to some extent Grace make sense for the story as well.</p>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<ul>
+<li>Alan: May have taken longer to figure out.</li>
+<li>Grace: Likely would have been as interested in the details of how polling works.</li>
+<li>Niklaus: Depends on their experience.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_carefully_dismisses_embedded_future.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_gets_burned_by_select.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_carefully_dismisses_embedded_future.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_gets_burned_by_select.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

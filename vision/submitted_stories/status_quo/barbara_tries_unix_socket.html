@@ -1,0 +1,476 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Barbara tries Unix socket - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/barbara_tries_unix_socket.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-barbara-tries-unix-socket"><a class="header" href="#-status-quo-stories-barbara-tries-unix-socket">😱 Status quo stories: Barbara tries Unix socket</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>Content of <code>Cargo.toml</code> for reproducibility:</p>
+<details>
+  <summary><code>Cargo.toml</code></summary>
+<pre><code class="language-toml">futures = "0.3.14"
+hyper = { version = "0.14.7", features = ["full"] }
+pretty_env_logger = "0.4.0"
+reqwest = "0.11.3"
+tokio = { version = "1.5.0", features = ["macros", "rt-multi-thread"] }
+</code></pre>
+</details>
+<p>There is a HTTP server in hyper which Barbara have to query.</p>
+<details>
+  <summary>Server code</summary>
+<pre><pre class="playground"><code class="language-rust edition2018">use hyper::server::conn::Http;
+use hyper::service::service_fn;
+use hyper::{Body, Request, Response};
+use std::convert::Infallible;
+use tokio::net::TcpListener;
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let listener = TcpListener::bind("127.0.0.1:3000").await?;
+ 
+    loop {
+        let (stream, _) = listener.accept().await?;
+ 
+        tokio::spawn(async move {
+            let _ = Http::new()  
+                .serve_connection(stream, service_fn(serve))
+                .await;
+        });
+    }
+}
+ 
+async fn serve(_req: Request&lt;Body&gt;) -&gt; Result&lt;Response&lt;Body&gt;, Infallible&gt; {
+    let res = Response::builder()
+        .header("content-type", "text/plain; charset=utf-8")
+        .body(Body::from("Hello World!"))
+        .unwrap();
+    Ok(res)
+}</code></pre></pre>
+</details>
+<h2 id="nice-simple-query-with-high-level-reqwest"><a class="header" href="#nice-simple-query-with-high-level-reqwest">Nice simple query with high-level reqwest</a></h2>
+<p>Barbara do HTTP GET request using TCP socket with reqwest and it works fine, everything is easy.</p>
+<pre><pre class="playground"><code class="language-rust edition2018">#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let res = reqwest::get("http://127.0.0.1:3000").await?;
+    println!("{}", res.text().await?);
+    Ok(()) 
+}</code></pre></pre>
+<h2 id="unix-sockets-for-performance"><a class="header" href="#unix-sockets-for-performance">Unix sockets for performance</a></h2>
+<p>One day, Barbara heard that using unix socket can provide a better performance by using unix socket when both the server and client is on the same machine, so Barbara decided to try it out.</p>
+<p>Barbara starts porting the server code to use unix socket, it was a no brainer for Barbara at least. Barbara changed <code>TcpListener::bind("127.0.0.1:3000").await?</code> to <code>UnixListener::bind("/tmp/socket")?</code> and it works like a charm.</p>
+<p>Barbara search through reqwest doc and github issues to see how to use unix socket for reqwest. Barbara found https://github.com/seanmonstar/reqwest/issues/39#issuecomment-778716774 saying reqwest does not support unix socket but hyper does with an example, which is a lower-level library. Since reqwest is so easy and porting hyper server to use unix socket is easy, Barbara thinks low-level hyper library should be easy too.</p>
+<h2 id="the-screen-stares-at-barbara"><a class="header" href="#the-screen-stares-at-barbara">The screen stares at Barbara</a></h2>
+<pre><pre class="playground"><code class="language-rust edition2018">use hyper::{body::HttpBody, client::conn, Body, Request};
+use tokio::net::UnixStream;
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    pretty_env_logger::init();
+    let stream = UnixStream::connect("/tmp/socket").await?;
+
+    let (mut request_sender, connection) = conn::handshake(stream).await?;
+ 
+    let request = Request::get("/").body(Body::empty())?;
+    let mut response = request_sender.send_request(request).await?;
+    println!("{:?}", response.body_mut().data().await);
+ 
+    let request = Request::get("/").body(Body::empty())?;
+    let mut response = request_sender.send_request(request).await?;
+    println!("{:?}", response.body_mut().data().await);
+ 
+    Ok(())
+}</code></pre></pre>
+<p>Barbara wrote some code according to the comments Barbara saw and read some docs like what is <code>handshake</code> to roughly know what it does. Barbara compile and it shows a warning, the <code>connection</code> variable is not used:</p>
+<pre><code>warning: unused variable: `connection`
+ --&gt; src/main.rs:9:30
+  |
+9 |     let (mut request_sender, connection) = conn::handshake(stream).await?;
+  |                              ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_connection`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+</code></pre>
+<p>Barbara then runs the program. Barbara stares at the screen and the screen stares at her. Barbara waited and ... it was stuck. So Barbara decides to look at the logs and run it again with <code>env RUST_LOG=trace cargo r</code>, and it was indeed stuck, but not sure where.</p>
+<pre><code> TRACE mio::poll &gt; registering event source with poller: token=Token(0), interests=READABLE | WRITABLE
+</code></pre>
+<p>Barbara try adding <code>println!</code> all over the code but it was still stuck, so Barbara try asking for help. Thanks to the welcoming Rust community, Barbara got help quickly in this case. It seemed like Barbara missed the <code>connection</code> which is a culprit and it was in the parent module of the docs Barbara read.</p>
+<p>Barbara added the missing piece to <code>.await</code> for the <code>connection</code>, all the while Barbara thought it will work if it was <code>.await</code>-ed but in this case having required to await something else to work is a surprise. Someone suggests to Barbara that she follow the example in the docs to insert a <code>tokio::spawn</code>, so she winds up with:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let (mut request_sender, connection) = conn::handshake(stream).await?;
+
+    tokio::spawn(async move {
+        if let Err(e) = connection.await {
+            eprintln!("error: {}", e);
+        }
+    })
+    
+    let request = ...
+<span class="boring">}</span></code></pre></pre>
+<p>Barbara run the code and it works now, yay! Barbara want to try to reuse the connection to send subsequent HTTP request. Barbara duplicates the last block and it runs.</p>
+<h2 id="mysterious-second-request"><a class="header" href="#mysterious-second-request">Mysterious second request</a></h2>
+<p>Some time later, Barbara was told that the program did not work on second request. Barbara tried it but it works. To double confirm, when Barbara tried it again it did not work. Rather than getting stuck, this time there is a error message, which is somewhat better but Barbara did not understand.</p>
+<p>The second request is so mysterious, it is like the second request playing hide and seek with Barbara. Sometimes it works and sometimes it does not work.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span> TRACE mio::poll &gt; registering event source with poller: token=Token(0), interests=READABLE | WRITABLE
+Some(Ok(b"Hello World!"))
+ TRACE want      &gt; signal: Want
+ TRACE mio::poll &gt; deregistering event source from poller
+ TRACE want      &gt; signal: Closed
+Error: hyper::Error(Canceled, "connection was not ready")
+<span class="boring">}</span></code></pre></pre>
+<p>As a typical method of solving asynchronous issue. Barbara add prints to every await boundaries in the source code to understand what is going on.</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use hyper::{body::HttpBody, client::conn, Body, Request};
+use tokio::net::UnixStream;
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    pretty_env_logger::init();
+    let stream = UnixStream::connect("/tmp/socket").await?;
+
+    let (mut request_sender, connection) = conn::handshake(stream).await?;
+    println!("connected"); 
+                        
+    tokio::spawn(async move {
+        if let Err(e) = connection.await {
+            println!("closed"); 
+            eprintln!("error: {}", e);
+        }
+        println!("closed"); 
+    });
+                  
+    let request = Request::get("/").body(Body::empty())?;
+    let mut response = request_sender.send_request(request).await?;
+    println!("{:?}", response.body_mut().data().await);
+                  
+    let request = Request::get("/").body(Body::empty())?;
+    println!("sending 2");
+    let mut response = request_sender.send_request(request).await?;
+    println!("sent 2"); 
+    println!("{:?}", response.body_mut().data().await);
+                     
+    Ok(())
+}                    </code></pre></pre>
+<p>The logs are now more detailed. Barbara can see that the connection was closed but why? Barbara had no idea and Barbara had to seek help again.</p>
+<pre><code> TRACE mio::poll &gt; registering event source with poller: token=Token(0), interests=READABLE | WRITABLE
+connected
+Some(Ok(b"Hello World!"))
+sending 2
+ TRACE want      &gt; signal: Want
+ TRACE mio::poll &gt; deregistering event source from poller
+ TRACE want      &gt; signal: Closed
+closed
+Error: hyper::Error(Canceled, "connection was not ready")
+</code></pre>
+<p>This time as well, Barbara was lucky enough to get a quick reply from the welcoming Rust community. Other users said there is a trick for these kind of cases, which is a tracing stream.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::pin::Pin;
+use std::task::{Context, Poll};
+use tokio::io::{AsyncRead, AsyncWrite, ReadBuf};
+        
+pub struct TracingStream&lt;S&gt; {
+    pub inner: S,
+}
+
+impl&lt;S: AsyncRead + AsyncWrite + Unpin&gt; AsyncRead for TracingStream&lt;S&gt; {
+    fn poll_read(
+        mut self: Pin&lt;&amp;mut Self&gt;,
+        cx: &amp;mut Context&lt;'_&gt;,
+        buf: &amp;mut ReadBuf&lt;'_&gt;,
+    ) -&gt; Poll&lt;Result&lt;(), std::io::Error&gt;&gt; {
+        let poll_result = Pin::new(&amp;mut self.inner).poll_read(cx, buf);
+        for line in String::from_utf8_lossy(buf.filled()).into_owned().lines() {
+            println!("&gt; {}", line);
+        }
+        poll_result
+    }
+}
+                                 
+impl&lt;S: AsyncRead + AsyncWrite + Unpin&gt; AsyncWrite for TracingStream&lt;S&gt; {
+    fn poll_flush(
+        mut self: Pin&lt;&amp;mut Self&gt;,
+        cx: &amp;mut Context&lt;'_&gt;,
+    ) -&gt; Poll&lt;Result&lt;(), std::io::Error&gt;&gt; {
+        Pin::new(&amp;mut self.inner).poll_flush(cx)
+    } 
+    
+    fn poll_shutdown(
+        mut self: Pin&lt;&amp;mut Self&gt;,
+        cx: &amp;mut Context&lt;'_&gt;,
+    ) -&gt; Poll&lt;Result&lt;(), std::io::Error&gt;&gt; {
+        Pin::new(&amp;mut self.inner).poll_shutdown(cx)
+    }
+ 
+    fn poll_write(
+        mut self: Pin&lt;&amp;mut Self&gt;,
+        cx: &amp;mut Context&lt;'_&gt;,
+        buf: &amp;[u8],
+    ) -&gt; Poll&lt;Result&lt;usize, std::io::Error&gt;&gt; {
+        let poll_result = Pin::new(&amp;mut self.inner).poll_write(cx, buf);
+        for line in String::from_utf8_lossy(buf).into_owned().lines() {
+            println!("&lt; {}", line);
+        }
+        poll_result
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Barbara happily copy pasted the code and wrap the <code>stream</code> within <code>TracingStream</code>. Running it with logs gives (same thing, in some cases it works, in some cases it did not work):</p>
+<pre><code> TRACE mio::poll &gt; registering event source with poller: token=Token(0), interests=READABLE | WRITABLE
+connected
+&lt; GET / HTTP/1.1
+&lt; 
+&gt; HTTP/1.1 200 OK
+&gt; content-type: text/plain; charset=utf-8
+&gt; content-length: 12
+&gt; date: Tue, 04 May 2021 17:02:49 GMT
+&gt; 
+&gt; Hello World!
+Some(Ok(b"Hello World!"))
+sending 2
+ TRACE want      &gt; signal: Want
+ TRACE want      &gt; signal: Want
+ TRACE mio::poll &gt; deregistering event source from poller
+ TRACE want      &gt; signal: Closed
+closed
+Error: hyper::Error(Canceled, "connection was not ready")
+</code></pre>
+<p>Barbara thought this probably only affects a unix socket but nope, even swapping it back with TCP socket does not work either. Now, not just Barbara was confused, even the other developers who offered help was confused now.</p>
+<h2 id="the-single-magical-line"><a class="header" href="#the-single-magical-line">The single magical line</a></h2>
+<p>After some time, a developer found a solution, just a single line. Barbara added the line and it works like a charm but it still feels like magic.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use futures::future;
+
+    // this new line below was added for second request
+    future::poll_fn(|cx| request_sender.poll_ready(cx)).await?;
+    let request = Request::get("/").body(Body::empty())?;
+    println!("sending 2");
+    let mut response = request_sender.send_request(request).await?;
+    println!("sent 2");
+    println!("{:?}", response.body_mut().data().await);
+<span class="boring">}</span></code></pre></pre>
+<p>Barbara still have no idea why it needs to be done this way. But at least it works now.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<p>Barbara is not able to see the problem right away. Usually missing an <code>await</code> is an issue but in this case, not awaiting on another variable or not polling for ready when using a low-level library may the program incorrect, it is also hard to debug and figure out what is the correct solution.</p>
+<p>In a way, some of the fixes "feels like magic". Sometimes polling is required to be done but where? It may make people afraid of using <code>async/.await</code> and end up writing safety net code (for example, writing code to do type checking in weakly typed languages in every lines of code to be safe).</p>
+<p>Having these pitfalls in mind, one can easily relate it back to unsafe. If there are unsafe blocks, the user needs to manually audit every specific code block for undefined behaviors. But in the case of async, the situation is someone similar such that the user need to audit the whole async code blocks (which is a lot compared to unsafe) for "undefined behaviors", rather than having when it compiles it works sort of behavior.</p>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<p>pickfire was experimenting with HTTP client over unix socket and faced this issue as he though it is easy, still a lot thanks to Programatik for helping out with a quick and helpful response.</p>
+<h3 id="why-did-you-choose-barbara-to-tell-this-story"><a class="header" href="#why-did-you-choose-barbara-to-tell-this-story"><strong>Why did you choose <em>Barbara</em> to tell this story?</strong></a></h3>
+<p>Barbara have some experience with synchronous and high-level asynchronous rust libraries but not with low-level asynchronous libraries.</p>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<p>Most likely everyone could have faced the same issue unless they are lucky.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_tries_async_streams.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_trims_a_stacktrace.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_tries_async_streams.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_trims_a_stacktrace.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

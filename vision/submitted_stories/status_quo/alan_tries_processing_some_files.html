@@ -1,0 +1,475 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alan tries tries processing some files - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/alan_tries_processing_some_files.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-alan-tries-processing-some-files"><a class="header" href="#-status-quo-stories-alan-tries-processing-some-files">😱 Status quo stories: Alan tries processing some files</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories [cannot be wrong], only inaccurate). Alternatively, you may wish to [add your own status quo story][htvsq]!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>Alan is new to Rust. He wants to build a program that recurses over all the files in a directory (and its subdirectories), reads each file, and produces some fingerprint of the file.</p>
+<p>Since so much blocking I/O is involved, he chooses async in order to process many files concurrently.</p>
+<h3 id="async"><a class="header" href="#async">Async</a></h3>
+<p>Alan does some research into <code>async</code> Rust. New to the language, he's heard that <code>async</code> support has recently landed, so he starts by reading <a href="https://blog.rust-lang.org/2019/11/07/Rust-1.39.0.html">the release notes</a> and much of the <a href="https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html">Async Book</a>, bookmarking the dense parts about Pinning as something he'll come back to when it makes more sense. Notably, he skips over the <a href="https://rust-lang.github.io/async-book/07_workarounds/04_recursion.html">Recursion Workaround</a> and other workaround bits.</p>
+<p>As someone who hasn't followed the evolution of <code>async</code> Rust closely, the <a href="https://rust-lang.github.io/async-book/08_ecosystem/00_chapter.html">Ecosystem</a> page of the Async Book provides a critical bit of context that he wishes he'd found first. Coming from Python and Go, where <code>asyncio</code> and goroutines are fully supported by the core language, Alan had been unclear exactly what <em>was</em> and what <em>wasn't</em> included in the language. This page puts everything into place.</p>
+<p>The <a href="https://rust-lang.github.io/async-book/08_ecosystem/00_chapter.html#popular-async-runtimes">Popular Runtimes</a> section makes it clear that he'll need to choose a third party ecosystem. He chooses Tokio because:</p>
+<ul>
+<li>It's the only ecosystem of those listed that he's already heard about.</li>
+<li>It seems to be widely used based on some web searches.</li>
+<li>It has bite-sized, approachable <a href="https://tokio.rs/tokio/tutorial">tutorial pages</a> that provide higher-level introduction than the average <code>rustdoc</code>.</li>
+<li>It provides rich RPC libraries, like Tonic, which he plans to fiddle with in a future project.</li>
+</ul>
+<h3 id="recursion"><a class="header" href="#recursion">Recursion</a></h3>
+<p>Alan starts by writing a recursive function that can call some operation on each regular file in a directory and recurse on each subdirectory.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn process_directory&lt;'a, F, P, T&gt;(path: PathBuf, processor: &amp;'a P) -&gt; Vec&lt;F&gt;
+where
+    P: Fn(DirEntry) -&gt; F,
+    F: Future&lt;Output = T&gt;,
+{
+    ReadDirStream::new(read_dir(path).await.unwrap())
+        .filter_map(|x| async {
+            let dir_entry = x.unwrap();
+            let ft = dir_entry.file_type().await.unwrap();
+            if ft.is_file() {
+                Some(vec![processor(dir_entry)])
+            } else if ft.is_dir() {
+                Some(process_directory(dir_entry.path(), processor).await)
+            } else {
+                None
+            }
+        })
+        .collect::&lt;Vec&lt;Vec&lt;F&gt;&gt;&gt;()
+        .await
+        .into_iter()
+        .flatten()
+        .collect()
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The first paper cut comes when the compiler complains:</p>
+<pre><code>error[E0733]: recursion in an `async fn` requires boxing
+  --&gt; src/main.rs:23:77
+   |
+23 | async fn process_directory&lt;'a, F, P, T&gt;(path: PathBuf, processor: &amp;'a P) -&gt; Vec&lt;F&gt;
+   |                                                                             ^^^^^^ recursive `async fn`
+   |
+   = note: a recursive `async fn` must be rewritten to return a boxed `dyn Future`
+
+...
+For more information about an error, try `rustc --explain E0733`.
+</code></pre>
+<p>From the explainer, Alan learns that he cannot use the <code>async</code> sugaring, and needs to use a Boxed Pin in his function signature:</p>
+<pre><code>fn process_directory&lt;'a, F, P, T&gt;(
+    path: PathBuf,
+    processor: &amp;'static P,
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Vec&lt;F&gt;&gt;&gt;&gt;
+</code></pre>
+<p>New to Rust, Alan still doesn't really understand what <code>Pin</code> does, so he reads <a href="https://doc.rust-lang.org/std/pin/index.html">the docs</a>, sees that it marks which objects are <em>"guaranteed not to move"</em>, and wonders why the compiler couldn't determine this automatically since he read so much about how the borrow checker can already detect <em>moves</em> versus borrows.</p>
+<p>He's also not entirely sure why the returned <code>Future</code> needs to be <code>Boxed</code>. The suggested explainer helps a bit:</p>
+<pre><code>The `Box&lt;...&gt;` ensures that the result is of known size, and the pin is
+required to keep it in the same place in memory.
+</code></pre>
+<p>But Alan figures that the size of <code>Future&lt;Output = T&gt;</code> should be determined by the type <code>T</code>. It's not like he's implementing a custom struct that is <code>Future</code>; he's returning a <code>Vec&lt;T&gt;</code> inside the standard <code>async move {}</code>. Alan wishes there was a way to express "<em>Hey I'm returning a Future created by <code>async move</code>, whose <code>Output</code> attribute has a known size, so the resulting Future should have a known size too!</em>"</p>
+<p>But Alan does what the compiler tells him to do and adds some extra stuff to his function, which now looks like:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn process_directory&lt;'a, F, P, T&gt;(
+    path: PathBuf,
+    processor: &amp;'static P,
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Vec&lt;F&gt;&gt; + 'a&gt;&gt;
+where
+    P: Fn(DirEntry) -&gt; F,
+    F: Future&lt;Output = T&gt;,
+{
+    Box::pin(async move {
+        ReadDirStream::new(read_dir(path).await.unwrap())
+            .filter_map(|x| async {
+                let dir_entry = x.unwrap();
+                let ft = dir_entry.file_type().await.unwrap();
+                if ft.is_file() {
+                    Some(vec![processor(dir_entry)])
+                } else if ft.is_dir() {
+                    Some(process_directory(dir_entry.path(), processor).await)
+                } else {
+                    None
+                }
+            })
+            .collect::&lt;Vec&lt;Vec&lt;F&gt;&gt;&gt;()
+            .await
+            .into_iter()
+            .flatten()
+            .collect()
+    })
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="rate-limiting"><a class="header" href="#rate-limiting">Rate Limiting</a></h3>
+<p>Alan knows that <code>process_directory</code> may be called on directories with many thousands of files or subdirectories, and is wary of exhausting file descriptor limits. Since he can't find much documentation about how to keep the number of async tasks in check - Tokio's docs suggest we can <a href="https://tokio.rs/tokio/tutorial/spawning">spawn millions of tasks</a>, but don't offer advice on how to manage tasks with expensive side effects - he decides he needs to build a simple rate limiter.</p>
+<p>Alan's rate limiter will wrap some <code>Future&lt;Output =T&gt;</code>, acquire a semaphore, and then await the Future, returning the same type <code>T</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn rate_limit&lt;F, T&gt;(fut: F, sem: &amp;Semaphore) -&gt; T
+where
+    F: Future&lt;Output = T&gt;,
+{
+    let _permit = sem.acquire().await;
+    fut.await
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Since the <code>async fn foo&lt;T&gt;() -&gt; T</code> syntax desugars to <code>fn foo&lt;T&gt;() -&gt; Future&lt;Output = T&gt;</code>, and since <code>fut.await</code> returns <code>T</code>, Alan assumes that the above is equivalent to:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn rate_limit&lt;F, T&gt;(fut: F, sem: &amp;Semaphore) -&gt; F
+where
+    F: Future&lt;Output = T&gt;,
+{
+    ...
+}
+<span class="boring">}</span></code></pre></pre>
+<p>So he plugs this new <code>rate_limit</code> logic into <code>process_directory</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use futures::future::join_all;                 
+use futures::stream::StreamExt;                
+use futures::Future;                           
+use std::path::PathBuf;                        
+use std::pin::Pin;                                    
+use tokio::fs::{read_dir, DirEntry};     
+use tokio::sync::Semaphore;                    
+use tokio_stream::wrappers::ReadDirStream;     
+
+async fn rate_limit&lt;F, T&gt;(fut: F, sem: &amp;Semaphore) -&gt; T
+where
+    F: Future&lt;Output = T&gt;,
+{
+    let _permit = sem.acquire().await;
+    fut.await
+}
+
+fn process_directory&lt;'a, F, P, T&gt;(
+    path: PathBuf,
+    processor: &amp;'a P,
+    sem: &amp;'static Semaphore,
+) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = Vec&lt;F&gt;&gt; + 'a&gt;&gt;
+where
+    P: Fn(DirEntry) -&gt; F,
+    F: Future&lt;Output = T&gt;,
+{
+    Box::pin(async move {
+        ReadDirStream::new(read_dir(path).await.unwrap())
+            .filter_map(|x| async {
+                let dir_entry = x.unwrap();
+                let ft = dir_entry.file_type().await.unwrap();
+                if ft.is_file() {
+                    Some(vec![rate_limit(processor(dir_entry), sem)])
+                } else if ft.is_dir() {
+                    Some(process_directory(dir_entry.path(), processor, sem).await)
+                } else {
+                    None
+                }
+            })
+            .collect::&lt;Vec&lt;Vec&lt;F&gt;&gt;&gt;()
+            .await
+            .into_iter()
+            .flatten()
+            .collect()
+    })
+}
+
+async fn expensive(de: DirEntry) -&gt; usize {
+    // assume this function spawns a task that does heavy I/O on the file
+    de.file_name().len()
+}
+
+#[tokio::main(flavor = "current_thread")]
+async fn main() {
+    let sem = Semaphore::new(10);
+    let path = PathBuf::from("/tmp/foo");
+    let results = join_all(process_directory(path, &amp;expensive, &amp;sem).await);
+    dbg!(results.await);
+}</code></pre></pre>
+<p>And is met with a new complaint from the compiler:</p>
+<pre><code>error[E0308]: `if` and `else` have incompatible types
+  --&gt; src/main.rs:34:24
+   |
+18 |    fn process_directory&lt;'a, F, P, T&gt;(
+   |                             - this type parameter
+...
+32 |  /                 if ft.is_file() {
+33 |  |                     Some(vec![rate_limit(processor(dir_entry), sem)])
+   |  |                     ------------------------------------------------- expected because of this
+34 |  |                 } else if ft.is_dir() {
+   |  |________________________^
+35 | ||                     Some(process_directory(dir_entry.path(), processor, sem).await)
+36 | ||                 } else {
+37 | ||                     None
+38 | ||                 }
+   | ||                 ^
+   | ||_________________|
+   | |__________________`if` and `else` have incompatible types
+   |                    expected opaque type, found type parameter `F`
+   |
+   = note: expected type `Option&lt;Vec&lt;impl futures::Future&gt;&gt;`
+              found enum `Option&lt;Vec&lt;F&gt;&gt;`
+   = help: type parameters must be constrained to match other types
+   = note: for more information, visit https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters
+</code></pre>
+<p>Alan is confused. In line 33, <code>rate_limit</code> returns <code>Future&lt;Output = usize&gt;</code>, so why is this an opaque <code>Future</code>? So far as he can tell, the <code>Option&lt;Vec&lt;impl futures::Future&lt;Output = usize&gt;</code> returned on line 33 is the same type as the <code>Option&lt;Vec&lt;F&gt;&gt;</code> where <code>F: Future&lt;Output = usize&gt;</code> returned on line 35.</p>
+<p>So he strips the problem down to only a few lines of code, and still he cannot figure out why the compiler complains:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use futures::{future::pending, Future};
+
+async fn passthru&lt;F, T&gt;(fut: F) -&gt; T
+where
+    F: Future&lt;Output = T&gt;,
+{
+    fut.await
+}
+
+fn main() {
+    let func = pending::&lt;u8&gt;;
+    match true {
+        true =&gt; passthru(func()),
+        false =&gt; func(),
+    };
+}</code></pre></pre>
+<p>To which the compiler nevertheless replies:</p>
+<pre><code>error[E0308]: `match` arms have incompatible types
+  --&gt; src/main.rs:14:18
+   |
+12 | /     match true {
+13 | |         true =&gt; passthru(func()),
+   | |                 ---------------- this is found to be of type `impl futures::Future`
+14 | |         false =&gt; func(),
+   | |                  ^^^^^^ expected opaque type, found struct `futures::future::Pending`
+15 | |     };
+   | |_____- `match` arms have incompatible types
+   |
+   = note: expected type `impl futures::Future`
+            found struct `futures::future::Pending&lt;u8&gt;`
+</code></pre>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<ul>
+<li>The manual desugaring required for <code>async</code> recursion erases some of the "magic" of <code>async</code>.</li>
+<li>Some programmers may never implement custom types that are <code>Future</code>, instead using standard constructs like <code>async</code> blocks to produce them. In these cases, the programmer might assume the returned <code>Future</code>s should have concrete types with known sizes, which would allow them to work directly with the returned types rather than have to deal with the complexities of trait objects, <code>Box</code>-ing, and opaque type comparisons.</li>
+<li><code>Pin</code> documentation focuses on data that can or cannot "move" in memory. To someone new to Rust, it might be easy to confuse this concept with "move" semantics in the context of ownership.</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<p>I describe my own experience while working on my first Rust project.</p>
+<h3 id="why-did-you-choose-alan-to-tell-this-story"><a class="header" href="#why-did-you-choose-alan-to-tell-this-story"><strong>Why did you choose Alan to tell this story?</strong></a></h3>
+<p>I chose Alan to tell this story because I envision him comping from Python. I mostly work in <code>asyncio</code> Python by day, which means my exposure to async is shaped by what I'd expect from a language without traits, and one where heap wrangling and memory addressing is abstracted away.</p>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<p>I'm not sure, but I'd assume:</p>
+<ul>
+<li><strong>Grace</strong> would not get tripped up on the need for <code>Box::pin</code></li>
+<li><strong>Niklaus</strong> might share the confusion expressed above</li>
+<li><strong>Barbara</strong> might wish we could use <code>async</code> sugaring in recursive functions.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_builds_a_cache.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_wants_prefetch_iterator.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_builds_a_cache.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_wants_prefetch_iterator.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

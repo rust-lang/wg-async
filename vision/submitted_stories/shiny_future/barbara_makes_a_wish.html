@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Barbara makes a wish - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/shiny_future/barbara_makes_a_wish.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-shiny-future-stories-barbara-makes-a-wish"><a class="header" href="#-shiny-future-stories-barbara-makes-a-wish">✨ Shiny future stories: Barbara makes a wish</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "shiny future" story submitted as part of the brainstorming period. It is derived from what actual Rust users wish async Rust should be, and is meant to deal with some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as peoples needs and desires for async Rust may differ greatly, shiny future stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>. At worst they are only useful for a small set of people or their problems might be better solved with alternative solutions). Alternatively, you may wish to <a href="../shiny_future.html">add your own shiny vision story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p><a href="../../characters/barbara.html">Barbara</a> has an initial prototype of a new service she wrote in sync Rust. She then decides, since the service is extremely I/O bound, to port it to async Rust and her benchmarks have led her to believe that performance is being left on the table.</p>
+<p>She does this by sprinkling <code>async/.await</code> everywhere, picking an executor, and moving dependencies from sync to async.</p>
+<p>Once she has the program compiling, she thinks "oh that was easy". She runs it for the first time and surprisingly she finds out that when hitting an endpoint, nothing happens.</p>
+<p>Barbara, always prepared, has already added logging to her service and she checks the logs. As she expected, she sees here that the endpoint handler has been invoked but then... nothing. Barbara exclaims, "Oh no! This was not what I was expecting, but let's dig deeper."</p>
+<p>She checks the code and sees that the endpoint spawns several tasks, but unfortunately those tasks don't have much logging in them.</p>
+<p>Barbara now remembers hearing something about a <code>wish4-async-insight</code> crate, which has gotten some buzz on her Rust-related social media channels. She decides to give that a shot.</p>
+<p>She adds the crate as a dependency to her <code>Cargo.toml</code>, renaming it to just <code>insight</code> to make it easier to reference in her code, and then initializes it in her main async function.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn accept_loop(addr: impl ToSocketAddrs) -&gt; Result&lt;()&gt; {
+    insight::init(); // new code
+    ...
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Barbara rebuilds and runs her program again. She doesn't see anything different in the terminal output for the program itself though, and the behavior is the same as before: hitting an endpoint, nothing happens. She double-checks the readme for the <code>wish4-async-insight</code> crate, and realizes that she needs to connect other programs to her service to observe the insights being gathered. Barbara decides that she wants to customize the port that <code>insight</code> is listening on before she starts her experiments with those programs.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn accept_loop(addr: impl ToSocketAddrs) -&gt; Result&lt;()&gt; {
+    insight::init(listen_port =&gt; 8080); // new code, leveraging keyword arguments feature added in 2024
+    ...
+}
+<span class="boring">}</span></code></pre></pre>
+<p>While her code rebuilds, Barbara investigates what programs she might use to connect to the insight crate.</p>
+<p>One such program, <code>consolation</code>, can run in the terminal. Barbara is currently just deploying her service locally on her development box, so she opts to try that out and see what it tells her.</p>
+<pre><code>% rustup install wish4-consolation
+...
+% consolation --port 8080
+</code></pre>
+<p>This brings up a terminal window that looks similar to the Unix <code>top</code> program, except that instead of a list of OS processes, this offers a list of tasks, with each task having a type, ID, and status history (i.e. percentage of time spent in running, ready to poll, or blocked). Barbara skims the output in the list, and sees that one task is listed as currently blocked.</p>
+<p>Barbara taps the arrow-keys and sees that this causes a cursor to highlight different tasks in the list. She highlights the blocked task and hits the Enter key. This causes the terminal to switch to a Task view, describing more details about that task and its status.</p>
+<p>The Task view here says that the task is blocked, references a file and line number, and also includes the line from the source code, which says <code>chan.send(value).await</code>. The blocked task also lists the resources that the task is waiting on: <code>prototype_channel</code>, and next to that there is text on a dark red background: "waiting on channel capacity." Again, Barbara taps the arrow-keys and sees that she can select the line for the resource.</p>
+<p>Barbara notices that this whole time, at the bottom of the terminal, there was a line that says "For help, hit <code>?</code> key"; she taps question mark. This brings up a help message in a scrollable subwindow explaining the task view in general as well as link to online documentation. The help message notes that the user can follow the chain: One can go from the blocked task to the resource it's waiting on, and from that resource to a list of tasks responsible for freeing up the resource.</p>
+<p>Barbara hits the Escape key to close the help window. The highlight is still on the line that says "prototype_channel: waiting on channel capacity"; Barbara hits Enter, and this brings up a list with just one task on it: The channel reader task. Barbara realizes what this is saying: The channel resource is blocking the sender because it is full, and the only way that can be resolved is if the channel reader manages to receive some inputs from the channel.</p>
+<p>Barbara opens the help window again, and brings up the link to the online documentation. There, she sees discussion of resource starvation and the specific case of a bounded channel being filled up before its receiver makes progress. The main responses outlined there are 1. decrease the send rate, 2. increase the receive rate, or 3. increase the channel's internal capacity, noting the extreme approach of changing to an unbounded channel (with the caveat that this risks resource exhaustion).</p>
+<p>Barbara skims the task view for the channel reader, since she wants to determine why it is not making progress. However, she is eager to see if her service as a whole is workable apart from this issue, so she also adopts the quick fix of swapping in an unbounded channel. Barbara is betting that if this works, she can use the data from <code>wish4-async-insight</code> about the channel sizes to put a bounded channel with an appropriate size in later.</p>
+<p>Barbara happily moves along to some initial performance analysis of her "working" code, eager to see what other things <code>wish4-async-insight</code> will reveal during her explorations.</p>
+<h3 id="alternate-history"><a class="header" href="#alternate-history">Alternate History</a></h3>
+<p><em>The original status quo story just said that Barbara's problem was resolved (sort of) by switching to an unbounded channel. I, much like Barbara, could not tell <em>why</em> this resolved her problem. In particular, I could not tell whether there was an outright deadlock due to a cycle in the task-resource dependency chain that, or if there something more subtle happening. In the story above, I assumed it was the second case: something subtle.</em></p>
+<p><em>Here's an important alternate history though, for the first case of a cycle. Its ...</em> the same story, right up to when Barbara first runs <code>consolation</code>:</p>
+<pre><code>% rustup install wish4-consolation
+...
+% consolation --port 8080
+</code></pre>
+<p>This brings up a terminal window that looks similar to the Unix <code>top</code> program, except that instead of a list of OS processes, this offers a list of tasks, and shows their status (i.e. running, ready to poll, or blocked), as well as some metrics about how long the tasks spend in each state.</p>
+<p>At the top of the screen, Barbara sees highlighted warning: "deadlock cycle was detected. hit <code>P</code> for more info."</p>
+<p>Barbara types capital <code>P</code>. The terminal switches to "problem view," which shows</p>
+<ul>
+<li>The task types, ID, and attributes for each type.</li>
+<li>The resources being awaited on</li>
+<li>The location / backtrace of the await.</li>
+<li>A link to a documentation page expanding on the issue.</li>
+</ul>
+<p>The screen also says "hit <code>D</code> to generate a graphviz <code>.dot</code> file to disk describing the cycle."</p>
+<p>Barbara hits <code>D</code> and stares at the resulting graph, which shows a single circle (labelled "task"), and an arc to a box (labelled "prototype_channel"), and an arc from that box back to the circle. The arc from the circle to the box is labelled  <code>send: waiting on channel capacity</code>, and the arc from the box to the circle is labelled "sole consumer (mpsc channel)".</p>
+<pre class="mermaid">graph TD
+  task -- send: waiting on channel capacity --&gt; prototype_channel
+  prototype_channel -- &quot;sole receiver (mpsc channel)&quot; --&gt; task
+  task((task))
+</pre>
+<p>Barbara suddenly realizes her mistake: She had constructed a single task that was sometimes enqueuing work (by sending messages on the channel), and sometimes dequeuing work, but she had not put any controls into place to ensure that the dequeuing (via <code>recv</code>) would get prioritized as the channel filled up.</p>
+<p>Barbara reflects on the matter: she knows that she could swap in an unbounded channel to resolve this, but she thinks that she would be better off thinking a bit more about her system design, to see if she can figure out a way to supply back-pressure so that the send rate will go down as the channel fills up.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-status-quo-story-or-stories-are-you-retelling"><a class="header" href="#what-status-quo-story-or-stories-are-you-retelling"><strong>What status quo story or stories are you retelling?</strong></a></h3>
+<p><a href="../status_quo/barbara_wants_async_insights.html">Barbara wants Async Insights</a></p>
+<h3 id="what-is-alan-most-excited-about-in-this-future-is-he-disappointed-by-anything"><a class="header" href="#what-is-alan-most-excited-about-in-this-future-is-he-disappointed-by-anything"><strong>What is <a href="../../characters/alan.html">Alan</a> most excited about in this future? Is he disappointed by anything?</strong></a></h3>
+<p>Alan is happy to see a tool that gives one a view into the internals of the async executor.</p>
+<p>Alan is not so thrilled about using the <code>consolation</code> terminal interface; but luckily there are other options, namely IDE/editor plugins as well as a web-browser based client, that offer even richer functionality, such as renderings of the task/resource dependency graph.</p>
+<h3 id="what-is-grace-most-excited-about-in-this-future-is-she-disappointed-by-anything"><a class="header" href="#what-is-grace-most-excited-about-in-this-future-is-she-disappointed-by-anything"><strong>What is <a href="../../characters/grace.html">Grace</a> most excited about in this future? Is she disappointed by anything?</strong></a></h3>
+<p>Grace is happy to see a tool, but wonders whether it could have been integrated into <code>gdb</code>.</p>
+<p>Grace is not so thrilled to learn that this tool is not going to try to provide specific insight into performance issues that arise solely from computational overheads in her own code. (The readme for <code>wish4-async-insight</code> says on this matter "for that, use perf," which Grace finds unsatisfying.)</p>
+<h3 id="what-is-niklaus-most-excited-about-in-this-future-is-he-disappointed-by-anything"><a class="header" href="#what-is-niklaus-most-excited-about-in-this-future-is-he-disappointed-by-anything"><strong>What is <a href="../../characters/niklaus.html">Niklaus</a> most excited about in this future? Is he disappointed by anything?</strong></a></h3>
+<p>Niklaus is happy to learn that the <code>wish4-async-insight</code> is supported by both <code>async-std</code> and <code>tokio</code>, since he relies on friends in both communities to help him learn more about Async Rust.</p>
+<p>Niklaus is happy about the tool's core presentation oriented around abstractions he understands (tasks and resources). Niklaus is also happy about the integrated help.</p>
+<p>However, Niklaus is a little nervous about some of the details in the output that he doesn't understand.</p>
+<h3 id="what-is-barbara-most-excited-about-in-this-future-is-she-disappointed-by-anything"><a class="header" href="#what-is-barbara-most-excited-about-in-this-future-is-she-disappointed-by-anything"><strong>What is <a href="../../characters/barbara.html">Barbara</a> most excited about in this future? Is she disappointed by anything?</strong></a></h3>
+<p>Barbara is thrilled with how this tool has given her insight into the innards of the async executor she is using.</p>
+<p>She is disappointed to learn that not every async executor supports the <code>wish4-async-insight</code> crate. The crate works by monitoring state changes within the executor, instrumented via the <code>tracing</code> crate. Not every async-executor is instrumented in a fashion compatible with <code>wish4-async-insight</code>.</p>
+<h3 id="what-projects-benefit-the-most-from-this-future"><a class="header" href="#what-projects-benefit-the-most-from-this-future"><strong>What <a href="../../projects.html">projects</a> benefit the most from this future?</strong></a></h3>
+<p>Any async codebase that can hook into the <code>wish4-async-insight</code> crate and supply its data via a network port during development would benefit from this. So, I suspect any codebase that uses a sufficiently popular (i.e. appropriately instrumented) async executor will benefit.</p>
+<p>The main exception I can imagine right now is <a href="../../projects/MonsterMesh.html">MonsterMesh</a>: its resource constraints and <code>#![no_std]</code> environment  are almost certainly incompatible with the needs of the <code>wish4-async-insight</code> crate.</p>
+<h3 id="are-there-any-projects-that-are-hindered-by-this-future"><a class="header" href="#are-there-any-projects-that-are-hindered-by-this-future"><strong>Are there any <a href="../../projects.html">projects</a> that are hindered by this future?</strong></a></h3>
+<p>The only "hindrance" is that the there is an expectation that the async-executor be instrumented appropriately to feed its data to the <code>wish4-async-insight</code> crate once it is initialized.</p>
+<h3 id="what-are-the-incremental-steps-towards-realizing-this-shiny-future-optional"><a class="header" href="#what-are-the-incremental-steps-towards-realizing-this-shiny-future-optional"><strong>What are the incremental steps towards realizing this shiny future?</strong> (Optional)</a></h3>
+<ul>
+<li>
+<p>Get tracing crate to 1.0 so that async executors can rely on it.</p>
+</li>
+<li>
+<p>Prototype an insight console atop a concrete async executor (e.g. <code>tokio</code>)</p>
+</li>
+<li>
+<p>Develop a shared protocol atop <code>tracing</code> that compatible async executors will use to provide the insightful data.</p>
+</li>
+</ul>
+<h3 id="does-realizing-this-future-require-cooperation-between-many-projects-optional"><a class="header" href="#does-realizing-this-future-require-cooperation-between-many-projects-optional"><strong>Does realizing this future require cooperation between many projects?</strong> (Optional)</a></h3>
+<p>Yes. Yes it does.</p>
+<p>At the very least, as mentioned among the "incremental steps", we will need a common protocol that the async executors use to communicate their internal state.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/shiny_future/barbara_enjoys_an_async_sandwich.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/shiny_future/barbara_wants_async_rw.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/shiny_future/barbara_enjoys_an_async_sandwich.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/shiny_future/barbara_wants_async_rw.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

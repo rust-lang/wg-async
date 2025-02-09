@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alan tries using a socket Sink - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/alan_tries_a_socket_sink.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-alan-tries-using-a-socket-sink"><a class="header" href="#-status-quo-stories-alan-tries-using-a-socket-sink">😱 Status quo stories: Alan tries using a socket Sink</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>Alan is working on a project that uses <code>async-std</code>. He has worked a bit with <code>tokio</code> in the past and is more familiar with that, but he is interested to learn something how things work in <code>async-std</code>.</p>
+<p>One of the goals is to switch from a WebSocket implementation using raw TCP sockets to one managed behind an HTTP server library, so both HTTP and WebSocket RPC calls can be forwarded to a transport-agnostic RPC server.</p>
+<p>In this server implementation:</p>
+<ul>
+<li>RPC call strings can be received over a WebSocket</li>
+<li>The strings are decoded and sent to an RPC router that calls the methods specified in the RPC call</li>
+<li>Some of the methods that are called can take some time to return a result, so they are spawned separately
+<ul>
+<li>RPC has built-in properties to organize call IDs and methods, so results can be sent in any order</li>
+</ul>
+</li>
+<li>Since WebSockets are bidirectional streams (duplex sockets), the response is sent back through the same client socket</li>
+</ul>
+<p>He finds the HTTP server <code>tide</code> and it seems fairly similar to <code>warp</code>, which he was using with <code>tokio</code>. He also finds the WebSocket middleware library <code>tide-websockets</code> that goes with it.</p>
+<p>However, as he's working, Alan encounters a situation where the socket needs to be written to within an async thread, and the traits just aren't working. He wants to split the stream into a sender and receiver:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use futures::{SinkExt, StreamExt};
+use async_std::sync::{Arc, Mutex};
+use log::{debug, info, warn};
+
+async fn rpc_ws_handler(ws_stream: WebSocketConnection) {
+    let (ws_sender, mut ws_receiver) = ws_stream.split();
+    let ws_sender = Arc::new(Mutex::new(ws_sender));
+
+    while let Some(msg) = ws_receiver.next().await {
+        debug!("Received new WS RPC message: {:?}", msg);
+
+        let ws_sender = ws_sender.clone();
+
+        async_std::task::spawn(async move {
+            let res = call_rpc(msg).await?;
+
+            match ws_sender.lock().await.send_string(res).await {
+                Ok(_) =&gt; info!("New WS data sent."),
+                Err(_) =&gt; warn!("WS connection closed."),
+            };
+        });
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>split</code> method splits the <code>ws_stream</code> into two separate halves:</p>
+<ul>
+<li>a producer (<code>ws_sender</code>) that implements a <code>Stream</code> with the messages arriving on the websocket;</li>
+<li>a consumer (<code>ws_receiver</code>) that implements <code>Sink</code>, which can be used to send responses.</li>
+</ul>
+<p>This way, one task can pull items from the <code>ws_sender</code> and spawn out subtasks. Those subtasks share access to the <code>ws_receiver</code> and send messages there when they're done. Unfortunately, Alan finds that he can't use this pattern here, as the <code>Sink</code> trait wasn't implemented in the WebSockets middleware library he's using.</p>
+<p>Alan also tries creating a sort of poller worker thread using an intermediary messaging channel, but he has trouble reasoning about the code and wasn't able to get it to compile:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use async_std::channel;
+use async_std::sync::{Arc, Mutex};
+use log::{debug, info, warn};
+
+async fn rpc_ws_handler(ws_stream: WebSocketConnection) {
+    let (ws_sender, mut ws_receiver) = channel::unbounded::&lt;String&gt;();
+    let ws_receiver = Arc::new(ws_receiver);
+
+    let ws_stream = Arc::new(Mutex::new(ws_stream));
+    let poller_ws_stream = ws_stream.clone();
+
+    async_std::task::spawn(async move {
+        while let Some(msg) = ws_receiver.next().await {
+            match poller_ws_stream.lock().await.send_string(msg).await {
+                Ok(msg) =&gt; info!("New WS data sent. {:?}", msg),
+                Err(msg) =&gt; warn!("WS connection closed. {:?}", msg),
+            };
+        }
+    });
+
+    while let Some(msg) = ws_stream.lock().await.next().await {
+        async_std::task::spawn(async move {
+            let res = call_rpc(msg).await?;
+            ws_sender.send(res);
+        });
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Alan wonders if he's thinking about it wrong, but the solution isn't as obvious as his earlier <code>Sink</code> approach. Looking around, he realizes a solution to his problems already exists-- as others have been in his shoes before-- within two other nearly-identical pull requests, but they were both closed by the project maintainers. He tries opening a third one with the same code, pointing to an example where it was actually found to be useful. To his joy, his original approach works with the code in the closed pull requests in his local copy! Alan's branch is able to compile for the first time.</p>
+<p>However, almost immediately, his request is closed <a href="https://github.com/http-rs/tide-websockets/issues/15#issuecomment-797090892">with a comment suggesting that he try to create an intermediate polling task instead</a>, much as he was trying before. Alan is feeling frustrated. "I already tried that approach," he thinks, "and it doesn't work!"</p>
+<p>As a result of his frustration, Alan calls out one developer of the project on social media. He knows this developer is opposed to the <code>Sink</code> traits. Alan's message is not well-received: the maintainer sends a short response and Alan feels dismissed. Alan later finds out he was blocked. A co-maintainer responds to the thread, defending and supporting the other maintainer's actions, and suggests that Alan "get over it". Alan is given a link to a blog post. The post provides a number of criticisms of <code>Sink</code> but, after reading it, Alan isn't sure what he should do instead.</p>
+<p>Because of this heated exchange, Alan grows concerned for his own career, what these well-known community members might think or say about his to others, and his confidence in the community surrounding this language that he really enjoys using is somewhat shaken.</p>
+<p>Despite this, Alan takes a walk, gathers his determination, and commits to maintaining his fork with the changes from the other pull requests that were shut down. He publishes his version to crates.io, vowing to be more welcoming to "misfit" pull requests like the one he needed.</p>
+<p>A few weeks later, Alan's work at his project at work is merged with his new forked crate. It's a big deal, his first professional open source contribution to a Rust project! Still, he  doesn't feel like he has a sense of closure with the community. Meanwhile, his friends say they want to try Rust, but they're worried about its async execution issues, and he doesn't know what else to say, other than to offer a sense of understanding. Maybe the situation will get better someday, he hopes.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<ul>
+<li>There are often many sources of opinion in the community regarding futures and async, but these opinions aren't always backed up with examples of how it should be better accomplished. Sometimes we just find a thing that works and would prefer to stick with it, but others argue that some traits make implementations unnecessarily complex, and choose to leave it out. Disagreements like these in the ecosystem can be harmful to the reputation of the project and the participants.</li>
+<li>If there's a source of substantial disagreement, the community becomes even further fragmented, and this may cause additional confusion in newcomers.</li>
+<li>Alan is used to fragmentation from the communities he comes from, so this isn't too discouraging, but what's difficult is that there's enough functionality overlap in async libraries that it's tempting to get them to interop with each other as-needed, and this can lead to architectural challenges resulting from a difference in design philosophies.</li>
+<li>It's also unclear if Futures are core to the Rust asynchronous experience, much as Promises are in JavaScript, or if the situation is actually more complex.</li>
+<li>The <code>Sink</code> trait is complex but it solves a real problem, and the workarounds required to solve problems without it can be unsatisfactory.</li>
+<li>Disagreement about core abstractions like <code>Sink</code> can make interoperability between runtimes more difficult; it also makes it harder for people to reproduce patterns they are used to from one runtime to another.</li>
+<li>It is all too easy for technical discussions like this to become heated; it's important for all participants to try and provide each other with the "benefit of the doubt".</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<ul>
+<li><a href="https://github.com/http-rs/tide-websockets">https://github.com/http-rs/tide-websockets</a>
+<ul>
+<li><a href="https://github.com/http-rs/tide-websockets/pull/17">https://github.com/http-rs/tide-websockets/pull/17</a> - Third pull request</li>
+<li><a href="https://github.com/http-rs/tide-websockets/issues/15#issuecomment-797090892">https://github.com/http-rs/tide-websockets/issues/15#issuecomment-797090892</a> - Suggestion to use a broadcast channel</li>
+</ul>
+</li>
+<li><a href="https://github.com/ChainSafe/forest/commit/ff2691bab92823a8595d1d456ed5fa9683641d76#diff-2770a30d9f259666fb470d6f11cf1851ebb2d579a1480a8173d3855572748385">https://github.com/ChainSafe/forest/commit/ff2691bab92823a8595d1d456ed5fa9683641d76#diff-2770a30d9f259666fb470d6f11cf1851ebb2d579a1480a8173d3855572748385</a> - Where some of the original polling work is replaced
+<ul>
+<li><a href="https://github.com/ChainSafe/forest/blob/b9fccde00e7356a5e336665a7e482d4ef439d714/node/rpc/src/rpc_ws_handler.rs#L121">https://github.com/ChainSafe/forest/blob/b9fccde00e7356a5e336665a7e482d4ef439d714/node/rpc/src/rpc_ws_handler.rs#L121</a> - File with Sink solution</li>
+</ul>
+</li>
+<li><a href="https://github.com/cryptoquick/tide-websockets-sink">https://github.com/cryptoquick/tide-websockets-sink</a></li>
+<li><a href="https://twitter.com/cryptoquick/status/1370143022801846275">https://twitter.com/cryptoquick/status/1370143022801846275</a></li>
+<li><a href="https://twitter.com/cryptoquick/status/1370155726056738817">https://twitter.com/cryptoquick/status/1370155726056738817</a></li>
+<li><a href="https://blog.yoshuawuyts.com/rust-streams/#why-we-do-not-talk-about-the-sink-trait">https://blog.yoshuawuyts.com/rust-streams/#why-we-do-not-talk-about-the-sink-trait</a></li>
+<li><a href="https://thephd.github.io/output-ranges">[C++] Throwing Out The Kitchen Sink</a></li>
+</ul>
+<h3 id="why-did-you-choose-alan-to-tell-this-story"><a class="header" href="#why-did-you-choose-alan-to-tell-this-story"><strong>Why did you choose <a href="../../characters/alan.html">Alan</a> to tell this story?</strong></a></h3>
+<ul>
+<li>Alan is more representative of the original author's background in JS, TypeScript, and NodeJS.</li>
+</ul>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<ul>
+<li>(I'm not sure.)</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_thinks_he_needs_async_locks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_tries_to_debug_a_hang.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_thinks_he_needs_async_locks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_tries_to_debug_a_hang.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

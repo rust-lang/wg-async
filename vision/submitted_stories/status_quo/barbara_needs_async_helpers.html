@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Barbara needs Async Helpers - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/barbara_needs_async_helpers.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-barbara-needs-async-helpers"><a class="header" href="#-status-quo-stories-barbara-needs-async-helpers">😱 Status quo stories: Barbara needs Async Helpers</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p><a href="../../characters/barbara.html">Barbara</a>, an experienced Rust user, is prototyping an async Rust service for work. To get things working quickly, she decides to prototype in <a href="https://crates.io/crates/tokio/"><code>tokio</code></a>, since it is unclear which runtime her work will use.</p>
+<p>She starts adding warp and <a href="https://crates.io/crates/tokio/"><code>tokio</code></a> to her dependencies list. She notices that <a href="https%3E//crates.io/crates/warp/"><code>warp</code></a> <a href="https://github.com/seanmonstar/warp/#example">suggests</a> using <a href="https://crates.io/crates/tokio/"><code>tokio</code></a> with the <code>full</code> feature. She's a bit concerned about how this might affect the compile times and also that <em>all</em> of tokio is needed for her little project, but she pushes forward.</p>
+<p>As she builds out functionality, she's pleased to see tokio provides a bunch of helpers like <a href="https://docs.rs/tokio/1.4.0/tokio/macro.join.html"><code>join!</code></a> and async versions of the standard library types like channels and mutexes.</p>
+<p>After completing one endpoint, she moves to a new one which requires streaming http responses to the client. Barbara quickly finds out from <a href="https://crates.io/crates/tokio/"><code>tokio</code></a> <a href="https://docs.rs/tokio/1.4.0/tokio/stream/index.html">docs</a>, that it does not provide a stream type, and so she adds <a href="https://crates.io/crates/tokio-stream/"><code>tokio-stream</code></a> to her dependencies.</p>
+<p>Moving on she tries to make some functions generic over the web framework underneath, so she tries to abstract off the functionality to a trait. So she writes an async function inside a trait, just like a normal function.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Client {
+    async fn get();
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Then she gets a helpful error message.</p>
+<pre><code>error[E0706]: functions in traits cannot be declared `async`
+ --&gt; src/lib.rs:2:5
+  |
+2 |     async fn get();
+  |     -----^^^^^^^^^^
+  |     |
+  |     `async` because of this
+  |
+  = note: `async` trait functions are not currently supported
+  = note: consider using the `async-trait` crate: https://crates.io/crates/async-trait
+</code></pre>
+<p>She then realizes that Rust doesn't support async functions in traits yet, so she adds <a href="https://crates.io/crates/async-trait/"><code>async-trait</code></a> to her dependencies.</p>
+<p>Some of her functions are recursive, and she wanted them to be async functions, so she sprinkles some <code>async/.await</code> keywords in those functions.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn sum(n: usize) -&gt; usize {
+    if n == 0 {
+        0
+    } else {
+        n + sum(n - 1).await
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Then she gets an error message.</p>
+<pre><code>error[E0733]: recursion in an `async fn` requires boxing
+ --&gt; src/lib.rs:1:27
+  |
+1 | async fn sum(n: usize) -&gt; usize {
+  |                           ^^^^^ recursive `async fn`
+  |
+  = note: a recursive `async fn` must be rewritten to return a boxed `dyn Future`
+</code></pre>
+<p>So to make these functions async she starts boxing her futures the hard way, fighting with the compiler. She knows that <code>async</code> keyword is sort of a sugar for <code>impl Future</code> so she tries the following at first.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn sum(n: usize) -&gt; Box&lt;dyn Future&lt;Output = usize&gt;&gt; {
+    Box::new(async move {
+        if n == 0 {
+            0
+        } else {
+            n + sum(n - 1).await
+        }
+    })
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The compiler gives the following error.</p>
+<pre><code>error[E0277]: `dyn Future&lt;Output = usize&gt;` cannot be unpinned
+  --&gt; src/main.rs:11:17
+   |
+11 |             n + sum(n - 1).await
+   |                 ^^^^^^^^^^^^^^^^ the trait `Unpin` is not implemented for `dyn Future&lt;Output = usize&gt;`
+   |
+   = note: required because of the requirements on the impl of `Future` for `Box&lt;dyn Future&lt;Output = usize&gt;&gt;`
+   = note: required by `poll`
+</code></pre>
+<p>She then reads about <code>Unpin</code> and <code>Pin</code>, and finally comes up with a solution.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn sum(n: usize) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = usize&gt;&gt;&gt; {
+    Box::pin(async move {
+        if n == 0 {
+            0
+        } else {
+            n + sum(n - 1).await
+        }
+    })
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The code works!</p>
+<p>She searches online for better methods and finds out the <a href="https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html">async-book</a>. She reads about <a href="https://rust-lang.github.io/async-book/07_workarounds/04_recursion.html">recursion</a> and finds out a cleaner way using the <a href="https://crates.io/crates/futures/"><code>futures</code></a> crate.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use futures::future::{BoxFuture, FutureExt};
+
+fn sum(n: usize) -&gt; BoxFuture&lt;'static, usize&gt; {
+    async move {
+        if n == 0 {
+            0
+        } else {
+            n + sum(n - 1).await
+        }
+    }.boxed()
+}
+<span class="boring">}</span></code></pre></pre>
+<p>She also asks one of her peers for a code review asynchronously, and after awaiting their response, she learns about the <a href="https://crates.io/crates/async-recursion/"><code>async-recursion</code></a> crate. Then she adds <a href="https://crates.io/crates/async-recursion/"><code>async-recursion</code></a> to the dependencies. Now she can write the following, which seems reasonably clean:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[async_recursion]
+async fn sum(n: usize) -&gt; usize {
+        if n == 0 {
+            0
+        } else {
+            n + sum(n - 1).await
+        }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>As she is working, she realizes that what she really needs is to write a <code>Stream</code> of data. She starts trying to write her <code>Stream</code> implementation and spends several hours banging her head against her desk in frustration (her challenges are pretty similar to what <a href="./alan_hates_writing_a_stream.html">Alan experienced</a>). Ultimately she's stuck trying to figure out why her <code>&amp;mut self.foo</code> call is giving her errors:</p>
+<pre><code>error[E0277]: `R` cannot be unpinned
+  --src/main.rs:52:26
+   |
+52 |                 Pin::new(&amp;mut self.reader).poll_read(cx, buf)
+   |                          ^^^^^^^^^^^^^^^^ the trait `Unpin` is not implemented for `R`
+   |
+   = note: required by `Pin::&lt;P&gt;::new`
+help: consider further restricting this bound
+   |
+40 |     R: AsyncRead + Unpin,
+   |                  ^^^^^^^
+</code></pre>
+<p>Fortunately, that weekend, <a href="https://github.com/fasterthanlime">@fasterthanlime</a> publishes a <a href="https://fasterthanli.me/articles/pin-and-suffering">blog post</a> covering the gory details of <code>Pin</code>. Reading that post, she learns about <a href="https://crates.io/crates/pin-project/"><code>pin-project</code></a>, which she adds as a dependency. She's able to get her code working, but it's kind of a mess. Feeling quite proud of herself, she shows it to a friend, and they suggest that maybe she ought to try the <a href="https://crates.io/crates/async-stream/"><code>async-stream</code></a> crate. Reading that, she realizes she can use this crate to simplify some of her streams, though not all of them fit.</p>
+<p>"Finally!", Barbara says, breathing a sigh of relief. She is done with her prototype, and shows it off at work, but to her dismay, the team decides that they need to use a custom runtime for their use case. They're building an embedded system and it has relatively limited resources. Barbara thinks, "No problem, it should be easy enough to change runtimes, right?"</p>
+<p>So now Barbara starts the journey of replacing tokio with a myriad of off the shelf and custom helpers. She can't use warp so now she has to find an alternative. She also has to find a new channel implementations and there are a few:</p>
+<ul>
+<li>In <a href="https://crates.io/crates/futures/"><code>futures</code></a></li>
+<li><a href="https://crates.io/crates/async-std/"><code>async-std</code></a> has one, but it seems to be tied to another runtime so she can't use that.</li>
+<li><a href="https://crates.io/crates/smol/"><code>smol</code></a> has one that is independent.</li>
+</ul>
+<p>This process of "figure out which alternative is an option" is repeated many times. She also tries to use the <a href="https://docs.rs/futures/0.3.14/futures/macro.select.html"><code>select!</code></a> macro from <a href="https://crates.io/crates/futures/"><code>futures</code></a> but it requires more pinning and workarounds (not to mention a <a href="https://rust-lang.github.io/wg-async/vision/status_quo/alan_runs_into_stack_trouble.html">stack overflow</a> or two).</p>
+<p>But Barbara fights through all of it. In the end, she gets it to work, but she realizes that she has a ton of random dependencies and associated compilation time. She wonders if all that dependencies will have a negative effect on the binary size. She also had to rewrite some bits of functionality on her own.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<ul>
+<li>Functionality is found either in "framework"-like crates (e.g., tokio) <em>and</em> spread around many different ecosystem crates.</li>
+<li>It's sometimes difficult to discover where this functionality lives.</li>
+<li>Additionally, the trouble of non runtime-agnostic libraries becomes very apparent.</li>
+<li>Helpers and utilities might have analogues across the ecosystem, but they are different in subtle ways.</li>
+<li>Some patterns are clean if you know the right utility crate and very painful otherwise.</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<p><a href="https://github.com/rust-lang/wg-async/issues/105">Issue 105</a></p>
+<h3 id="what-are-helper-functionsmacros"><a class="header" href="#what-are-helper-functionsmacros"><strong>What are helper functions/macros?</strong></a></h3>
+<p>They are functions/macros that helps with certain basic pieces of functionality and features. Like to await on multiple futures concurrently (<code>join!</code> in tokio), or else race the futures and take the result of the one that finishes first.</p>
+<h3 id="will-there-be-a-difference-if-lifetimes-are-involved-in-async-recursion-functions"><a class="header" href="#will-there-be-a-difference-if-lifetimes-are-involved-in-async-recursion-functions"><strong>Will there be a difference if lifetimes are involved in async recursion functions?</strong></a></h3>
+<p>Lifetimes would make it a bit more difficult. Although for simple functions it shouldn't be much of a problem.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn concat&lt;'a&gt;(string: &amp;'a mut String, slice: &amp;'a str) -&gt; Pin&lt;Box&lt;dyn Future&lt;Output = ()&gt; + 'a&gt;&gt; {
+    Box::pin(async move {
+        if !slice.is_empty() {
+            string.push_str(&amp;slice[0..1]);
+            concat(string, &amp;slice[1..]).await;
+        }
+    })
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="why-did-you-choose-barbara-to-tell-this-story"><a class="header" href="#why-did-you-choose-barbara-to-tell-this-story"><strong>Why did you choose <a href="../../characters/barbara.html">Barbara</a> to tell this story?</strong></a></h3>
+<p>This particular issue impacts all users of Rust even (and sometimes especially) experienced ones.</p>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<p>Other characters may not know all their options and hence might have fewer problems as a result.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_makes_their_first_steps_into_async.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_plays_with_async.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_makes_their_first_steps_into_async.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_plays_with_async.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

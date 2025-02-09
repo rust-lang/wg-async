@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Grace debugs a crash dump again - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/shiny_future/grace_debugs_a_crash_dump_again.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-shiny-future-stories-grace-debugs-a-crash-dump-again"><a class="header" href="#-shiny-future-stories-grace-debugs-a-crash-dump-again">✨ Shiny future stories: Grace debugs a crash dump again</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "shiny future" story submitted as part of the brainstorming period. It is derived from what actual Rust users wish async Rust should be, and is meant to deal with some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as peoples needs and desires for async Rust may differ greatly, shiny future stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>. At worst they are only useful for a small set of people or their problems might be better solved with alternative solutions). Alternatively, you may wish to <a href="../shiny_future.html">add your own shiny vision story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>It's been a few years since the new <a href="../../projects/DistriData.html">DistriData</a> database has shipped. For the most part things have gone smoothly. The whole team is confident in trusting the compiler, and they have far fewer bugs in production than they had in the old system. The downside is that now when a bug does make it to production, it tends to be really subtle and take a lot of time to get right.</p>
+<p>Today when Grace opens her e-mail, she discovers she's been assigned to investigate a dump from a crash that has been occurring in production lately. The crash happens rarely, so it's important to glean as much information as possible. They need to get this fixed soon!</p>
+<p>Even though there's a lot of pressure around this situation, Grace is grateful that she won't have to fight her tools to make progress. A lot has changed in Async Rust over the years. The async community got together and defined the Async Debugging Protocol, which provides a standard way for tools to inspect the state of an asynchronous Rust program. Many of the most popular runtimes like Tokio and async-std follow this protocol, and a number of tools have been written to use the protocol as well. Even though Grace's team has opted to build a custom runtime to address their own unique needs, it was not too much work to implement the Async Debugging Protocol and it was well worth it due to the increase in developer productivity. This has truly revolutionized async debugging in much the same way the <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a> did for IDEs.</p>
+<p>Upon opening the crash dump, her favorite debugger immediately gives an overview of the state of the program at the point it crashed. It shows what executors are running, how many OS-level threads each executor is using, what tasks are there, and what the state of each task is. For each thread, Grace can see a stack trace and the debugger provides a logical stack trace for each task as well. Many of the resources that the blocked tasks are waiting on are visible too, particularly those provided by the runtime like timers, mutexes, and I/O.</p>
+<p>This high level, generic view provides a good start, but the team's custom executor provides additional functionality that the Async Debugging Protocol does not support. Still, using the features already provided as a starting point, Grace was able to write some additional debugging macros to recover the additional state. These macros are used by the whole team and are now a standard part of their debugging toolkit.</p>
+<p>Grace has seen a few instances of this crash now and she notices a constellation of tasks that look a little funny. This gives her an idea for what might be going wrong. She uses that to add a new test case than ends up crashing the service in a way that looks very similar. It seems like she's found the bug! Even better, it looks like it should be a simple fix and the team will be able to put this issue behind them once and for all.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-status-quo-stories-are-you-retelling"><a class="header" href="#what-status-quo-stories-are-you-retelling">What status quo stories are you retelling?</a></h3>
+<p>Grace debugs a crash dump.</p>
+<h3 id="what-are-the-key-attributes-of-this-shiny-future"><a class="header" href="#what-are-the-key-attributes-of-this-shiny-future">What are the key attributes of this shiny future?</a></h3>
+<ul>
+<li>Most of the abilities to inspect executor and task state while debugging a live process also work on crash dumps.</li>
+<li>Debugging async programs is both runtime- and tooling- agnostic.
+<ul>
+<li>People should be able to get a good experience using whatever tools they are comfortable with, whether that's gdb, lldb, VS Code, IntelliJ, or a specialized Rust async debugger.</li>
+<li>Debugging tools should be able to work with different runtimes. Not all projects in an organization will use the same runtime, and some may be custom.</li>
+</ul>
+</li>
+<li>It's possible to see the following things while debugging:
+<ul>
+<li>What tasks are running, along with logical stack traces.</li>
+<li>Some idea of what the task is waiting on if it is blocked.</li>
+<li>If there are multiple executors, we can inspect each one.</li>
+<li>Raw stack traces for the OS-level threads that the executors use to schedule tasks.</li>
+<li>Which futures have been passed into a <code>select!</code>, their current state, and which one is being polled.</li>
+</ul>
+</li>
+<li>Additional tooling may be necessary for custom or exotic executors. The hypothetical Async Debugging Protocol is one size fits all, but one size won't fit all. We don't want to constrain what an executor can do just so we can debug it.</li>
+<li>An async runtime should not be required to support these common debugging features. For example, perhaps it requires more space to support and therefore is not appropriate for an extremely constrained embedded environment.</li>
+</ul>
+<p>I envisioned provided this with some kind of "Async Debugging Protocol" that is analogous to the Language Server Protocol. It's not really clear what this would be exactly, and there may be a better approach to solving these problems. For live debugging, it may be as simple as a few traits the executor can implement that provide introspection capabilities. For crash dumps, maybe there's a convention around including a couple of debugging symbols. It might require some kind of rich metadata format that tells the debugger how to inspect and interpret the core data structures for the executor.</p>
+<h3 id="what-is-the-most-shiny-about-this-future"><a class="header" href="#what-is-the-most-shiny-about-this-future">What is the "most shiny" about this future?</a></h3>
+<p>The biggest aspect of this shiny future is the increased developer productivity, particularly in debugging. Many of the status quo stories called out the difficulty of debugging async code. In this shiny future, there are really good tools for live debugging, and many of these work offline in the crash dump case as well.</p>
+<p>As a follow-on, the enhanced developer productivity will support writing more correct and safer programs, and probably allow developers to diagnose performance problems as well. These are a direct consequence of better debugging, but rather an indirect consequence of giving the developer better tools.</p>
+<h3 id="what-are-some-of-the-potential-pitfalls-about-this-future"><a class="header" href="#what-are-some-of-the-potential-pitfalls-about-this-future">What are some of the potential pitfalls about this future?</a></h3>
+<p>Depending on how the "Async Debugging Protocol" works, there may be some overhead in following it. Hopefully this would be minimal, and not require any additional code during normal execution scenarios. But, it might make the debugging symbols or other metadata larger. Following the protocol may constrain some of the choices an async runtime can make.</p>
+<p>At the very least, choosing to follow the protocol will require additional work on the part of the runtime implementor.</p>
+<h3 id="did-anything-surprise-you-when-writing-this-story-did-the-story-go-any-place-unexpected"><a class="header" href="#did-anything-surprise-you-when-writing-this-story-did-the-story-go-any-place-unexpected">Did anything surprise you when writing this story? Did the story go any place unexpected?</a></h3>
+<p>Doing this in a way that is runtime and tooling agnostic will be challenging, so the details of how that could be done are not included in this story.</p>
+<p>In some ways, doing this for a live process seems easier, since you can write code that inspects or reports on its own state. This seems to be the approach that <a href="https://github.com/tokio-rs/console">tokio-console</a> is taking.</p>
+<p>There seems to be a lot of overlap between live debugging scenarios and post-mortem scenarios. With a little care, it might be able to support both using many of the same underlying capabilities.</p>
+<h3 id="what-are-some-variations-of-this-story-that-you-considered-or-that-you-think-might-be-fun-to-write-have-any-variations-of-this-story-already-been-written"><a class="header" href="#what-are-some-variations-of-this-story-that-you-considered-or-that-you-think-might-be-fun-to-write-have-any-variations-of-this-story-already-been-written">What are some variations of this story that you considered, or that you think might be fun to write? Have any variations of this story already been written?</a></h3>
+<p>It would be worth removing the runtime agnostic aspect of this story and looking at how things would look if we just focused on Tokio or async-std. Perhaps each runtime would include a set of debugger macros to help find the runtime's state.</p>
+<h3 id="what-are-some-of-the-things-well-have-to-figure-out-to-realize-this-future-what-projects-besides-rust-itself-are-involved-if-any-optional"><a class="header" href="#what-are-some-of-the-things-well-have-to-figure-out-to-realize-this-future-what-projects-besides-rust-itself-are-involved-if-any-optional">What are some of the things we'll have to figure out to realize this future? What projects besides Rust itself are involved, if any? (Optional)</a></h3>
+<p>A lot of the work here probably will not be done by the core Rust team, other than perhaps to coordinate and guide it. Most of the work will require coordination among projects like Tokio and async-std, as well as the debugging tool authors.</p>
+<p>There does not seem to be an obvious way to implement everything in this story. It would probably be good to focus on a particular runtime at least to get a proof of concept and better sketch out the requirements.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/shiny_future/barbara_wants_async_tracing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../design_docs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/shiny_future/barbara_wants_async_tracing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../design_docs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

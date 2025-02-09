@@ -1,0 +1,467 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Barbara bridges sync and async in perf.rust-lang.org - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/barbara_bridges_sync_and_async.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-barbara-bridges-sync-and-async-in-perfrust-langorg"><a class="header" href="#-status-quo-stories-barbara-bridges-sync-and-async-in-perfrust-langorg">😱 Status quo stories: Barbara bridges sync and async in <code>perf.rust-lang.org</code></a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>Barbara is working on the code for <a href="https://perf.rust-lang.org/">perf.rust-lang.org</a> and she wants to do a web request to load various intermediate results. She has heard that the <code>reqwest</code> crate is quite nice, so she decides to give it a try. She writes up an async function that does her web request:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn do_web_request(url: &amp;Url) -&gt; Data {
+    ...
+}
+<span class="boring">}</span></code></pre></pre>
+<p>She needs to apply this async function to a number of urls. She wants to use the iterator map function, like so:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">async fn do_web_request(url: &amp;Url) -&gt; Data {...}
+
+fn aggregate(urls: &amp;[Url]) -&gt; Vec&lt;Data&gt; {
+    urls
+        .iter()
+        .map(|url| do_web_request(url))
+        .collect()
+}
+
+fn main() {
+    /* do stuff */
+    let data = aggregate();
+    /* do more stuff */
+}</code></pre></pre>
+<p>Of course, since <code>do_web_request</code> is an async fn, she gets a type error from the compiler:</p>
+<pre><code>error[E0277]: a value of type `Vec&lt;Data&gt;` cannot be built from an iterator over elements of type `impl Future`
+  --&gt; src/main.rs:11:14
+   |
+11 |             .collect();
+   |              ^^^^^^^ value of type `Vec&lt;Data&gt;` cannot be built from `std::iter::Iterator&lt;Item=impl Future&gt;`
+   |
+   = help: the trait `FromIterator&lt;impl Future&gt;` is not implemented for `Vec&lt;Data&gt;`
+</code></pre>
+<p>"Of course," she thinks, "I can't call an async function from a closure."</p>
+<h3 id="introducing-block_on"><a class="header" href="#introducing-block_on">Introducing <code>block_on</code></a></h3>
+<p>She decides that since she is not overly concerned about performance, so she decides she'll just use a call to <a href="https://docs.rs/futures/0.3.14/futures/executor/fn.block_on.html"><code>block_on</code> from the <code>futures</code> crate</a> and execute the function synchronously:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">async fn do_web_request(url: &amp;Url) -&gt; Data {...}
+
+fn aggregate(urls: &amp;[Url]) -&gt; Vec&lt;Data&gt; {
+    urls
+        .iter()
+        .map(|url| futures::executor::block_on(do_web_request(url)))
+        .collect()
+}
+
+fn main() {
+    /* do stuff */
+    let data = aggregate();
+    /* do more stuff */
+}</code></pre></pre>
+<p>The code compiles, and it seems to work.</p>
+<h3 id="switching-to-async-main"><a class="header" href="#switching-to-async-main">Switching to async main</a></h3>
+<p>As Barbara works on <a href="https://perf.rust-lang.org/">perf.rust-lang.org</a>, she realizes that she needs to do more and more async operations. She decides to convert her synchronous <code>main</code> function into an <code>async main</code>. She's using tokio, so she is able to do this very conveniently with the <code>#[tokio::main]</code> decorator:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">#[tokio::main]
+async fn main() {
+    /* do stuff */
+    let data = aggregate();
+    /* do more stuff */
+}</code></pre></pre>
+<p>Everything seems to work ok on her laptop, but when she pushes the code to production, it deadlocks immediately. "What's this?" she says. Confused, she runs the code on her laptop a few more times, but it seems to work fine. (There's a faq explaining what's going on. -ed.)</p>
+<p>She decides to try debugging. She fires up a debugger but finds it is isn't really giving her useful information about what is stuck (she has <a href="https://rust-lang.github.io/wg-async/vision/status_quo/alan_tries_to_debug_a_hang.html">basically the same problems that Alan has</a>). <a href="https://rust-lang.github.io/wg-async/vision/status_quo/barbara_wants_async_insights.html">She wishes she could get insight into tokio's state.</a></p>
+<p>Frustrated, she starts reading the tokio docs more closely and she realizes that <code>tokio</code> runtimes offer their own <code>block_on</code> method. "Maybe using tokio's <code>block_on</code> will help?" she thinks, "Worth a try, anyway." She changes the <code>aggregate</code> function to use tokio's <code>block_on</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn block_on&lt;O&gt;(f: impl Future&lt;Output = O&gt;) -&gt; O {
+    let rt = tokio::runtime::Runtime::new().unwrap();
+    rt.block_on(f)
+}
+
+fn aggregate(urls: &amp;[Url]) -&gt; Vec&lt;Data&gt; {
+    urls
+        .iter()
+        .map(|url| block_on(do_web_request(url)))
+        .collect()
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The good news is that the deadlock is gone. The bad news is that now she is getting a panic:</p>
+<blockquote>
+<p>thread 'main' panicked at 'Cannot start a runtime from within a runtime. This happens because a function (like <code>block_on</code>) attempted to block the current thread while the thread is being used to drive asynchronous tasks.'</p>
+</blockquote>
+<p>"Well," she thinks, "I could use the <code>Handle</code> API to get the current runtime instead of creating a new one? Maybe that's the problem."</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn aggregate(urls: &amp;[&amp;str]) -&gt; Vec&lt;String&gt; {
+    let handle = tokio::runtime::Handle::current();
+    urls.iter()
+        .map(|url| handle.block_on(do_web_request(url)))
+        .collect()
+}
+<span class="boring">}</span></code></pre></pre>
+<p>But this also seems to panic in the same way.</p>
+<h3 id="trying-out-spawn_blocking"><a class="header" href="#trying-out-spawn_blocking">Trying out <code>spawn_blocking</code></a></h3>
+<p>Reading more into this problem, she realizes she is supposed to be using <code>spawn_blocking</code>. She tries replacing <code>block_on</code> with <code>tokio::task::spawn_blocking</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn aggregate(urls: &amp;[Url]) -&gt; Vec&lt;Data&gt; {
+    urls
+        .iter()
+        .map(|url| tokio::task::spawn_blocking(move || do_web_request(url)))
+        .collect()
+}
+<span class="boring">}</span></code></pre></pre>
+<p>but now she gets a type error again:</p>
+<pre><code>error[E0277]: a value of type `Vec&lt;Data&gt;` cannot be built from an iterator over elements of type `tokio::task::JoinHandle&lt;impl futures::Future&gt;`
+  --&gt; src/main.rs:22:14
+   |
+22 |             .collect();
+   |              ^^^^^^^ value of type `Vec&lt;Data&gt;` cannot be built from `std::iter::Iterator&lt;Item=tokio::task::JoinHandle&lt;impl futures::Future&gt;&gt;`
+   |
+   = help: the trait `FromIterator&lt;tokio::task::JoinHandle&lt;impl futures::Future&gt;&gt;` is not implemented for `Vec&lt;Data&gt;`
+</code></pre>
+<p>Of course! <code>spawn_blocking</code>, like <code>map</code>, just takes a regular closure, not an async closure; it's purpose is to embed some sync code within an async task, so a sync closure makes sense -- and moreover async closures aren't stable -- but it's all rather frustrating nonetheless. "Well," she thinks, "I can use <code>spawn</code> to get back into an async context!" So she adds a call to <code>spawn</code> inside the <code>spawn_blocking</code> closure:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn aggregate(urls: &amp;[Url]) -&gt; Vec&lt;Data&gt; {
+    urls
+        .iter()
+        .map(|url| tokio::task::spawn_blocking(move || {
+            tokio::task::spawn(async move {
+                do_web_request(url).await
+            })
+        }))
+        .collect()
+}
+<span class="boring">}</span></code></pre></pre>
+<p>But this isn't really helping, as <code>spawn</code> still yields a future. She's getting the same errors.</p>
+<h3 id="trying-out-join_all"><a class="header" href="#trying-out-join_all">Trying out <code>join_all</code></a></h3>
+<p>She remembers now that this whole drama started because she was converting her <code>main</code> function to be <code>async</code>. Maybe she doesn't have to bridge between sync and async? She starts digging around in the docs and finds <code>futures::join_all</code>. Using that, she can change <code>aggregate</code> to be an async function too:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn aggregate(urls: &amp;[Url]) -&gt; Vec&lt;Data&gt; {
+    futures::join_all(
+        urls
+            .iter()
+            .map(|url| do_web_request(url))
+    ).await
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Things are working again now, so she is happy, although she notes that <code>join_all</code> has quadratic time complexity. That's not great.</p>
+<h3 id="filtering"><a class="header" href="#filtering">Filtering</a></h3>
+<p>Later on, she would like to apply a filter to the aggregation operation. She realizes that if she wants to use the fetched data when doing the filtering, she has to filter the vector after the join has completed. She wants to write something like</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn aggregate(urls: &amp;[Url]) -&gt; Vec&lt;Data&gt; {
+    futures::join_all(
+        urls
+            .iter()
+            .map(|url| do_web_request(url))
+            .filter(|data| test(data))
+    ).await
+}
+<span class="boring">}</span></code></pre></pre>
+<p>but she can't, because <code>data</code> is a future and not the <code>Data</code> itself. Instead she has to build the vector first and then post-process it:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn aggregate(urls: &amp;[Url]) -&gt; Vec&lt;Data&gt; {
+    let mut data: Vec&lt;Data&gt; = futures::join_all(
+        urls
+            .iter()
+            .map(|url| do_web_request(url))
+    ).await;
+    data.retain(test);
+    data
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This is annoying, but performance isn't critical, so it's ok.</p>
+<h3 id="and-the-cycle-begins-again"><a class="header" href="#and-the-cycle-begins-again">And the cycle begins again</a></h3>
+<p>Later on, she wants to call <code>aggregate</code> from another binary. This one doesn't have an <code>async main</code>. This context is deep inside of an iterator chain and was previously entirely synchronous. She realizes it would be a lot of work to change all the intervening stack frames to be <code>async fn</code>, rewrite the iterators into streams, etc. She decides to just call <code>block_on</code> again, even though it make her nervous.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story">What are the morals of the story?</a></h3>
+<ul>
+<li>Some projects don't care about max performance and just want things to work once the program compiles.
+<ul>
+<li>They would probably be happy with sync but as the most popular libraries for web requests, databases, etc, offer async interfaces, they may still be using async code.</li>
+</ul>
+</li>
+<li>There are contexts where you can't easily add an <code>await</code>.
+<ul>
+<li>For example, inside of an iterator chain.</li>
+<li>Big block of existing code.</li>
+</ul>
+</li>
+<li>Mixing sync and async code can cause deadlocks that are really painful to diagnose, particularly when you have an async-sync-async sandwich.</li>
+</ul>
+<h3 id="why-did-you-choose-barbara-to-tell-this-story"><a class="header" href="#why-did-you-choose-barbara-to-tell-this-story">Why did you choose Barbara to tell this story?</a></h3>
+<ul>
+<li>Because Mark (who experienced most of it) is a very experienced Rust developer.</li>
+<li>Because you could experience this story regardless of language background or being new to Rust.</li>
+</ul>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters">How would this story have played out differently for the other characters?</a></h3>
+<p>I would expect it would work out fairly similarly, except that the type errors and things might well have been more challenging for people to figure out, assuming they aren't already familiar with Rust.</p>
+<h3 id="why-did-barbara-only-get-deadlocks-in-production-and-not-on-her-laptop"><a class="header" href="#why-did-barbara-only-get-deadlocks-in-production-and-not-on-her-laptop">Why did Barbara only get deadlocks in production, and not on her laptop?</a></h3>
+<p>This is because the production instance she was using had only a single core, but her laptop is a multicore machine. The actual cause of the deadlocks is that <code>block_on</code> basically "takes over" the tokio worker thread, and hence the tokio scheduler cannot run. If that <code>block_on</code> is blocked on another future that will have to execute, then some other thread must take over of completing that future. On Barbara's multicore machine, there were more threads available, so the system did not deadlock. But on the production instance, there was only a single thread. Barbara could have encountered deadlocks on her local machine as well if she had enough instances of <code>block_on</code> running at once.</p>
+<h3 id="could-the-runtime-have-prevented-the-deadlock"><a class="header" href="#could-the-runtime-have-prevented-the-deadlock">Could the runtime have prevented the deadlock?</a></h3>
+<p>One way to resolve this problem would be to have a runtime that creates more threads as needed. This is what was proposed <a href="https://async.rs/blog/stop-worrying-about-blocking-the-new-async-std-runtime/">in this blog post</a>, for example.</p>
+<p>Adapting the number of worker threads has downsides. It requires knowing the right threshold for creating new threads (which is fundamentally unknowable). The result is that the runtime will sometimes observe that some thread seems to be taking a long time and create new threads <em>just before</em> that thread was about to finish. These new threads generate overhead and lower the overall performance. It also requires work stealing and other techniques that can lead to work running on mulitple cores and having less locality. Systems tuned for maximal performance tend to prefer a single thread per core for this reason.</p>
+<p>If some runtimes are adaptive, that may also lead to people writing libraries which block without caring. These libraries would then be a performance or deadlock hazard when used on a runtime that is not adaptive.</p>
+<h3 id="is-there-any-way-to-have-kept-aggregate-as-a-synchronous-function"><a class="header" href="#is-there-any-way-to-have-kept-aggregate-as-a-synchronous-function">Is there any way to have kept <code>aggregate</code> as a synchronous function?</a></h3>
+<p>Yes, Barbara could have written something like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">fn aggregate(urls: &amp;[Url]) -&gt; Vec&lt;Data&gt; {
+    let handle = Handle::current();
+
+    urls.iter()
+        .map(|url| handle.block_on(do_web_request(url)))
+        .collect()
+}
+
+#[tokio::main]
+async fn main() {
+    let data = task::spawn_blocking(move || aggregate(&amp;[Url, Url]))
+        .await
+        .unwrap();
+    println!("done");
+}</code></pre></pre>
+<p>This <code>aggregate</code> function can only safely be invoked from inside a tokio <code>spawn_blocking</code> call, however, since <code>Handle::current</code> will only work in that context. She could also have used the original futures variant of <code>block_on</code>, in that case, and things would also work.</p>
+<h3 id="why-didnt-barbara-just-use-the-sync-api-for-reqwest"><a class="header" href="#why-didnt-barbara-just-use-the-sync-api-for-reqwest">Why didn't Barbara just use the sync API for reqwest?</a></h3>
+<p>reqwest does offer a synchronous API, but it's not enabled by default, you have to use an optional feature. Further, not all crates offer synchronous APIs. Finally, Barbara has had some vague poor experience when using synchronous APIs, such as panics, and so she's learned the heuristic of "use the async API unless you're doing something really, really simple".</p>
+<p>Regardless, the synchronous reqwest API is actually itself implemented using <code>block_on</code>: so Barbara would have ultimately hit the same issues. Further, not all crates offer synchronous APIs -- some offer only async APIs. In fact, these same issues are probably the sources of those panics that Barbara encountered in the past.</p>
+<p>In general, though, embedded sync within async or vice versa works "ok", once you know the right tricks. Where things become challenging is when you have a "sandwich", with async-sync-async.</p>
+<h3 id="do-people-mix-spawn_blocking-and-spawn-successfully-in-real-code"><a class="header" href="#do-people-mix-spawn_blocking-and-spawn-successfully-in-real-code">Do people mix <code>spawn_blocking</code> and <code>spawn</code> successfully in real code?</a></h3>
+<p>Yes! Here is <a href="https://github.com/rust-lang/rustc-perf/blob/3651aa744ab2a22e1adf96a698851165086ad835/site/src/main.rs#L35-L36">some code from perf.rust-lang.org</a> doing exactly that. The catch is that it winds up giving you a future in the end, which didn't work for Barbara because her code is embedded within an iterator (and hence she can't make things async "all the way down").</p>
+<h3 id="what-are-other-ways-people-could-experience-similar-problems-mixing-sync-and-async"><a class="header" href="#what-are-other-ways-people-could-experience-similar-problems-mixing-sync-and-async">What are other ways people could experience similar problems mixing sync and async?</a></h3>
+<ul>
+<li>Using <code>std::Mutex</code> in async code.</li>
+<li>Calling the blocking version of an asynchronous API.
+<ul>
+<li>For example, <code>reqwest::blocking</code>, the synchronous <a href="https://gitlab.freedesktop.org/dbus/zbus/-/blob/main/zbus/src/proxy.rs#L121"><code>zbus</code></a> and <a href="https://github.com/bytebeamio/rumqtt/blob/8de24cbc0484f459246251873aa6c80be8b6e85f/rumqttc/src/client.rs#L224"><code>rumqtt</code></a> APIs.</li>
+<li>These are commonly implemented by using some variant of <code>block_on</code> internally.</li>
+<li>Therefore they can lead to panics or deadlocks depending on what async runtime they are built from and used with.</li>
+</ul>
+</li>
+</ul>
+<h3 id="why-wouldnt-barbara-just-make-everything-async-from-the-start"><a class="header" href="#why-wouldnt-barbara-just-make-everything-async-from-the-start">Why wouldn't Barbara just make everything async from the start?</a></h3>
+<p>There are times when converting synchronous code to async is difficult or even impossible. Here are some of the reasons:</p>
+<ul>
+<li><a href="./alan_needs_async_in_traits.html">Asynchronous functions cannot appear in trait impls</a>.</li>
+<li>Asynchronous functions cannot be called from APIs that take closures for callbacks, like <code>Iterator::map</code> in this example.</li>
+<li>Sometimes the synchronous functions come from other crates and are not fully under their control.</li>
+<li>It's just a lot of work!</li>
+</ul>
+<h3 id="how-many-variants-of-block_on-are-there"><a class="header" href="#how-many-variants-of-block_on-are-there">How many variants of <code>block_on</code> are there?</a></h3>
+<ul>
+<li>the <code>futures</code> crate offers a runtime-independent block-on (which can lead to deadlocks, as in this story)</li>
+<li>the <code>tokio</code> crate offers a <code>block_on</code> method (which will panic if used inside of another tokio runtime, as in this story)</li>
+<li>the <a href="https://crates.io/crates/pollster"><code>pollster</code></a> crate exists just to offer <code>block_on</code></li>
+<li>the <a href="https://docs.rs/futures-lite/1.11.3/futures_lite/future/fn.block_on.html"><code>futures-lite</code></a> crate offers a <code>block_on</code></li>
+<li>the <a href="https://docs.rs/async-std/1.9.0/async_std/task/fn.block_on.html"><code>aysnc-std</code></a> crate offers <code>block_on</code></li>
+<li>the <a href="https://docs.rs/async-std/1.9.0/async_std/task/fn.block_on.html"><code>async-io</code></a> crate offers <code>block_on</code></li>
+<li>...there are probably more, but I think you get the point.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_benchmarks_async_trait.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_builds_an_async_executor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_benchmarks_async_trait.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_builds_an_async_executor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

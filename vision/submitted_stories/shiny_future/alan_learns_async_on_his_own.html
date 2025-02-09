@@ -1,0 +1,614 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alan learns async on his own - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/shiny_future/alan_learns_async_on_his_own.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-shiny-future-stories-alan-learns-async-on-his-own"><a class="header" href="#-shiny-future-stories-alan-learns-async-on-his-own">✨ Shiny future stories: Alan learns async on his own</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "shiny future" story submitted as part of the
+brainstorming period. It is derived from what actual Rust users wish
+async Rust should be, and is meant to deal with some of the challenges
+that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the
+FAQ, feel free to open a PR making edits (but keep in mind that, as
+peoples needs and desires for async Rust may differ greatly, shiny
+future stories [cannot be wrong]. At worst they are only useful for a
+small set of people or their problems might be better solved with
+alternative solutions). Alternatively, you may wish to <a href="../shiny_future.html">add your own
+shiny vision story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p><a href="../../characters/alan.html">Alan</a> is trying to pick up Rust, and wants to build a command-line web
+scraper since it's a project he's recently written in Go. The program
+takes a URL, and recursively downloads all URLs named in all fetched
+pages.</p>
+<p>Alan goes to crates.io and searches for "http client", and finds a
+library called <code>reqwest</code>. He opens its documentation, and sees that the
+library has him choose between an "async" and a "blocking" client.
+Confused, Alan types in "rust async" in his favorite search engine, and
+finds the <a href="https://rust-lang.github.io/async-book/">Rust async book</a>. On the very first page there's a summary of
+where async is useful and where it's not, as well as some of the
+downsides of each approach. Alan sees that for "make a single web
+request", async is not generally necessary, whereas for "making many
+network requests concurrently" async is recommended. Since Alan expects
+his crawler to make many requests, he decides he probably wants
+async for this application.</p>
+<p>The async book tells Alan that he should mark his <code>main</code> function as
+<code>async fn</code>, so he does. He then follows the <code>reqwest</code> async examples,
+and is able to successfully make his crawler download a single web page.
+Next, he wants to parse each page to extract additional URLs to fetch.
+So, he finds a library that can parse HTML, <code>quick-xml</code>. He sets up his
+application with a <code>HashSet</code> to store all the yet-to-be-parsed URLs, and
+then writes a loop that pulls out a URL from the set, issues a HTTP
+request, awaits the response bytes, and passes them to <code>quick-xml</code>. Alan
+first tried to give the <code>http::Response</code> directly to
+<code>quick_xml::Reader::from_reader</code>, but the compiler told him:</p>
+<pre><code class="language-text">error: This type does not implement `Read`, which is required by `Reader::from_reader`.
+
+    let page = Reader::from_reader(request.await?);
+                                   ^^^^^^^^^^^^^^
+
+      help: The type does implement `AsyncRead`, but the method does not support asynchronous inputs.
+suggestion: Use a method that supports asynchronous readers or read the data to a `Vec&lt;u8&gt;` first,
+            and then pass that to `Reader::from_reader` instead (`Vec&lt;u8&gt;` implements `Read`).
+</code></pre>
+<p>Alan has his program iterate over all the links on the fetched page, and
+add any URLs he finds to the <code>HashSet</code>, before he then goes around the
+loop again. He is pretty satisfied -- the program seems to work well.
+However, it's fairly slow, as it only fetches one page at a time. Alan
+looks in the async book he discovered earlier, and sees a chapter titled
+"Doing many things at once". The chapter tells Alan that he has three
+options:</p>
+<ul>
+<li>use <em>select</em> to wait for the first of many futures to complete;</li>
+<li>use <em>join</em> to wait on many futures to all complete; and</li>
+<li>use <em>spawn</em> to run a future in the background.</li>
+</ul>
+<p>Alan figures that his program should keep many requests in flight at the
+same time, and then parse each one as it finishes, so he goes for the
+select approach. He writes:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut requests = Select::new();
+requests.insert(client.get(start_url).send());
+while !requests.is_empty() {
+    let response = requests.await;
+    // Use quick-xml to extract urls from response.
+    // For each url:
+        if seen_urls.insert(url.clone()) {
+            requests.insert(client.get(url).send());
+        }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This works, and Alan is delighted. But it seems to work a bit <em>too</em> well
+-- his crawler is so fast that it starts getting rate-limited by the
+servers he runs it against. So, Alan decides to make his crawler a bit
+less aggressive, and adds a call to <code>std::thread::sleep</code> after he parses
+each page. He compiles his application again, and sees a new warning
+from the compiler:</p>
+<pre><code class="language-text">warning: blocking call in asynchronous code
+
+    std::thread::sleep(Duration::from_secs(1));
+    ^^^^^^^^^^^^^^^^^^
+
+      help: If the thread is put to sleep, other asynchronous code running
+            on the same thread does not get to run either.
+suggestion: Use the asynchronous std::future::sleep method instead of std::thread::sleep in async code.
+   reading: See the "Blocking in async code" chapter in the Rust async book for more details.
+</code></pre>
+<p>Alan is happy that the compiler told him about this problem up front,
+rather than his downloads being held up during the entire sleep period!
+He does as the compiler instructs, and replaces <code>thread::sleep</code> with its
+asynchronous alternative and an <code>await</code>. He then runs his code again,
+and the warning is gone, and everything seems to work correctly.</p>
+<p>While looking at his code in his editor, however, Alan notices a little
+yellow squiggly line next to his <code>while</code> loop. Hovering over it, he sees
+a warning from a tool called "Clippy", that says:</p>
+<pre><code class="language-text">warning: 
+
+    while !requests.is_empty() {
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^ this loop
+
+        let response = requests.await;
+                       ^^^^^^^^^^^^^^ awaits one future from a `Select`
+    
+    
+        std::future::sleep(Duration::from_secs(1)).await;
+        ^^^^^^^^^^^^^^^^^^ and then pauses, which prevents progress on the `Select`
+    
+
+      help: Futures do nothing when they're not being awaited,
+            so while the task is asleep, the `Select` cannot make progress.
+suggestion: Consider spawning the futures in the `Select` so they can run in the background.
+   reading: See the "Doing many things at once" chapter in the Rust async book for more details.
+</code></pre>
+<p>Alan first searches for "rust clippy" on his search engine of choice,
+and learns that it is a linter for Rust that checks for common mistakes
+and cases where code can be more idiomatic. He makes a mental note to
+always run Clippy from now on.</p>
+<p>Alan recognizes the recommended chapter title from before, and sure
+enough, when he looks back on the page that made him choose select, he
+sees a box explaining that, as the warning suggests, a <code>Select</code> only
+makes progress on the asynchronous tasks it contains when it is being
+awaited. The same box also suggests to <em>spawn</em> the tasks before placing
+them in the <code>Select</code> to have them continue to run even after the
+<code>Select</code> has yielded an item.</p>
+<p>So, Alan modifies his code to spawn each request:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// For each url:
+if seen_urls.insert(url.clone()) {
+    requests.insert(std::future::spawn(async { 
+        client.get(url).send().await
+    }));
+}
+<span class="boring">}</span></code></pre></pre>
+<p>But now his code doesn't compile any more:</p>
+<pre><code class="language-text">error: borrow of `client` does not live long enough:
+
+    let client = request::Client::new();
+        ^^^^^^ client is created here
+
+    requests.insert(std::future::spawn(async {
+                    ^^^^^^^^^^^^^^^^^^ spawn requires F: 'static
+
+        client.get(url).send().await
+        ^^^^^^ this borrow of client makes the `async` block have lifetime 'a
+
+    }
+    ^ the lifetime 'a ends here when `client` is dropped.
+
+      help: An async block that needs access to local variables cannot be spawned,
+            since spawned tasks may run past the end of the current function.
+suggestion: Consider using `async move` to move `client` if it isn't needed elsewhere,
+            or keep `client` around forever by using `Arc` for reference-counting,
+            and then `clone` it before passing it into each call to `spawn`.
+   reading: See the "Spawning and 'static" chapter in the Rust async book for more details.
+</code></pre>
+<blockquote>
+<p>Author note: the recommendation <code>Arc</code> above should be inferred from
+the <code>Send</code> bound on <code>spawn</code>. If such a bound isn't present, we should
+recommend <code>Rc</code> instead. Ideally we would also tailor the suggestion to
+whether changing <code>async</code> to <code>async move</code> would <em>actually</em> make the
+code compile.</p>
+</blockquote>
+<p>Alan is amazed at how comprehensive the compiler errors are, and is glad
+to see a reference to the async book, which he now realizes he should
+probably just make time to read start-to-finish, as it covers everything
+he's running into. Alan first tries to change <code>async</code> to <code>async move</code> as
+the compiler suggests, but the compiler then tells him that <code>client</code> may
+be used again in the next iteration of the loop, which makes Alan
+facepalm. Instead, he does as the compiler tells him, and puts the
+<code>client</code> in an <code>Arc</code> and <code>clone</code>s that <code>Arc</code> for each <code>spawn</code>.</p>
+<p>At this point, the code looks a little messy, so Alan decides to open
+the referenced chapter in the async book as well. It suggests that
+while the pattern he's used is a good fallback, it's often possible to
+<em>construct</em> the future outside the spawn, and then <code>await</code> it inside the
+spawn. Alan gives that a try by removing the <code>Arc</code> again and writing:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let fut = client.get(url).send();
+requests.insert(std::future::spawn(async move {
+    fut.await
+}));
+<span class="boring">}</span></code></pre></pre>
+<blockquote>
+<p>Author note: how would the compiler tell Alan about this
+transformation rather than him having to discover it in the book?</p>
+</blockquote>
+<p>This works, and Alan is happy! Doubly-so when he notices the yellow
+Clippy squiggles telling him that the <code>async move { fut.await }</code> can be
+simplified to just <code>fut</code>.</p>
+<p>Alan runs his crawler again, and this time it doesn't run afoul of any
+rate limiting. However, Alan notices that it's still just parsing one
+page's HTML at a time, and wonders if he can parallelize that part too.
+He figures that since each spawned future runs in the background, he can
+just do the XML parsing in there too! So, he refactors the code for
+going from a URL to a list of URLs into its own <code>async fn urls</code>, and
+then writes:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn urls(client: &amp;Client, url: Url) -&gt; Vec&lt;Url&gt; { /* .. */ }
+
+let mut requests = Select::new();
+requests.insert(spawn(urls(&amp;client, start_url)));
+while !requests.is_empty() {
+    let urls = requests.await;
+    for url in urls {
+        if seen_urls.insert(url.clone()) {
+            requests.insert(spawn(urls(&amp;client, url)));
+        }
+    }
+    sleep(Duration::from_secs(1)).await;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>However, to Alan's surprise, this no longer compiles, and is back to the
+old <code>'static</code> error:</p>
+<pre><code class="language-text">error: borrow of `client` does not live long enough:
+
+    let client = request::Client::new();
+        ^^^^^^ client is created here
+
+    requests.insert(spawn(urls(&amp;client, start_url)));
+                    ^^^^^ spawn requires F: 'static
+
+    requests.insert(spawn(urls(&amp;client, start_url)));
+                               ^^^^^^^ but the provided argument is tied to the lifetime of this borrow
+
+    }
+    ^ which ends here when `client` is dropped.
+
+      help: When you call an `async fn`, it does nothing until it is first awaited.
+            For that reason, the `Future` that it returns borrows all of the `async fn`'s arguments.
+suggestion: If possible, write the `async fn` (`urls`) as a regular `fn() -&gt; impl Future` that
+            first uses any arguments that aren't needed after the first `await`, and then
+            returns an `async move {}` with the remainder of the function body.
+
+            Otherwise, consider making the arguments reference-counted with `Arc` so that the async
+            function's return value does not borrow anything from its caller.
+   reading: See the "Spawning and 'static" chapter in the Rust async book for more details.
+</code></pre>
+<p>With the compiler's helpful explanation, Alan realizes that this is
+another instance of the same problem he had earlier, and changes his
+<code>async fn</code> to:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn urls(client: &amp;Client, url: Url) -&gt; impl Future&lt;Output = Vec&lt;Url&gt;&gt; {
+    let fut = client.get(url).send();
+    async move {
+        let response = fut.await;
+        // Use quick-xml to extract URLs to return.
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>At which point the code once again compiles, and runs faster than ever
+before! However, when Alan runs his crawler against a website with
+particularly large pages, he notices a new warning in his terminal when
+the crawler is running:</p>
+<pre><code class="language-text">******************** [ Scheduling Delay Detected ] *********************
+The asynchronous runtime has detected that asynchronous tasks are
+occasionally prevented from running due to a long-running synchronous
+operation holding up the executing thread.
+
+In particular, the task defined at src/lib.rs:88 can make progress, but
+the executor thread that would run it hasn't executed a new asynchronous
+task in a while. It was last seen executing at src/lib.rs:96.
+
+This warning suggests that your program is running a long-running or
+blocking operation somewhere inside of an `async fn`, which prevents
+that thread from making progress on concurrent asynchronous tasks. In
+the worst instance, this can lead to deadlocks if the blocking code
+blocks waiting on some asynchronous task that itself cannot make
+progress until the thread continues running asynchronous tasks.
+
+You can find more details about this error in the "Blocking in async
+code" chapter of the Rust async book.
+
+This warning is only displayed in debug mode.
+************************************************************************
+</code></pre>
+<p>Looking at the indicated lines, Alan sees that line 88 is:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>requests.insert(spawn(urls(&amp;client, url)));
+<span class="boring">}</span></code></pre></pre>
+<p>And line 96 is the <code>loop</code> around:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>match html_reader.read_event(&amp;mut buf) {
+    // ...
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Alan thinks he understands what the warning is trying to tell him, but
+he's not quite sure what he should do to fix it. So he goes to the
+indicated chapter in the async book, which says:</p>
+<blockquote>
+<p>If you have to run a long-running synchronous operation, or issue a
+blocking system call, you risk holding up the execution of
+asynchronous tasks that the current thread is responsible for
+managing until the long-running operation completes. You have many
+options for mitigating the impact of such synchronous code, each with
+its own set of trade-offs.</p>
+</blockquote>
+<p>It then suggests:</p>
+<ul>
+<li>Try to make the synchronous code asynchronous if possible. This could
+even just consist of inserting occasional voluntary scheduling points
+into long-running loops using <code>std::future::yield().await</code> to allow
+the thread to continue to make progress on asynchronous tasks.</li>
+<li>Run the synchronous code in a dedicated thread using
+<code>spawn_blocking</code> and simply <code>await</code> the resulting <code>JoinHandle</code> in the
+asynchronous code.</li>
+<li>Inform the runtime that the current thread (with <code>block_in_place</code>)
+that it should give away all of its background tasks to other runtime
+threads (if applicable), and only then execute the synchronous code.</li>
+</ul>
+<p>The document goes into more detail about the implications of each
+choice, but Alan likes the first option the best for this use-case, and
+augments his HTML reading loop to occasionally call
+<code>std::future::yield().await</code>. The runtime warning goes away.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-status-quo-stories-are-you-retelling"><a class="header" href="#what-status-quo-stories-are-you-retelling">What status quo stories are you retelling?</a></h3>
+<ul>
+<li><a href="../status_quo/alan_tries_to_debug_a_hang.html">Alan tries to debug a hang</a></li>
+<li><a href="../status_quo/barbara_anguishes_over_http.html">Barbara anguishes over HTTP</a></li>
+<li><a href="../status_quo/barbara_bridges_sync_and_async.html">Barbara bridges sync and async in perf.rust-lang.org</a></li>
+<li><a href="../status_quo/barbara_compares_some_cpp_code.html">Barbara compares some C++ code</a></li>
+<li><a href="../status_quo/barbara_makes_their_first_steps_into_async.html">Barbara makes their first foray into async</a></li>
+<li><a href="../status_quo/niklaus_wants_to_share_knowledge.html">Niklaus wants to share knowledge</a></li>
+</ul>
+<h3 id="what-are-the-key-attributes-of-this-shiny-future"><a class="header" href="#what-are-the-key-attributes-of-this-shiny-future">What are the key attributes of this shiny future?</a></h3>
+<ul>
+<li>Not every use-case requires async, and users should be told early on
+that that's the case, and enough to make the decision themselves!</li>
+<li>Compiler errors and warnings should recognize <em>specific</em> common
+mistakes and recommend good general patterns for solutions.</li>
+<li>Warnings and errors should refer users to more comprehensive
+documentation for in-depth explanations and best practices.</li>
+<li>A shared terminology (<code>AsyncRead</code>) and standard locations for key
+primitives (<code>sleep</code>, <code>spawn</code>, <code>Select</code>) is needed to be able to
+provide truly helpful, actionable error messages.</li>
+<li>Async Rust has some very particular problem patterns which are
+important to handle correctly. Misleading error messages like "add
+<code>'static</code> to your <code>&amp;mut</code>" or "add <code>move</code>" can really throw developers
+for a loop by sending them down the wrong rabbit hole.</li>
+<li>Detecting known cases of blocking (even if imperfect) could help
+users significantly in avoiding foot-guns. Some cases are:
+using <code>std::thread::sleep</code>, loops without <code>.await</code> in them (or where
+all the <code>.await</code>s are on <code>poll_fn</code> futures), calling methods that
+transitively call <code>block_on</code>.</li>
+</ul>
+<h3 id="what-is-the-most-shiny-about-this-future"><a class="header" href="#what-is-the-most-shiny-about-this-future">What is the "most shiny" about this future?</a></h3>
+<p>The ability to detect issues that <em>would</em> be performance problems at
+runtime at compile-time.</p>
+<h3 id="what-are-some-of-the-potential-pitfalls-about-this-future"><a class="header" href="#what-are-some-of-the-potential-pitfalls-about-this-future">What are some of the potential pitfalls about this future?</a></h3>
+<p>Detecting blocking is tricky, and likely subject to both false-positives
+and false-negatives. Users <em>hate</em> false-positive warnings, so we'll have
+to be careful about when we give warnings based on what <em>might</em> happen
+at runtime.</p>
+<h3 id="did-anything-surprise-you-when-writing-this-story-did-the-story-go-any-place-unexpected"><a class="header" href="#did-anything-surprise-you-when-writing-this-story-did-the-story-go-any-place-unexpected">Did anything surprise you when writing this story? Did the story go any place unexpected?</a></h3>
+<p>I wasn't expecting it to end up this long and detailed!</p>
+<p>I also wasn't expecting to have to get into the fact that <code>async fn</code>s
+capture their arguments, but got there very quickly by just walking
+through what I imagine Alan's thought process and development would be
+like.</p>
+<h3 id="what-are-some-variations-of-this-story-that-you-considered-or-that-you-think-might-be-fun-to-write-have-any-variations-of-this-story-already-been-written"><a class="header" href="#what-are-some-variations-of-this-story-that-you-considered-or-that-you-think-might-be-fun-to-write-have-any-variations-of-this-story-already-been-written">What are some variations of this story that you considered, or that you think might be fun to write? Have any variations of this story already been written?</a></h3>
+<ul>
+<li>How does Alan realize the difference between <code>Select</code> (really
+<code>FuturesUnordered</code>) and <code>select!</code> (where the branches are known
+statically)?</li>
+<li>Another common pain-point is forgetting to pin futures when using
+constructs like <code>select!</code>. Can the compiler detect this and suggest
+<code>std::task::pin!</code> (and can we have that in <code>std</code> please)?</li>
+<li>Tools that allow the user to introspect the program state at runtime
+and detect things like blocking that way are great, but don't help
+newcomers too much. They won't know about the tools, or what to look
+for.</li>
+<li>How can we detect and warn about async code that transitively ends up
+calling <code>block_on</code>?</li>
+<li>This story didn't get into taking a <code>Mutex</code> and holding it across an
+<code>.await</code>, and the associated problems. Nor how a user finds other,
+better design patterns to deal with that situation.</li>
+<li>A story where Alan uses the docs to decide he <em>shouldn't</em> use async
+would be nice. Including if he then needs to use some library that is
+itself <code>async</code> -- how does he bridge that gap? And perhaps one where
+he then later changes his mind and has to move from sync to async.</li>
+<li><a href="../status_quo/barbara_plays_with_async.html">Barbara plays with async</a>
+could also use a similar-style "shining future" story.</li>
+</ul>
+<h3 id="what-are-some-of-the-things-well-have-to-figure-out-to-realize-this-future-what-projects-besides-rust-itself-are-involved-if-any-optional"><a class="header" href="#what-are-some-of-the-things-well-have-to-figure-out-to-realize-this-future-what-projects-besides-rust-itself-are-involved-if-any-optional">What are some of the things we'll have to figure out to realize this future? What projects besides Rust itself are involved, if any? (Optional)</a></h3>
+<ul>
+<li>Detecting the async "color" of functions to warn about crossing.</li>
+<li>Detecting long-running code in runtimes.</li>
+<li>Standardizing enough core terminology and mechanisms that the
+compiler can both detect specific problems and propose actionable
+solutions</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/shiny_future/template.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/shiny_future/alans_trust_in_the_compiler_is_rewarded.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/shiny_future/template.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/shiny_future/alans_trust_in_the_compiler_is_rewarded.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alan creates a hanging alarm - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/alan_creates_a_hanging_alarm.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-alan-creates-a-hanging-alarm"><a class="header" href="#-status-quo-stories-alan-creates-a-hanging-alarm">😱 Status quo stories: Alan Creates a Hanging Alarm</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p><a href="../../characters/alan.html">Alan</a> is a developer on the Bottlerocket project.
+<a href="https://github.com/bottlerocket-os/bottlerocket">Bottlerocket</a> is a Linux-based open-source operating system that is purpose-built by Amazon Web Services for running containers.
+Alan created a rust program, <a href="https://github.com/bottlerocket-os/bottlerocket/tree/develop/tools/pubsys">pubsys</a>, to ensure that Bottlerocket update repositories are healthy.
+A <em>repository verification alarm</em> uses pubsys to check the validity of Bottlerocket update repositories and notifies the team if any issues are found.</p>
+<h3 id="multiple-tokio-runtimes"><a class="header" href="#multiple-tokio-runtimes">Multiple Tokio Runtimes</a></h3>
+<p>Bottlerocket uses its own <a href="https://github.com/awslabs/tough/">tough</a> library to read and write TUF repositories.
+This library was created before async became widespread and <a href="https://github.com/seanmonstar/reqwest">reqwest</a> changed its main interface to <code>async</code>.
+When reqwest switched to async, Alan used the <code>reqwest::blocking</code> feature instead of re-writing tough to be an async interface.
+(Maybe Alan <a href="https://github.com/awslabs/tough/issues/213">should</a> make tough an async interface, but he hasn't yet.)
+In order to provide a non-async interface, <code>reqwest::blocking</code> creates a tokio runtime so that it can await futures.</p>
+<p>In pubsys Alan created some parallel downloading logic while using the above libraries:
+Without realizing the danger, he created a tokio runtime in pubsys and used futures/await to do this parallelization, like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>for target in targets {
+    // use pubsys, which uses reqwest::blocking to get a response body reader
+    let mut reader = pubsys_repo.read_target(&amp;target).unwrap();
+
+    // spawn a task in our own tokio runtime that conflicts with reqwest::blocking's runtime
+    tasks.push(tokio::spawn(async move {
+        io::copy(&amp;mut reader, &amp;mut io::sink()).context(error::TargetDownload {
+            target: target.to_string(),
+        })
+    }));
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Surprisingly, in retrospect, this worked... until it didn't.</p>
+<p>Recently Alan discovered that his repository verification alarm was hanging.
+Alan discovered this by turning on trace level debugging and noticing that tokio was in an endless loop.
+Alan remembered previous development efforts when multiple tokio runtimes caused a panic, but he had never seen a hang for this reason.
+Still, he suspected multiple runtimes might be in play and audited to code.
+The root cause <em>was</em>, in fact, having multiple tokio runtimes, though Alan don't know what change exposed the issue.
+(Maybe it was a <code>cargo update</code>?)</p>
+<p>The fix was to eliminate the need for a tokio runtime in the pubsys code path by doing the parallel downloads in a different way
+(first with <a href="https://github.com/bottlerocket-os/bottlerocket/pull/1521/files#diff-7546c95d0732614af12f62ff8c072f8c1061f82945c714daf1dd2962c42921ffL47">threads</a> for a quick fix, then with a <a href="https://github.com/bottlerocket-os/bottlerocket/pull/1564/files">thread pool</a>).</p>
+<p><a href="../../characters/alan.html">Alan</a> is surprised and sad since he thought the compiler would help him write safe code.
+Instead the compiler was ignorant of his misuse of the de-facto standard Rust async runtime.</p>
+<h3 id="addendum-multiple-tokio-major-versions"><a class="header" href="#addendum-multiple-tokio-major-versions">Addendum: Multiple Tokio Major Versions</a></h3>
+<p>Alan is also sad that the cargo package manager doesn't understand the de-facto standard runtime's versioning requirements.</p>
+<p>Alan had trouble updating to tokio v1 because:</p>
+<ul>
+<li>Having two major versions of the tokio runtime can/will cause problems.</li>
+<li>Cargo does not understand this and allows multiple major versions of tokio.</li>
+</ul>
+<p>Ultimately Alan's strategy for this in Bottlerocket is to ensure that only one version of tokio exists in the Cargo.lock.
+This requirement delayed his ability to upgrade to tokio v1 and caused him to use a beta version of actix-web since all depenencies need to agree on tokio v1.</p>
+<h3 id="not-easy-to-block-on"><a class="header" href="#not-easy-to-block-on">Not Easy to Block-On</a></h3>
+<p>When Alan is writing a procedural program, and it is perfectly fine to block, then encountering an async function is problematic.</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn my_blocking_program() {
+    blocking_function_1();
+    blocking_function_2();
+
+    // uh oh, now what?
+    async_function_1().await
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Uh oh.
+Now Alan needs to decide what third-party runtime to use.
+Should he create that runtime around main, or should I create it and clean it up around this one function call?
+Put differently, should he bubble up async throughout the program even though the program is blocking and procedural (non-async) by nature?</p>
+<p>If he uses tokio, and gets it wrong (foot-guns described above), his program may hang or panic at runtime.</p>
+<p>In this scenario, Alan would consider this a nicer experience:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn my_blocking_program() {
+    blocking_function_1();
+    blocking_function_2();
+
+    std::thread::block_on({
+        async_function_1()
+    })
+}
+<span class="boring">}</span></code></pre></pre>
+<!-- links -->
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<p><em>Here are some standard FAQ to get you started. Feel free to add more!</em></p>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<p>When you use a Rust async runtime, which is unavoidable these days, you <em>really</em> need to know what you're doing.</p>
+<p>Although the first two of the following points are about tokio, they are really about Rust async since tokio serves as the de-facto <code>std::runtime</code> for Rust.</p>
+<ul>
+<li>It is confusing and dangerous that multiple tokio runtimes can panic or hang at program runtime.</li>
+<li>It is challenging that using multiple major versions of tokio (which is allowed by cargo) can fail at runtime.</li>
+<li>It is unfortunate that we need a 3rd party runtime in order to <code>block_on</code> a future, even if we are not trying to write async code.</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<p>See the links embedded in the story itself (mostly at the top).</p>
+<h3 id="why-did-you-choose-bottlerocket-to-tell-this-story"><a class="header" href="#why-did-you-choose-bottlerocket-to-tell-this-story"><strong>Why did you choose <em>Bottlerocket</em> to tell this story?</strong></a></h3>
+<p>Bottlerocket is a real-life project that experienced these real-life challenges!
+<a href="../../characters/alan.html">Alan</a> is representative of several programmers on the project that have experience with batteries-included languages like Go and Java.</p>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<ul>
+<li><a href="../../characters/barbara.html">Barbara</a> would not have made this mistake given her experience.</li>
+<li><a href="../../characters/grace.html">Grace</a> could have made the same mistake since this issue is very specific to the Rust ecosystem.</li>
+<li><a href="../../characters/niklaus.html">Niklaus</a> could have easily made this mistake and might also have had a hard time understanding anything about the runtime or what went wrong.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_builds_a_task_scheduler.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_finds_database_drops_hard.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_builds_a_task_scheduler.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_finds_database_drops_hard.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

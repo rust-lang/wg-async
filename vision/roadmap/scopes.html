@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Scoped spawn and reliable cancellation - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/roadmap/scopes.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="scopes"><a class="header" href="#scopes">Scopes</a></h1>
+<h2 id="impact"><a class="header" href="#impact">Impact</a></h2>
+<ul>
+<li>Able to spawn parallel tasks or blocking work that accesses borrowed data</li>
+<li>Easily create expressive scheduler patterns that make use of borrowed data using high-level combinators and APIs</li>
+<li>When data is no longer needed, able to cancel work and have it reliably and promptly terminate, including any subtasks or other bits of work it may have created</li>
+<li>Cancellation does not leave work "half-finished", but reliably cleans up program state</li>
+<li>Able to use DMA, io-uring, etc to write directly into output buffers, and to recover in the case of cancellation</li>
+</ul>
+<h2 id="requires"><a class="header" href="#requires">Requires</a></h2>
+<ul>
+<li><a href="./scopes/capability.html">capability</a></li>
+<li><a href="./scopes/api.html">APIs</a></li>
+</ul>
+<h2 id="design-notes"><a class="header" href="#design-notes">Design notes</a></h2>
+<p>Async functions are commonly written with borrowed references as arguments:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn do_something(db: &amp;Db) { ... }
+<span class="boring">}</span></code></pre></pre>
+<p>but important utilities like <code>spawn</code> and <code>spawn_blocking</code> require <code>'static</code> tasks. Building on non-cancelable traits, we can implement a "scope" API that allows one to introduce an async scope. This scope API should permit one to spawn tasks into a scope, but have various kinds of scopes (e.g., synchronous execution, parallel execution, and so forth). It should ultimately reside in the standard library and hook into different runtimes for scheduling. This will take some experimentation!</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn foo(db: &amp;Database) {
+    let result = std::async_thread::scope(|s| {
+        let job1 = s.spawn(async || {
+            async_thing(db)
+        });
+        let job2 = s.spawn_blocking(|| {
+            sync_thing(db)
+        });
+
+        (job1.await, job2.await)
+    }).await;
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="side-stepping-the-nested-await-problem"><a class="header" href="#side-stepping-the-nested-await-problem">Side-stepping the nested await problem</a></h3>
+<p>One goal of scopes is to avoid the "nested await" problem, as described in <a href="https://rust-lang.github.io/wg-async/vision/status_quo/barbara_battles_buffered_streams.html">Barbara battles buffered streams (BBBS)</a>. The idea is like this: the standard combinators which run work "in the background" and which give access to intermediate results from that work should schedule that work into a scope.<sup class="footnote-reference"><a href="#hard">1</a></sup> This would typically be done by using an "interior iterator" pattern, but it could also be done by taking a scope parameter. Some examples from today's APIs are <code>FuturesUnordered</code> and <code>Stream::buffered</code>.</p>
+<div class="footnote-definition" id="hard"><sup class="footnote-definition-label">1</sup>
+<p>This is not a hard rule. But invoking poll manually is best regarded as a risky thing to be managed with care -- not only because of the formal safety guarantees, but because of the possibility for "nested await"-style failures.</p>
+</div>
+<p>In the case of <a href="https://rust-lang.github.io/wg-async/vision/status_quo/barbara_battles_buffered_streams.html">BBBS</a>, the problem arises because of <code>buffered</code>, which spawns off concurrent work to process multiple connections. Under this system, the implementation of <code>buffered</code> would create an internal scope for spawn its tasks into that scope, side-stepping the problem. One could imagine also offering a variant of <code>buffered</code> like <code>buffered_in</code> that takes a scope parameter, permitting the user to choose the scope of those spawned tasks:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn do_work(database: &amp;Database) {
+    std::async_thread::scope(|s| {
+        let work = do_select(database, FIND_WORK_QUERY).await?;
+        std::async_iter::from_iter(work)
+            .map(|item| do_select(database, work_from_item(item)))
+            .buffered_in(5, scope)
+            .for_each(|work_item| process_work_item(database, work_item))
+            .await;
+    }).await;
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="concurrency-without-scopes-join-select-race-and-friends"><a class="header" href="#concurrency-without-scopes-join-select-race-and-friends">Concurrency without scopes: Join, select, race, and friends</a></h3>
+<p>It is possible to introduce concurrency in ways that both (a) do not require scopes and (b) avoid the "nested await" problem. Any combinator which takes multiple <code>Async</code> instances and polls them to completion (or cancels them) before it itself returns is ok. This includes:</p>
+<ul>
+<li><code>join</code>, because the <code>join(a, b)</code> doesn't complete until both <code>a</code> and <code>b</code> have completed;</li>
+<li><code>select</code>, because selecting will cancel the alternatives that are not chosen;</li>
+<li><code>race</code>, which is a variant of select.</li>
+</ul>
+<p>This is important because embedded systems often avoid allocators, and the scope API implicitly requires allocation (one can spawn an unbounded number of tasks).</p>
+<h3 id="cancellation"><a class="header" href="#cancellation">Cancellation</a></h3>
+<p>In today's Rust, any async function can be synchronously cancelled at any await point: the code simply stops executing, and destructors are run for any extant variables. This leads to a lot of bugs. (TODO: link to stories)</p>
+<p>Under systems like <a href="https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md">Swift's proposed structured concurrency model</a>, or with APIs like <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken?view=net-5.0">.NET's CancellationToken</a>, cancellation is "voluntary". What this means is that when a task is cancelled, a flag is set; the task can query this flag but is not otherwise affected. Under structured concurrency systems, this flag is propagated to all chidren (and transitively to their children).</p>
+<p>Voluntary cancellation is a requirement for <a href="./scoped.html">scoped access</a>. If there are parallel tasks executing within a scope, and the scope itself is canceled, those parallel tasks must be joined and halted before the memory for the scope can be freed.</p>
+<p>One downside of such a system is that cancellation <em>may not</em> take effect. We can make it more likely to work by integrating the cancellation flag into the standard library methods, similar to how tokio encourages <a href="https://tokio.rs/blog/2020-04-preemption">"voluntary preemption"</a>. This means that file reads and things will start to report errors (<code>Err(TaskCanceled)</code>) once the task has been canceled. This has the advantage that it exercises existing error paths and permits recovery.</p>
+<h3 id="cancellation-and-select"><a class="header" href="#cancellation-and-select">Cancellation and <code>select</code></a></h3>
+<p>The <code>select</code> macro chooses from N futures and returns the first one that matches. Today, the others are immediately canceled. This behavior doesn't play especially well with voluntary cancellation. There are a few options here:</p>
+<ul>
+<li>We could make <code>select</code> signal cancellation for each of the things it is selecting over and then wait for them to finish.</li>
+<li>We could also make <code>select</code> continue to take <code>Future</code> (not <code>Async</code>) values, which effectively makes <code>Future</code> a "cancel-safe" trait (or perhaps we introduce a <code>CancelSafe</code> marker trait that extends <code>Async</code>).
+<ul>
+<li>This would mean that typical <code>async fn</code> could not be given to select, though we might allow people to mark <code>async fn</code> as "cancel-safe", in which case they would implement <code>Future</code>. They would also not have access to ordinary async fn, though.
+<ul>
+<li>Effectively, the current <code>Future</code> trait becomes the "cancel-safe" form of <code>Async</code>. This is a bit odd, since it has other distinctions, like using <code>Pin</code>, so it might be preferable to use a 'marker trait'.</li>
+</ul>
+</li>
+<li>Of course, users could spawn a task that calls the function and give the handle to select.</li>
+</ul>
+</li>
+</ul>
+<h2 id="frequently-asked-questions"><a class="header" href="#frequently-asked-questions">Frequently asked questions</a></h2>
+<h3 id="could-there-be-a-convenient-way-to-access-the-current-scope"><a class="header" href="#could-there-be-a-convenient-way-to-access-the-current-scope">Could there be a convenient way to access the current scope?</a></h3>
+<p>If we wanted to integrate the idea of scopes more deeply, we could have some way to get access to the current scope and reference its lifetime. Lots of unknowns to work out here, though. For example, suppose you have a function that creates a scope and invokes a closure within. Do we have a way to indicate to the closure that <code>'scope</code> in that closure may be different?</p>
+<p>It starts to feel like simply passing "scope" values may be simpler, and perhaps we need a way to automate the threading of state instead. Another advantage of passing a <code>scope</code> explicitly is that it is clear when parallel tasks may be launched.</p>
+<h3 id="how-does-cancellation-work-in-other-settings"><a class="header" href="#how-does-cancellation-work-in-other-settings">How does cancellation work in other settings?</a></h3>
+<p>Many other languages use a shard flag to observe when cancellation has been requested.</p>
+<p>In some languages, there is also an immediate callback that is invoked when cancellation is requested which permits you to take immediate action. <a href="https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md#cancellation-handlers">Swift proposal E0304</a>, for example, includes "cancellation handlers" that are run immediately.</p>
+<ul>
+<li><a href="https://kotlinlang.org/docs/cancellation-and-timeouts.html">Kotlin cancellation</a>:
+<ul>
+<li>You can invoke <code>cancel</code> on launched jobs (spawned tasks).</li>
+<li>Cancelling sets a flag that the job can check for.</li>
+<li>Builtin functions check for the flag and throw an exception if it is set.
+<ul>
+<li>If you need a builtin function to run post-cancellation, you can <a href="https://kotlinlang.org/docs/cancellation-and-timeouts.html#run-non-cancellable-block">run the code in a "non-cancelable" context</a>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="what-is-the-relationship-between-asyncdrop-and-cancellation"><a class="header" href="#what-is-the-relationship-between-asyncdrop-and-cancellation">What is the relationship between AsyncDrop and cancellation?</a></h3>
+<p>In async Rust today, one signals cancellation of a future by (synchronously) dropping it. This <em>forces</em> the future to stop executing, and drops the values that are on the stack. Experience has shown that this is someting users have a lot of trouble doing correctly, particularly at fine granularities (see e.g. <a href="../submitted_stories/status_quo/alan_builds_a_cache.html">Alan builds a cache</a> or <a href="../submitted_stories/status_quo/barbara_gets_burned_by_select.html">Barbara gets burned by select</a>).</p>
+<p>Given <code>AsyncDrop</code>, we could adopt a similar convention, where canceling an <code>Async</code> is done by (asynchronously) dropping it. This would presumably amend the unsafe contract of the <code>Async</code> trait so that the value must be polled to completion <em>or</em> async-dropped. To avoid the footguns we see today, a typical future could simply continue execution from its <code>AsyncDrop</code> method (but disregard the result). It might however set an internal flag to true or otherwise allow the user to find out that it has been canceled. It's not clear, though, precisely what value is being added by <code>AsyncDrop</code> in this scenario versus the <code>Async</code> simply not implementing <code>AsyncDrop</code> -- perhaps though it serves as an elegant way to give both an immediate "cancellation" callback and an opportunity to continue.</p>
+<p>An alternative is to use a cancellation token of some kind, so that <em>scopes</em> can be canceled and that cancelation can be observed. The main reason to have that token or observation mechanism be "built-in" to some degree is so that it can be observed and used to drive "voluntary cancellation" from I/O routines and the like. Under that model, <code>AsyncDrop</code> would be intended more for values (like database handles) that have cleanup to be done, much like <code>Drop</code> today, and less as a way to signal cancellation.</p>
+<h2 id="related-work"><a class="header" href="#related-work">Related Work</a></h2>
+<ul>
+<li><a href="https://blog.yoshuawuyts.com/async-cancellation-1/">Async Cancellation I (Yoshua Wuyts, 2021)</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../vision/roadmap/async_fn/async_main_and_tests.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../vision/roadmap/scopes/capability.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../vision/roadmap/async_fn/async_main_and_tests.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../vision/roadmap/scopes/capability.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../mermaid.min.js"></script>
+        <script src="../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

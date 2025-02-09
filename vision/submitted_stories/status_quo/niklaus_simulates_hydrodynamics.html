@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Niklaus builds a hydrodynamics simulator - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/niklaus_simulates_hydrodynamics.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-niklaus-builds-a-hydrodynamics-simulator"><a class="header" href="#-status-quo-stories-niklaus-builds-a-hydrodynamics-simulator">😱 Status quo stories: Niklaus Builds a Hydrodynamics Simulator</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<h3 id="problem"><a class="header" href="#problem">Problem</a></h3>
+<p>Niklaus is a professor of physics at the University of Rustville. He needed to build a tool to solve hydrodynamics simulations; there is a common method for this that subdivides a region into a grid and computes the solution for each grid patch. All the patches in a grid for a point in time are independent and can be computed in parallel, but they are dependent on neighboring patches in the previously computed frame in time.  This is a well known computational model and the patterns for basic parallelization are well established.</p>
+<p>Niklaus wanted to write a performant tool to compute the solutions to the simulations of his research.  He chose Rust because he needed high performance but he also wanted something that could be maintained by his students, who are not professional programmers. Rust's safety guarantees giver him confidence that his results are not going to be corrupted by data races or other programming errors. After implementing the core mathematical formulas, Niklaus began implementing the parallelization architecture.</p>
+<p>His first attempt to was to emulate a common CFD design pattern: using message passing to communicate between processes that are each assigned a specific patch in the grid. So he assign one thread to each patch and used messages to communicate solution state to dependent patches.  With one thread per patch this usually meant that there were 5-10x more threads than CPU cores.</p>
+<p>This solution worked, but Niklaus had two problems with it. First, it gave him no control over CPU usage so the solution would greedily use all available CPU resources. Second, using messages to communicate solution values between patches did not scale when his team added a new feature (tracer particles) the additional messages caused by this change created so much overhead that parallel processing was no faster than serial. So, Niklaus decided to find a better solution.</p>
+<h3 id="solution-path"><a class="header" href="#solution-path">Solution Path</a></h3>
+<p>To address the first problem: Niklaus' new design decoupled the work that needed to be done (solving physics equations for each patch in the grid) from the workers (threads), this would allow him to set the number of threads and not use all the CPU resources. So, he began looking for a tool in Rust that would meet this design pattern. When he read about <code>async</code> and how it allowed the user to define units of work and send those to an executor which would manage the execution of those tasks across a set of workers, he thought he'd found exactly what he needed. He also thought that the <code>.await</code> semantics would give a much better way of coordinating dependencies between patches. Further reading indicated that <code>tokio</code> was the runtime of choice for <code>async</code> in the community and, so, he began building a new CFD solver with <code>async</code> and <code>tokio</code>.</p>
+<p>After making some progress, Niklaus ran into his first problem. Niklaus had been under a false impression about what <code>async</code> executors do. He had assumed that a multi-threaded executor could automatically move the execution of an <code>async</code> block to a worker thread. When this turned out to wrong, he went to Stackoverflow and learned that async tasks must be explicitly spawned into a thread pool if they are to be executed on a worker thread. This meant that the algorithm to be parallelized became strongly coupled to both the spawner and the executor. Code that used to cleanly express a physics algorithm now had interspersed references to the task spawner, not only making it harder to understand, but also making it impossible to try different execution strategies, since with Tokio the spawner and executor are the same object (the Tokio runtime). Niklaus felt that a better design for data parallelism would enable better separation of concerns: a group of interdependent compute tasks, and a strategy to execute them in parallel.</p>
+<p>Niklaus second problem came as he tried to fully replace the message passing from the first design: sharing data between tasks. He used the <code>async</code> API to coordinate computation of patches so that a patch would only go to a worker when all its dependencies had completed. But he also needed to account for the solution data which was passed in the messages. He setup a shared data structure to track the solutions for each patch now that messages would not be passing that data. Learning how to properly use shared data with <code>async</code> was a new challenge. The initial design:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let mut stage_primitive_and_scalar = |index: BlockIndex, state: BlockState&lt;C&gt;, hydro: H, geometry: GridGeometry| {
+        let stage = async move {
+            let p = state.try_to_primitive(&amp;hydro, &amp;geometry)?;
+            let s = state.scalar_mass / &amp;geometry.cell_volumes / p.map(P::lorentz_factor);
+            Ok::&lt;_, HydroError&gt;( ( p.to_shared(), s.to_shared() ) )
+        };
+        stage_map.insert(index, runtime.spawn(stage).map(|f| f.unwrap()).shared());
+    };
+<span class="boring">}</span></code></pre></pre>
+<p>lacked performance because he needed to clone the value for every task.  So, Niklaus switched over to using <code>Arc</code> to keep a thread safe RC to the shared data. But this change introduced a lot of <code>.map</code> and <code>.unwrap</code> function calls, making the code much harder to read. He realized that managing the dependency graph was not intuitive when using <code>async</code> for concurrency.</p>
+<p>As the program matured, a new problem arose: a steep learning curve with error handling. The initial version of his design used <code>panic!</code>s to fail the program if an error was encountered, but the stack traces were almost unreadable. He asked his teammate Grace to migrate over to using the <code>Result</code> idiom for error handling and Grace found a major inconvenience. The Rust type inference inconsistently breaks when propagating <code>Result</code> in <code>async</code> blocks. Grace frequently found that she had to specify the type of the error when creating a result value:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>Ok::&lt;_, HydroError&gt;( ( p.to_shared(), s.to_shared() ) )  
+<span class="boring">}</span></code></pre></pre>
+<p>And she could not figure out why she had to add the <code>::&lt;_, HydroError&gt;</code> to some of the <code>Result</code> values.</p>
+<p>Finally, once Niklaus' team began using the new <code>async</code> design for their simulations, they noticed an important issue that impacted productivity: compilation time had now increased to between 30 and 60 seconds. The nature of their work requires frequent changes to code and recompilation and 30-60 seconds is long enough to have a noticeable impact on their quality of life.  What he and his team want is for compilation to be 2 to 3 seconds. Niklaus believes that the use of <code>async</code> is a major contributor to the long compilation times.</p>
+<p>This new solution works, but Niklaus is not satisfied with how complex his code became after the move to <code>async</code> and that compilation time is now 30-60 seconds.  The state sharing adding a large amount of cruft with <code>Arc</code> and <code>async</code> is not well suited for using a dependency graph to schedule tasks so implementing this solution created a key component of his program that was difficult to understand and pervasive. Ultimately, his conclusion was that <code>async</code> is not appropriate for parallelizing computational tasks. He will be trying a new design based upon Rayon in the next version of her application.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<ul>
+<li><code>async</code> looks to be the wrong choice for parallelizing compute bound/computational work</li>
+<li>There is a lack of guidance to help people solving such problems get started on the right foot</li>
+<li>Quality of Life issues (compilation time, type inference on <code>Result</code>) can create a drag on users ability to focus on their domain problem</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<p>This story is based on the experience of building the <a href="https://github.com/clemson-cal/app-kilonova">kilonova</a> hydrodynamics simulation solver.</p>
+<h3 id="why-did-you-choose-niklaus-and-grace-to-tell-this-story"><a class="header" href="#why-did-you-choose-niklaus-and-grace-to-tell-this-story"><strong>Why did you choose Niklaus and Grace to tell this story?</strong></a></h3>
+<p>I chose Niklaus as the primary character in this story because this work was driven by someone who only uses programming for a small part of their work. Grace was chosen as a supporting character because of that persons experience with C/C++ programming and to avoid repeating characters.</p>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<ul>
+<li>Alan: there's a good chance he would have already had experience working with either async workflows in another language or doing parallelization of compute bound tasks; and so would already know from experience that <code>async</code> was not the right place to start.</li>
+<li>Grace: likewise, might already have experience with problems like this and would know what to look for when searching for tools.</li>
+<li>Barbara:  the experience would likely be fairly similar, since the actual subject of this story is quite familiar with Rust by now</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/grace_writes_a_new_fb_service.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/niklaus_wants_to_share_knowledge.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/grace_writes_a_new_fb_service.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/niklaus_wants_to_share_knowledge.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

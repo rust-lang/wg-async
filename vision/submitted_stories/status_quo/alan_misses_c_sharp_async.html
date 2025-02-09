@@ -1,0 +1,558 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alan misses C# async - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/alan_misses_c_sharp_async.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-alan-misses-c-async"><a class="header" href="#-status-quo-stories-alan-misses-c-async">😱 Status quo stories: Alan misses C# async</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async
+Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR
+making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories
+<a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to
+<a href="../../how_to_vision/status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<h3 id="first-attempt"><a class="header" href="#first-attempt">First attempt</a></h3>
+<p><a href="../../characters/alan.html">Alan</a> has finally gotten comfortable working in rust and finally decides to try writing async code.
+He's used C#'s async and mostly loved the experience, so he decides to try writing it the same way:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">async fn run_async() {
+    println!("Hello async!");
+}
+
+fn main() {
+    run_async();
+}</code></pre></pre>
+<p>But the compiler didn't like this:</p>
+<pre><code>warning: unused implementer of `Future` that must be used
+ --&gt; src/main.rs:6:5
+  |
+6 |     run_async();
+  |     ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_must_use)]` on by default
+  = note: futures do nothing unless you `.await` or poll them
+</code></pre>
+<p>Alan has no idea what <code>Future</code> is; he's never seen this before and it's not in his code. He sees the
+note in the warning and adds <code>.await</code> to the line in <code>main</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">fn main() {
+    run_async().await;
+}</code></pre></pre>
+<p>The compiler does't like this either.</p>
+<pre><code>error[E0728]: `await` is only allowed inside `async` functions and blocks
+ --&gt; src/main.rs:6:5
+  |
+5 | fn main() {
+  |    ---- this is not `async`
+6 |     run_async().await;
+  |     ^^^^^^^^^^^^^^^^^ only allowed inside `async` functions and blocks
+</code></pre>
+<p>... so Alan adds <code>async</code> to <code>main</code>:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">async fn main() {
+    run_async().await;
+}</code></pre></pre>
+<p>which prompts yet another error from the compiler:</p>
+<pre><code>error[E0277]: `main` has invalid return type `impl Future`
+ --&gt; src/main.rs:5:17
+  |
+5 | async fn main() {
+  |                 ^ `main` can only return types that implement `Termination`
+  |
+  = help: consider using `()`, or a `Result`
+
+error[E0752]: `main` function is not allowed to be `async`
+ --&gt; src/main.rs:5:1
+  |
+5 | async fn main() {
+  | ^^^^^^^^^^^^^^^ `main` function is not allowed to be `async`
+</code></pre>
+<p>So Alan decides to do a lot of research online and hunting around on StackOverflow. He learns that
+<code>async fn</code> returns a value, but it's not the same as the value returned from async functions in C#.
+In C#, the object he gets back can only be used to query the result of an already running thread of
+work. The rust one doesn't seem to do anything until you call <code>.await</code> on it. Alan thinks this is
+really nice because he now has more control over when the processing starts. You seem to get the same
+control as constructing a <code>Task</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task?view=net-5.0#task-instantiation">manually</a> in C#, but with a lot less effort.</p>
+<p>He also ends up finding out a little about executors. <code>tokio</code> seems to be really popular, so he
+incorporates that into his project:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">async fn run_async() {
+    println!("Hello async!");
+}
+
+#[tokio::main]
+async fn main() {
+    run_async().await;
+}</code></pre></pre>
+<p>And it works!</p>
+<pre><code>Hello async!
+</code></pre>
+<h3 id="attempting-concurrency"><a class="header" href="#attempting-concurrency">Attempting concurrency</a></h3>
+<p>Alan decides to try running two async functions concurrently. "This is pretty easy in C#," he
+thinks, "This can't be too hard in rust."</p>
+<p>In C# Alan would usually write something like:</p>
+<pre><code class="language-csharp">async Task expensive1() {
+    ...
+}
+
+async Task expensive2() {
+    ...
+}
+
+public static async Main() {
+    Task task = expensive1();
+    await expensive2();
+    task.Wait();
+}
+</code></pre>
+<p>If the code was more dynamic, Alan could have also used the Task API to simplify the await:</p>
+<pre><code class="language-csharp">public static Main() {
+    List&lt;Task&gt; tasks = new List&lt;Task&gt;();
+    tasks.push(expensive1());
+    tasks.push(expensive2());
+    try {
+        Task.WaitAll(tasks.ToArray());
+    }
+    // Ignore exceptions here.
+    catch (AggregateException) {}
+}
+</code></pre>
+<p>So Alan tries the first approach in rust:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use std::sync::mpsc::{self, Sender, Receiver};
+
+async fn expensive1(tx: Sender&lt;()&gt;, rx: Receiver&lt;()&gt;) {
+    println!("Doing expensive work in 1");
+    tx.send(()).ok();
+    let _ = rx.recv();
+    println!("Got result, finishing processing in 1");
+    println!("1 done");
+}
+
+async fn expensive2(tx: Sender&lt;()&gt;, rx: Receiver&lt;()&gt;) {
+    println!("Doing simple setup in 2");
+    let _ = rx.recv();
+    println!("Got signal from 1, doing expensive processing in 2");
+    tx.send(()).ok();
+    println!("2 done");
+}
+
+#[tokio::main]
+async fn main() {
+    let (tx1, rx1) = mpsc::channel();
+    let (tx2, rx2) = mpsc::channel();
+    expensive1(tx1, rx2).await;
+    expensive2(tx2, rx1).await;
+}</code></pre></pre>
+<p>But this just hangs after printing:</p>
+<pre><code>Doing expensive work in 1
+</code></pre>
+<p>Alan wonders if this means he can't run code concurrently... he does some research and learns about
+<code>join</code>, which doesn't seem to be part of the std. This seems like the second example in C#, but Alan
+is surprised it doesn't come with the standard library. He has to import <code>futures</code> as a dependency
+and tries again:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use futures::join;
+...
+
+#[tokio::main]
+async fn main() {
+    let (tx1, rx1) = mpsc::channel();
+    let (tx2, rx2) = mpsc::channel();
+    let fut1 = expensive1(tx1, rx2);
+    let fut2 = expensive2(tx2, rx1);
+    join!(fut1, fut2);
+}</code></pre></pre>
+<p>But this still hangs the same way as the first attempt. After more research, Alan learns that he
+can't use the standard <code>mpsc::channel</code> in async contexts. He needs to use the ones in the external
+<code>futures</code> crate. This requires quite a few changes since the API's don't line up with the one's in
+std:</p>
+<ul>
+<li><code>rx</code> has to be <code>mut</code></li>
+<li>there's bounded and unbounded mpsc channels, Alan went with unbounded since the API seemed simpler
+for now</li>
+<li>you need to import the <code>StreamExt</code> trait to be able to get a value out of <code>rx</code>, this took a lot of
+research to get right.</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust edition2018">use futures::{
+    join,
+    channel::mpsc::{self, UnoundedSender, UnboundedReceiver},
+    StreamExt,
+};
+use std::sync::mpsc::{self, Sender, Receiver};
+
+async fn expensive1(tx: Sender&lt;()&gt;, mut rx: Receiver&lt;()&gt;) {
+    println!("Doing expensive work in 1");
+    tx.unbounded_send(()).ok();
+    let _ = rx.next().await;
+    println!("Got result, finishing processing in 1");
+    println!("1 done");
+}
+
+async fn expensive2(tx: Sender&lt;()&gt;, mut rx: Receiver&lt;()&gt;) {
+    println!("Doing simple setup in 2");
+    let _ = rx.next().await;
+    println!("Got signal from 1, doing expensive processing in 2");
+    tx.unbounded_send(()).ok();
+    println!("2 done");
+}
+
+#[tokio::main]
+async fn main() {
+    let (tx1, rx1) = mpsc::channel();
+    let (tx2, rx2) = mpsc::channel();
+    let fut1 = expensive1(tx1, rx2);
+    let fut2 = expensive2(tx2, rx1);
+    join!(fut1, fut2);
+}</code></pre></pre>
+<p>And now it works!</p>
+<pre><code>Doing expensive work in 1
+Doing simple setup in 2
+Got signal from 1, doing expensive processing in 2
+2 done
+Got result, finishing processing in 1
+1 done
+</code></pre>
+<p>While this is more similar to using the <code>Task.WaitAll</code> from C#, there were a lot more changes needed
+than Alan expected.</p>
+<h3 id="cancelling-tasks"><a class="header" href="#cancelling-tasks">Cancelling tasks</a></h3>
+<p>Another pattern Alan had to use frequently in C# was accounting for cancellation of tasks. Users in
+GUI applications might not want to wait for some long running operation or in a web server some
+remote calls might time out. C# has a really nice API surrounding <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken?view=net-5.0"><code>CancellationTokens</code></a>.</p>
+<p>They can be used in a fashion similar to (overly simplified example):</p>
+<pre><code class="language-csharp">async Task ExpensiveWork(CancellationToken token) {
+    while (not_done) {
+        // Do expensive operations...
+        if (token.IsCancellationRequested) {
+            // Cleanup...
+            break;
+        }
+    }
+}
+
+public static async Main() {
+    // Create the cancellation source and grab its token.
+    CancellationTokenSource source = new CancellationTokenSource();
+    CancellationToken token = source.Token;
+
+    // Setup a handler so that on user input the expensive work will be canceled.
+    SetupInputHandler(() =&gt; {
+        // on user cancel
+        source.Cancel();
+    });
+
+    // Pass the token to the functions that should be stopped when requested.
+    await ExpensiveWork(token);
+}
+</code></pre>
+<p>Alan does some research. He searches for "rust async cancellation" and can't find anything similar.
+He reads that "dropping a future is cancelling it". In his junior dev days, Alan might have run with
+that idea and moved on to the next task, but experienced Alan knows something is wrong here. If he
+drops a <code>Future</code> how does he control the cleanup? Which <code>await</code> point is the one that will not be
+processed? This scares Alan since he realized he could get some really nasty bugs if this happens
+in production. In order to work around this, Alan needs to make sure <em>every</em> future around critical
+code is carefully reviewed for drops in the wrong places. Alan also decided he needs to come up with
+some custom code to handle cancelling.</p>
+<p>Alan decides to ask around, and gets suggestions for searching with "rust cancel future" or
+"rust cancel async". He finds out about tokio's <a href="https://docs.rs/tokio-util/0.6.7/tokio_util/sync/struct.CancellationToken.html"><code>tokio_util::sync::CancellationToken</code></a>, and also
+the <a href="https://docs.rs/stop-token/0.2.0/stop_token/"><code>stop-token</code></a> and <a href="https://docs.rs/stopper/0.2.0/stopper/"><code>stopper</code></a> crates. He decides to try working with the version in
+<code>tokio_util</code> since he's already using <code>tokio</code>. Looking at the docs for each, they all seem to
+behave how Alan expected, though he couldn't use <code>stop-token</code> since that only works with
+<code>async-std</code>. <code>stopper</code> also seems like a good alternative, but he decides to go with the type that
+is built by the tokio team.</p>
+<p>Reading the docs it seems that the tokio <code>CancellationToken</code> acts more like a combination of C#'s
+<code>CancellationTokenSource</code> and <code>CancellationToken</code>. He needs to pass the tokens generated from a call
+to <code>child_token()</code> and keep the main token for triggering cancellation. One advantage that all of
+the token crates seem to have is that they can also integrate directly with streams and futures,
+or be polled directly (as a stream or boolean).</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use tokio_util::sync::CancellationToken;
+use futures::StreamExt;
+// ...
+
+fn generate_work() -&gt; impl Stream&lt;Item = Work&gt; {
+    // ...
+}
+
+async fn expensive_work(token: CancellationToken) {
+    let mut work_stream = generate_work();
+    loop {
+        if let Some(op) = work_stream.next().await {
+            op.work().await;
+        } else {
+            break;
+        }
+
+        if token.is_cancelled() {
+            break;
+        }
+    }
+}
+
+#[tokio::main]
+async fn main() {
+    let token = CancellationToken::new();
+    let child_token = token.child_token();
+    setup_input_handler(move || {
+        token.cancel();
+    });
+
+    expensive_work(child_token).await;
+}</code></pre></pre>
+<p>This seems relatively straightforward!</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<ul>
+<li>First Attempt
+<ul>
+<li>Unused implementer warnings for <code>Futures</code> are less clear than they are for, e.g. <code>Result</code>.</li>
+<li>It's not as easy to jump into experimenting with async as compared to synchronous code. It
+requires a lot more front-end research on the user's end.</li>
+<li>Developers might need to unlearn async behavior from other languages in order to understand
+async rust.</li>
+<li>Dynamic languages with async provide async main, but rust does not. We could be more helpful
+by explaining this in compiler errors.</li>
+</ul>
+</li>
+<li>Attempting Concurrency
+<ul>
+<li>Trying to use items from std is the obvious thing to try, but wrong because they are blocking.</li>
+<li>The corresponding async versions of the std items don't exist in std, but are in <code>futures</code>
+crate. So it's hard to actually develop in async without the <code>futures</code> crates.</li>
+</ul>
+</li>
+<li>Cancelling Tasks
+<ul>
+<li>It's not obvious that futures could only run part-way.</li>
+<li>Async types and crates can be bound to certain ecosystems, limiting developers' ability to
+reuse existing code.</li>
+</ul>
+</li>
+</ul>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<ul>
+<li>The docs for <a href="https://docs.rs/futures/0.3.15/futures/channel/oneshot/struct.Canceled.html"><code>oneshot::Canceled</code></a> mentions that dropping a <code>Sender</code> will cancel the future.
+Someone inexperienced might accidentally apply this to a broader scope of types.</li>
+<li><a href="https://internals.rust-lang.org/t/async-await-the-challenges-besides-syntax-cancellation/10287">This IRLO post</a> has a nice discussion on cancellation, where the <a href="https://gist.github.com/Matthias247/ffc0f189742abf6aa41a226fe07398a8">linked gist</a>
+is a thorough overview of problems surrounding cancelation in async rust, with comparisons to other
+languages.</li>
+</ul>
+<h3 id="why-did-you-choose-alan-to-tell-this-story"><a class="header" href="#why-did-you-choose-alan-to-tell-this-story"><strong>Why did you choose Alan to tell this story?</strong></a></h3>
+<p>C# is a garbage collected language that has had async for a long time. Alan best fit the model for
+a developer coming from such a language.</p>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<ul>
+<li><a href="../../characters/barbara.html">Barbara</a> may already be used to the ideosynchracies of async in rust. She may not realize how
+difficult it could be for someone who has a very different model of async engrained into them.</li>
+<li><a href="../../characters/grace.html">Grace</a> has likely never used async utilities similar to the ones in C# and other GC languages. C
+and C++ tend to use callbacks to manage async workflows. She may have been following the C++
+proposals for coroutines (e.g. <code>co_await</code>, <code>co_yield</code>, <code>co_return</code>), but similar to rust, the
+utilities are not yet thoroughly built out in those spaces. She may be familiar with cancelation in
+external libraries like <a href="https://github.com/lewissbaker/cppcoro#Cancellation"><code>cppcoro</code></a>, or async in
+general with <a href="https://github.com/Naios/continuable"><code>continuable</code></a></li>
+<li><a href="../../characters/niklaus.html">Niklaus</a> may not have had enough experience to be wary of some of the pitfalls encountered here.
+He might have introduced bugs around dropping futures (to cancel) without realizing it.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_lost_the_world.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_needs_async_in_traits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/alan_lost_the_world.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/alan_needs_async_in_traits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

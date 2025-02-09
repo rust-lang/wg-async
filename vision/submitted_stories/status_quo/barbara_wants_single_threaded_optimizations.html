@@ -1,0 +1,304 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Barbara awants single threaded optimizations - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/status_quo/barbara_wants_single_threaded_optimizations.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-status-quo-stories-barbara-wants-single-threaded-optimizations-but-not-that-much"><a class="header" href="#-status-quo-stories-barbara-wants-single-threaded-optimizations-but-not-that-much">😱 Status quo stories: Barbara wants single threaded optimizations, but not that much</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "status quo" story submitted as part of the brainstorming period. It is derived from real-life experiences of actual Rust users and is meant to reflect some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as they reflect peoples' experiences, status quo stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>, only inaccurate). Alternatively, you may wish to <a href="../status_quo.html">add your own status quo story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>Barbara is working on operating system services, all of which benefit from concurrency, but only some of which benefit from parallelism. In cases where a service does not benefit from parallelism, a single-threaded executor is used which allows spawning <code>!Send</code> tasks.</p>
+<p>Barbara has developed a useful feature as a module within one of her system's single-threaded services. The feature allows for the creation of multiple IPC objects to use within concurrent tasks while caching and reusing some of the heavier computation performed. This is implemented with reference counted interior mutability:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct IpcHandle {
+    cache_storage: Rc&lt;RefCell&lt;IpcCache&gt;&gt;,
+    // ...
+}
+
+struct IpcCache { /* ... */ }
+<span class="boring">}</span></code></pre></pre>
+<p>A colleague asks Barbara if she'd be interested in making this code available to other services with similar needs. After Barbara factors the module out into its own crate, her colleague tries integrating it into their service. This fails because the second service needs to hold <code>IpcHandle</code>s across yieldpoints and it uses a multi-threaded executor. The multi-threaded executor requires that all tasks implement <code>Send</code> so they can be migrated between threads for work stealing scheduling.</p>
+<h3 id="rejected-both-single--and-multi-threaded-versions"><a class="header" href="#rejected-both-single--and-multi-threaded-versions">Rejected: both single- and multi-threaded versions</a></h3>
+<p>Barbara considers her options to make the crate usable by the multi-threaded system service. She decides against making <code>IpcHandle</code> available in both single-threaded and multi-threaded versions. To do this generically would require a lot of boilerplate. For example, it would require manually duplicating APIs which would need to have a <code>Send</code> bound in the multi-threaded case:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl LocalIpcHandle {
+    fn spawn_on_reply&lt;F: Future + 'static&gt;(&amp;mut self, to_spawn: impl Fn(IpcReply) -&gt; F) {
+        // ...
+    }
+}
+
+impl SendIpcHandle {
+    fn spawn_on_reply&lt;F: Future + Send + 'static&gt;(&amp;mut self, to_spawn: impl Fn(IpcReply) -&gt; F) {
+        // ...
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="accepted-only-implement-multi-threaded-version"><a class="header" href="#accepted-only-implement-multi-threaded-version">Accepted: only implement multi-threaded version</a></h3>
+<p>Barbara decides it's not worth the effort to duplicate so much of the crate's functionality, and decides to make the whole library thread-safe:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct IpcHandle {
+    cache_storage: Arc&lt;Mutex&lt;IpcCache&gt;&gt;,
+    // ...
+}
+
+struct IpcCache { /* ... */ }
+<span class="boring">}</span></code></pre></pre>
+<p>This requires her to migrate her original system service to use multi-threaded types when interacting with the library. Before the change her service uses only single-threaded reference counting and interior mutability:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Clone)]
+struct ClientBroker {
+    state: Rc&lt;RefCell&lt;ClientState&gt;&gt;,
+}
+
+impl ClientBroker {
+    fn start_serving_clients(self) {
+        let mut ipc_handle = self.make_ipc_handle_for_new_clients();
+        ipc_handle.spawn_on_reply(move |reply| shared_state.clone().serve_client(reply));
+        LocalExecutor::new().run_singlethreaded(ipc_handle.listen());
+    }
+
+    fn make_ipc_handle_for_new_clients(&amp;self) { /* ... */ }
+    async fn serve_client(self, reply: IpcReply) { /* accesses interior mutability... */ }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>In order to be compatible with her own crate, Barbara needs to wrap the shared state of her service behind multi-threaded reference counting and synchronization:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Clone)]
+struct ClientBroker {
+    state: Arc&lt;Mutex&lt;ClientState&gt;&gt;,
+}
+
+impl ClientBroker { /* nothing changed */ }
+<span class="boring">}</span></code></pre></pre>
+<p>This incurs some performance overhead when cloning the <code>Arc</code> and when accessing the <code>Mutex</code>. The former is cheap when uncontended on x86 but will have different performance characteristics on e.g. ARM platforms. The latter's overhead varies depending on the kind of <code>Mutex</code> used, e.g. an uncontended <code>parking_lot::Mutex</code> may only need a few atomic instructions to acquire it. Acquiring many platforms' <code>std::sync::Mutex</code> is much more expensive than a few atomics. This overhead is usually not very high, but it does pollute shared resources like cache lines and is multiplied by the number of single-threaded services which make use of such a library.</p>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-are-the-morals-of-the-story"><a class="header" href="#what-are-the-morals-of-the-story"><strong>What are the morals of the story?</strong></a></h3>
+<p>In synchronous Rust, choosing the "<code>Send</code>ness" of a crate is basically a choice about the concurrency it can support. In asynchronous Rust, one can write highly concurrent programs that still execute using only a single thread, but it is difficult to achieve maximum performance with reusable code.</p>
+<p>Abstracting over a library's <code>Send</code>ness requires being generic over storage/synchronization types <em>and</em> APIs which need to accept user-defined types/tasks/callbacks.</p>
+<h3 id="what-are-the-sources-for-this-story"><a class="header" href="#what-are-the-sources-for-this-story"><strong>What are the sources for this story?</strong></a></h3>
+<p>As of writing, the <a href="https://fuchsia.dev">Fuchsia</a> operating system had <a href="https://cs.opensource.google/search?q=file:rs%20run_singlethreaded&amp;sq=&amp;ss=fuchsia%2Ffuchsia">over 1,500 invocations</a> of <code>LocalExecutor::run_singlethreaded</code>. There were [less than 500 invocations][mt-invocations] of <code>SendExecutor::run</code>.<sup class="footnote-reference"><a href="#fuchsia-methods">1</a></sup> As of writing the author could not find any widely used support libraries which were not thread-safe.</p>
+<p>[mt-invocations]: https://cs.opensource.google/search?q=file:rs%20%5C.run%5C(&amp;ss=fuchsia%2Ffuchsia</p>
+<p><code>actix-rt</code>'s <a href="https://docs.rs/actix-rt/1.1.1/actix_rt/fn.spawn.html">spawn function</a> does not require <code>Send</code> for its futures, because each task is polled on the thread that spawned it. However it is very common when using <code>actix-rt</code> via <code>actix-web</code> to make use of async crates originally designed for <code>tokio</code>, whose <a href="https://docs.rs/tokio/1.6.1/tokio/fn.spawn.html">spawn function</a> does require <code>Send</code>.</p>
+<p>Popular crates like <code>diesel</code> are still designing async support, and it appears they are <a href="https://github.com/diesel-rs/diesel/issues/399#issuecomment-850826567">likely to require <code>Send</code></a>.</p>
+<div class="footnote-definition" id="fuchsia-methods"><sup class="footnote-definition-label">1</sup>
+<p>There are multiple ways to invoke the different Rust executors for Fuchsia. The other searches for each executor yield a handful of results but not enough to change the relative sample sizes here.</p>
+</div>
+<h3 id="why-did-you-choose-barbara-to-tell-this-story"><a class="header" href="#why-did-you-choose-barbara-to-tell-this-story"><strong>Why did you choose <em>Barbara</em> to tell this story?</strong></a></h3>
+<p>As an experienced Rustacean, <a href="../../characters/barbara.html">Barbara</a> is more likely to be responsible for designing functionality to share across teams. She's also going to be more aware of the specific performance implications of her change, and will likely find it more frustrating to encounter these boundaries.</p>
+<h3 id="how-would-this-story-have-played-out-differently-for-the-other-characters"><a class="header" href="#how-would-this-story-have-played-out-differently-for-the-other-characters"><strong>How would this story have played out differently for the other characters?</strong></a></h3>
+<p>A less experienced Rustacean may not even be tempted to define two versions, as the approach Barbara took is pretty close to the "just <code>.clone()</code> it" advice often given to beginners.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_anguishes_over_http.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_battles_buffered_streams.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/status_quo/barbara_anguishes_over_http.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/status_quo/barbara_battles_buffered_streams.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Alan switches runtimes - wg-async</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">wg-async</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang/wg-async/edit/master/src/vision/submitted_stories/shiny_future/alan_switches_runtimes.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="-shiny-future-stories-alan-switches-runtimes"><a class="header" href="#-shiny-future-stories-alan-switches-runtimes">✨ Shiny future stories: Alan switches runtimes</a></h1>
+<h2 id="-warning-draft-status-"><a class="header" href="#-warning-draft-status-">🚧 Warning: Draft status 🚧</a></h2>
+<p>This is a draft "shiny future" story submitted as part of the brainstorming period. It is derived from what actual Rust users wish async Rust should be, and is meant to deal with some of the challenges that Async Rust programmers face today.</p>
+<p>If you would like to expand on this story, or adjust the answers to the FAQ, feel free to open a PR making edits (but keep in mind that, as peoples needs and desires for async Rust may differ greatly, shiny future stories <a href="../../how_to_vision/comment.html#comment-to-understand-or-improve-not-to-negate-or-dissuade">cannot be wrong</a>. At worst they are only useful for a small set of people or their problems might be better solved with alternative solutions). Alternatively, you may wish to <a href="../shiny_future.html">add your own shiny vision story</a>!</p>
+<h2 id="the-story"><a class="header" href="#the-story">The story</a></h2>
+<p>Since his <a href="./alans_trust_in_the_compiler_is_rewarded.html">early adventures</a> with Async I/O went so well, Alan has been looking for a way to learn more. He finds a job working in Rust. One of the projects he works on is <a href="../../projects/DistriData.html">DistriData</a>. Looking at their code, he sees an annotation he has never seen before:</p>
+<pre><pre class="playground"><code class="language-rust edition2018">#[humboldt::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let result = std::async_thread::spawn(async move {
+        do_something()
+    });
+}</code></pre></pre>
+<p>He asks Barbara, one of his coworkers, "What is this <code>humboldt::main</code> annotation? What's <code>humboldt</code>?" She answers by explaining to him that Rust's support for async I/O is actually based around an underlying runtime. "Rust gives you a pretty decent runtime by default," she says, "but it's not tuned for our workloads. We wrote our own runtime, which we call <code>humboldt</code>."</p>
+<p>Alan asks, "What happens with the various std APIs? For example, I see we are calling <code>std::async_thread::spawn</code> -- when I used that before, it spawned tasks into the default runtime. What happens now?"</p>
+<p>Barbara explains that the "async" APIs in std generally execute relative to the current runtime that is in use. "When you call <code>std::async_thread::spawn</code>, it will spawn a task onto the current runtime. It's the same with the routines in <code>std::async_io</code> and so forth. The <code>humboldt::main</code> annotation actually just creates a synchronous <code>main</code> function that initializes the <code>humboldt</code> runtime and launches the first future. When you just write an <code>async fn main</code> without any annotation, the compiler synthesizes the same <code>main</code> function with the default runtime."</p>
+<h2 id="learning-more-about-humboldt"><a class="header" href="#learning-more-about-humboldt">Learning more about Humboldt</a></h2>
+<p>Alan sees that some of the networking code that is being used in their application is creating network connections using humboldt APIs:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use humboldt::network;
+<span class="boring">}</span></code></pre></pre>
+<p>He asks Barbara, "Why don't we use the <code>std::async_io</code> APIs for that?" She explains that Humboldt makes use of some custom kernel extensions that, naturally enough, aren't part of the std library. "TCP is for rubes," she says, "we are using TTCP -- Turbo TCP." Her mind wanders briefly to <a href="https://en.wikipedia.org/wiki/Turbo_Pascal">Turbo Pascal</a> and she has a brief moment of yearning for the days when computers had a "Turbo" button that changed them from 8 MHz to 12 MHz. She snaps back into the present day. "Anyway, the <code>std::async_io</code> APIs just call into humboldt's APIs via various traits. But we can code directly against <code>humboldt</code> when we want to access the extra capabilities it offers. That <em>does</em> make it harder to change to another runtime later, though."</p>
+<h2 id="integrating-into-other-event-loops"><a class="header" href="#integrating-into-other-event-loops">Integrating into other event loops</a></h2>
+<p>Later on, Alan is working on a visualizer front-end that integrates with <a href="../../projects/DistriData.html">DistriData</a> to give more details about their workloads. To do it, he needs to integrate with Cocoa APIs and he wants to run certain tasks on <a href="https://en.wikipedia.org/wiki/Grand_Central_Dispatch">Grand Central Dispatch</a>. He approaches Barbara and asks, "If everything is running on <code>humboldt</code>, is there a way for me to run some things on another event loop? How does that work?"</p>
+<p>Barbara explains, "That's easy. You just have to use the <code>gcd</code> wrapper crate -- you can find it on <code>crates.io</code>. It implements the runtime traits for <code>gcd</code> and it has a <code>spawn</code> method. Once you spawn your task onto <code>gcd</code>, everything you run within <code>gcd</code> will be running in that context."</p>
+<p>Alan says, "And so, if I want to get things running on <code>humboldt</code> again, I spawn a task back on <code>humboldt</code>?"</p>
+<p>"Exactly," says Barbara. "Humboldt has a global event loop, so you can do that by just doing <code>humboldt::spawn</code>. You can also just use the <code>humboldt::io</code> APIs directly. They will always use the Humboldt I/O threads, rather than using the current runtime."</p>
+<p>Alan winds up with some code that looks like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn do_something_on_humboldt() {
+    gcd::spawn(async move {
+        let foo = do_something_on_gcd();
+
+        let bar = humboldt::spawn(async move {
+            do_a_little_bit_of_stuff_on_humboldt();
+        });
+
+        combine(foo.await, bar.await);
+    });
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="-frequently-asked-questions"><a class="header" href="#-frequently-asked-questions">🤔 Frequently Asked Questions</a></h2>
+<h3 id="what-status-quo-story-or-stories-are-you-retelling"><a class="header" href="#what-status-quo-story-or-stories-are-you-retelling">What status quo story or stories are you retelling?</a></h3>
+<p>Good question! I'm not entirely sure! I have to go looking and think about it. Maybe we'll have to write some more.</p>
+<h3 id="what-are-the-key-points-you-were-trying-to-convey-with-this-status-quo-story"><a class="header" href="#what-are-the-key-points-you-were-trying-to-convey-with-this-status-quo-story">What are the key points you were trying to convey with this status quo story?</a></h3>
+<ul>
+<li>There is some way to seamlessly change to a different default runtime to use for <code>async fn main</code>.</li>
+<li>There is no global runtime, just the current runtime.</li>
+<li>When you are using this different runtime, you can write code that is hard-coded to it and which exposes additional capabilities.</li>
+<li>You can integrate multiple runtimes relatively easily, and the std APIs work with whichever is the current runtime.</li>
+</ul>
+<h3 id="how-do-you-imagine-the-std-apis-and-so-forth-know-the-current-runtime"><a class="header" href="#how-do-you-imagine-the-std-apis-and-so-forth-know-the-current-runtime">How do you imagine the std APIs and so forth know the current runtime?</a></h3>
+<p>I was imagining that we would add fields to the <code>Context&lt;'_&gt;</code> struct that is supplied to each <code>async fn</code> when it runs. Users don't have direct access to this struct, but the compiler does. If the std APIs return futures, they would gain access to it that way as well. If not, we'd have to create some other mechanism.</p>
+<h3 id="what-happens-for-runtimes-that-dont-support-all-the-features-that-std-supports"><a class="header" href="#what-happens-for-runtimes-that-dont-support-all-the-features-that-std-supports">What happens for runtimes that don't support all the features that std supports?</a></h3>
+<p>That feels like a portability question. See the (yet to be written) sequel story, "Alan runs some things on WebAssembly". =)</p>
+<h3 id="what-is-alan-most-excited-about-in-this-future-is-he-disappointed-by-anything"><a class="header" href="#what-is-alan-most-excited-about-in-this-future-is-he-disappointed-by-anything"><strong>What is <a href="../../characters/alan.html">Alan</a> most excited about in this future? Is he disappointed by anything?</strong></a></h3>
+<p>Alan is excited about how easy it is to get async programs up and running, and he finds that they perform pretty well once he does so, so he's happy.</p>
+<h3 id="what-is-grace-most-excited-about-in-this-future-is-she-disappointed-by-anything"><a class="header" href="#what-is-grace-most-excited-about-in-this-future-is-she-disappointed-by-anything"><strong>What is <a href="../../characters/grace.html">Grace</a> most excited about in this future? Is she disappointed by anything?</strong></a></h3>
+<p>Grace is concerned with memory safety and being able to deploy her tricks she knows from other languages. Memory safety works fine here. In terms of tricks she knows and loves, she's happy that she can easily switch to another runtime. The default runtime is good and works well for most things, but for the [<code>DistriData</code>] project, they really need something tailored just for them. She is also happy she can use the extended APIs offered by <code>humboldt</code>.</p>
+<h3 id="what-is-niklaus-most-excited-about-in-this-future-is-he-disappointed-by-anything"><a class="header" href="#what-is-niklaus-most-excited-about-in-this-future-is-he-disappointed-by-anything"><strong>What is <a href="../../characters/niklaus.html">Niklaus</a> most excited about in this future? Is he disappointed by anything?</strong></a></h3>
+<p>Niklaus finds it async Rust quite accessible, for the same reasons cited as in <a href="./alans_trust_in_the_compiler_is_rewarded.html">"Alan's Trust in the Rust Compiler is Rewarded"</a>.</p>
+<h3 id="what-is-barbara-most-excited-about-in-this-future-is-she-disappointed-by-anything"><a class="header" href="#what-is-barbara-most-excited-about-in-this-future-is-she-disappointed-by-anything"><strong>What is <a href="../../characters/barbara.html">Barbara</a> most excited about in this future? Is she disappointed by anything?</strong></a></h3>
+<p>Depending on the technical details, Barbara may be a bit disappointed by the details of how std interfaces with the runtimes, as that may introduce some amount of overhead. This may not matter in practice, but it could also lead to library authors avoiding the std APIs in favor of writing generics or other mechanisms that are "zero overhead".</p>
+<h3 id="what-projects-benefit-the-most-from-this-future"><a class="header" href="#what-projects-benefit-the-most-from-this-future"><strong>What <a href="../../projects.html">projects</a> benefit the most from this future?</strong></a></h3>
+<p>Projects like <a href="../../projects/DistriData.html">DistriData</a> really benefit from being able to customize their runtime.</p>
+<h3 id="are-there-any-projects-that-are-hindered-by-this-future"><a class="header" href="#are-there-any-projects-that-are-hindered-by-this-future"><strong>Are there any <a href="../../projects.html">projects</a> that are hindered by this future?</strong></a></h3>
+<p>We have to pay careful attention to embedded projects like <a href="../../projects/MonsterMesh.html">MonsterMesh</a>. Some of the most obvious ways to implement this future would lean on <code>dyn</code> types and perhaps boxing, and that would rule out some embedded projects. Embedded runtimes like <a href="https://github.com/akiles/embassy">embassy</a> are also the most different in their overall design and they would have the hardest time fitting into the std APIs (of course, many embedded projects are already no-std, but many of them make use of some subset of the std capabilities through the facade). In general, traits and generic functions in std could lead to larger code size, as well.</p>
+<h3 id="what-are-the-incremental-steps-towards-realizing-this-shiny-future"><a class="header" href="#what-are-the-incremental-steps-towards-realizing-this-shiny-future"><strong>What are the incremental steps towards realizing this shiny future?</strong></a></h3>
+<p>There are a few steps required to realize this future:</p>
+<ul>
+<li>We have to determine the core mechanism that is used for std types to interface with the current scheduler.
+<ul>
+<li>Is it based on dynamic dispatch? Delayed linking? Some other tricks we have yet to invent?</li>
+<li>Depending on the details, language changes may be required.</li>
+</ul>
+</li>
+<li>We have to hammer out the set of traits or other interfaces used to define the parts of a runtime (see below for some of the considerations).
+<ul>
+<li>We can start with easier cases and proceed to more difficult ones, however.</li>
+</ul>
+</li>
+</ul>
+<h3 id="does-realizing-this-future-require-cooperation-between-many-projects"><a class="header" href="#does-realizing-this-future-require-cooperation-between-many-projects"><strong>Does realizing this future require cooperation between many projects?</strong></a></h3>
+<p>Yes. We will need to collaborate to define traits that std can use to interface with each runtime, and the runtimes will need to implement those traits. This is going to be non-trivial, because we want to preserve the ability for independent runtimes to experiment, while also preserving the ability to "max and match" and re-use components. For example, it'd probably be useful to have a bunch of shared I/O infrastructure, or to have utility crates for locks, for running threadpools, and the like. On the other hand, tokio takes advantage of the fact that it owns the I/O types <em>and</em> the locks <em>and</em> the scheduler to do some <a href="https://tokio.rs/blog/2020-04-preemption">nifty tricks</a> and we would want to ensure that remains an option.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../vision/submitted_stories/shiny_future/alans_trust_in_the_compiler_is_rewarded.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../vision/submitted_stories/shiny_future/barbara_appreciates_performance_tools.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../vision/submitted_stories/shiny_future/alans_trust_in_the_compiler_is_rewarded.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../vision/submitted_stories/shiny_future/barbara_appreciates_performance_tools.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../mermaid.min.js"></script>
+        <script src="../../../mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>
