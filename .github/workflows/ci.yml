@@ -11,7 +11,7 @@ jobs:
     name: build and test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install mdbook
         run: |
           tag=$(curl -LsSf https://api.github.com/repos/rust-lang/mdBook/releases/latest | jq -r '.tag_name')
@@ -24,8 +24,25 @@ jobs:
         run: |
           git config --global http.postBuffer 50000000
           git config --global https.postBuffer 50000000
-      - uses: rust-lang/simpleinfra/github-actions/static-websites@master
+      - name: Upload book artifacts
+        uses: actions/upload-pages-artifact@v3
         with:
-          deploy_dir: book
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          path: book
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository_owner == 'rust-lang'
+
+  # Deploy is run as a separate job as it needs elevated permissions
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    needs: test  # the `test` job uploads the pages artifact
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository_owner == 'rust-lang'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        id: deployment
